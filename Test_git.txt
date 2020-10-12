@@ -1,4 +1,8 @@
 OIOIO
  LAOALAO
+<<<<<<< HEAD
 
 feature1
+=======
+feature 2
+>>>>>>> origin/feature2
