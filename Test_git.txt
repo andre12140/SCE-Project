@@ -1,3 +1,9 @@
 Testing:
 
+<<<<<<< HEAD
 	Andre_feture
+=======
+
+
+feature Daniel
+>>>>>>> featureDaniel
