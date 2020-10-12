@@ -1,8 +1,2 @@
-OIOIO
- LAOALAO
-<<<<<<< HEAD
+Testing:
 
-feature1
-=======
-feature 2
->>>>>>> origin/feature2
