@@ -1,0 +1,655 @@
+%CMF
+# %PSECTS Section
+# For each object file, details of its psects are enumerated here.
+# The begining of the section is indicated by %PSECTS.  The first
+# line indicates the name of the first object file, e.g.
+#    $foo.obj
+# Each line that follows describes a psect in that object file, until
+# the next object file.  The lines that describe a psect have the
+# format:
+#    <psect name> <class name> <space> <link address> <load addresses> <length> <delta>
+# All addresses and the length are given in unqualified hexadecimal
+# in delta units.  Any other numeric values are decimal.
+%PSECTS
+$dist/default/production/tstTC74.X.production.o
+cinit CODE 0 24 24 8 2
+text1 CODE 0 2C 2C 146 2
+text2 CODE 0 172 172 5E 2
+text3 CODE 0 20B 20B 1E 2
+text4 CODE 0 242 242 10 2
+text5 CODE 0 252 252 A 2
+text6 CODE 0 265 265 8 2
+text7 CODE 0 1D0 1D0 3B 2
+text8 CODE 0 25C 25C 9 2
+maintext CODE 0 229 229 19 2
+cstackCOMMON COMMON 1 70 70 6 1
+intentry CODE 0 4 4 1E 2
+bssCOMMON COMMON 1 76 76 4 1
+$/tmp/xcXYJk0Tg.o
+reset_vec CODE 0 0 0 2 2
+end_init CODE 0 22 22 2 2
+config CONFIG 0 8007 8007 5 2
+# %UNUSED Section
+# This section enumerates the unused ranges of each CLASS. Each entry
+# is described on a single line as follows:
+#    <class name> <range> <delta>
+# Addresses given in the range are in hexadecimal and units of delta.
+%UNUSED
+RAM 20-6F 1
+RAM A0-EF 1
+RAM 120-16F 1
+RAM 1A0-1EF 1
+RAM 220-26F 1
+RAM 2A0-2EF 1
+RAM 320-36F 1
+RAM 3A0-3EF 1
+RAM 420-46F 1
+RAM 4A0-4EF 1
+RAM 520-56F 1
+RAM 5A0-5EF 1
+RAM 620-64F 1
+BANK0 20-6F 1
+BANK1 A0-EF 1
+BANK2 120-16F 1
+BANK3 1A0-1EF 1
+BANK4 220-26F 1
+BANK5 2A0-2EF 1
+BANK6 320-36F 1
+BANK7 3A0-3EF 1
+BANK8 420-46F 1
+BANK9 4A0-4EF 1
+CONST 2-3 2
+CONST 26D-1FFF 2
+ENTRY 2-3 2
+ENTRY 26D-1FFF 2
+IDLOC 8000-8003 2
+SFR10 500-51F 1
+SFR11 580-59F 1
+SFR12 600-61F 1
+SFR13 680-6EF 1
+SFR14 700-76F 1
+SFR15 780-7EF 1
+SFR16 800-86F 1
+SFR17 880-8EF 1
+SFR18 900-96F 1
+SFR19 980-9EF 1
+SFR20 A00-A6F 1
+SFR21 A80-AEF 1
+SFR22 B00-B6F 1
+SFR23 B80-BEF 1
+SFR24 C00-C6F 1
+SFR25 C80-CEF 1
+SFR26 D00-D6F 1
+SFR27 D80-DEF 1
+SFR28 E00-E6F 1
+SFR29 E80-EEF 1
+SFR30 F00-F6F 1
+SFR31 F80-FEF 1
+STACK 2000-23EF 1
+CODE 2-3 2
+CODE 26D-1FFF 2
+SFR0 0-1F 1
+SFR1 80-9F 1
+SFR2 100-11F 1
+SFR3 180-19F 1
+SFR4 200-21F 1
+SFR5 280-29F 1
+SFR6 300-31F 1
+SFR7 380-39F 1
+SFR8 400-41F 1
+SFR9 480-49F 1
+BANK10 520-56F 1
+BANK11 5A0-5EF 1
+BANK12 620-64F 1
+BIGRAM 2000-23EF 1
+COMMON 7A-7D 1
+EEDATA F000-F0FF 2
+STRCODE 2-3 2
+STRCODE 26D-1FFF 2
+STRING 2-3 2
+STRING 26D-1FFF 2
+# %LINETAB Section
+# This section enumerates the file/line to address mappings.
+# The beginning of the section is indicated by %LINETAB.
+# The first line indicates the name of the first object file, e.g.
+#   $foo.obj
+# Each line that follows describes a single mapping until the next
+# object file.  Mappings have the following format:
+#    <address> <psect name> <class name> ><line number>:<file name>
+# The address is absolute and given given in unqualified hex 
+# in delta units of the psect. All mappings within an object file
+# are in ascending order of addresses.
+# All other numeric values are in decimal.
+%LINETAB
+$dist/default/production/tstTC74.X.production.o
+24 cinit CODE >7923:/tmp/xcXsDbo7q
+24 cinit CODE >7926:/tmp/xcXsDbo7q
+24 cinit CODE >7941:/tmp/xcXsDbo7q
+25 cinit CODE >7942:/tmp/xcXsDbo7q
+26 cinit CODE >7943:/tmp/xcXsDbo7q
+27 cinit CODE >7944:/tmp/xcXsDbo7q
+28 cinit CODE >7950:/tmp/xcXsDbo7q
+28 cinit CODE >7952:/tmp/xcXsDbo7q
+29 cinit CODE >7953:/tmp/xcXsDbo7q
+2A cinit CODE >7954:/tmp/xcXsDbo7q
+4 intentry CODE >52:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/interrupt_manager.c
+6 intentry CODE >55:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/interrupt_manager.c
+A intentry CODE >57:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/interrupt_manager.c
+14 intentry CODE >60:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/interrupt_manager.c
+15 intentry CODE >61:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/interrupt_manager.c
+1B intentry CODE >64:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/interrupt_manager.c
+1C intentry CODE >65:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/interrupt_manager.c
+1D intentry CODE >68:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/interrupt_manager.c
+1E intentry CODE >69:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/interrupt_manager.c
+1F intentry CODE >70:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/interrupt_manager.c
+20 intentry CODE >73:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/interrupt_manager.c
+20 intentry CODE >74:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/interrupt_manager.c
+25C text8 CODE >57:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/mcc.c
+25C text8 CODE >60:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/mcc.c
+25F text8 CODE >62:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/mcc.c
+260 text8 CODE >64:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/mcc.c
+261 text8 CODE >66:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/mcc.c
+263 text8 CODE >68:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/mcc.c
+264 text8 CODE >69:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/mcc.c
+1D0 text7 CODE >57:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1D0 text7 CODE >62:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1D2 text7 CODE >63:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1D3 text7 CODE >64:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1D4 text7 CODE >65:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1D5 text7 CODE >66:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1D6 text7 CODE >71:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1D8 text7 CODE >72:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1DA text7 CODE >73:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1DC text7 CODE >74:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1DE text7 CODE >75:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1E0 text7 CODE >80:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1E3 text7 CODE >81:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1E5 text7 CODE >82:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1E7 text7 CODE >83:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1E9 text7 CODE >84:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1EB text7 CODE >89:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1EC text7 CODE >90:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1ED text7 CODE >91:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1EE text7 CODE >92:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1EF text7 CODE >93:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1F0 text7 CODE >98:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1F1 text7 CODE >99:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1F2 text7 CODE >100:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1F3 text7 CODE >101:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1F4 text7 CODE >102:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1F5 text7 CODE >107:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1F7 text7 CODE >108:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1F9 text7 CODE >109:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1FB text7 CODE >110:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1FD text7 CODE >111:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+1FF text7 CODE >120:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+202 text7 CODE >121:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+205 text7 CODE >122:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+207 text7 CODE >123:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+20A text7 CODE >124:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/pin_manager.c
+265 text6 CODE >71:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/mcc.c
+265 text6 CODE >74:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/mcc.c
+267 text6 CODE >76:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/mcc.c
+268 text6 CODE >78:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/mcc.c
+269 text6 CODE >80:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/mcc.c
+26A text6 CODE >82:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/mcc.c
+26B text6 CODE >84:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/mcc.c
+26C text6 CODE >85:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/mcc.c
+252 text5 CODE >50:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/mcc.c
+252 text5 CODE >52:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/mcc.c
+255 text5 CODE >53:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/mcc.c
+258 text5 CODE >54:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/mcc.c
+25B text5 CODE >55:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/mcc.c
+242 text4 CODE >83:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/i2c1_driver.c
+242 text4 CODE >85:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/i2c1_driver.c
+247 text4 CODE >87:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/i2c1_driver.c
+248 text4 CODE >88:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/i2c1_driver.c
+24A text4 CODE >89:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/i2c1_driver.c
+24B text4 CODE >90:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/i2c1_driver.c
+24E text4 CODE >91:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/i2c1_driver.c
+24F text4 CODE >92:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/i2c1_driver.c
+250 text4 CODE >93:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/i2c1_driver.c
+250 text4 CODE >94:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/i2c1_driver.c
+251 text4 CODE >95:/home/cra/MPLABXProjects/tstTC74.X/mcc_generated_files/i2c1_driver.c
+20B text3 CODE >32:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+20B text3 CODE >34:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+21E text3 CODE >35:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+220 text3 CODE >36:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+226 text3 CODE >37:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+228 text3 CODE >38:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+172 text2 CODE >47:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+173 text2 CODE >49:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+176 text2 CODE >50:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+17B text2 CODE >51:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+17D text2 CODE >52:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+17D text2 CODE >54:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+18F text2 CODE >56:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+190 text2 CODE >57:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+196 text2 CODE >59:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+19D text2 CODE >61:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+19E text2 CODE >62:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+19F text2 CODE >63:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+19F text2 CODE >65:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+1A0 text2 CODE >66:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+1A0 text2 CODE >67:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+1A1 text2 CODE >68:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+1B4 text2 CODE >70:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+1BA text2 CODE >71:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+1C7 text2 CODE >72:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+1C9 text2 CODE >73:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+1CB text2 CODE >74:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+1CD text2 CODE >75:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+1CE text2 CODE >77:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+1CF text2 CODE >78:/home/cra/MPLABXProjects/tstTC74.X/I2C/i2c.c
+2C text1 CODE >51:/home/cra/MPLABXProjects/tstTC74.X/main.c
+2C text1 CODE >54:/home/cra/MPLABXProjects/tstTC74.X/main.c
+2C text1 CODE >55:/home/cra/MPLABXProjects/tstTC74.X/main.c
+3A text1 CODE >56:/home/cra/MPLABXProjects/tstTC74.X/main.c
+4F text1 CODE >58:/home/cra/MPLABXProjects/tstTC74.X/main.c
+62 text1 CODE >59:/home/cra/MPLABXProjects/tstTC74.X/main.c
+74 text1 CODE >60:/home/cra/MPLABXProjects/tstTC74.X/main.c
+89 text1 CODE >61:/home/cra/MPLABXProjects/tstTC74.X/main.c
+9C text1 CODE >62:/home/cra/MPLABXProjects/tstTC74.X/main.c
+B0 text1 CODE >63:/home/cra/MPLABXProjects/tstTC74.X/main.c
+C5 text1 CODE >64:/home/cra/MPLABXProjects/tstTC74.X/main.c
+CB text1 CODE >65:/home/cra/MPLABXProjects/tstTC74.X/main.c
+D0 text1 CODE >67:/home/cra/MPLABXProjects/tstTC74.X/main.c
+DD text1 CODE >68:/home/cra/MPLABXProjects/tstTC74.X/main.c
+F2 text1 CODE >69:/home/cra/MPLABXProjects/tstTC74.X/main.c
+105 text1 CODE >70:/home/cra/MPLABXProjects/tstTC74.X/main.c
+117 text1 CODE >71:/home/cra/MPLABXProjects/tstTC74.X/main.c
+12C text1 CODE >72:/home/cra/MPLABXProjects/tstTC74.X/main.c
+13F text1 CODE >73:/home/cra/MPLABXProjects/tstTC74.X/main.c
+153 text1 CODE >74:/home/cra/MPLABXProjects/tstTC74.X/main.c
+168 text1 CODE >75:/home/cra/MPLABXProjects/tstTC74.X/main.c
+16F text1 CODE >77:/home/cra/MPLABXProjects/tstTC74.X/main.c
+171 text1 CODE >78:/home/cra/MPLABXProjects/tstTC74.X/main.c
+229 maintext CODE >80:/home/cra/MPLABXProjects/tstTC74.X/main.c
+229 maintext CODE >85:/home/cra/MPLABXProjects/tstTC74.X/main.c
+22C maintext CODE >102:/home/cra/MPLABXProjects/tstTC74.X/main.c
+22F maintext CODE >103:/home/cra/MPLABXProjects/tstTC74.X/main.c
+231 maintext CODE >104:/home/cra/MPLABXProjects/tstTC74.X/main.c
+232 maintext CODE >105:/home/cra/MPLABXProjects/tstTC74.X/main.c
+234 maintext CODE >106:/home/cra/MPLABXProjects/tstTC74.X/main.c
+236 maintext CODE >108:/home/cra/MPLABXProjects/tstTC74.X/main.c
+236 maintext CODE >112:/home/cra/MPLABXProjects/tstTC74.X/main.c
+237 maintext CODE >113:/home/cra/MPLABXProjects/tstTC74.X/main.c
+23D maintext CODE >114:/home/cra/MPLABXProjects/tstTC74.X/main.c
+23F maintext CODE >108:/home/cra/MPLABXProjects/tstTC74.X/main.c
+23F maintext CODE >116:/home/cra/MPLABXProjects/tstTC74.X/main.c
+240 maintext CODE >117:/home/cra/MPLABXProjects/tstTC74.X/main.c
+# %SYMTAB Section
+# An enumeration of all symbols in the program.
+# The beginning of the section is indicated by %SYMTAB.
+# Each line describes a single symbol as follows:
+#    <label> <value> [-]<load-adj> <class> <space> <psect> <file-name>
+# The value and load-adj are both in unqualified hexadecimal.
+# All other numeric values are in decimal.  The load-adj is the
+# quantity one needs to add to the symbol value in order to obtain the load
+# address of the symbol.  This value may be signed. If the symbol
+# was defined in a psect then <psect> will be "-". File-name
+# is the name of the object file in which the symbol was defined.
+%SYMTAB
+___latbits 2 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__Hspace_0 800C 0 ABS 0 - -
+__Hspace_1 7A 0 ABS 0 - -
+__Hspace_2 0 0 ABS 0 - -
+__Hspace_3 0 0 ABS 0 - -
+_SSP1STATbits 18F 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__Heeprom_data 0 0 EEDATA 3 eeprom_data -
+__CFG_MCLRE$ON 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_PMD_Initialize 4CA 0 CODE 0 text6 dist/default/production/tstTC74.X.production.o
+main@c 75 0 COMMON 1 cstackCOMMON dist/default/production/tstTC74.X.production.o
+__Hstrings 0 0 ABS 0 strings -
+__CFG_WDTCCS$SC 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_LATA 16 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_LATB 17 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_LATC 18 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_LATD 19 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_LATE 1A 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_PMD0 796 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_PMD1 797 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_PMD2 798 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_PMD3 799 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_PMD4 79A 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_PMD5 79B 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_WPUA F39 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_WPUB F44 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_WPUC F4F 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_WPUD F5A 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_WPUE F65 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+___sp 0 0 STACK 2 stack /tmp/xcXYJk0Tg.o
+_main 452 0 CODE 0 maintext dist/default/production/tstTC74.X.production.o
+btemp 7E 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+start 44 0 CODE 0 init /tmp/xcXYJk0Tg.o
+__size_of_main 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__HbssCOMMON 0 0 ABS 0 bssCOMMON -
+__CFG_SCANE$available 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__CFG_DEBUG$OFF 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__Hpowerup 0 0 CODE 0 powerup -
+__size_of_SYSTEM_Initialize 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+intlevel0 0 0 ENTRY 0 functab /tmp/xcXYJk0Tg.o
+intlevel1 0 0 ENTRY 0 functab /tmp/xcXYJk0Tg.o
+intlevel2 0 0 ENTRY 0 functab /tmp/xcXYJk0Tg.o
+intlevel3 0 0 ENTRY 0 functab /tmp/xcXYJk0Tg.o
+intlevel4 0 0 ENTRY 0 functab /tmp/xcXYJk0Tg.o
+intlevel5 0 0 ENTRY 0 functab /tmp/xcXYJk0Tg.o
+_i2c1_driver_open 484 0 CODE 0 text4 dist/default/production/tstTC74.X.production.o
+__LbssCOMMON 0 0 ABS 0 bssCOMMON -
+wtemp0 7E 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__Hfunctab 0 0 ENTRY 0 functab -
+__end_of_PMD_Initialize 4DA 0 CODE 0 text6 dist/default/production/tstTC74.X.production.o
+__Hclrtext 0 0 ABS 0 clrtext -
+_i2c1_driver_i2cISR 76 0 COMMON 1 bssCOMMON dist/default/production/tstTC74.X.production.o
+_ANSELA F38 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_ANSELB F43 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_ANSELC F4E 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_ANSELD F59 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_ANSELE F64 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__end_of_INTERRUPT_InterruptManager 44 0 CODE 0 intentry dist/default/production/tstTC74.X.production.o
+__size_of_ReadI2C 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__Lmaintext 0 0 ABS 0 maintext -
+__CFG_FEXTOSC$OFF 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__size_of_tsttc 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_PIN_MANAGER_Initialize 3A0 0 CODE 0 text7 dist/default/production/tstTC74.X.production.o
+__end_of_i2c1_driver_open 4A4 0 CODE 0 text4 dist/default/production/tstTC74.X.production.o
+start_initialization 48 0 CODE 0 cinit dist/default/production/tstTC74.X.production.o
+_ODCONA F3A 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_ODCONB F45 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_ODCONC F50 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_ODCOND F5B 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_ODCONE F66 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_OSCFRQ 893 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__CFG_WDTCPS$WDTCPS_31 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_TRISCbits 13 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__size_of_i2c1_driver_open 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_RC3PPS F23 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_RC4PPS F24 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__end_of_SYSTEM_Initialize 4B8 0 CODE 0 text5 dist/default/production/tstTC74.X.production.o
+tsttc@value 73 0 COMMON 1 cstackCOMMON dist/default/production/tstTC74.X.production.o
+__end_of_ReadI2C 452 0 CODE 0 text3 dist/default/production/tstTC74.X.production.o
+___int_sp 0 0 STACK 2 stack /tmp/xcXYJk0Tg.o
+__Hbank0 0 0 ABS 0 bank0 -
+__Hbank1 0 0 ABS 0 bank1 -
+__Hbank2 0 0 ABS 0 bank2 -
+__Hbank3 0 0 ABS 0 bank3 -
+__Hbank4 0 0 ABS 0 bank4 -
+__Hbank5 0 0 ABS 0 bank5 -
+__Hbank6 0 0 ABS 0 bank6 -
+__Hbank7 0 0 ABS 0 bank7 -
+__Hbank8 0 0 ABS 0 bank8 -
+__Hbank9 0 0 ABS 0 bank9 -
+__Hcinit 58 0 CODE 0 cinit -
+__Hidloc 0 0 IDLOC 0 idloc -
+__size_of_OSCILLATOR_Initialize 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__Hsfr10 0 0 ABS 0 sfr10 -
+__Hsfr11 0 0 ABS 0 sfr11 -
+__Hsfr12 0 0 ABS 0 sfr12 -
+__Hsfr13 0 0 ABS 0 sfr13 -
+__Hsfr14 0 0 ABS 0 sfr14 -
+__Hsfr15 0 0 ABS 0 sfr15 -
+__Hsfr16 0 0 ABS 0 sfr16 -
+__Hsfr17 0 0 ABS 0 sfr17 -
+__Hsfr18 0 0 ABS 0 sfr18 -
+__Hsfr19 0 0 ABS 0 sfr19 -
+__Hsfr20 0 0 ABS 0 sfr20 -
+__Hsfr21 0 0 ABS 0 sfr21 -
+__Hsfr22 0 0 ABS 0 sfr22 -
+__Hsfr23 0 0 ABS 0 sfr23 -
+__Hsfr24 0 0 ABS 0 sfr24 -
+__Hsfr25 0 0 ABS 0 sfr25 -
+__Hsfr26 0 0 ABS 0 sfr26 -
+__Hsfr27 0 0 ABS 0 sfr27 -
+__Hsfr28 0 0 ABS 0 sfr28 -
+__Hsfr29 0 0 ABS 0 sfr29 -
+__Hsfr30 0 0 ABS 0 sfr30 -
+__Hsfr31 0 0 ABS 0 sfr31 -
+__Hstack 0 0 STACK 2 stack -
+__Hbank10 0 0 ABS 0 bank10 -
+__Hbank11 0 0 ABS 0 bank11 -
+__Hbank12 0 0 ABS 0 bank12 -
+__Hbank13 0 0 BANK13 1 bank13 -
+__Hbank14 0 0 BANK14 1 bank14 -
+__Hbank15 0 0 BANK15 1 bank15 -
+__Hbank16 0 0 BANK16 1 bank16 -
+__Hbank17 0 0 BANK17 1 bank17 -
+__Hbank18 0 0 BANK18 1 bank18 -
+__Hbank19 0 0 BANK19 1 bank19 -
+__Hbank20 0 0 BANK20 1 bank20 -
+__Hbank21 0 0 BANK21 1 bank21 -
+__Hbank22 0 0 BANK22 1 bank22 -
+__Hbank23 0 0 BANK23 1 bank23 -
+__Hbank24 0 0 BANK24 1 bank24 -
+__Hbank25 0 0 BANK25 1 bank25 -
+__Hbank26 0 0 BANK26 1 bank26 -
+__Hbank27 0 0 BANK27 1 bank27 -
+__Hbank28 0 0 BANK28 1 bank28 -
+__Hbank29 0 0 BANK29 1 bank29 -
+__Hbank30 0 0 BANK30 1 bank30 -
+__Hbank31 0 0 BANK31 1 bank31 -
+__Hbigram 0 0 ABS 0 bigram -
+__Hmaintext 0 0 ABS 0 maintext -
+__Hcommon 0 0 ABS 0 common -
+__Hconfig 10018 0 CONFIG 0 config -
+__Lbank0 0 0 ABS 0 bank0 -
+__Lbank1 0 0 ABS 0 bank1 -
+__Lbank2 0 0 ABS 0 bank2 -
+__Lbank3 0 0 ABS 0 bank3 -
+__Lbank4 0 0 ABS 0 bank4 -
+__Lbank5 0 0 ABS 0 bank5 -
+__Lbank6 0 0 ABS 0 bank6 -
+__Lbank7 0 0 ABS 0 bank7 -
+__Lbank8 0 0 ABS 0 bank8 -
+__Lbank9 0 0 ABS 0 bank9 -
+__Lcinit 48 0 CODE 0 cinit -
+__Lidloc 0 0 IDLOC 0 idloc -
+__Lsfr10 0 0 ABS 0 sfr10 -
+__Lsfr11 0 0 ABS 0 sfr11 -
+__Lsfr12 0 0 ABS 0 sfr12 -
+__Lsfr13 0 0 ABS 0 sfr13 -
+__Lsfr14 0 0 ABS 0 sfr14 -
+__Lsfr15 0 0 ABS 0 sfr15 -
+__Lsfr16 0 0 ABS 0 sfr16 -
+__Lsfr17 0 0 ABS 0 sfr17 -
+__Lsfr18 0 0 ABS 0 sfr18 -
+__Lsfr19 0 0 ABS 0 sfr19 -
+__Lsfr20 0 0 ABS 0 sfr20 -
+__Lsfr21 0 0 ABS 0 sfr21 -
+__Lsfr22 0 0 ABS 0 sfr22 -
+__Lsfr23 0 0 ABS 0 sfr23 -
+__Lsfr24 0 0 ABS 0 sfr24 -
+__Lsfr25 0 0 ABS 0 sfr25 -
+__Lsfr26 0 0 ABS 0 sfr26 -
+__Lsfr27 0 0 ABS 0 sfr27 -
+__Lsfr28 0 0 ABS 0 sfr28 -
+__Lsfr29 0 0 ABS 0 sfr29 -
+__Lsfr30 0 0 ABS 0 sfr30 -
+__Lsfr31 0 0 ABS 0 sfr31 -
+__Lstack 0 0 STACK 2 stack -
+_INTCONbits B 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__Habs1 0 0 ABS 0 abs1 -
+__Hcode 0 0 ABS 0 code -
+__Hinit 44 0 CODE 0 init -
+__Hsfr0 0 0 ABS 0 sfr0 -
+__Hsfr1 0 0 ABS 0 sfr1 -
+__Hsfr2 0 0 ABS 0 sfr2 -
+__Hsfr3 0 0 ABS 0 sfr3 -
+__Hsfr4 0 0 ABS 0 sfr4 -
+__Hsfr5 0 0 ABS 0 sfr5 -
+__Hsfr6 0 0 ABS 0 sfr6 -
+__Hsfr7 0 0 ABS 0 sfr7 -
+__Hsfr8 0 0 ABS 0 sfr8 -
+__Hsfr9 0 0 ABS 0 sfr9 -
+__Htext 0 0 ABS 0 text -
+__Labs1 0 0 ABS 0 abs1 -
+__Lcode 0 0 ABS 0 code -
+__Linit 44 0 CODE 0 init -
+__Lsfr0 0 0 ABS 0 sfr0 -
+__Lsfr1 0 0 ABS 0 sfr1 -
+__Lsfr2 0 0 ABS 0 sfr2 -
+__Lsfr3 0 0 ABS 0 sfr3 -
+__Lsfr4 0 0 ABS 0 sfr4 -
+__Lsfr5 0 0 ABS 0 sfr5 -
+__Lsfr6 0 0 ABS 0 sfr6 -
+__Lsfr7 0 0 ABS 0 sfr7 -
+__Lsfr8 0 0 ABS 0 sfr8 -
+__Lsfr9 0 0 ABS 0 sfr9 -
+__Ltext 0 0 ABS 0 text -
+_SSP1CON1 190 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_SSP1CON2 191 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_SSP1STAT 18F 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__CFG_WDTCWS$WDTCWS_7 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+int$flags 7E 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__HcstackCOMMON 0 0 ABS 0 cstackCOMMON -
+__size_of_INTERRUPT_InterruptManager 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__S0 800C 0 ABS 0 - -
+__S1 7A 0 ABS 0 - -
+__S2 0 0 ABS 0 - -
+__S3 0 0 ABS 0 - -
+_SYSTEM_Initialize 4A4 0 CODE 0 text5 dist/default/production/tstTC74.X.production.o
+__CFG_BOREN$ON 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__Lintentry 8 0 CODE 0 intentry -
+reset_vec 0 0 CODE 0 reset_vec /tmp/xcXYJk0Tg.o
+__CFG_FCMEN$ON 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_INTERRUPT_InterruptManager 8 0 CODE 0 intentry dist/default/production/tstTC74.X.production.o
+__size_of_PMD_Initialize 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_PIE3bits 719 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__size_of_WriteI2C 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__end_of_PIN_MANAGER_Initialize 416 0 CODE 0 text7 dist/default/production/tstTC74.X.production.o
+__Lbank10 0 0 ABS 0 bank10 -
+__Lbank11 0 0 ABS 0 bank11 -
+__Lbank12 0 0 ABS 0 bank12 -
+__Lbank13 0 0 BANK13 1 bank13 -
+__Lbank14 0 0 BANK14 1 bank14 -
+__Lbank15 0 0 BANK15 1 bank15 -
+__Lbank16 0 0 BANK16 1 bank16 -
+__Lbank17 0 0 BANK17 1 bank17 -
+__Lbank18 0 0 BANK18 1 bank18 -
+__Lbank19 0 0 BANK19 1 bank19 -
+__Lbank20 0 0 BANK20 1 bank20 -
+__Lbank21 0 0 BANK21 1 bank21 -
+__Lbank22 0 0 BANK22 1 bank22 -
+__Lbank23 0 0 BANK23 1 bank23 -
+__Lbank24 0 0 BANK24 1 bank24 -
+__Lbank25 0 0 BANK25 1 bank25 -
+__Lbank26 0 0 BANK26 1 bank26 -
+__Lbank27 0 0 BANK27 1 bank27 -
+__Lbank28 0 0 BANK28 1 bank28 -
+__Lbank29 0 0 BANK29 1 bank29 -
+__Lbank30 0 0 BANK30 1 bank30 -
+__Lbank31 0 0 BANK31 1 bank31 -
+__pmaintext 452 0 CODE 0 maintext dist/default/production/tstTC74.X.production.o
+__Lbigram 0 0 ABS 0 bigram -
+__CFG_BORV$LO 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__CFG_RSTOSC$HFINT1 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__Lcommon 0 0 ABS 0 common -
+__Lconfig 1000E 0 CONFIG 0 config -
+__CFG_CP$OFF 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__CFG_WDTE$OFF 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+WriteI2C@data_out 71 0 COMMON 1 cstackCOMMON dist/default/production/tstTC74.X.production.o
+stackhi 23EF 0 ABS 0 - /tmp/xcXYJk0Tg.o
+stacklo 2000 0 ABS 0 - /tmp/xcXYJk0Tg.o
+_SSP1CLKPPS EC5 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_OSCCON1 88D 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_OSCCON3 88F 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_OSCTUNE 892 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_SSP1DATPPS EC6 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__Lspace_0 0 0 ABS 0 - -
+__Lspace_1 0 0 ABS 0 - -
+__Lspace_2 0 0 ABS 0 - -
+__Lspace_3 0 0 ABS 0 - -
+__pbssCOMMON 76 0 COMMON 1 bssCOMMON dist/default/production/tstTC74.X.production.o
+__CFG_LPBOREN$OFF 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_PIR3bits 70F 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__Lend_init 44 0 CODE 0 end_init -
+__CFG_LVP$ON 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__CFG_CSWEN$ON 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__LcstackCOMMON 0 0 ABS 0 cstackCOMMON -
+__CFG_ZCD$OFF 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+end_of_initialization 50 0 CODE 0 cinit dist/default/production/tstTC74.X.production.o
+_WriteI2C 2E4 0 CODE 0 text2 dist/default/production/tstTC74.X.production.o
+__Hintentry 44 0 CODE 0 intentry -
+__CFG_STVREN$ON 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__Lstrings 0 0 ABS 0 strings -
+__Hreset_vec 4 0 CODE 0 reset_vec -
+__end_of_WriteI2C 3A0 0 CODE 0 text2 dist/default/production/tstTC74.X.production.o
+_ReadI2C 416 0 CODE 0 text3 dist/default/production/tstTC74.X.production.o
+__ptext1 58 0 CODE 0 text1 dist/default/production/tstTC74.X.production.o
+__ptext2 2E4 0 CODE 0 text2 dist/default/production/tstTC74.X.production.o
+__ptext3 416 0 CODE 0 text3 dist/default/production/tstTC74.X.production.o
+__ptext4 484 0 CODE 0 text4 dist/default/production/tstTC74.X.production.o
+__ptext5 4A4 0 CODE 0 text5 dist/default/production/tstTC74.X.production.o
+__ptext6 4CA 0 CODE 0 text6 dist/default/production/tstTC74.X.production.o
+__ptext7 3A0 0 CODE 0 text7 dist/default/production/tstTC74.X.production.o
+__ptext8 4B8 0 CODE 0 text8 dist/default/production/tstTC74.X.production.o
+_i2c1_driver_busCollisionISR 78 0 COMMON 1 bssCOMMON dist/default/production/tstTC74.X.production.o
+__Lpowerup 0 0 CODE 0 powerup -
+__Leeprom_data 0 0 EEDATA 3 eeprom_data -
+__Lreset_vec 0 0 CODE 0 reset_vec -
+_SLRCONA F3B 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_SLRCONB F46 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_SLRCONC F51 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_SLRCOND F5C 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_SLRCONE F67 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__CFG_CLKOUTEN$OFF 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__end_of__initialization 50 0 CODE 0 cinit dist/default/production/tstTC74.X.production.o
+__Lfunctab 0 0 ENTRY 0 functab -
+__Lclrtext 0 0 ABS 0 clrtext -
+_SSP1CON1bits 190 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_SSP1CON2bits 191 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__pcstackCOMMON 70 0 COMMON 1 cstackCOMMON dist/default/production/tstTC74.X.production.o
+_SSP1ADD 18D 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_SSP1BUF 18C 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_SSP1MSK 18E 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__Hend_init 48 0 CODE 0 end_init -
+__end_of_main 484 0 CODE 0 maintext dist/default/production/tstTC74.X.production.o
+_OSCEN 891 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_TRISA 11 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_TRISB 12 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_TRISC 13 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_TRISD 14 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_TRISE 15 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_WPUC3 7A7B 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_WPUC4 7A7C 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__end_of_tsttc 2E4 0 CODE 0 text1 dist/default/production/tstTC74.X.production.o
+__Hram 0 0 ABS 0 ram -
+__Lram 0 0 ABS 0 ram -
+__CFG_CPD$OFF 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_tsttc 58 0 CODE 0 text1 dist/default/production/tstTC74.X.production.o
+__size_of_PIN_MANAGER_Initialize 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__pintentry 8 0 CODE 0 intentry dist/default/production/tstTC74.X.production.o
+__end_of_OSCILLATOR_Initialize 4CA 0 CODE 0 text8 dist/default/production/tstTC74.X.production.o
+__CFG_PPS1WAY$ON 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__initialization 48 0 CODE 0 cinit dist/default/production/tstTC74.X.production.o
+__CFG_PWRTE$OFF 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+__CFG_WRT$OFF 0 0 ABS 0 - dist/default/production/tstTC74.X.production.o
+_OSCILLATOR_Initialize 4B8 0 CODE 0 text8 dist/default/production/tstTC74.X.production.o
+# %SPLITSTAB Section
+# This section enumerates all the psect splits performed by the assembler.
+# The beginning of the section is indicated by %SPLITSTAB.
+# Each line is a record a particular split, where the parent psect is on
+# the left and the child on the right.  Note that a child psect is always
+# split form the top of the parent psect. All splits from a given parent
+# are listed in the order in which they occurred.
+%SPLITSTAB
+# %DABS Section
+# This section contains a table of all usuage of the assember
+# directive DABS in the program. Each line has the following format:
+#   <name> <space> <address> <size>
+# If the DABS was originally labelled then that shall be <name>,
+# otherwise name will be "-".  The <space> number is in decimal.
+# <address> and <size> are in byte units as unqaulified hexadecimal
+%DABS
+- 1 7E 2
+# %SEGMENTS Section
+# This sections enumerates the segments of the program.  Each segment
+# is described on a single line as follows:
+#    <name> <space> <link address> <file address> <size> <delta>
+# Addresses and size are in unqualified hexadecimal.  The link address
+# and size are in units of delta. The file address is in units of bytes.
+# All other numeric quantities are in decimal.
+%SEGMENTS
+cstackCOMMON 1 70 70 A 1
+intentry 0 4 8 269 2
+reset_vec 0 0 0 2 2
+config 0 8007 1000E 5 2
