@@ -44,6 +44,7 @@
 #include "mcc_generated_files/mcc.h"
 #include "I2C/i2c.h"
 //#include "stdio.h"
+#include <string.h>
 
 /*
                          Main application
@@ -205,32 +206,57 @@ int LCDbusy()
     }
     long unsigned int m = (counter-3600*h)/60;
     long unsigned int s = ((counter-3600*h)-60*m);*/
-    
-int h = 23;
-int m = 59;
-int s = 40;
 
-void LAB_ISR(void) {    
+struct Time {
+    int h;
+    int m;
+    int s;
+}; 
+
+struct Time t = {0,0,0};
+
+void Clock_ISR(void) {    
     
-    s++;
+    t.s++;
     
-    if(s==60){
-        m++;
-        s=0;
+    if(t.s==60){
+        t.m++;
+        t.s=0;
     }
-    if(m==60){
-        h++;
-        m=0;
+    if(t.m==60){
+        t.h++;
+        t.m=0;
     }
-    if(h==24){
-        h=0;
+    if(t.h==24){
+        t.h=0;
     }
-    
+}
+
+void menuLCD_ISR(){
     char str[8];
-    sprintf(str, "%02d:%02d:%02d", h,m,s);
+    sprintf(str, "%02d:%02d:%02d", t.h,t.m,t.s);
     
     LCDcmd(0x80);
     LCDstr(str);
+    
+    LCDcmd(0x8B);
+    LCDstr("CTL ?");
+    
+    LCDcmd(0xc0);
+    char tt[4] = "20";
+    strcat(tt," C");
+    LCDstr(tt);
+    
+    LCDcmd(0xcd);
+    int aux = 7;
+    char l[1];
+    sprintf(l, "%d", aux);
+    
+    char ll[3] = "L ";
+    strcat(ll, l);
+    LCDstr(ll);
+
+    LCDcmd(0x80);
 }
 
 void main(void)
@@ -245,8 +271,9 @@ void main(void)
     // initialize the device
     SYSTEM_Initialize();
     
-    TMR1_SetInterruptHandler(LAB_ISR);
-
+    TMR1_SetInterruptHandler(Clock_ISR);
+    
+    TMR3_SetInterruptHandler(menuLCD_ISR);
     
     i2c1_driver_open();
     I2C_SCL = 1;
@@ -261,7 +288,7 @@ void main(void)
     // Enable the Peripheral Interrupts
     INTERRUPT_PeripheralInterruptEnable();
 
-     IO_RA4_SetHigh();
+    IO_RA4_SetHigh();
     float aux = IO_RB4_GetValue();
     int a = 1;
 

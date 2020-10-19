@@ -27,6 +27,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S973 . . ]
 "21483
 [v _PIR4bits `VS973 ~T0 @X0 0 e@1808 ]
+"367 mcc_generated_files/tmr3.h
+[v _TMR3_ISR `(v ~T0 @X0 0 ef ]
 "367 mcc_generated_files/tmr1.h
 [v _TMR1_ISR `(v ~T0 @X0 0 ef ]
 "21846 C:/Users/Andre/.mchp_packs/Microchip/PIC16F1xxxx_DFP/1.5.133/xc8\pic\include\proc\pic16f18875.h
@@ -13839,9 +13841,22 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;tmr1.h: 385: void TMR1_SetInterruptHandler(void (* InterruptHandler)(void));
 [; ;tmr1.h: 403: extern void (*TMR1_InterruptHandler)(void);
 [; ;tmr1.h: 421: void TMR1_DefaultInterruptHandler(void);
-[; ;mcc.h: 71: void SYSTEM_Initialize(void);
-[; ;mcc.h: 84: void OSCILLATOR_Initialize(void);
-[; ;mcc.h: 97: void PMD_Initialize(void);
+[; ;stdbool.h: 15: typedef unsigned char bool;
+[; ;tmr3.h: 100: void TMR3_Initialize(void);
+[; ;tmr3.h: 129: void TMR3_StartTimer(void);
+[; ;tmr3.h: 161: void TMR3_StopTimer(void);
+[; ;tmr3.h: 196: uint16_t TMR3_ReadTimer(void);
+[; ;tmr3.h: 235: void TMR3_WriteTimer(uint16_t timerVal);
+[; ;tmr3.h: 271: void TMR3_Reload(void);
+[; ;tmr3.h: 310: void TMR3_StartSinglePulseAcquisition(void);
+[; ;tmr3.h: 349: uint8_t TMR3_CheckGateValueStatus(void);
+[; ;tmr3.h: 367: void TMR3_ISR(void);
+[; ;tmr3.h: 385: void TMR3_SetInterruptHandler(void (* InterruptHandler)(void));
+[; ;tmr3.h: 403: extern void (*TMR3_InterruptHandler)(void);
+[; ;tmr3.h: 421: void TMR3_DefaultInterruptHandler(void);
+[; ;mcc.h: 72: void SYSTEM_Initialize(void);
+[; ;mcc.h: 85: void OSCILLATOR_Initialize(void);
+[; ;mcc.h: 98: void PMD_Initialize(void);
 [v $root$_INTERRUPT_InterruptManager `(v ~T0 @X0 0 e ]
 "52 mcc_generated_files/interrupt_manager.c
 [v _INTERRUPT_InterruptManager `(v ~T10 @X0 1 ef ]
@@ -13857,74 +13872,89 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;interrupt_manager.c: 56: {
 "56
 {
-[; ;interrupt_manager.c: 57: if(PIE4bits.TMR1IE == 1 && PIR4bits.TMR1IF == 1)
+[; ;interrupt_manager.c: 57: if(PIE4bits.TMR3IE == 1 && PIR4bits.TMR3IF == 1)
 "57
-[e $ ! && == -> . . _PIE4bits 0 0 `i -> 1 `i == -> . . _PIR4bits 0 0 `i -> 1 `i 1623  ]
+[e $ ! && == -> . . _PIE4bits 0 2 `i -> 1 `i == -> . . _PIR4bits 0 2 `i -> 1 `i 1623  ]
 [; ;interrupt_manager.c: 58: {
 "58
 {
-[; ;interrupt_manager.c: 59: TMR1_ISR();
+[; ;interrupt_manager.c: 59: TMR3_ISR();
 "59
-[e ( _TMR1_ISR ..  ]
+[e ( _TMR3_ISR ..  ]
 "60
 }
 [; ;interrupt_manager.c: 60: }
 [e $U 1624  ]
 "61
 [e :U 1623 ]
-[; ;interrupt_manager.c: 61: else if(PIE3bits.BCL1IE == 1 && PIR3bits.BCL1IF == 1)
-[e $ ! && == -> . . _PIE3bits 0 1 `i -> 1 `i == -> . . _PIR3bits 0 1 `i -> 1 `i 1625  ]
+[; ;interrupt_manager.c: 61: else if(PIE4bits.TMR1IE == 1 && PIR4bits.TMR1IF == 1)
+[e $ ! && == -> . . _PIE4bits 0 0 `i -> 1 `i == -> . . _PIR4bits 0 0 `i -> 1 `i 1625  ]
 [; ;interrupt_manager.c: 62: {
 "62
 {
-[; ;interrupt_manager.c: 63: i2c1_driver_busCollisionISR();
+[; ;interrupt_manager.c: 63: TMR1_ISR();
 "63
-[e ( *U _i2c1_driver_busCollisionISR ..  ]
+[e ( _TMR1_ISR ..  ]
 "64
 }
 [; ;interrupt_manager.c: 64: }
 [e $U 1626  ]
 "65
 [e :U 1625 ]
-[; ;interrupt_manager.c: 65: else if(PIE3bits.SSP1IE == 1 && PIR3bits.SSP1IF == 1)
-[e $ ! && == -> . . _PIE3bits 0 0 `i -> 1 `i == -> . . _PIR3bits 0 0 `i -> 1 `i 1627  ]
+[; ;interrupt_manager.c: 65: else if(PIE3bits.BCL1IE == 1 && PIR3bits.BCL1IF == 1)
+[e $ ! && == -> . . _PIE3bits 0 1 `i -> 1 `i == -> . . _PIR3bits 0 1 `i -> 1 `i 1627  ]
 [; ;interrupt_manager.c: 66: {
 "66
 {
-[; ;interrupt_manager.c: 67: i2c1_driver_i2cISR();
+[; ;interrupt_manager.c: 67: i2c1_driver_busCollisionISR();
 "67
-[e ( *U _i2c1_driver_i2cISR ..  ]
+[e ( *U _i2c1_driver_busCollisionISR ..  ]
 "68
 }
 [; ;interrupt_manager.c: 68: }
 [e $U 1628  ]
 "69
 [e :U 1627 ]
-[; ;interrupt_manager.c: 69: else
+[; ;interrupt_manager.c: 69: else if(PIE3bits.SSP1IE == 1 && PIR3bits.SSP1IF == 1)
+[e $ ! && == -> . . _PIE3bits 0 0 `i -> 1 `i == -> . . _PIR3bits 0 0 `i -> 1 `i 1629  ]
 [; ;interrupt_manager.c: 70: {
 "70
 {
+[; ;interrupt_manager.c: 71: i2c1_driver_i2cISR();
+"71
+[e ( *U _i2c1_driver_i2cISR ..  ]
 "72
 }
+[; ;interrupt_manager.c: 72: }
+[e $U 1630  ]
+"73
+[e :U 1629 ]
+[; ;interrupt_manager.c: 73: else
+[; ;interrupt_manager.c: 74: {
+"74
+{
+"76
+}
+[e :U 1630 ]
 [e :U 1628 ]
 [e :U 1626 ]
 [e :U 1624 ]
-"73
-}
-[; ;interrupt_manager.c: 72: }
-[; ;interrupt_manager.c: 73: }
-[e $U 1629  ]
-"74
-[e :U 1622 ]
-[; ;interrupt_manager.c: 74: else
-[; ;interrupt_manager.c: 75: {
-"75
-{
 "77
 }
-[e :U 1629 ]
+[; ;interrupt_manager.c: 76: }
 [; ;interrupt_manager.c: 77: }
-[; ;interrupt_manager.c: 78: }
+[e $U 1631  ]
 "78
+[e :U 1622 ]
+[; ;interrupt_manager.c: 78: else
+[; ;interrupt_manager.c: 79: {
+"79
+{
+"81
+}
+[e :U 1631 ]
+[; ;interrupt_manager.c: 81: }
+[; ;interrupt_manager.c: 82: }
+"82
 [e :UE 1621 ]
 }

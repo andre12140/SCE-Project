@@ -21283,13 +21283,52 @@ extern void (*TMR1_InterruptHandler)(void);
 # 421
 void TMR1_DefaultInterruptHandler(void);
 
-# 71 "mcc_generated_files/mcc.h"
+# 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
+typedef unsigned char bool;
+
+# 100 "mcc_generated_files/tmr3.h"
+void TMR3_Initialize(void);
+
+# 129
+void TMR3_StartTimer(void);
+
+# 161
+void TMR3_StopTimer(void);
+
+# 196
+uint16_t TMR3_ReadTimer(void);
+
+# 235
+void TMR3_WriteTimer(uint16_t timerVal);
+
+# 271
+void TMR3_Reload(void);
+
+# 310
+void TMR3_StartSinglePulseAcquisition(void);
+
+# 349
+uint8_t TMR3_CheckGateValueStatus(void);
+
+# 367
+void TMR3_ISR(void);
+
+# 385
+void TMR3_SetInterruptHandler(void (* InterruptHandler)(void));
+
+# 403
+extern void (*TMR3_InterruptHandler)(void);
+
+# 421
+void TMR3_DefaultInterruptHandler(void);
+
+# 72 "mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
 
-# 84
+# 85
 void OSCILLATOR_Initialize(void);
 
-# 97
+# 98
 void PMD_Initialize(void);
 
 # 154 "I2C/i2c.h"
@@ -21306,7 +21345,45 @@ signed char WriteI2C( unsigned char data_out );
 
 signed char getsI2C( unsigned char *rdptr, unsigned char length );
 
-# 52 "main.c"
+# 14 "E:\Microchip\xc8\v2.30\pic\include\c90\string.h"
+extern void * memcpy(void *, const void *, size_t);
+extern void * memmove(void *, const void *, size_t);
+extern void * memset(void *, int, size_t);
+
+
+
+
+extern void * __builtin_memcpy(void *, const void *, size_t);
+#pragma intrinsic(__builtin_memcpy)
+
+# 36
+extern char * strcat(char *, const char *);
+extern char * strcpy(char *, const char *);
+extern char * strncat(char *, const char *, size_t);
+extern char * strncpy(char *, const char *, size_t);
+extern char * strdup(const char *);
+extern char * strtok(char *, const char *);
+
+
+extern int memcmp(const void *, const void *, size_t);
+extern int strcmp(const char *, const char *);
+extern int stricmp(const char *, const char *);
+extern int strncmp(const char *, const char *, size_t);
+extern int strnicmp(const char *, const char *, size_t);
+extern void * memchr(const void *, int, size_t);
+extern size_t strcspn(const char *, const char *);
+extern char * strpbrk(const char *, const char *);
+extern size_t strspn(const char *, const char *);
+extern char * strstr(const char *, const char *);
+extern char * stristr(const char *, const char *);
+extern char * strerror(int);
+extern size_t strlen(const char *);
+extern char * strchr(const char *, int);
+extern char * strichr(const char *, int);
+extern char * strrchr(const char *, int);
+extern char * strrichr(const char *, int);
+
+# 53 "main.c"
 unsigned char tsttc (void)
 {
 unsigned char value;
@@ -21336,7 +21413,7 @@ SSP1CON2bits.PEN = 1;while(SSP1CON2bits.PEN);
 return value;
 }
 
-# 87
+# 88
 void LCDsend(unsigned char c)
 {
 while ((SSP1CON2 & 0x1F) | (SSP1STATbits.R_W));
@@ -21445,31 +21522,57 @@ if(LCDrecv(0) & 0x80) return 1;
 return 0;
 }
 
-int h = 23;
-int m = 59;
-int s = 40;
+# 210
+struct Time {
+int h;
+int m;
+int s;
+};
 
-void LAB_ISR(void) {
+struct Time t = {0,0,0};
 
-s++;
+void Clock_ISR(void) {
 
-if(s==60){
-m++;
-s=0;
+t.s++;
+
+if(t.s==60){
+t.m++;
+t.s=0;
 }
-if(m==60){
-h++;
-m=0;
+if(t.m==60){
+t.h++;
+t.m=0;
 }
-if(h==24){
-h=0;
+if(t.h==24){
+t.h=0;
+}
 }
 
+void menuLCD_ISR(){
 char str[8];
-sprintf(str, "%02d:%02d:%02d", h,m,s);
+sprintf(str, "%02d:%02d:%02d", t.h,t.m,t.s);
 
 LCDcmd(0x80);
 LCDstr(str);
+
+LCDcmd(0x8B);
+LCDstr("CTL ?");
+
+LCDcmd(0xc0);
+char tt[4] = "20";
+strcat(tt," C");
+LCDstr(tt);
+
+LCDcmd(0xcd);
+int aux = 7;
+char l[1];
+sprintf(l, "%d", aux);
+
+char ll[3] = "L ";
+strcat(ll, l);
+LCDstr(ll);
+
+LCDcmd(0x80);
 }
 
 void main(void)
@@ -21484,8 +21587,9 @@ unsigned char buf[17];
 
 SYSTEM_Initialize();
 
-TMR1_SetInterruptHandler(LAB_ISR);
+TMR1_SetInterruptHandler(Clock_ISR);
 
+TMR3_SetInterruptHandler(menuLCD_ISR);
 
 i2c1_driver_open();
 TRISCbits.TRISC3 = 1;
@@ -21519,6 +21623,6 @@ aux = PORTBbits.RB4;
 
 }
 
-# 292
+# 333
 }
 

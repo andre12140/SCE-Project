@@ -1,12 +1,14 @@
 Version 3.2 HI-TECH Software Intermediate Code
 [v F12258 `(v ~T0 @X0 0 tf ]
 [v F12261 `(v ~T0 @X0 0 tf ]
-"97 mcc_generated_files/mcc.h
+"98 mcc_generated_files/mcc.h
 [v _PMD_Initialize `(v ~T0 @X0 0 ef ]
 "152 mcc_generated_files/pin_manager.h
 [v _PIN_MANAGER_Initialize `(v ~T0 @X0 0 ef ]
-"84 mcc_generated_files/mcc.h
+"85 mcc_generated_files/mcc.h
 [v _OSCILLATOR_Initialize `(v ~T0 @X0 0 ef ]
+"100 mcc_generated_files/tmr3.h
+[v _TMR3_Initialize `(v ~T0 @X0 0 ef ]
 "100 mcc_generated_files/tmr1.h
 [v _TMR1_Initialize `(v ~T0 @X0 0 ef ]
 "23508 C:/Users/Andre/.mchp_packs/Microchip/PIC16F1xxxx_DFP/1.5.133/xc8\pic\include\proc\pic16f18875.h
@@ -13825,9 +13827,22 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;tmr1.h: 385: void TMR1_SetInterruptHandler(void (* InterruptHandler)(void));
 [; ;tmr1.h: 403: extern void (*TMR1_InterruptHandler)(void);
 [; ;tmr1.h: 421: void TMR1_DefaultInterruptHandler(void);
-[; ;mcc.h: 71: void SYSTEM_Initialize(void);
-[; ;mcc.h: 84: void OSCILLATOR_Initialize(void);
-[; ;mcc.h: 97: void PMD_Initialize(void);
+[; ;stdbool.h: 15: typedef unsigned char bool;
+[; ;tmr3.h: 100: void TMR3_Initialize(void);
+[; ;tmr3.h: 129: void TMR3_StartTimer(void);
+[; ;tmr3.h: 161: void TMR3_StopTimer(void);
+[; ;tmr3.h: 196: uint16_t TMR3_ReadTimer(void);
+[; ;tmr3.h: 235: void TMR3_WriteTimer(uint16_t timerVal);
+[; ;tmr3.h: 271: void TMR3_Reload(void);
+[; ;tmr3.h: 310: void TMR3_StartSinglePulseAcquisition(void);
+[; ;tmr3.h: 349: uint8_t TMR3_CheckGateValueStatus(void);
+[; ;tmr3.h: 367: void TMR3_ISR(void);
+[; ;tmr3.h: 385: void TMR3_SetInterruptHandler(void (* InterruptHandler)(void));
+[; ;tmr3.h: 403: extern void (*TMR3_InterruptHandler)(void);
+[; ;tmr3.h: 421: void TMR3_DefaultInterruptHandler(void);
+[; ;mcc.h: 72: void SYSTEM_Initialize(void);
+[; ;mcc.h: 85: void OSCILLATOR_Initialize(void);
+[; ;mcc.h: 98: void PMD_Initialize(void);
 "50 mcc_generated_files/mcc.c
 [v _SYSTEM_Initialize `(v ~T0 @X0 1 ef ]
 "51
@@ -13845,67 +13860,70 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;mcc.c: 54: OSCILLATOR_Initialize();
 "54
 [e ( _OSCILLATOR_Initialize ..  ]
-[; ;mcc.c: 55: TMR1_Initialize();
+[; ;mcc.c: 55: TMR3_Initialize();
 "55
-[e ( _TMR1_Initialize ..  ]
-[; ;mcc.c: 56: }
+[e ( _TMR3_Initialize ..  ]
+[; ;mcc.c: 56: TMR1_Initialize();
 "56
+[e ( _TMR1_Initialize ..  ]
+[; ;mcc.c: 57: }
+"57
 [e :UE 1621 ]
 }
-"58
-[v _OSCILLATOR_Initialize `(v ~T0 @X0 1 ef ]
 "59
+[v _OSCILLATOR_Initialize `(v ~T0 @X0 1 ef ]
+"60
 {
-[; ;mcc.c: 58: void OSCILLATOR_Initialize(void)
-[; ;mcc.c: 59: {
+[; ;mcc.c: 59: void OSCILLATOR_Initialize(void)
+[; ;mcc.c: 60: {
 [e :U _OSCILLATOR_Initialize ]
 [f ]
-[; ;mcc.c: 61: OSCCON1 = 0x62;
-"61
+[; ;mcc.c: 62: OSCCON1 = 0x62;
+"62
 [e = _OSCCON1 -> -> 98 `i `uc ]
-[; ;mcc.c: 63: OSCCON3 = 0x00;
-"63
+[; ;mcc.c: 64: OSCCON3 = 0x00;
+"64
 [e = _OSCCON3 -> -> 0 `i `uc ]
-[; ;mcc.c: 65: OSCEN = 0x00;
-"65
+[; ;mcc.c: 66: OSCEN = 0x00;
+"66
 [e = _OSCEN -> -> 0 `i `uc ]
-[; ;mcc.c: 67: OSCFRQ = 0x02;
-"67
+[; ;mcc.c: 68: OSCFRQ = 0x02;
+"68
 [e = _OSCFRQ -> -> 2 `i `uc ]
-[; ;mcc.c: 69: OSCTUNE = 0x00;
-"69
-[e = _OSCTUNE -> -> 0 `i `uc ]
-[; ;mcc.c: 70: }
+[; ;mcc.c: 70: OSCTUNE = 0x00;
 "70
+[e = _OSCTUNE -> -> 0 `i `uc ]
+[; ;mcc.c: 71: }
+"71
 [e :UE 1622 ]
 }
-"72
-[v _PMD_Initialize `(v ~T0 @X0 1 ef ]
 "73
+[v _PMD_Initialize `(v ~T0 @X0 1 ef ]
+"74
 {
-[; ;mcc.c: 72: void PMD_Initialize(void)
-[; ;mcc.c: 73: {
+[; ;mcc.c: 73: void PMD_Initialize(void)
+[; ;mcc.c: 74: {
 [e :U _PMD_Initialize ]
 [f ]
-[; ;mcc.c: 75: PMD0 = 0x00;
-"75
+[; ;mcc.c: 76: PMD0 = 0x00;
+"76
 [e = _PMD0 -> -> 0 `i `uc ]
-[; ;mcc.c: 77: PMD1 = 0x00;
-"77
+[; ;mcc.c: 78: PMD1 = 0x00;
+"78
 [e = _PMD1 -> -> 0 `i `uc ]
-[; ;mcc.c: 79: PMD2 = 0x00;
-"79
+[; ;mcc.c: 80: PMD2 = 0x00;
+"80
 [e = _PMD2 -> -> 0 `i `uc ]
-[; ;mcc.c: 81: PMD3 = 0x00;
-"81
+[; ;mcc.c: 82: PMD3 = 0x00;
+"82
 [e = _PMD3 -> -> 0 `i `uc ]
-[; ;mcc.c: 83: PMD4 = 0x00;
-"83
+[; ;mcc.c: 84: PMD4 = 0x00;
+"84
 [e = _PMD4 -> -> 0 `i `uc ]
-[; ;mcc.c: 85: PMD5 = 0x00;
-"85
-[e = _PMD5 -> -> 0 `i `uc ]
-[; ;mcc.c: 86: }
+[; ;mcc.c: 86: PMD5 = 0x00;
 "86
+[e = _PMD5 -> -> 0 `i `uc ]
+[; ;mcc.c: 87: }
+"87
 [e :UE 1623 ]
 }

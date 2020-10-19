@@ -15,6 +15,8 @@
 [v ___lwmod __lwmod `(ui  1 e 2 0 ]
 "10 E:\Microchip\xc8\v2.30\pic\sources\c90\common\sprcadd.c
 [v ___fladd __fladd `(d  1 e 4 0 ]
+"8 E:\Microchip\xc8\v2.30\pic\sources\c90\common\strcat.c
+[v _strcat strcat `(*.4uc  1 e 1 0 ]
 "15 E:\Microchip\xc8\v2.30\pic\sources\c90\common\Umul16.c
 [v ___wmul __wmul `(ui  1 e 2 0 ]
 "4 E:\Microchip\xc8\v2.30\pic\sources\c90\common\Umul8_16.c
@@ -30,24 +32,26 @@
 "47
 [v _WriteI2C WriteI2C `(c  1 e 1 0 ]
 [v i1_WriteI2C WriteI2C `(c  1 e 1 0 ]
-"87 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\main.c
+"88 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\main.c
 [v _LCDsend LCDsend `(v  1 e 1 0 ]
-"95
+"96
 [v _LCDrecv LCDrecv `(uc  1 e 1 0 ]
-"126
+"127
 [v _LCDsend2x4 LCDsend2x4 `(v  1 e 1 0 ]
 [v i1_LCDsend2x4 LCDsend2x4 `(v  1 e 1 0 ]
-"149
+"150
 [v _LCDinit LCDinit `(v  1 e 1 0 ]
-"172
+"173
 [v _LCDcmd LCDcmd `(v  1 e 1 0 ]
-"177
+"178
 [v _LCDchar LCDchar `(v  1 e 1 0 ]
-"182
+"183
 [v _LCDstr LCDstr `(v  1 e 1 0 ]
-"199
-[v _LAB_ISR LAB_ISR `(v  1 e 1 0 ]
-"222
+"218
+[v _Clock_ISR Clock_ISR `(v  1 e 1 0 ]
+"235
+[v _menuLCD_ISR menuLCD_ISR `(v  1 e 1 0 ]
+"262
 [v _main main `(v  1 e 1 0 ]
 "83 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\mcc_generated_files/i2c1_driver.c
 [v _i2c1_driver_open i2c1_driver_open `(b  1 e 0 0 ]
@@ -55,9 +59,9 @@
 [v _INTERRUPT_InterruptManager INTERRUPT_InterruptManager `II(v  1 e 1 0 ]
 "50 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\mcc_generated_files/mcc.c
 [v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
-"58
+"59
 [v _OSCILLATOR_Initialize OSCILLATOR_Initialize `(v  1 e 1 0 ]
-"72
+"73
 [v _PMD_Initialize PMD_Initialize `(v  1 e 1 0 ]
 "57 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\mcc_generated_files/pin_manager.c
 [v _PIN_MANAGER_Initialize PIN_MANAGER_Initialize `(v  1 e 1 0 ]
@@ -71,15 +75,25 @@
 [v _TMR1_SetInterruptHandler TMR1_SetInterruptHandler `(v  1 e 1 0 ]
 "182
 [v _TMR1_DefaultInterruptHandler TMR1_DefaultInterruptHandler `(v  1 e 1 0 ]
-[s S757 . 1 `uc 1 INTEDG 1 0 :1:0 
+"64 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\mcc_generated_files/tmr3.c
+[v _TMR3_Initialize TMR3_Initialize `(v  1 e 1 0 ]
+"127
+[v _TMR3_WriteTimer TMR3_WriteTimer `(v  1 e 1 0 ]
+"164
+[v _TMR3_ISR TMR3_ISR `(v  1 e 1 0 ]
+"178
+[v _TMR3_SetInterruptHandler TMR3_SetInterruptHandler `(v  1 e 1 0 ]
+"182
+[v _TMR3_DefaultInterruptHandler TMR3_DefaultInterruptHandler `(v  1 e 1 0 ]
+[s S761 . 1 `uc 1 INTEDG 1 0 :1:0 
 `uc 1 . 1 0 :5:1 
 `uc 1 PEIE 1 0 :1:6 
 `uc 1 GIE 1 0 :1:7 
 ]
 "365 C:/Users/Andre/.mchp_packs/Microchip/PIC16F1xxxx_DFP/1.5.133/xc8\pic\include\proc\pic16f18875.h
-[u S762 . 1 `S757 1 . 1 0 ]
-[v _INTCONbits INTCONbits `VES762  1 e 1 @11 ]
-[s S1072 . 1 `uc 1 RB0 1 0 :1:0 
+[u S766 . 1 `S761 1 . 1 0 ]
+[v _INTCONbits INTCONbits `VES766  1 e 1 @11 ]
+[s S1096 . 1 `uc 1 RB0 1 0 :1:0 
 `uc 1 RB1 1 0 :1:1 
 `uc 1 RB2 1 0 :1:2 
 `uc 1 RB3 1 0 :1:3 
@@ -89,15 +103,15 @@
 `uc 1 RB7 1 0 :1:7 
 ]
 "464
-[u S1081 . 1 `S1072 1 . 1 0 ]
-[v _PORTBbits PORTBbits `VES1081  1 e 1 @13 ]
+[u S1105 . 1 `S1096 1 . 1 0 ]
+[v _PORTBbits PORTBbits `VES1105  1 e 1 @13 ]
 "671
 [v _TRISA TRISA `VEuc  1 e 1 @17 ]
 "733
 [v _TRISB TRISB `VEuc  1 e 1 @18 ]
 "795
 [v _TRISC TRISC `VEuc  1 e 1 @19 ]
-[s S1020 . 1 `uc 1 TRISC0 1 0 :1:0 
+[s S1044 . 1 `uc 1 TRISC0 1 0 :1:0 
 `uc 1 TRISC1 1 0 :1:1 
 `uc 1 TRISC2 1 0 :1:2 
 `uc 1 TRISC3 1 0 :1:3 
@@ -107,15 +121,15 @@
 `uc 1 TRISC7 1 0 :1:7 
 ]
 "812
-[u S1029 . 1 `S1020 1 . 1 0 ]
-[v _TRISCbits TRISCbits `VES1029  1 e 1 @19 ]
+[u S1053 . 1 `S1044 1 . 1 0 ]
+[v _TRISCbits TRISCbits `VES1053  1 e 1 @19 ]
 "857
 [v _TRISD TRISD `VEuc  1 e 1 @20 ]
 "919
 [v _TRISE TRISE `VEuc  1 e 1 @21 ]
 "951
 [v _LATA LATA `VEuc  1 e 1 @22 ]
-[s S1051 . 1 `uc 1 LATA0 1 0 :1:0 
+[s S1075 . 1 `uc 1 LATA0 1 0 :1:0 
 `uc 1 LATA1 1 0 :1:1 
 `uc 1 LATA2 1 0 :1:2 
 `uc 1 LATA3 1 0 :1:3 
@@ -125,8 +139,8 @@
 `uc 1 LATA7 1 0 :1:7 
 ]
 "968
-[u S1060 . 1 `S1051 1 . 1 0 ]
-[v _LATAbits LATAbits `VES1060  1 e 1 @22 ]
+[u S1084 . 1 `S1075 1 . 1 0 ]
+[v _LATAbits LATAbits `VES1084  1 e 1 @22 ]
 "1013
 [v _LATB LATB `VEuc  1 e 1 @23 ]
 "1075
@@ -304,32 +318,32 @@
 [v _TMR1H TMR1H `VEuc  1 e 1 @525 ]
 "6799
 [v _T1CON T1CON `VEuc  1 e 1 @526 ]
-[s S1204 . 1 `uc 1 ON 1 0 :1:0 
+[s S1239 . 1 `uc 1 ON 1 0 :1:0 
 `uc 1 RD16 1 0 :1:1 
 `uc 1 nSYNC 1 0 :1:2 
 `uc 1 . 1 0 :1:3 
 `uc 1 CKPS 1 0 :2:4 
 ]
 "6830
-[s S1210 . 1 `uc 1 TMR1ON 1 0 :1:0 
+[s S1245 . 1 `uc 1 TMR1ON 1 0 :1:0 
 `uc 1 T1RD16 1 0 :1:1 
 `uc 1 nT1SYNC 1 0 :1:2 
 `uc 1 . 1 0 :1:3 
 `uc 1 T1CKPS0 1 0 :1:4 
 `uc 1 T1CKPS1 1 0 :1:5 
 ]
-[s S1217 . 1 `uc 1 . 1 0 :4:0 
+[s S1252 . 1 `uc 1 . 1 0 :4:0 
 `uc 1 CKPS0 1 0 :1:4 
 `uc 1 CKPS1 1 0 :1:5 
 ]
-[s S1221 . 1 `uc 1 . 1 0 :1:0 
+[s S1256 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 RD161 1 0 :1:1 
 ]
-[u S1224 . 1 `S1204 1 . 1 0 `S1210 1 . 1 0 `S1217 1 . 1 0 `S1221 1 . 1 0 ]
-[v _T1CONbits T1CONbits `VES1224  1 e 1 @526 ]
+[u S1259 . 1 `S1239 1 . 1 0 `S1245 1 . 1 0 `S1252 1 . 1 0 `S1256 1 . 1 0 ]
+[v _T1CONbits T1CONbits `VES1259  1 e 1 @526 ]
 "6895
 [v _T1GCON T1GCON `VEuc  1 e 1 @527 ]
-[s S1250 . 1 `uc 1 . 1 0 :2:0 
+[s S1285 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 GVAL 1 0 :1:2 
 `uc 1 GGO_nDONE 1 0 :1:3 
 `uc 1 GSPM 1 0 :1:4 
@@ -338,7 +352,7 @@
 `uc 1 GE 1 0 :1:7 
 ]
 "6929
-[s S1258 . 1 `uc 1 . 1 0 :2:0 
+[s S1293 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 T1GVAL 1 0 :1:2 
 `uc 1 T1GGO_nDONE 1 0 :1:3 
 `uc 1 T1GSPM 1 0 :1:4 
@@ -346,15 +360,54 @@
 `uc 1 T1GPOL 1 0 :1:6 
 `uc 1 T1GE 1 0 :1:7 
 ]
-[s S1266 . 1 `uc 1 . 1 0 :3:0 
+[s S1301 . 1 `uc 1 . 1 0 :3:0 
 `uc 1 T1GGO 1 0 :1:3 
 ]
-[u S1269 . 1 `S1250 1 . 1 0 `S1258 1 . 1 0 `S1266 1 . 1 0 ]
-[v _T1GCONbits T1GCONbits `VES1269  1 e 1 @527 ]
+[u S1304 . 1 `S1285 1 . 1 0 `S1293 1 . 1 0 `S1301 1 . 1 0 ]
+[v _T1GCONbits T1GCONbits `VES1304  1 e 1 @527 ]
 "7091
 [v _T1GATE T1GATE `VEuc  1 e 1 @528 ]
 "7257
 [v _T1CLK T1CLK `VEuc  1 e 1 @529 ]
+"7406
+[v _TMR3L TMR3L `VEuc  1 e 1 @530 ]
+"7576
+[v _TMR3H TMR3H `VEuc  1 e 1 @531 ]
+"7696
+[v _T3CON T3CON `VEuc  1 e 1 @532 ]
+"7727
+[s S1407 . 1 `uc 1 TMR3ON 1 0 :1:0 
+`uc 1 T3RD16 1 0 :1:1 
+`uc 1 nT3SYNC 1 0 :1:2 
+`uc 1 . 1 0 :1:3 
+`uc 1 T3CKPS0 1 0 :1:4 
+`uc 1 T3CKPS1 1 0 :1:5 
+]
+[s S1418 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 RD163 1 0 :1:1 
+]
+[u S1421 . 1 `S1239 1 . 1 0 `S1407 1 . 1 0 `S1252 1 . 1 0 `S1418 1 . 1 0 ]
+[v _T3CONbits T3CONbits `VES1421  1 e 1 @532 ]
+"7792
+[v _T3GCON T3GCON `VEuc  1 e 1 @533 ]
+"7826
+[s S1455 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 T3GVAL 1 0 :1:2 
+`uc 1 T3GGO_nDONE 1 0 :1:3 
+`uc 1 T3GSPM 1 0 :1:4 
+`uc 1 T3GTM 1 0 :1:5 
+`uc 1 T3GPOL 1 0 :1:6 
+`uc 1 T3GE 1 0 :1:7 
+]
+[s S1463 . 1 `uc 1 . 1 0 :3:0 
+`uc 1 T3GGO 1 0 :1:3 
+]
+[u S1466 . 1 `S1285 1 . 1 0 `S1455 1 . 1 0 `S1463 1 . 1 0 ]
+[v _T3GCONbits T3GCONbits `VES1466  1 e 1 @533 ]
+"7988
+[v _T3GATE T3GATE `VEuc  1 e 1 @534 ]
+"8154
+[v _T3CLK T3CLK `VEuc  1 e 1 @535 ]
 [s S337 . 1 `uc 1 SSP1IF 1 0 :1:0 
 `uc 1 BCL1IF 1 0 :1:1 
 `uc 1 SSP2IF 1 0 :1:2 
@@ -365,7 +418,7 @@
 "21433
 [u S344 . 1 `S337 1 . 1 0 ]
 [v _PIR3bits PIR3bits `VES344  1 e 1 @1807 ]
-[s S787 . 1 `uc 1 TMR1IF 1 0 :1:0 
+[s S791 . 1 `uc 1 TMR1IF 1 0 :1:0 
 `uc 1 TMR2IF 1 0 :1:1 
 `uc 1 TMR3IF 1 0 :1:2 
 `uc 1 TMR4IF 1 0 :1:3 
@@ -373,9 +426,9 @@
 `uc 1 TMR6IF 1 0 :1:5 
 ]
 "21483
-[u S794 . 1 `S787 1 . 1 0 ]
-[v _PIR4bits PIR4bits `VES794  1 e 1 @1808 ]
-[s S487 . 1 `uc 1 SSP1IE 1 0 :1:0 
+[u S798 . 1 `S791 1 . 1 0 ]
+[v _PIR4bits PIR4bits `VES798  1 e 1 @1808 ]
+[s S491 . 1 `uc 1 SSP1IE 1 0 :1:0 
 `uc 1 BCL1IE 1 0 :1:1 
 `uc 1 SSP2IE 1 0 :1:2 
 `uc 1 BCL2IE 1 0 :1:3 
@@ -383,9 +436,9 @@
 `uc 1 RCIE 1 0 :1:5 
 ]
 "21855
-[u S494 . 1 `S487 1 . 1 0 ]
-[v _PIE3bits PIE3bits `VES494  1 e 1 @1817 ]
-[s S770 . 1 `uc 1 TMR1IE 1 0 :1:0 
+[u S498 . 1 `S491 1 . 1 0 ]
+[v _PIE3bits PIE3bits `VES498  1 e 1 @1817 ]
+[s S774 . 1 `uc 1 TMR1IE 1 0 :1:0 
 `uc 1 TMR2IE 1 0 :1:1 
 `uc 1 TMR3IE 1 0 :1:2 
 `uc 1 TMR4IE 1 0 :1:3 
@@ -393,8 +446,8 @@
 `uc 1 TMR6IE 1 0 :1:5 
 ]
 "21905
-[u S777 . 1 `S770 1 . 1 0 ]
-[v _PIE4bits PIE4bits `VES777  1 e 1 @1818 ]
+[u S781 . 1 `S774 1 . 1 0 ]
+[v _PIE4bits PIE4bits `VES781  1 e 1 @1818 ]
 "22157
 [v _PMD0 PMD0 `VEuc  1 e 1 @1942 ]
 "22214
@@ -471,12 +524,9 @@
 [v _WPUC4 WPUC4 `VEb  1 e 0 @31356 ]
 "358 E:\Microchip\xc8\v2.30\pic\sources\c90\common\doprnt.c
 [v _dpowers dpowers `DC[5]ui  1 s 10 dpowers ]
-"195 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\main.c
-[v _h h `i  1 e 2 0 ]
-"196
-[v _m m `i  1 e 2 0 ]
-"197
-[v _s s `i  1 e 2 0 ]
+[s S1014 Time 6 `i 1 h 2 0 `i 1 m 2 2 `i 1 s 2 4 ]
+"216 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\main.c
+[v _t t `S1014  1 e 6 0 ]
 "77 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\mcc_generated_files/i2c1_driver.h
 [v _i2c1_driver_busCollisionISR i2c1_driver_busCollisionISR `*.37(v  1 e 2 0 ]
 "78
@@ -485,14 +535,18 @@
 [v _timer1ReloadVal timer1ReloadVal `VEui  1 e 2 0 ]
 "58
 [v _TMR1_InterruptHandler TMR1_InterruptHandler `*.37(v  1 e 2 0 ]
-"222 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\main.c
+"57 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\mcc_generated_files/tmr3.c
+[v _timer3ReloadVal timer3ReloadVal `VEui  1 e 2 0 ]
+"58
+[v _TMR3_InterruptHandler TMR3_InterruptHandler `*.37(v  1 e 2 0 ]
+"262 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\main.c
 [v _main main `(v  1 e 1 0 ]
 {
-"251
-[v main@aux aux `f  1 a 4 22 ]
-"252
-[v main@a a `i  1 a 2 26 ]
 "292
+[v main@aux aux `f  1 a 4 30 ]
+"293
+[v main@a a `i  1 a 2 34 ]
+"333
 } 0
 "83 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\mcc_generated_files/i2c1_driver.c
 [v _i2c1_driver_open i2c1_driver_open `(b  1 e 0 0 ]
@@ -504,27 +558,38 @@
 {
 [v ___xxtofl@sign sign `uc  1 a 1 wreg ]
 "13
-[v ___xxtofl@arg arg `ul  1 a 4 2 ]
+[v ___xxtofl@arg arg `ul  1 a 4 10 ]
 "12
-[v ___xxtofl@exp exp `uc  1 a 1 1 ]
+[v ___xxtofl@exp exp `uc  1 a 1 9 ]
 "10
 [v ___xxtofl@sign sign `uc  1 a 1 wreg ]
-[v ___xxtofl@val val `l  1 p 4 29 ]
+[v ___xxtofl@val val `l  1 p 4 0 ]
 "15
-[v ___xxtofl@sign sign `uc  1 a 1 0 ]
+[v ___xxtofl@sign sign `uc  1 a 1 8 ]
 "44
 } 0
 "4 E:\Microchip\xc8\v2.30\pic\sources\c90\common\fleq.c
 [v ___fleq __fleq `(b  1 e 0 0 ]
 {
-[v ___fleq@ff1 ff1 `d  1 p 4 6 ]
-[v ___fleq@ff2 ff2 `d  1 p 4 10 ]
+[v ___fleq@ff1 ff1 `d  1 p 4 14 ]
+[v ___fleq@ff2 ff2 `d  1 p 4 18 ]
 "12
 } 0
 "50 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\mcc_generated_files/mcc.c
 [v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
 {
-"56
+"57
+} 0
+"64 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\mcc_generated_files/tmr3.c
+[v _TMR3_Initialize TMR3_Initialize `(v  1 e 1 0 ]
+{
+"97
+} 0
+"178
+[v _TMR3_SetInterruptHandler TMR3_SetInterruptHandler `(v  1 e 1 0 ]
+{
+[v TMR3_SetInterruptHandler@InterruptHandler InterruptHandler `*.37(v  1 p 2 0 ]
+"180
 } 0
 "64 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\mcc_generated_files/tmr1.c
 [v _TMR1_Initialize TMR1_Initialize `(v  1 e 1 0 ]
@@ -534,51 +599,51 @@
 "178
 [v _TMR1_SetInterruptHandler TMR1_SetInterruptHandler `(v  1 e 1 0 ]
 {
-[v TMR1_SetInterruptHandler@InterruptHandler InterruptHandler `*.37(v  1 p 2 29 ]
+[v TMR1_SetInterruptHandler@InterruptHandler InterruptHandler `*.37(v  1 p 2 0 ]
 "180
 } 0
-"72 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\mcc_generated_files/mcc.c
+"73 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\mcc_generated_files/mcc.c
 [v _PMD_Initialize PMD_Initialize `(v  1 e 1 0 ]
 {
-"86
+"87
 } 0
 "57 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\mcc_generated_files/pin_manager.c
 [v _PIN_MANAGER_Initialize PIN_MANAGER_Initialize `(v  1 e 1 0 ]
 {
 "124
 } 0
-"58 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\mcc_generated_files/mcc.c
+"59 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\mcc_generated_files/mcc.c
 [v _OSCILLATOR_Initialize OSCILLATOR_Initialize `(v  1 e 1 0 ]
 {
-"70
+"71
 } 0
-"149 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\main.c
+"150 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\main.c
 [v _LCDinit LCDinit `(v  1 e 1 0 ]
 {
-"170
+"171
 } 0
-"126
+"127
 [v _LCDsend2x4 LCDsend2x4 `(v  1 e 1 0 ]
 {
 [v LCDsend2x4@c c `uc  1 a 1 wreg ]
+"130
+[v LCDsend2x4@lc lc `uc  1 a 1 7 ]
 "129
-[v LCDsend2x4@lc lc `uc  1 a 1 36 ]
-"128
-[v LCDsend2x4@hc hc `uc  1 a 1 35 ]
-"126
+[v LCDsend2x4@hc hc `uc  1 a 1 6 ]
+"127
 [v LCDsend2x4@c c `uc  1 a 1 wreg ]
-[v LCDsend2x4@mode mode `uc  1 p 1 31 ]
-"131
-[v LCDsend2x4@c c `uc  1 a 1 34 ]
-"147
+[v LCDsend2x4@mode mode `uc  1 p 1 2 ]
+"132
+[v LCDsend2x4@c c `uc  1 a 1 5 ]
+"148
 } 0
-"87
+"88
 [v _LCDsend LCDsend `(v  1 e 1 0 ]
 {
 [v LCDsend@c c `uc  1 a 1 wreg ]
 [v LCDsend@c c `uc  1 a 1 wreg ]
-[v LCDsend@c c `uc  1 a 1 32 ]
-"94
+[v LCDsend@c c `uc  1 a 1 3 ]
+"95
 } 0
 "47 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\I2C/i2c.c
 [v _WriteI2C WriteI2C `(c  1 e 1 0 ]
@@ -586,36 +651,53 @@
 [v WriteI2C@data_out data_out `uc  1 a 1 wreg ]
 [v WriteI2C@data_out data_out `uc  1 a 1 wreg ]
 "49
-[v WriteI2C@data_out data_out `uc  1 a 1 30 ]
+[v WriteI2C@data_out data_out `uc  1 a 1 1 ]
 "78
 } 0
 "52 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\mcc_generated_files/interrupt_manager.c
 [v _INTERRUPT_InterruptManager INTERRUPT_InterruptManager `II(v  1 e 1 0 ]
 {
-"78
+"82
 } 0
-"164 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\mcc_generated_files/tmr1.c
-[v _TMR1_ISR TMR1_ISR `(v  1 e 1 0 ]
+"164 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\mcc_generated_files/tmr3.c
+[v _TMR3_ISR TMR3_ISR `(v  1 e 1 0 ]
 {
 "175
 } 0
-"127
-[v _TMR1_WriteTimer TMR1_WriteTimer `(v  1 e 1 0 ]
-{
-[v TMR1_WriteTimer@timerVal timerVal `ui  1 p 2 0 ]
-"147
-} 0
-"199 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\main.c
-[v _LAB_ISR LAB_ISR `(v  1 e 1 0 ]
-{
-"215
-[v LAB_ISR@str str `[8]uc  1 a 8 21 ]
-"220
-} 0
-"182 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\mcc_generated_files/tmr1.c
-[v _TMR1_DefaultInterruptHandler TMR1_DefaultInterruptHandler `(v  1 e 1 0 ]
+"182
+[v _TMR3_DefaultInterruptHandler TMR3_DefaultInterruptHandler `(v  1 e 1 0 ]
 {
 "185
+} 0
+"235 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\main.c
+[v _menuLCD_ISR menuLCD_ISR `(v  1 e 1 0 ]
+{
+"236
+[v menuLCD_ISR@str str `[8]uc  1 a 8 21 ]
+"246
+[v menuLCD_ISR@tt tt `[4]uc  1 a 4 29 ]
+"255
+[v menuLCD_ISR@ll ll `[3]uc  1 a 3 33 ]
+"252
+[v menuLCD_ISR@l l `[1]uc  1 a 1 38 ]
+"245
+[v menuLCD_ISR@F12473 F12473 `[4]uc  1 s 4 F12473 ]
+"253
+[v menuLCD_ISR@F12477 F12477 `[3]uc  1 s 3 F12477 ]
+"260
+} 0
+"8 E:\Microchip\xc8\v2.30\pic\sources\c90\common\strcat.c
+[v _strcat strcat `(*.4uc  1 e 1 0 ]
+{
+[v strcat@to to `*.4uc  1 a 1 wreg ]
+"15
+[v strcat@cp cp `*.4uc  1 a 1 4 ]
+"8
+[v strcat@to to `*.4uc  1 a 1 wreg ]
+[v strcat@from from `*.26DCuc  1 p 2 0 ]
+"18
+[v strcat@to to `*.4uc  1 a 1 3 ]
+"26
 } 0
 "505 E:\Microchip\xc8\v2.30\pic\sources\c90\common\doprnt.c
 [v _sprintf sprintf `(i  1 e 2 0 ]
@@ -681,49 +763,47 @@
 [v ___lwdiv@dividend dividend `ui  1 p 2 2 ]
 "30
 } 0
-"182 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\main.c
+"183 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\main.c
 [v _LCDstr LCDstr `(v  1 e 1 0 ]
 {
-[v LCDstr@p p `*.4uc  1 a 1 wreg ]
-"184
-[v LCDstr@c c `uc  1 a 1 10 ]
-"182
-[v LCDstr@p p `*.4uc  1 a 1 wreg ]
-[v LCDstr@p p `*.4uc  1 a 1 11 ]
-"187
+"185
+[v LCDstr@c c `uc  1 a 1 0 ]
+"183
+[v LCDstr@p p `*.26uc  1 p 2 9 ]
+"188
 } 0
-"177
+"178
 [v _LCDchar LCDchar `(v  1 e 1 0 ]
 {
 [v LCDchar@c c `uc  1 a 1 wreg ]
 [v LCDchar@c c `uc  1 a 1 wreg ]
-"179
-[v LCDchar@c c `uc  1 a 1 8 ]
 "180
+[v LCDchar@c c `uc  1 a 1 8 ]
+"181
 } 0
-"172
+"173
 [v _LCDcmd LCDcmd `(v  1 e 1 0 ]
 {
 [v LCDcmd@c c `uc  1 a 1 wreg ]
 [v LCDcmd@c c `uc  1 a 1 wreg ]
-"174
-[v LCDcmd@c c `uc  1 a 1 8 ]
 "175
+[v LCDcmd@c c `uc  1 a 1 8 ]
+"176
 } 0
-"126
+"127
 [v i1_LCDsend2x4 LCDsend2x4 `(v  1 e 1 0 ]
 {
 [v i1LCDsend2x4@c c `uc  1 a 1 wreg ]
-"129
+"130
 [v i1LCDsend2x4@lc lc `uc  1 a 1 7 ]
-"128
+"129
 [v i1LCDsend2x4@hc hc `uc  1 a 1 6 ]
-"126
+"127
 [v i1LCDsend2x4@c c `uc  1 a 1 wreg ]
 [v i1LCDsend2x4@mode mode `uc  1 p 1 2 ]
-"131
+"132
 [v i1LCDsend2x4@c c `uc  1 a 1 5 ]
-"147
+"148
 } 0
 "47 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\I2C/i2c.c
 [v i1_WriteI2C WriteI2C `(c  1 e 1 0 ]
@@ -733,4 +813,31 @@
 "49
 [v i1WriteI2C@data_out data_out `uc  1 a 1 1 ]
 "78
+} 0
+"127 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\mcc_generated_files/tmr3.c
+[v _TMR3_WriteTimer TMR3_WriteTimer `(v  1 e 1 0 ]
+{
+[v TMR3_WriteTimer@timerVal timerVal `ui  1 p 2 0 ]
+"147
+} 0
+"164 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\mcc_generated_files/tmr1.c
+[v _TMR1_ISR TMR1_ISR `(v  1 e 1 0 ]
+{
+"175
+} 0
+"127
+[v _TMR1_WriteTimer TMR1_WriteTimer `(v  1 e 1 0 ]
+{
+[v TMR1_WriteTimer@timerVal timerVal `ui  1 p 2 0 ]
+"147
+} 0
+"218 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\main.c
+[v _Clock_ISR Clock_ISR `(v  1 e 1 0 ]
+{
+"233
+} 0
+"182 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\tstLCD.X\mcc_generated_files/tmr1.c
+[v _TMR1_DefaultInterruptHandler TMR1_DefaultInterruptHandler `(v  1 e 1 0 ]
+{
+"185
 } 0

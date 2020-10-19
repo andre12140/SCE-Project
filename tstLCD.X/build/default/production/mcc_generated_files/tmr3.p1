@@ -1,153 +1,72 @@
 Version 3.2 HI-TECH Software Intermediate Code
-[v F12258 `(v ~T0 @X0 0 tf ]
-[v F12261 `(v ~T0 @X0 0 tf ]
-"5196 C:/Users/Andre/.mchp_packs/Microchip/PIC16F1xxxx_DFP/1.5.133/xc8\pic\include\proc\pic16f18875.h
-[s S244 :4 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S244 . SSPM CKP SSPEN SSPOV WCOL ]
-"5203
-[s S245 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S245 . SSPM0 SSPM1 SSPM2 SSPM3 ]
-"5209
-[s S246 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S246 . SSPM01 SSPM11 SSPM21 SSPM31 CKP1 SSPEN1 SSPOV1 WCOL1 ]
-"5195
-[u S243 `S244 1 `S245 1 `S246 1 ]
-[n S243 . . . . ]
-"5220
-[v _SSP1CON1bits `VS243 ~T0 @X0 0 e@400 ]
-"21846
-[s S992 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S992 . SSP1IE BCL1IE SSP2IE BCL2IE TXIE RCIE ]
-"21845
-[u S991 `S992 1 ]
-[n S991 . . ]
-"21855
-[v _PIE3bits `VS991 ~T0 @X0 0 e@1817 ]
-"21424
-[s S973 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S973 . SSP1IF BCL1IF SSP2IF BCL2IF TXIF RCIF ]
-"21423
-[u S972 `S973 1 ]
-[n S972 . . ]
-"21433
-[v _PIR3bits `VS972 ~T0 @X0 0 e@1807 ]
-[v F101 `(v ~T0 @X0 1 tf1`ul ]
-"12 C:/Users/Andre/.mchp_packs/Microchip/PIC16F1xxxx_DFP/1.5.133/xc8\pic\include\builtins.h
-[v __delay `JF101 ~T0 @X0 0 e ]
-[p i __delay ]
-"4826 C:/Users/Andre/.mchp_packs/Microchip/PIC16F1xxxx_DFP/1.5.133/xc8\pic\include\proc\pic16f18875.h
-[v _SSP1STAT `Vuc ~T0 @X0 0 e@399 ]
-"5190
-[v _SSP1CON1 `Vuc ~T0 @X0 0 e@400 ]
-"5310
-[v _SSP1CON2 `Vuc ~T0 @X0 0 e@401 ]
-"4636
-[v _SSP1ADD `Vuc ~T0 @X0 0 e@397 ]
-"5316
-[s S248 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S248 . SEN RSEN PEN RCEN ACKEN ACKDT ACKSTAT GCEN ]
-"5326
-[s S249 :1 `uc 1 :5 `uc 1 ]
-[n S249 . . ADMSK ]
-"5330
-[s S250 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S250 . . ADMSK1 ADMSK2 ADMSK3 ADMSK4 ADMSK5 ]
-"5338
-[s S251 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S251 . SEN1 ADMSK11 ADMSK21 ADMSK31 ACKEN1 ACKDT1 ACKSTAT1 GCEN1 ]
-"5348
-[s S252 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S252 . . RSEN1 PEN1 RCEN1 ADMSK41 ADMSK51 ]
-"5315
-[u S247 `S248 1 `S249 1 `S250 1 `S251 1 `S252 1 ]
-[n S247 . . . . . . ]
-"5357
-[v _SSP1CON2bits `VS247 ~T0 @X0 0 e@401 ]
-"4616
-[v _SSP1BUF `Vuc ~T0 @X0 0 e@396 ]
-"4756
-[v _SSP1MSK `Vuc ~T0 @X0 0 e@398 ]
-"4832
-[s S228 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S228 . BF UA R_nW S P D_nA CKE SMP ]
-"4842
-[s S229 :2 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 ]
-[n S229 . . R_W . D_A ]
-"4848
-[s S230 :2 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 ]
-[n S230 . . nW . nA ]
-"4854
-[s S231 :2 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 ]
-[n S231 . . nWRITE . nADDRESS ]
-"4860
-[s S232 :2 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 ]
-[n S232 . . READ_WRITE . DATA_ADDRESS ]
-"4866
-[s S233 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S233 . . I2C_READ I2C_START I2C_STOP I2C_DAT ]
-"4873
-[s S234 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S234 . BF1 UA1 R START STOP D CKE1 SMP1 ]
-"4883
-[s S235 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S235 . . RW START1 STOP1 DA ]
-"4890
-[s S236 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S236 . . RW1 I2C_START1 I2C_STOP2 DA1 ]
-"4897
-[s S237 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S237 . . I2C_READ1 S2 P2 DATA_ADDRESS1 ]
-"4904
-[s S238 :2 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 ]
-[n S238 . . READ_WRITE1 . D_A1 ]
-"4910
-[s S239 :2 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 ]
-[n S239 . . R_W1 . D_nA1 ]
-"4916
-[s S240 :2 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 ]
-[n S240 . . R_nW1 . I2C_DAT1 ]
-"4922
-[s S241 :2 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 ]
-[n S241 . . nW2 . nA2 ]
-"4928
-[s S242 :2 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 ]
-[n S242 . . nWRITE1 . nADDRESS1 ]
-"4831
-[u S227 `S228 1 `S229 1 `S230 1 `S231 1 `S232 1 `S233 1 `S234 1 `S235 1 `S236 1 `S237 1 `S238 1 `S239 1 `S240 1 `S241 1 `S242 1 ]
-[n S227 . . . . . . . . . . . . . . . . ]
-"4935
-[v _SSP1STATbits `VS227 ~T0 @X0 0 e@399 ]
-[v F12152 `(v ~T0 @X0 0 tf ]
-[; ;xc8\pic\include\__size_t.h: 4: typedef unsigned size_t;
-[; ;stdarg.h: 7: typedef void * va_list[1];
-[; ;stdarg.h: 10: extern void * __va_start(void);
-[; ;stdarg.h: 13: extern void * __va_arg(void *, ...);
-[; ;stdio.h: 43: struct __prbuf
-[; ;stdio.h: 44: {
-[; ;stdio.h: 45: char * ptr;
-[; ;stdio.h: 46: void (* func)(char);
-[; ;stdio.h: 47: };
-[; ;errno.h: 29: extern int errno;
-[; ;conio.h: 12: extern void init_uart(void);
-[; ;conio.h: 14: extern char getch(void);
-[; ;conio.h: 15: extern char getche(void);
-[; ;conio.h: 16: extern void putch(char);
-[; ;conio.h: 17: extern void ungetch(char);
-[; ;conio.h: 19: extern __bit kbhit(void);
-[; ;conio.h: 23: extern char * cgets(char *);
-[; ;conio.h: 24: extern void cputs(const char *);
-[; ;stdio.h: 88: extern int cprintf(char *, ...);
-[; ;stdio.h: 93: extern int _doprnt(struct __prbuf *, const register char *, register va_list);
-[; ;stdio.h: 183: extern char * gets(char *);
-[; ;stdio.h: 184: extern int puts(const char *);
-[; ;stdio.h: 185: extern int scanf(const char *, ...) __attribute__((unsupported("scanf() is not supported by this compiler")));
-[; ;stdio.h: 186: extern int sscanf(const char *, const char *, ...) __attribute__((unsupported("sscanf() is not supported by this compiler")));
-[; ;stdio.h: 187: extern int vprintf(const char *, va_list) __attribute__((unsupported("vprintf() is not supported by this compiler")));
-[; ;stdio.h: 188: extern int vsprintf(char *, const char *, va_list) __attribute__((unsupported("vsprintf() is not supported by this compiler")));
-[; ;stdio.h: 189: extern int vscanf(const char *, va_list ap) __attribute__((unsupported("vscanf() is not supported by this compiler")));
-[; ;stdio.h: 190: extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
-[; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
-[; ;stdio.h: 195: extern int printf(const char *, ...);
+[v F12108 `(v ~T0 @X0 0 tf ]
+"7792 C:/Users/Andre/.mchp_packs/Microchip/PIC16F1xxxx_DFP/1.5.133/xc8\pic\include\proc\pic16f18875.h
+[v _T3GCON `Vuc ~T0 @X0 0 e@533 ]
+"7988
+[v _T3GATE `Vuc ~T0 @X0 0 e@534 ]
+"8154
+[v _T3CLK `Vuc ~T0 @X0 0 e@535 ]
+"7576
+[v _TMR3H `Vuc ~T0 @X0 0 e@531 ]
+"7406
+[v _TMR3L `Vuc ~T0 @X0 0 e@530 ]
+"21474
+[s S974 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S974 . TMR1IF TMR2IF TMR3IF TMR4IF TMR5IF TMR6IF ]
+"21473
+[u S973 `S974 1 ]
+[n S973 . . ]
+"21483
+[v _PIR4bits `VS973 ~T0 @X0 0 e@1808 ]
+"21896
+[s S993 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S993 . TMR1IE TMR2IE TMR3IE TMR4IE TMR5IE TMR6IE ]
+"21895
+[u S992 `S993 1 ]
+[n S992 . . ]
+"21905
+[v _PIE4bits `VS992 ~T0 @X0 0 e@1818 ]
+[v F12105 `(v ~T0 @X0 0 tf ]
+"385 mcc_generated_files/tmr3.h
+[v _TMR3_SetInterruptHandler `(v ~T0 @X0 0 ef1`*F12105 ]
+"421
+[v _TMR3_DefaultInterruptHandler `(v ~T0 @X0 0 ef ]
+"7696 C:/Users/Andre/.mchp_packs/Microchip/PIC16F1xxxx_DFP/1.5.133/xc8\pic\include\proc\pic16f18875.h
+[v _T3CON `Vuc ~T0 @X0 0 e@532 ]
+"7702
+[s S339 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :2 `uc 1 ]
+[n S339 . ON RD16 nSYNC . CKPS ]
+"7709
+[s S340 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S340 . TMR3ON T3RD16 nT3SYNC . T3CKPS0 T3CKPS1 ]
+"7717
+[s S341 :4 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S341 . . CKPS0 CKPS1 ]
+"7722
+[s S342 :1 `uc 1 :1 `uc 1 ]
+[n S342 . . RD163 ]
+"7701
+[u S338 `S339 1 `S340 1 `S341 1 `S342 1 ]
+[n S338 . . . . . ]
+"7727
+[v _T3CONbits `VS338 ~T0 @X0 0 e@532 ]
+"7803
+[s S344 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S344 . . GVAL GGO_nDONE GSPM GTM GPOL GE ]
+"7812
+[s S345 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S345 . . T3GVAL T3GGO_nDONE T3GSPM T3GTM T3GPOL T3GE ]
+"7821
+[s S346 :3 `uc 1 :1 `uc 1 ]
+[n S346 . . T3GGO ]
+"7802
+[u S343 `S344 1 `S345 1 `S346 1 ]
+[n S343 . . . . ]
+"7826
+[v _T3GCONbits `VS343 ~T0 @X0 0 e@533 ]
+[; ;xc8\pic\include\xc.h: 18: extern const char __xc8_OPTIM_SPEED;
+[; ;xc8\pic\include\xc.h: 20: extern double __fpnormalize(double);
+[; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
 [; ;stdint.h: 13: typedef signed char int8_t;
 [; ;stdint.h: 20: typedef signed int int16_t;
 [; ;stdint.h: 28: typedef __int24 int24_t;
@@ -176,10 +95,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 282: typedef uint32_t uintmax_t;
 [; ;stdint.h: 289: typedef int16_t intptr_t;
 [; ;stdint.h: 294: typedef uint16_t uintptr_t;
-[; ;stdbool.h: 15: typedef unsigned char bool;
-[; ;xc8\pic\include\xc.h: 18: extern const char __xc8_OPTIM_SPEED;
-[; ;xc8\pic\include\xc.h: 20: extern double __fpnormalize(double);
-[; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
 [; ;xc8\pic\include\builtins.h: 8: extern void __nop(void);
 [; ;xc8\pic\include\builtins.h: 12: extern __nonreentrant void _delay(uint32_t);
 [; ;xc8\pic\include\builtins.h: 14: extern __nonreentrant void _delaywdt(uint32_t);
@@ -13854,65 +13769,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;xc8\pic\include\pic.h: 127: extern __bank0 unsigned char __resetbits;
 [; ;xc8\pic\include\pic.h: 128: extern __bank0 __bit __powerdown;
 [; ;xc8\pic\include\pic.h: 129: extern __bank0 __bit __timeout;
-[; ;pin_manager.h: 152: void PIN_MANAGER_Initialize (void);
-[; ;pin_manager.h: 164: void PIN_MANAGER_IOC(void);
-[; ;stdbool.h: 15: typedef unsigned char bool;
-[; ;stdbool.h: 15: typedef unsigned char bool;
-[; ;i2c1_driver.h: 33: typedef void (*interruptHandler)(void);
-[; ;i2c1_driver.h: 36: inline void i2c1_driver_close(void);
-[; ;i2c1_driver.h: 39: inline void mssp1_enableIRQ(void);
-[; ;i2c1_driver.h: 40: inline __bit mssp1_IRQisEnabled(void);
-[; ;i2c1_driver.h: 41: inline void mssp1_disableIRQ(void);
-[; ;i2c1_driver.h: 42: inline void mssp1_clearIRQ(void);
-[; ;i2c1_driver.h: 43: inline void mssp1_setIRQ(void);
-[; ;i2c1_driver.h: 44: inline __bit mssp1_IRQisSet(void);
-[; ;i2c1_driver.h: 45: inline void mssp1_waitForEvent(uint16_t*);
-[; ;i2c1_driver.h: 48: __bit i2c1_driver_open(void);
-[; ;i2c1_driver.h: 49: inline char i2c1_driver_getRXData(void);
-[; ;i2c1_driver.h: 50: inline char i2c1_driver_getAddr(void);
-[; ;i2c1_driver.h: 51: inline void i2c1_driver_setAddr(char addr);
-[; ;i2c1_driver.h: 52: inline void i2c1_driver_setMask(char mask);
-[; ;i2c1_driver.h: 53: inline void i2c1_driver_TXData(char d);
-[; ;i2c1_driver.h: 54: inline void i2c1_driver_resetBus(void);
-[; ;i2c1_driver.h: 55: inline void i2c1_driver_start(void);
-[; ;i2c1_driver.h: 56: inline void i2c1_driver_restart(void);
-[; ;i2c1_driver.h: 57: inline void i2c1_driver_stop(void);
-[; ;i2c1_driver.h: 58: inline __bit i2c1_driver_isNACK(void);
-[; ;i2c1_driver.h: 59: inline void i2c1_driver_startRX(void);
-[; ;i2c1_driver.h: 60: inline void i2c1_driver_sendACK(void);
-[; ;i2c1_driver.h: 61: inline void i2c1_driver_sendNACK(void);
-[; ;i2c1_driver.h: 62: inline void i2c1_driver_clearBusCollision(void);
-[; ;i2c1_driver.h: 64: __bit i2c1_driver_initSlaveHardware(void);
-[; ;i2c1_driver.h: 65: inline void i2c1_driver_releaseClock(void);
-[; ;i2c1_driver.h: 66: inline __bit i2c1_driver_isBufferFull(void);
-[; ;i2c1_driver.h: 67: inline __bit i2c1_driver_isStart(void);
-[; ;i2c1_driver.h: 68: inline __bit i2c1_driver_isStop(void);
-[; ;i2c1_driver.h: 69: inline __bit i2c1_driver_isAddress(void);
-[; ;i2c1_driver.h: 70: inline __bit i2c1_driver_isData(void);
-[; ;i2c1_driver.h: 71: inline __bit i2c1_driver_isRead(void);
-[; ;i2c1_driver.h: 72: inline __bit i2c1_driver_isWriteCollision(void);
-[; ;i2c1_driver.h: 73: inline __bit i2c1_driver_isReceiveOverflow(void);
-[; ;i2c1_driver.h: 75: inline void i2c1_driver_setBusCollisionISR(interruptHandler handler);
-[; ;i2c1_driver.h: 76: inline void i2c1_driver_setI2cISR(interruptHandler handler);
-"77 mcc_generated_files/i2c1_driver.h
-[v _i2c1_driver_busCollisionISR `*F12258 ~T0 @X0 1 e ]
-[; ;i2c1_driver.h: 77: void (*i2c1_driver_busCollisionISR)(void);
-"78
-[v _i2c1_driver_i2cISR `*F12261 ~T0 @X0 1 e ]
-[; ;i2c1_driver.h: 78: void (*i2c1_driver_i2cISR)(void);
-[; ;stdbool.h: 15: typedef unsigned char bool;
-[; ;tmr1.h: 100: void TMR1_Initialize(void);
-[; ;tmr1.h: 129: void TMR1_StartTimer(void);
-[; ;tmr1.h: 161: void TMR1_StopTimer(void);
-[; ;tmr1.h: 196: uint16_t TMR1_ReadTimer(void);
-[; ;tmr1.h: 235: void TMR1_WriteTimer(uint16_t timerVal);
-[; ;tmr1.h: 271: void TMR1_Reload(void);
-[; ;tmr1.h: 310: void TMR1_StartSinglePulseAcquisition(void);
-[; ;tmr1.h: 349: uint8_t TMR1_CheckGateValueStatus(void);
-[; ;tmr1.h: 367: void TMR1_ISR(void);
-[; ;tmr1.h: 385: void TMR1_SetInterruptHandler(void (* InterruptHandler)(void));
-[; ;tmr1.h: 403: extern void (*TMR1_InterruptHandler)(void);
-[; ;tmr1.h: 421: void TMR1_DefaultInterruptHandler(void);
 [; ;stdbool.h: 15: typedef unsigned char bool;
 [; ;tmr3.h: 100: void TMR3_Initialize(void);
 [; ;tmr3.h: 129: void TMR3_StartTimer(void);
@@ -13926,678 +13782,273 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;tmr3.h: 385: void TMR3_SetInterruptHandler(void (* InterruptHandler)(void));
 [; ;tmr3.h: 403: extern void (*TMR3_InterruptHandler)(void);
 [; ;tmr3.h: 421: void TMR3_DefaultInterruptHandler(void);
-[; ;mcc.h: 72: void SYSTEM_Initialize(void);
-[; ;mcc.h: 85: void OSCILLATOR_Initialize(void);
-[; ;mcc.h: 98: void PMD_Initialize(void);
-"30 mcc_generated_files/i2c1_driver.c
-[p n 520 ]
-[v F12156 `(v ~T0 @X0 1 tf ]
-"32
-[v _i2c1_driver_close `TF12156 ~T0 @X0 1 e ]
-"33
-{
-[; ;i2c1_driver.c: 32: inline void i2c1_driver_close(void)
-[; ;i2c1_driver.c: 33: {
-[e :U _i2c1_driver_close ]
-[f ]
-[; ;i2c1_driver.c: 34: SSP1CON1bits.SSPEN = 0;
-"34
-[e = . . _SSP1CON1bits 0 2 -> -> 0 `i `uc ]
-[; ;i2c1_driver.c: 35: }
-"35
-[e :UE 1621 ]
-}
-[v F12159 `(v ~T0 @X0 1 tf ]
-"38
-[v _mssp1_enableIRQ `TF12159 ~T0 @X0 1 e ]
-"39
-{
-[; ;i2c1_driver.c: 38: inline void mssp1_enableIRQ(void)
-[; ;i2c1_driver.c: 39: {
-[e :U _mssp1_enableIRQ ]
-[f ]
-[; ;i2c1_driver.c: 40: PIE3bits.SSP1IE = 1;
-"40
-[e = . . _PIE3bits 0 0 -> -> 1 `i `uc ]
-[; ;i2c1_driver.c: 41: }
-"41
-[e :UE 1622 ]
-}
-[v F12162 `(b ~T0 @X0 1 tf ]
-"43
-[v _mssp1_IRQisEnabled `TF12162 ~T0 @X0 1 e ]
-"44
-{
-[; ;i2c1_driver.c: 43: inline __bit mssp1_IRQisEnabled(void)
-[; ;i2c1_driver.c: 44: {
-[e :U _mssp1_IRQisEnabled ]
-[f ]
-[; ;i2c1_driver.c: 45: return PIE3bits.SSP1IE;
-"45
-[e ) -> . . _PIE3bits 0 0 `b ]
-[e $UE 1623  ]
-[; ;i2c1_driver.c: 46: }
-"46
-[e :UE 1623 ]
-}
-[v F12165 `(v ~T0 @X0 1 tf ]
-"48
-[v _mssp1_disableIRQ `TF12165 ~T0 @X0 1 e ]
-"49
-{
-[; ;i2c1_driver.c: 48: inline void mssp1_disableIRQ(void)
-[; ;i2c1_driver.c: 49: {
-[e :U _mssp1_disableIRQ ]
-[f ]
-[; ;i2c1_driver.c: 50: PIE3bits.SSP1IE = 0;
-"50
-[e = . . _PIE3bits 0 0 -> -> 0 `i `uc ]
-[; ;i2c1_driver.c: 51: }
-"51
-[e :UE 1624 ]
-}
-[v F12168 `(v ~T0 @X0 1 tf ]
-"53
-[v _mssp1_clearIRQ `TF12168 ~T0 @X0 1 e ]
-"54
-{
-[; ;i2c1_driver.c: 53: inline void mssp1_clearIRQ(void)
-[; ;i2c1_driver.c: 54: {
-[e :U _mssp1_clearIRQ ]
-[f ]
-[; ;i2c1_driver.c: 55: PIR3bits.SSP1IF = 0;
-"55
-[e = . . _PIR3bits 0 0 -> -> 0 `i `uc ]
-[; ;i2c1_driver.c: 56: }
-"56
-[e :UE 1625 ]
-}
-[v F12171 `(v ~T0 @X0 1 tf ]
+"57 mcc_generated_files/tmr3.c
+[v _timer3ReloadVal `Vui ~T0 @X0 1 e ]
+[; ;tmr3.c: 57: volatile uint16_t timer3ReloadVal;
 "58
-[v _mssp1_setIRQ `TF12171 ~T0 @X0 1 e ]
-"59
-{
-[; ;i2c1_driver.c: 58: inline void mssp1_setIRQ(void)
-[; ;i2c1_driver.c: 59: {
-[e :U _mssp1_setIRQ ]
-[f ]
-[; ;i2c1_driver.c: 60: PIR3bits.SSP1IF = 1;
-"60
-[e = . . _PIR3bits 0 0 -> -> 1 `i `uc ]
-[; ;i2c1_driver.c: 61: }
-"61
-[e :UE 1626 ]
-}
-[v F12174 `(b ~T0 @X0 1 tf ]
-"63
-[v _mssp1_IRQisSet `TF12174 ~T0 @X0 1 e ]
+[v _TMR3_InterruptHandler `*F12108 ~T0 @X0 1 e ]
+[; ;tmr3.c: 58: void (*TMR3_InterruptHandler)(void);
 "64
-{
-[; ;i2c1_driver.c: 63: inline __bit mssp1_IRQisSet(void)
-[; ;i2c1_driver.c: 64: {
-[e :U _mssp1_IRQisSet ]
-[f ]
-[; ;i2c1_driver.c: 65: return PIR3bits.SSP1IF;
+[v _TMR3_Initialize `(v ~T0 @X0 1 ef ]
 "65
-[e ) -> . . _PIR3bits 0 0 `b ]
-[e $UE 1627  ]
-[; ;i2c1_driver.c: 66: }
-"66
-[e :UE 1627 ]
-}
-[v F12177 `(v ~T0 @X0 1 tf1`*ui ]
-"68
-[v _mssp1_waitForEvent `TF12177 ~T0 @X0 1 e ]
-"69
 {
-[; ;i2c1_driver.c: 68: inline void mssp1_waitForEvent(uint16_t *timeout)
-[; ;i2c1_driver.c: 69: {
-[e :U _mssp1_waitForEvent ]
-"68
-[v _timeout `*ui ~T0 @X0 1 r1 ]
-"69
+[; ;tmr3.c: 64: void TMR3_Initialize(void)
+[; ;tmr3.c: 65: {
+[e :U _TMR3_Initialize ]
 [f ]
-[; ;i2c1_driver.c: 73: if(PIR3bits.SSP1IF == 0)
-"73
-[e $ ! == -> . . _PIR3bits 0 0 `i -> 0 `i 1629  ]
-[; ;i2c1_driver.c: 74: {
-"74
-{
-[; ;i2c1_driver.c: 75: while(1)
+[; ;tmr3.c: 69: T3GCON = 0x00;
+"69
+[e = _T3GCON -> -> 0 `i `uc ]
+[; ;tmr3.c: 72: T3GATE = 0x00;
+"72
+[e = _T3GATE -> -> 0 `i `uc ]
+[; ;tmr3.c: 75: T3CLK = 0x04;
 "75
-[e :U 1631 ]
-[; ;i2c1_driver.c: 76: {
-"76
-{
-[; ;i2c1_driver.c: 77: if(PIR3bits.SSP1IF) break;
-"77
-[e $ ! != -> . . _PIR3bits 0 0 `i -> -> -> 0 `i `Vuc `i 1633  ]
-[e $U 1632  ]
-[e :U 1633 ]
-[; ;i2c1_driver.c: 78: _delay((unsigned long)((100)*(1000000/4000000.0)));
+[e = _T3CLK -> -> 4 `i `uc ]
+[; ;tmr3.c: 78: TMR3H = 0xE7;
 "78
-[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 1000000 `l `d .4000000.0 `ul ]
-"79
-}
-[e :U 1630 ]
-"75
-[e $U 1631  ]
-[e :U 1632 ]
-"80
-}
-[e :U 1629 ]
-[; ;i2c1_driver.c: 79: }
-[; ;i2c1_driver.c: 80: }
-[; ;i2c1_driver.c: 81: }
+[e = _TMR3H -> -> 231 `i `uc ]
+[; ;tmr3.c: 81: TMR3L = 0xC8;
 "81
-[e :UE 1628 ]
-}
-"83
-[v _i2c1_driver_open `(b ~T0 @X0 1 ef ]
+[e = _TMR3L -> -> 200 `i `uc ]
+[; ;tmr3.c: 84: timer3ReloadVal=(uint16_t)((TMR3H << 8) | TMR3L);
 "84
-{
-[; ;i2c1_driver.c: 83: __bit i2c1_driver_open(void)
-[; ;i2c1_driver.c: 84: {
-[e :U _i2c1_driver_open ]
-[f ]
-[; ;i2c1_driver.c: 85: if(!SSP1CON1bits.SSPEN)
-"85
-[e $ ! ! != -> . . _SSP1CON1bits 0 2 `i -> -> -> 0 `i `Vuc `i 1635  ]
-[; ;i2c1_driver.c: 86: {
-"86
-{
-[; ;i2c1_driver.c: 87: SSP1STAT = 0x00;
+[e = _timer3ReloadVal -> | << -> _TMR3H `i -> 8 `i -> _TMR3L `i `ui ]
+[; ;tmr3.c: 87: PIR4bits.TMR3IF = 0;
 "87
-[e = _SSP1STAT -> -> 0 `i `uc ]
-[; ;i2c1_driver.c: 88: SSP1CON1 = 0x28;
-"88
-[e = _SSP1CON1 -> -> 40 `i `uc ]
-[; ;i2c1_driver.c: 89: SSP1CON2 = 0x00;
-"89
-[e = _SSP1CON2 -> -> 0 `i `uc ]
-[; ;i2c1_driver.c: 90: SSP1ADD = 0x3;
+[e = . . _PIR4bits 0 2 -> -> 0 `i `uc ]
+[; ;tmr3.c: 90: PIE4bits.TMR3IE = 1;
 "90
-[e = _SSP1ADD -> -> 3 `i `uc ]
-[; ;i2c1_driver.c: 91: return 1;
-"91
-[e ) -> -> 1 `i `b ]
-[e $UE 1634  ]
-"92
-}
-[; ;i2c1_driver.c: 92: }
-[e $U 1636  ]
+[e = . . _PIE4bits 0 2 -> -> 1 `i `uc ]
+[; ;tmr3.c: 93: TMR3_SetInterruptHandler(TMR3_DefaultInterruptHandler);
 "93
-[e :U 1635 ]
-[; ;i2c1_driver.c: 93: else
-[; ;i2c1_driver.c: 94: return 0;
-"94
-[e ) -> -> 0 `i `b ]
-[e $UE 1634  ]
-[e :U 1636 ]
-[; ;i2c1_driver.c: 95: }
-"95
-[e :UE 1634 ]
-}
+[e ( _TMR3_SetInterruptHandler (1 &U _TMR3_DefaultInterruptHandler ]
+[; ;tmr3.c: 96: T3CON = 0x01;
+"96
+[e = _T3CON -> -> 1 `i `uc ]
+[; ;tmr3.c: 97: }
 "97
-[v _i2c1_driver_initSlaveHardware `(b ~T0 @X0 1 ef ]
-"98
-{
-[; ;i2c1_driver.c: 97: __bit i2c1_driver_initSlaveHardware(void)
-[; ;i2c1_driver.c: 98: {
-[e :U _i2c1_driver_initSlaveHardware ]
-[f ]
-[; ;i2c1_driver.c: 99: if(!SSP1CON1bits.SSPEN)
+[e :UE 1620 ]
+}
 "99
-[e $ ! ! != -> . . _SSP1CON1bits 0 2 `i -> -> -> 0 `i `Vuc `i 1638  ]
-[; ;i2c1_driver.c: 100: {
+[v _TMR3_StartTimer `(v ~T0 @X0 1 ef ]
 "100
 {
-[; ;i2c1_driver.c: 131: SSP1CON1 |= 0x06;
-"131
-[e =| _SSP1CON1 -> -> 6 `i `uc ]
-[; ;i2c1_driver.c: 132: SSP1STAT = 0x00;
+[; ;tmr3.c: 99: void TMR3_StartTimer(void)
+[; ;tmr3.c: 100: {
+[e :U _TMR3_StartTimer ]
+[f ]
+[; ;tmr3.c: 102: T3CONbits.TMR3ON = 1;
+"102
+[e = . . _T3CONbits 1 0 -> -> 1 `i `uc ]
+[; ;tmr3.c: 103: }
+"103
+[e :UE 1621 ]
+}
+"105
+[v _TMR3_StopTimer `(v ~T0 @X0 1 ef ]
+"106
+{
+[; ;tmr3.c: 105: void TMR3_StopTimer(void)
+[; ;tmr3.c: 106: {
+[e :U _TMR3_StopTimer ]
+[f ]
+[; ;tmr3.c: 108: T3CONbits.TMR3ON = 0;
+"108
+[e = . . _T3CONbits 1 0 -> -> 0 `i `uc ]
+[; ;tmr3.c: 109: }
+"109
+[e :UE 1622 ]
+}
+"111
+[v _TMR3_ReadTimer `(ui ~T0 @X0 1 ef ]
+"112
+{
+[; ;tmr3.c: 111: uint16_t TMR3_ReadTimer(void)
+[; ;tmr3.c: 112: {
+[e :U _TMR3_ReadTimer ]
+[f ]
+"113
+[v _readVal `ui ~T0 @X0 1 a ]
+"114
+[v _readValHigh `uc ~T0 @X0 1 a ]
+"115
+[v _readValLow `uc ~T0 @X0 1 a ]
+[; ;tmr3.c: 113: uint16_t readVal;
+[; ;tmr3.c: 114: uint8_t readValHigh;
+[; ;tmr3.c: 115: uint8_t readValLow;
+[; ;tmr3.c: 117: T3CONbits.T3RD16 = 1;
+"117
+[e = . . _T3CONbits 1 1 -> -> 1 `i `uc ]
+[; ;tmr3.c: 119: readValLow = TMR3L;
+"119
+[e = _readValLow _TMR3L ]
+[; ;tmr3.c: 120: readValHigh = TMR3H;
+"120
+[e = _readValHigh _TMR3H ]
+[; ;tmr3.c: 122: readVal = ((uint16_t)readValHigh << 8) | readValLow;
+"122
+[e = _readVal | << -> _readValHigh `ui -> 8 `i -> _readValLow `ui ]
+[; ;tmr3.c: 124: return readVal;
+"124
+[e ) _readVal ]
+[e $UE 1623  ]
+[; ;tmr3.c: 125: }
+"125
+[e :UE 1623 ]
+}
+"127
+[v _TMR3_WriteTimer `(v ~T0 @X0 1 ef1`ui ]
+"128
+{
+[; ;tmr3.c: 127: void TMR3_WriteTimer(uint16_t timerVal)
+[; ;tmr3.c: 128: {
+[e :U _TMR3_WriteTimer ]
+"127
+[v _timerVal `ui ~T0 @X0 1 r1 ]
+"128
+[f ]
+[; ;tmr3.c: 129: if (T3CONbits.nT3SYNC == 1)
+"129
+[e $ ! == -> . . _T3CONbits 1 2 `i -> 1 `i 1625  ]
+[; ;tmr3.c: 130: {
+"130
+{
+[; ;tmr3.c: 132: T3CONbits.TMR3ON = 0;
 "132
-[e = _SSP1STAT -> -> 0 `i `uc ]
-[; ;i2c1_driver.c: 133: SSP1CON2 = 0x00;
-"133
-[e = _SSP1CON2 -> -> 0 `i `uc ]
-[; ;i2c1_driver.c: 135: SSP1CON1bits.SSPEN = 1;
+[e = . . _T3CONbits 1 0 -> -> 0 `i `uc ]
+[; ;tmr3.c: 135: TMR3H = (timerVal >> 8);
 "135
-[e = . . _SSP1CON1bits 0 2 -> -> 1 `i `uc ]
-[; ;i2c1_driver.c: 136: return 1;
+[e = _TMR3H -> >> _timerVal -> 8 `i `uc ]
+[; ;tmr3.c: 136: TMR3L = timerVal;
 "136
-[e ) -> -> 1 `i `b ]
-[e $UE 1637  ]
-"137
-}
-[e :U 1638 ]
-[; ;i2c1_driver.c: 137: }
-[; ;i2c1_driver.c: 138: return 0;
-"138
-[e ) -> -> 0 `i `b ]
-[e $UE 1637  ]
-[; ;i2c1_driver.c: 139: }
+[e = _TMR3L -> _timerVal `uc ]
+[; ;tmr3.c: 139: T3CONbits.TMR3ON =1;
 "139
-[e :UE 1637 ]
+[e = . . _T3CONbits 1 0 -> -> 1 `i `uc ]
+"140
 }
-[v F12197 `(v ~T0 @X0 1 tf ]
+[; ;tmr3.c: 140: }
+[e $U 1626  ]
 "141
-[v _i2c1_driver_resetBus `TF12197 ~T0 @X0 1 e ]
+[e :U 1625 ]
+[; ;tmr3.c: 141: else
+[; ;tmr3.c: 142: {
 "142
 {
-[; ;i2c1_driver.c: 141: inline void i2c1_driver_resetBus(void)
-[; ;i2c1_driver.c: 142: {
-[e :U _i2c1_driver_resetBus ]
-[f ]
-[; ;i2c1_driver.c: 144: }
+[; ;tmr3.c: 144: TMR3H = (timerVal >> 8);
 "144
-[e :UE 1639 ]
-}
-[v F12200 `(v ~T0 @X0 1 tf ]
+[e = _TMR3H -> >> _timerVal -> 8 `i `uc ]
+[; ;tmr3.c: 145: TMR3L = timerVal;
+"145
+[e = _TMR3L -> _timerVal `uc ]
 "146
-[v _i2c1_driver_start `TF12200 ~T0 @X0 1 e ]
+}
+[e :U 1626 ]
+[; ;tmr3.c: 146: }
+[; ;tmr3.c: 147: }
 "147
-{
-[; ;i2c1_driver.c: 146: inline void i2c1_driver_start(void)
-[; ;i2c1_driver.c: 147: {
-[e :U _i2c1_driver_start ]
-[f ]
-[; ;i2c1_driver.c: 148: SSP1CON2bits.SEN = 1;
-"148
-[e = . . _SSP1CON2bits 0 0 -> -> 1 `i `uc ]
-[; ;i2c1_driver.c: 149: }
+[e :UE 1624 ]
+}
 "149
-[e :UE 1640 ]
-}
-[v F12203 `(v ~T0 @X0 1 tf ]
+[v _TMR3_Reload `(v ~T0 @X0 1 ef ]
+"150
+{
+[; ;tmr3.c: 149: void TMR3_Reload(void)
+[; ;tmr3.c: 150: {
+[e :U _TMR3_Reload ]
+[f ]
+[; ;tmr3.c: 151: TMR3_WriteTimer(timer3ReloadVal);
 "151
-[v _i2c1_driver_restart `TF12203 ~T0 @X0 1 e ]
+[e ( _TMR3_WriteTimer (1 _timer3ReloadVal ]
+[; ;tmr3.c: 152: }
 "152
-{
-[; ;i2c1_driver.c: 151: inline void i2c1_driver_restart(void)
-[; ;i2c1_driver.c: 152: {
-[e :U _i2c1_driver_restart ]
-[f ]
-[; ;i2c1_driver.c: 153: SSP1CON2bits.RSEN = 1;
-"153
-[e = . . _SSP1CON2bits 0 1 -> -> 1 `i `uc ]
-[; ;i2c1_driver.c: 154: }
+[e :UE 1627 ]
+}
 "154
-[e :UE 1641 ]
-}
-[v F12206 `(v ~T0 @X0 1 tf ]
+[v _TMR3_StartSinglePulseAcquisition `(v ~T0 @X0 1 ef ]
+"155
+{
+[; ;tmr3.c: 154: void TMR3_StartSinglePulseAcquisition(void)
+[; ;tmr3.c: 155: {
+[e :U _TMR3_StartSinglePulseAcquisition ]
+[f ]
+[; ;tmr3.c: 156: T3GCONbits.T3GGO = 1;
 "156
-[v _i2c1_driver_stop `TF12206 ~T0 @X0 1 e ]
+[e = . . _T3GCONbits 2 1 -> -> 1 `i `uc ]
+[; ;tmr3.c: 157: }
 "157
-{
-[; ;i2c1_driver.c: 156: inline void i2c1_driver_stop(void)
-[; ;i2c1_driver.c: 157: {
-[e :U _i2c1_driver_stop ]
-[f ]
-[; ;i2c1_driver.c: 158: SSP1CON2bits.PEN = 1;
-"158
-[e = . . _SSP1CON2bits 0 2 -> -> 1 `i `uc ]
-[; ;i2c1_driver.c: 159: }
+[e :UE 1628 ]
+}
 "159
-[e :UE 1642 ]
-}
-[v F12209 `(b ~T0 @X0 1 tf ]
+[v _TMR3_CheckGateValueStatus `(uc ~T0 @X0 1 ef ]
+"160
+{
+[; ;tmr3.c: 159: uint8_t TMR3_CheckGateValueStatus(void)
+[; ;tmr3.c: 160: {
+[e :U _TMR3_CheckGateValueStatus ]
+[f ]
+[; ;tmr3.c: 161: return (T3GCONbits.T3GVAL);
 "161
-[v _i2c1_driver_isNACK `TF12209 ~T0 @X0 1 e ]
+[e ) . . _T3GCONbits 1 1 ]
+[e $UE 1629  ]
+[; ;tmr3.c: 162: }
 "162
-{
-[; ;i2c1_driver.c: 161: inline __bit i2c1_driver_isNACK(void)
-[; ;i2c1_driver.c: 162: {
-[e :U _i2c1_driver_isNACK ]
-[f ]
-[; ;i2c1_driver.c: 163: return SSP1CON2bits.ACKSTAT;
-"163
-[e ) -> . . _SSP1CON2bits 0 6 `b ]
-[e $UE 1643  ]
-[; ;i2c1_driver.c: 164: }
+[e :UE 1629 ]
+}
 "164
-[e :UE 1643 ]
-}
-[v F12212 `(v ~T0 @X0 1 tf ]
-"166
-[v _i2c1_driver_startRX `TF12212 ~T0 @X0 1 e ]
-"167
+[v _TMR3_ISR `(v ~T0 @X0 1 ef ]
+"165
 {
-[; ;i2c1_driver.c: 166: inline void i2c1_driver_startRX(void)
-[; ;i2c1_driver.c: 167: {
-[e :U _i2c1_driver_startRX ]
+[; ;tmr3.c: 164: void TMR3_ISR(void)
+[; ;tmr3.c: 165: {
+[e :U _TMR3_ISR ]
 [f ]
-[; ;i2c1_driver.c: 168: SSP1CON2bits.RCEN = 1;
+[; ;tmr3.c: 168: PIR4bits.TMR3IF = 0;
 "168
-[e = . . _SSP1CON2bits 0 3 -> -> 1 `i `uc ]
-[; ;i2c1_driver.c: 169: }
+[e = . . _PIR4bits 0 2 -> -> 0 `i `uc ]
+[; ;tmr3.c: 169: TMR3_WriteTimer(timer3ReloadVal);
 "169
-[e :UE 1644 ]
-}
-[v F12182 `(uc ~T0 @X0 1 tf ]
+[e ( _TMR3_WriteTimer (1 _timer3ReloadVal ]
+[; ;tmr3.c: 171: if(TMR3_InterruptHandler)
 "171
-[v _i2c1_driver_getRXData `TF12182 ~T0 @X0 1 e ]
+[e $ ! != _TMR3_InterruptHandler -> -> 0 `i `*F12108 1631  ]
+[; ;tmr3.c: 172: {
 "172
 {
-[; ;i2c1_driver.c: 171: inline char i2c1_driver_getRXData(void)
-[; ;i2c1_driver.c: 172: {
-[e :U _i2c1_driver_getRXData ]
-[f ]
-[; ;i2c1_driver.c: 173: return SSP1BUF;
+[; ;tmr3.c: 173: TMR3_InterruptHandler();
 "173
-[e ) _SSP1BUF ]
-[e $UE 1645  ]
-[; ;i2c1_driver.c: 174: }
+[e ( *U _TMR3_InterruptHandler ..  ]
 "174
-[e :UE 1645 ]
 }
-[v F12188 `(v ~T0 @X0 1 tf1`uc ]
-"176
-[v _i2c1_driver_setAddr `TF12188 ~T0 @X0 1 e ]
-"177
-{
-[; ;i2c1_driver.c: 176: inline void i2c1_driver_setAddr(char addr)
-[; ;i2c1_driver.c: 177: {
-[e :U _i2c1_driver_setAddr ]
-"176
-[v _addr `uc ~T0 @X0 1 r1 ]
-"177
-[f ]
-[; ;i2c1_driver.c: 178: SSP1ADD = addr;
+[e :U 1631 ]
+[; ;tmr3.c: 174: }
+[; ;tmr3.c: 175: }
+"175
+[e :UE 1630 ]
+}
 "178
-[e = _SSP1ADD _addr ]
-[; ;i2c1_driver.c: 179: }
+[v _TMR3_SetInterruptHandler `(v ~T0 @X0 1 ef1`*F12105 ]
+{
+[; ;tmr3.c: 178: void TMR3_SetInterruptHandler(void (* InterruptHandler)(void)){
+[e :U _TMR3_SetInterruptHandler ]
+[v F12131 `(v ~T0 @X0 0 tf ]
+[v _InterruptHandler `*F12131 ~T0 @X0 1 r1 ]
+[f ]
+[; ;tmr3.c: 179: TMR3_InterruptHandler = InterruptHandler;
 "179
-[e :UE 1646 ]
+[e = _TMR3_InterruptHandler _InterruptHandler ]
+[; ;tmr3.c: 180: }
+"180
+[e :UE 1632 ]
 }
-[v F12191 `(v ~T0 @X0 1 tf1`uc ]
-"181
-[v _i2c1_driver_setMask `TF12191 ~T0 @X0 1 e ]
 "182
+[v _TMR3_DefaultInterruptHandler `(v ~T0 @X0 1 ef ]
 {
-[; ;i2c1_driver.c: 181: inline void i2c1_driver_setMask(char mask)
-[; ;i2c1_driver.c: 182: {
-[e :U _i2c1_driver_setMask ]
-"181
-[v _mask `uc ~T0 @X0 1 r1 ]
-"182
+[; ;tmr3.c: 182: void TMR3_DefaultInterruptHandler(void){
+[e :U _TMR3_DefaultInterruptHandler ]
 [f ]
-[; ;i2c1_driver.c: 183: SSP1MSK = mask;
-"183
-[e = _SSP1MSK _mask ]
-[; ;i2c1_driver.c: 184: }
-"184
-[e :UE 1647 ]
-}
-[v F12194 `(v ~T0 @X0 1 tf1`uc ]
-"186
-[v _i2c1_driver_TXData `TF12194 ~T0 @X0 1 e ]
-"187
-{
-[; ;i2c1_driver.c: 186: inline void i2c1_driver_TXData(char d)
-[; ;i2c1_driver.c: 187: {
-[e :U _i2c1_driver_TXData ]
-"186
-[v _d `uc ~T0 @X0 1 r1 ]
-"187
-[f ]
-[; ;i2c1_driver.c: 188: SSP1BUF = d;
-"188
-[e = _SSP1BUF _d ]
-[; ;i2c1_driver.c: 189: }
-"189
-[e :UE 1648 ]
-}
-[v F12185 `(uc ~T0 @X0 1 tf ]
-"191
-[v _i2c1_driver_getAddr `TF12185 ~T0 @X0 1 e ]
-"192
-{
-[; ;i2c1_driver.c: 191: inline char i2c1_driver_getAddr(void)
-[; ;i2c1_driver.c: 192: {
-[e :U _i2c1_driver_getAddr ]
-[f ]
-[; ;i2c1_driver.c: 193: return SSP1ADD;
-"193
-[e ) _SSP1ADD ]
-[e $UE 1649  ]
-[; ;i2c1_driver.c: 194: }
-"194
-[e :UE 1649 ]
-}
-[v F12215 `(v ~T0 @X0 1 tf ]
-"196
-[v _i2c1_driver_sendACK `TF12215 ~T0 @X0 1 e ]
-"197
-{
-[; ;i2c1_driver.c: 196: inline void i2c1_driver_sendACK(void)
-[; ;i2c1_driver.c: 197: {
-[e :U _i2c1_driver_sendACK ]
-[f ]
-[; ;i2c1_driver.c: 198: SSP1CON2bits.ACKDT = 0;
-"198
-[e = . . _SSP1CON2bits 0 5 -> -> 0 `i `uc ]
-[; ;i2c1_driver.c: 199: SSP1CON2bits.ACKEN = 1;
-"199
-[e = . . _SSP1CON2bits 0 4 -> -> 1 `i `uc ]
-[; ;i2c1_driver.c: 200: }
-"200
-[e :UE 1650 ]
-}
-[v F12218 `(v ~T0 @X0 1 tf ]
-"202
-[v _i2c1_driver_sendNACK `TF12218 ~T0 @X0 1 e ]
-"203
-{
-[; ;i2c1_driver.c: 202: inline void i2c1_driver_sendNACK(void)
-[; ;i2c1_driver.c: 203: {
-[e :U _i2c1_driver_sendNACK ]
-[f ]
-[; ;i2c1_driver.c: 204: SSP1CON2bits.ACKDT = 1;
-"204
-[e = . . _SSP1CON2bits 0 5 -> -> 1 `i `uc ]
-[; ;i2c1_driver.c: 205: SSP1CON2bits.ACKEN = 1;
-"205
-[e = . . _SSP1CON2bits 0 4 -> -> 1 `i `uc ]
-[; ;i2c1_driver.c: 206: }
-"206
-[e :UE 1651 ]
-}
-[v F12226 `(v ~T0 @X0 1 tf ]
-"208
-[v _i2c1_driver_releaseClock `TF12226 ~T0 @X0 1 e ]
-"209
-{
-[; ;i2c1_driver.c: 208: inline void i2c1_driver_releaseClock(void)
-[; ;i2c1_driver.c: 209: {
-[e :U _i2c1_driver_releaseClock ]
-[f ]
-[; ;i2c1_driver.c: 210: SSP1CON1bits.CKP = 1;
-"210
-[e = . . _SSP1CON1bits 0 1 -> -> 1 `i `uc ]
-[; ;i2c1_driver.c: 211: }
-"211
-[e :UE 1652 ]
-}
-[v F12229 `(b ~T0 @X0 1 tf ]
-"213
-[v _i2c1_driver_isBufferFull `TF12229 ~T0 @X0 1 e ]
-"214
-{
-[; ;i2c1_driver.c: 213: inline __bit i2c1_driver_isBufferFull(void)
-[; ;i2c1_driver.c: 214: {
-[e :U _i2c1_driver_isBufferFull ]
-[f ]
-[; ;i2c1_driver.c: 215: return SSP1STATbits.BF;
-"215
-[e ) -> . . _SSP1STATbits 0 0 `b ]
-[e $UE 1653  ]
-[; ;i2c1_driver.c: 216: }
-"216
-[e :UE 1653 ]
-}
-[v F12232 `(b ~T0 @X0 1 tf ]
-"218
-[v _i2c1_driver_isStart `TF12232 ~T0 @X0 1 e ]
-"219
-{
-[; ;i2c1_driver.c: 218: inline __bit i2c1_driver_isStart(void)
-[; ;i2c1_driver.c: 219: {
-[e :U _i2c1_driver_isStart ]
-[f ]
-[; ;i2c1_driver.c: 220: return SSP1STATbits.S;
-"220
-[e ) -> . . _SSP1STATbits 0 3 `b ]
-[e $UE 1654  ]
-[; ;i2c1_driver.c: 221: }
-"221
-[e :UE 1654 ]
-}
-[v F12238 `(b ~T0 @X0 1 tf ]
-"223
-[v _i2c1_driver_isAddress `TF12238 ~T0 @X0 1 e ]
-"224
-{
-[; ;i2c1_driver.c: 223: inline __bit i2c1_driver_isAddress(void)
-[; ;i2c1_driver.c: 224: {
-[e :U _i2c1_driver_isAddress ]
-[f ]
-[; ;i2c1_driver.c: 225: return !SSP1STATbits.D_nA;
-"225
-[e ) -> -> ! != -> . . _SSP1STATbits 0 5 `i -> -> -> 0 `i `Vuc `i `i `b ]
-[e $UE 1655  ]
-[; ;i2c1_driver.c: 226: }
-"226
-[e :UE 1655 ]
-}
-[v F12235 `(b ~T0 @X0 1 tf ]
-"228
-[v _i2c1_driver_isStop `TF12235 ~T0 @X0 1 e ]
-"229
-{
-[; ;i2c1_driver.c: 228: inline __bit i2c1_driver_isStop(void)
-[; ;i2c1_driver.c: 229: {
-[e :U _i2c1_driver_isStop ]
-[f ]
-[; ;i2c1_driver.c: 230: return SSP1STATbits.P;
-"230
-[e ) -> . . _SSP1STATbits 0 4 `b ]
-[e $UE 1656  ]
-[; ;i2c1_driver.c: 231: }
-"231
-[e :UE 1656 ]
-}
-[v F12241 `(b ~T0 @X0 1 tf ]
-"233
-[v _i2c1_driver_isData `TF12241 ~T0 @X0 1 e ]
-"234
-{
-[; ;i2c1_driver.c: 233: inline __bit i2c1_driver_isData(void)
-[; ;i2c1_driver.c: 234: {
-[e :U _i2c1_driver_isData ]
-[f ]
-[; ;i2c1_driver.c: 235: return SSP1STATbits.D_nA;
-"235
-[e ) -> . . _SSP1STATbits 0 5 `b ]
-[e $UE 1657  ]
-[; ;i2c1_driver.c: 236: }
-"236
-[e :UE 1657 ]
-}
-[v F12244 `(b ~T0 @X0 1 tf ]
-"238
-[v _i2c1_driver_isRead `TF12244 ~T0 @X0 1 e ]
-"239
-{
-[; ;i2c1_driver.c: 238: inline __bit i2c1_driver_isRead(void)
-[; ;i2c1_driver.c: 239: {
-[e :U _i2c1_driver_isRead ]
-[f ]
-[; ;i2c1_driver.c: 240: return SSP1STATbits.R_nW;
-"240
-[e ) -> . . _SSP1STATbits 0 2 `b ]
-[e $UE 1658  ]
-[; ;i2c1_driver.c: 241: }
-"241
-[e :UE 1658 ]
-}
-[v F12247 `(b ~T0 @X0 1 tf ]
-"243
-[v _i2c1_driver_isWriteCollision `TF12247 ~T0 @X0 1 e ]
-"244
-{
-[; ;i2c1_driver.c: 243: inline __bit i2c1_driver_isWriteCollision(void)
-[; ;i2c1_driver.c: 244: {
-[e :U _i2c1_driver_isWriteCollision ]
-[f ]
-[; ;i2c1_driver.c: 245: return SSP1CON1bits.WCOL;
-"245
-[e ) -> . . _SSP1CON1bits 0 4 `b ]
-[e $UE 1659  ]
-[; ;i2c1_driver.c: 246: }
-"246
-[e :UE 1659 ]
-}
-[v F12250 `(b ~T0 @X0 1 tf ]
-"248
-[v _i2c1_driver_isReceiveOverflow `TF12250 ~T0 @X0 1 e ]
-"249
-{
-[; ;i2c1_driver.c: 248: inline __bit i2c1_driver_isReceiveOverflow(void)
-[; ;i2c1_driver.c: 249: {
-[e :U _i2c1_driver_isReceiveOverflow ]
-[f ]
-[; ;i2c1_driver.c: 250: return SSP1CON1bits.SSPOV;
-"250
-[e ) -> . . _SSP1CON1bits 0 3 `b ]
-[e $UE 1660  ]
-[; ;i2c1_driver.c: 251: }
-"251
-[e :UE 1660 ]
-}
-[v F12221 `(v ~T0 @X0 1 tf ]
-"253
-[v _i2c1_driver_clearBusCollision `TF12221 ~T0 @X0 1 e ]
-"254
-{
-[; ;i2c1_driver.c: 253: inline void i2c1_driver_clearBusCollision(void)
-[; ;i2c1_driver.c: 254: {
-[e :U _i2c1_driver_clearBusCollision ]
-[f ]
-[; ;i2c1_driver.c: 255: PIR3bits.BCL1IF = 0;
-"255
-[e = . . _PIR3bits 0 1 -> -> 0 `i `uc ]
-[; ;i2c1_driver.c: 256: }
-"256
-[e :UE 1661 ]
-}
-[v F12253 `(v ~T0 @X0 1 tf1`*F12152 ]
-"258
-[v _i2c1_driver_setBusCollisionISR `TF12253 ~T0 @X0 1 e ]
-{
-[; ;i2c1_driver.c: 258: inline void i2c1_driver_setBusCollisionISR(interruptHandler handler){
-[e :U _i2c1_driver_setBusCollisionISR ]
-[v _handler `*F12152 ~T0 @X0 1 r1 ]
-[f ]
-[; ;i2c1_driver.c: 259: i2c1_driver_busCollisionISR = handler;
-"259
-[e = _i2c1_driver_busCollisionISR _handler ]
-[; ;i2c1_driver.c: 260: }
-"260
-[e :UE 1662 ]
-}
-[v F12256 `(v ~T0 @X0 1 tf1`*F12152 ]
-"262
-[v _i2c1_driver_setI2cISR `TF12256 ~T0 @X0 1 e ]
-{
-[; ;i2c1_driver.c: 262: inline void i2c1_driver_setI2cISR(interruptHandler handler){
-[e :U _i2c1_driver_setI2cISR ]
-[v _handler `*F12152 ~T0 @X0 1 r1 ]
-[f ]
-[; ;i2c1_driver.c: 263: i2c1_driver_i2cISR = handler;
-"263
-[e = _i2c1_driver_i2cISR _handler ]
-[; ;i2c1_driver.c: 264: }
-"264
-[e :UE 1663 ]
+[; ;tmr3.c: 185: }
+"185
+[e :UE 1633 ]
 }

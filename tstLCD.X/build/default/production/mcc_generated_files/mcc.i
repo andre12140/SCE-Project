@@ -21283,13 +21283,52 @@ extern void (*TMR1_InterruptHandler)(void);
 # 421
 void TMR1_DefaultInterruptHandler(void);
 
-# 71 "mcc_generated_files/mcc.h"
+# 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
+typedef unsigned char bool;
+
+# 100 "mcc_generated_files/tmr3.h"
+void TMR3_Initialize(void);
+
+# 129
+void TMR3_StartTimer(void);
+
+# 161
+void TMR3_StopTimer(void);
+
+# 196
+uint16_t TMR3_ReadTimer(void);
+
+# 235
+void TMR3_WriteTimer(uint16_t timerVal);
+
+# 271
+void TMR3_Reload(void);
+
+# 310
+void TMR3_StartSinglePulseAcquisition(void);
+
+# 349
+uint8_t TMR3_CheckGateValueStatus(void);
+
+# 367
+void TMR3_ISR(void);
+
+# 385
+void TMR3_SetInterruptHandler(void (* InterruptHandler)(void));
+
+# 403
+extern void (*TMR3_InterruptHandler)(void);
+
+# 421
+void TMR3_DefaultInterruptHandler(void);
+
+# 72 "mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
 
-# 84
+# 85
 void OSCILLATOR_Initialize(void);
 
-# 97
+# 98
 void PMD_Initialize(void);
 
 # 50 "mcc_generated_files/mcc.c"
@@ -21298,6 +21337,7 @@ void SYSTEM_Initialize(void)
 PMD_Initialize();
 PIN_MANAGER_Initialize();
 OSCILLATOR_Initialize();
+TMR3_Initialize();
 TMR1_Initialize();
 }
 
