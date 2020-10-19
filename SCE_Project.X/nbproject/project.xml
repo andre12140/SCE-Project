@@ -3,7 +3,7 @@
     <type>com.microchip.mplab.nbide.embedded.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>tstLCD</name>
+            <name>SCE_Project</name>
             <creation-uuid>51849e0c-6acc-44b5-adc6-5816dd949760</creation-uuid>
             <make-project-type>0</make-project-type>
             <c-extensions>c</c-extensions>
