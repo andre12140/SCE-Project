@@ -192,6 +192,47 @@ int LCDbusy()
     return 0;
 }
 
+//long unsigned int counter = 70190;
+
+//void LAB_ISR(void) {    
+    
+    /*counter++;
+    
+    long unsigned int h = counter/3600;
+    if(h==24){
+        h = 0;
+        counter=0;
+    }
+    long unsigned int m = (counter-3600*h)/60;
+    long unsigned int s = ((counter-3600*h)-60*m);*/
+    
+int h = 23;
+int m = 59;
+int s = 40;
+
+void LAB_ISR(void) {    
+    
+    s++;
+    
+    if(s==60){
+        m++;
+        s=0;
+    }
+    if(m==60){
+        h++;
+        m=0;
+    }
+    if(h==24){
+        h=0;
+    }
+    
+    char str[8];
+    sprintf(str, "%02d:%02d:%02d", h,m,s);
+    
+    LCDcmd(0x80);
+    LCDstr(str);
+}
+
 void main(void)
 {
     unsigned char c;
@@ -203,21 +244,9 @@ void main(void)
     
     // initialize the device
     SYSTEM_Initialize();
+    
+    TMR1_SetInterruptHandler(LAB_ISR);
 
-    // When using interrupts, you need to set the Global and Peripheral Interrupt Enable bits
-    // Use the following macros to:
-
-    // Enable the Global Interrupts
-    //INTERRUPT_GlobalInterruptEnable();
-
-    // Enable the Peripheral Interrupts
-    //INTERRUPT_PeripheralInterruptEnable();
-
-    // Disable the Global Interrupts
-    //INTERRUPT_GlobalInterruptDisable();
-
-    // Disable the Peripheral Interrupts
-    //INTERRUPT_PeripheralInterruptDisable();
     
     i2c1_driver_open();
     I2C_SCL = 1;
@@ -226,11 +255,33 @@ void main(void)
     WPUC4 = 1;
     LCDinit();
 
+    // Enable the Global Interrupts
+    INTERRUPT_GlobalInterruptEnable();
+
+    // Enable the Peripheral Interrupts
+    INTERRUPT_PeripheralInterruptEnable();
+
+     IO_RA4_SetHigh();
+    float aux = IO_RB4_GetValue();
+    int a = 1;
+
     while (1)
     {
+        if(IO_RB4_GetValue() != aux){
+            if(a==1){
+               IO_RA4_SetLow();
+               a=0;
+            } else{
+               IO_RA4_SetHigh();
+               a=1;
+            }
+            aux = IO_RB4_GetValue();
+        }
         // Add your application code
-                
-        NOP();
+    }
+        // Add your application code
+        
+            /*NOP();
 	c = tsttc();
 	//        hc = (c / 10);
 	//        lc = (c % 10);
@@ -250,7 +301,8 @@ void main(void)
 	LCDstr(buf);
         NOP();
         __delay_ms(3000);
-    }
+        */
+         
 }
 /**
  End of File
