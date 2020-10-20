@@ -207,6 +207,10 @@ int LCDbusy()
     long unsigned int m = (counter-3600*h)/60;
     long unsigned int s = ((counter-3600*h)-60*m);*/
 
+int map(int x, int in_min, int in_max, int out_min, int out_max) {
+  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
 struct Time {
     int h;
     int m;
@@ -214,8 +218,16 @@ struct Time {
 }; 
 
 struct Time t = {0,0,0};
+unsigned char c;
+int lumLevel;
 
 void Clock_ISR(void) {    
+    
+    c = tsttc(); //Get temp
+    
+    uint8_t lum = ADCC_GetSingleConversion(channel_ANA0) >> 12; //DUVIDA
+    
+    lumLevel = map(lum,1,15,0,7);
     
     t.s++;
     
@@ -243,27 +255,20 @@ void menuLCD_ISR(){
     LCDstr("CTL ?");
     
     LCDcmd(0xc0);
-    char tt[4] = "20";
-    strcat(tt," C");
-    LCDstr(tt);
+    char tt[4];
+	sprintf(tt, "%02d C", c);
+	LCDstr(tt);
     
     LCDcmd(0xcd);
-    int aux = 7;
-    char l[1];
-    sprintf(l, "%d", aux);
-    
-    char ll[3] = "L ";
-    strcat(ll, l);
-    LCDstr(ll);
-
-    LCDcmd(0x80);
+    char l[3];
+    sprintf(l, "L %d", lumLevel);
+    LCDstr(l);
 }
 
 void main(void)
 {
-    unsigned char c;
-    unsigned char hc;
-    unsigned char lc;
+    
+    
     unsigned char c1;
     unsigned char c2;
     unsigned char buf[17];

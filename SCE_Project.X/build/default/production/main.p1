@@ -81,22 +81,25 @@ Version 3.2 HI-TECH Software Intermediate Code
 "12 C:/Users/Andre/.mchp_packs/Microchip/PIC16F1xxxx_DFP/1.5.133/xc8\pic\include\builtins.h
 [v __delay `JF38 ~T0 @X0 0 e ]
 [p i __delay ]
-"210 main.c
-[s S1838 `i 1 `i 1 `i 1 ]
-[n S1838 Time h m s ]
+"214 main.c
+[s S1839 `i 1 `i 1 `i 1 ]
+[n S1839 Time h m s ]
+"228
+[c E12264 0 60 61 62 63 .. ]
+[n E12264 . channel_ANA0 channel_VSS channel_Temp channel_DAC1 channel_FVR_buf1  ]
+"252 mcc_generated_files/adcc.h
+[v _ADCC_GetSingleConversion `(ui ~T0 @X0 0 ef1`E12264 ]
 "194 E:\Microchip\xc8\v2.30\pic\include\c90\stdio.h
 [v _sprintf `(i ~T0 @X0 0 e1v`*uc`*Cuc ]
-"36 E:\Microchip\xc8\v2.30\pic\include\c90\string.h
-[v _strcat `(*uc ~T0 @X0 0 ef2`*uc`*Cuc ]
 [p mainexit ]
-"72 mcc_generated_files/mcc.h
+"73 mcc_generated_files/mcc.h
 [v _SYSTEM_Initialize `(v ~T0 @X0 0 ef ]
-[v F12283 `(v ~T0 @X0 0 tf ]
+[v F12371 `(v ~T0 @X0 0 tf ]
 "385 mcc_generated_files/tmr1.h
-[v _TMR1_SetInterruptHandler `(v ~T0 @X0 0 ef1`*F12283 ]
-[v F12310 `(v ~T0 @X0 0 tf ]
+[v _TMR1_SetInterruptHandler `(v ~T0 @X0 0 ef1`*F12371 ]
+[v F12344 `(v ~T0 @X0 0 tf ]
 "385 mcc_generated_files/tmr3.h
-[v _TMR3_SetInterruptHandler `(v ~T0 @X0 0 ef1`*F12310 ]
+[v _TMR3_SetInterruptHandler `(v ~T0 @X0 0 ef1`*F12344 ]
 "48 mcc_generated_files/i2c1_driver.h
 [v _i2c1_driver_open `(b ~T0 @X0 0 ef ]
 "801 C:/Users/Andre/.mchp_packs/Microchip/PIC16F1xxxx_DFP/1.5.133/xc8\pic\include\proc\pic16f18875.h
@@ -13840,8 +13843,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;xc8\pic\include\pic.h: 127: extern __bank0 unsigned char __resetbits;
 [; ;xc8\pic\include\pic.h: 128: extern __bank0 __bit __powerdown;
 [; ;xc8\pic\include\pic.h: 129: extern __bank0 __bit __timeout;
-[; ;pin_manager.h: 152: void PIN_MANAGER_Initialize (void);
-[; ;pin_manager.h: 164: void PIN_MANAGER_IOC(void);
+[; ;pin_manager.h: 172: void PIN_MANAGER_Initialize (void);
+[; ;pin_manager.h: 184: void PIN_MANAGER_IOC(void);
 [; ;stdbool.h: 15: typedef unsigned char bool;
 [; ;xc8\pic\include\__size_t.h: 4: typedef unsigned size_t;
 [; ;stdarg.h: 7: typedef void * va_list[1];
@@ -13917,18 +13920,42 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _i2c1_driver_i2cISR `*F12261 ~T0 @X0 1 e ]
 [; ;i2c1_driver.h: 78: void (*i2c1_driver_i2cISR)(void);
 [; ;stdbool.h: 15: typedef unsigned char bool;
-[; ;tmr1.h: 100: void TMR1_Initialize(void);
-[; ;tmr1.h: 129: void TMR1_StartTimer(void);
-[; ;tmr1.h: 161: void TMR1_StopTimer(void);
-[; ;tmr1.h: 196: uint16_t TMR1_ReadTimer(void);
-[; ;tmr1.h: 235: void TMR1_WriteTimer(uint16_t timerVal);
-[; ;tmr1.h: 271: void TMR1_Reload(void);
-[; ;tmr1.h: 310: void TMR1_StartSinglePulseAcquisition(void);
-[; ;tmr1.h: 349: uint8_t TMR1_CheckGateValueStatus(void);
-[; ;tmr1.h: 367: void TMR1_ISR(void);
-[; ;tmr1.h: 385: void TMR1_SetInterruptHandler(void (* InterruptHandler)(void));
-[; ;tmr1.h: 403: extern void (*TMR1_InterruptHandler)(void);
-[; ;tmr1.h: 421: void TMR1_DefaultInterruptHandler(void);
+[; ;adcc.h: 72: typedef uint16_t adc_result_t;
+[; ;adcc.h: 89: typedef enum
+[; ;adcc.h: 90: {
+[; ;adcc.h: 91: channel_ANA0 = 0x0,
+[; ;adcc.h: 92: channel_VSS = 0x3C,
+[; ;adcc.h: 93: channel_Temp = 0x3D,
+[; ;adcc.h: 94: channel_DAC1 = 0x3E,
+[; ;adcc.h: 95: channel_FVR_buf1 = 0x3F
+[; ;adcc.h: 96: } adcc_channel_t;
+[; ;adcc.h: 130: void ADCC_Initialize(void);
+[; ;adcc.h: 159: void ADCC_StartConversion(adcc_channel_t channel);
+[; ;adcc.h: 189: bool ADCC_IsConversionDone();
+[; ;adcc.h: 221: adc_result_t ADCC_GetConversionResult(void);
+[; ;adcc.h: 252: adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel);
+[; ;adcc.h: 277: void ADCC_StopConversion(void);
+[; ;adcc.h: 304: void ADCC_SetStopOnInterrupt(void);
+[; ;adcc.h: 329: void ADCC_DischargeSampleCapacitor(void);
+[; ;adcc.h: 355: void ADCC_LoadAcquisitionRegister(uint8_t);
+[; ;adcc.h: 381: void ADCC_SetPrechargeTime(uint8_t);
+[; ;adcc.h: 406: void ADCC_SetRepeatCount(uint8_t);
+[; ;adcc.h: 434: uint8_t ADCC_GetCurrentCountofConversions(void);
+[; ;adcc.h: 458: void ADCC_ClearAccumulator(void);
+[; ;adcc.h: 483: uint16_t ADCC_GetAccumulatorValue(void);
+[; ;adcc.h: 511: bool ADCC_HasAccumulatorOverflowed(void);
+[; ;adcc.h: 536: uint16_t ADCC_GetFilterValue(void);
+[; ;adcc.h: 564: uint16_t ADCC_GetPreviousResult(void);
+[; ;adcc.h: 590: void ADCC_DefineSetPoint(uint16_t);
+[; ;adcc.h: 616: void ADCC_SetUpperThreshold(uint16_t);
+[; ;adcc.h: 642: void ADCC_SetLowerThreshold(uint16_t);
+[; ;adcc.h: 669: uint16_t ADCC_GetErrorCalculation(void);
+[; ;adcc.h: 696: void ADCC_EnableDoubleSampling(void);
+[; ;adcc.h: 720: void ADCC_EnableContinuousConversion(void);
+[; ;adcc.h: 744: void ADCC_DisableContinuousConversion(void);
+[; ;adcc.h: 772: bool ADCC_HasErrorCrossedUpperThreshold(void);
+[; ;adcc.h: 800: bool ADCC_HasErrorCrossedLowerThreshold(void);
+[; ;adcc.h: 827: uint8_t ADCC_GetConversionStageStatus(void);
 [; ;stdbool.h: 15: typedef unsigned char bool;
 [; ;tmr3.h: 100: void TMR3_Initialize(void);
 [; ;tmr3.h: 129: void TMR3_StartTimer(void);
@@ -13942,9 +13969,22 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;tmr3.h: 385: void TMR3_SetInterruptHandler(void (* InterruptHandler)(void));
 [; ;tmr3.h: 403: extern void (*TMR3_InterruptHandler)(void);
 [; ;tmr3.h: 421: void TMR3_DefaultInterruptHandler(void);
-[; ;mcc.h: 72: void SYSTEM_Initialize(void);
-[; ;mcc.h: 85: void OSCILLATOR_Initialize(void);
-[; ;mcc.h: 98: void PMD_Initialize(void);
+[; ;stdbool.h: 15: typedef unsigned char bool;
+[; ;tmr1.h: 100: void TMR1_Initialize(void);
+[; ;tmr1.h: 129: void TMR1_StartTimer(void);
+[; ;tmr1.h: 161: void TMR1_StopTimer(void);
+[; ;tmr1.h: 196: uint16_t TMR1_ReadTimer(void);
+[; ;tmr1.h: 235: void TMR1_WriteTimer(uint16_t timerVal);
+[; ;tmr1.h: 271: void TMR1_Reload(void);
+[; ;tmr1.h: 310: void TMR1_StartSinglePulseAcquisition(void);
+[; ;tmr1.h: 349: uint8_t TMR1_CheckGateValueStatus(void);
+[; ;tmr1.h: 367: void TMR1_ISR(void);
+[; ;tmr1.h: 385: void TMR1_SetInterruptHandler(void (* InterruptHandler)(void));
+[; ;tmr1.h: 403: extern void (*TMR1_InterruptHandler)(void);
+[; ;tmr1.h: 421: void TMR1_DefaultInterruptHandler(void);
+[; ;mcc.h: 73: void SYSTEM_Initialize(void);
+[; ;mcc.h: 86: void OSCILLATOR_Initialize(void);
+[; ;mcc.h: 99: void PMD_Initialize(void);
 [; ;i2c.h: 154: void OpenI2C( unsigned char sync_mode, unsigned char slew );
 [; ;i2c.h: 156: signed char WriteI2C( unsigned char data_out );
 [; ;i2c.h: 158: signed char putsI2C( unsigned char *wrptr );
@@ -14743,13 +14783,32 @@ Version 3.2 HI-TECH Software Intermediate Code
 "194
 [e :UE 1836 ]
 }
-[; ;main.c: 210: struct Time {
-[; ;main.c: 211: int h;
-[; ;main.c: 212: int m;
-[; ;main.c: 213: int s;
-[; ;main.c: 214: };
-"216
-[v _t `S1838 ~T0 @X0 1 e ]
+"210
+[v _map `(i ~T0 @X0 1 ef5`i`i`i`i`i ]
+{
+[; ;main.c: 210: int map(int x, int in_min, int in_max, int out_min, int out_max) {
+[e :U _map ]
+[v _x `i ~T0 @X0 1 r1 ]
+[v _in_min `i ~T0 @X0 1 r2 ]
+[v _in_max `i ~T0 @X0 1 r3 ]
+[v _out_min `i ~T0 @X0 1 r4 ]
+[v _out_max `i ~T0 @X0 1 r5 ]
+[f ]
+[; ;main.c: 211: return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+"211
+[e ) + / * - _x _in_min - _out_max _out_min - _in_max _in_min _out_min ]
+[e $UE 1838  ]
+[; ;main.c: 212: }
+"212
+[e :UE 1838 ]
+}
+[; ;main.c: 214: struct Time {
+[; ;main.c: 215: int h;
+[; ;main.c: 216: int m;
+[; ;main.c: 217: int s;
+[; ;main.c: 218: };
+"220
+[v _t `S1839 ~T0 @X0 1 e ]
 [i _t
 :U ..
 :U ..
@@ -14759,281 +14818,257 @@ Version 3.2 HI-TECH Software Intermediate Code
 ..
 ..
 ]
-[; ;main.c: 216: struct Time t = {0,0,0};
-"218
+[; ;main.c: 220: struct Time t = {0,0,0};
+"221
+[v _c `uc ~T0 @X0 1 e ]
+[; ;main.c: 221: unsigned char c;
+"222
+[v _lumLevel `i ~T0 @X0 1 e ]
+[; ;main.c: 222: int lumLevel;
+"224
 [v _Clock_ISR `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 218: void Clock_ISR(void) {
+[; ;main.c: 224: void Clock_ISR(void) {
 [e :U _Clock_ISR ]
 [f ]
-[; ;main.c: 220: t.s++;
-"220
-[e ++ . _t 2 -> 1 `i ]
-[; ;main.c: 222: if(t.s==60){
-"222
-[e $ ! == . _t 2 -> 60 `i 1840  ]
-{
-[; ;main.c: 223: t.m++;
-"223
-[e ++ . _t 1 -> 1 `i ]
-[; ;main.c: 224: t.s=0;
-"224
-[e = . _t 2 -> 0 `i ]
-"225
-}
-[e :U 1840 ]
-[; ;main.c: 225: }
-[; ;main.c: 226: if(t.m==60){
+[; ;main.c: 226: c = tsttc();
 "226
-[e $ ! == . _t 1 -> 60 `i 1841  ]
-{
-[; ;main.c: 227: t.h++;
-"227
-[e ++ . _t 0 -> 1 `i ]
-[; ;main.c: 228: t.m=0;
+[e = _c ( _tsttc ..  ]
 "228
-[e = . _t 1 -> 0 `i ]
-"229
+[v _lum `uc ~T0 @X0 1 a ]
+[; ;main.c: 228: uint8_t lum = ADCC_GetSingleConversion(channel_ANA0) >> 12;
+[e = _lum -> >> ( _ADCC_GetSingleConversion (1 . `E12264 0 -> 12 `i `uc ]
+[; ;main.c: 230: lumLevel = map(lum,1,15,0,7);
+"230
+[e = _lumLevel ( _map (4 , , , , -> _lum `i -> 1 `i -> 15 `i -> 0 `i -> 7 `i ]
+[; ;main.c: 232: t.s++;
+"232
+[e ++ . _t 2 -> 1 `i ]
+[; ;main.c: 234: if(t.s==60){
+"234
+[e $ ! == . _t 2 -> 60 `i 1841  ]
+{
+[; ;main.c: 235: t.m++;
+"235
+[e ++ . _t 1 -> 1 `i ]
+[; ;main.c: 236: t.s=0;
+"236
+[e = . _t 2 -> 0 `i ]
+"237
 }
 [e :U 1841 ]
-[; ;main.c: 229: }
-[; ;main.c: 230: if(t.h==24){
-"230
-[e $ ! == . _t 0 -> 24 `i 1842  ]
+[; ;main.c: 237: }
+[; ;main.c: 238: if(t.m==60){
+"238
+[e $ ! == . _t 1 -> 60 `i 1842  ]
 {
-[; ;main.c: 231: t.h=0;
-"231
-[e = . _t 0 -> 0 `i ]
-"232
+[; ;main.c: 239: t.h++;
+"239
+[e ++ . _t 0 -> 1 `i ]
+[; ;main.c: 240: t.m=0;
+"240
+[e = . _t 1 -> 0 `i ]
+"241
 }
 [e :U 1842 ]
-[; ;main.c: 232: }
-[; ;main.c: 233: }
-"233
-[e :UE 1839 ]
+[; ;main.c: 241: }
+[; ;main.c: 242: if(t.h==24){
+"242
+[e $ ! == . _t 0 -> 24 `i 1843  ]
+{
+[; ;main.c: 243: t.h=0;
+"243
+[e = . _t 0 -> 0 `i ]
+"244
 }
-"235
+[e :U 1843 ]
+[; ;main.c: 244: }
+[; ;main.c: 245: }
+"245
+[e :UE 1840 ]
+}
+"247
 [v _menuLCD_ISR `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 235: void menuLCD_ISR(){
+[; ;main.c: 247: void menuLCD_ISR(){
 [e :U _menuLCD_ISR ]
 [f ]
-"236
-[v _str `uc ~T0 @X0 -> 8 `i a ]
-[; ;main.c: 236: char str[8];
-[; ;main.c: 237: sprintf(str, "%02d:%02d:%02d", t.h,t.m,t.s);
-"237
-[e ( _sprintf (1 , , , (. , &U _str :s 1C . _t 0 . _t 1 . _t 2 ]
-[; ;main.c: 239: LCDcmd(0x80);
-"239
-[e ( _LCDcmd (1 -> -> 128 `i `uc ]
-[; ;main.c: 240: LCDstr(str);
-"240
-[e ( _LCDstr (1 &U _str ]
-[; ;main.c: 242: LCDcmd(0x8B);
-"242
-[e ( _LCDcmd (1 -> -> 139 `i `uc ]
-[; ;main.c: 243: LCDstr("CTL ?");
-"243
-[e ( _LCDstr (1 -> :s 2C `*uc ]
-[; ;main.c: 245: LCDcmd(0xc0);
-"245
-[e ( _LCDcmd (1 -> -> 192 `i `uc ]
-[v F12473 `uc ~T0 @X0 -> 4 `i s ]
-[i F12473
-:U ..
--> 50 `c
--> 48 `c
--> 0 `c
-..
-]
-"246
-[v _tt `uc ~T0 @X0 -> 4 `i a ]
-[; ;main.c: 246: char tt[4] = "20";
-[e = _tt F12473 ]
-[; ;main.c: 247: strcat(tt," C");
-"247
-[e ( _strcat (2 , &U _tt :s 3C ]
-[; ;main.c: 248: LCDstr(tt);
 "248
-[e ( _LCDstr (1 &U _tt ]
-[; ;main.c: 250: LCDcmd(0xcd);
-"250
-[e ( _LCDcmd (1 -> -> 205 `i `uc ]
+[v _str `uc ~T0 @X0 -> 8 `i a ]
+[; ;main.c: 248: char str[8];
+[; ;main.c: 249: sprintf(str, "%02d:%02d:%02d", t.h,t.m,t.s);
+"249
+[e ( _sprintf (1 , , , (. , &U _str :s 1C . _t 0 . _t 1 . _t 2 ]
+[; ;main.c: 251: LCDcmd(0x80);
 "251
-[v _aux `i ~T0 @X0 1 a ]
-[; ;main.c: 251: int aux = 7;
-[e = _aux -> 7 `i ]
-"252
-[v _l `uc ~T0 @X0 -> -> 1 `i `ux a ]
-[; ;main.c: 252: char l[1];
-[; ;main.c: 253: sprintf(l, "%d", aux);
-"253
-[e ( _sprintf (1 , (. , &U _l :s 4C _aux ]
-[v F12477 `uc ~T0 @X0 -> 3 `i s ]
-[i F12477
-:U ..
--> 76 `c
--> 32 `c
--> 0 `c
-..
-]
-"255
-[v _ll `uc ~T0 @X0 -> 3 `i a ]
-[; ;main.c: 255: char ll[3] = "L ";
-[e = _ll F12477 ]
-[; ;main.c: 256: strcat(ll, l);
-"256
-[e ( _strcat (2 , &U _ll -> &U _l `*Cuc ]
-[; ;main.c: 257: LCDstr(ll);
-"257
-[e ( _LCDstr (1 &U _ll ]
-[; ;main.c: 259: LCDcmd(0x80);
-"259
 [e ( _LCDcmd (1 -> -> 128 `i `uc ]
-[; ;main.c: 260: }
+[; ;main.c: 252: LCDstr(str);
+"252
+[e ( _LCDstr (1 &U _str ]
+[; ;main.c: 254: LCDcmd(0x8B);
+"254
+[e ( _LCDcmd (1 -> -> 139 `i `uc ]
+[; ;main.c: 255: LCDstr("CTL ?");
+"255
+[e ( _LCDstr (1 -> :s 2C `*uc ]
+[; ;main.c: 257: LCDcmd(0xc0);
+"257
+[e ( _LCDcmd (1 -> -> 192 `i `uc ]
+"258
+[v _tt `uc ~T0 @X0 -> 4 `i a ]
+[; ;main.c: 258: char tt[4];
+[; ;main.c: 259: sprintf(tt, "%02d C", c);
+"259
+[e ( _sprintf (1 , (. , &U _tt :s 3C -> _c `i ]
+[; ;main.c: 260: LCDstr(tt);
 "260
-[e :UE 1843 ]
+[e ( _LCDstr (1 &U _tt ]
+[; ;main.c: 262: LCDcmd(0xcd);
+"262
+[e ( _LCDcmd (1 -> -> 205 `i `uc ]
+"263
+[v _l `uc ~T0 @X0 -> 3 `i a ]
+[; ;main.c: 263: char l[3];
+[; ;main.c: 264: sprintf(l, "L %d", lumLevel);
+"264
+[e ( _sprintf (1 , (. , &U _l :s 4C _lumLevel ]
+[; ;main.c: 265: LCDstr(l);
+"265
+[e ( _LCDstr (1 &U _l ]
+[; ;main.c: 266: }
+"266
+[e :UE 1844 ]
 }
 [v $root$_main `(v ~T0 @X0 0 e ]
-"262
+"268
 [v _main `(v ~T0 @X0 1 ef ]
-"263
+"269
 {
-[; ;main.c: 262: void main(void)
-[; ;main.c: 263: {
+[; ;main.c: 268: void main(void)
+[; ;main.c: 269: {
 [e :U _main ]
 [f ]
-"264
-[v _c `uc ~T0 @X0 1 a ]
-"265
-[v _hc `uc ~T0 @X0 1 a ]
-"266
-[v _lc `uc ~T0 @X0 1 a ]
-"267
-[v _c1 `uc ~T0 @X0 1 a ]
-"268
-[v _c2 `uc ~T0 @X0 1 a ]
-"269
-[v _buf `uc ~T0 @X0 -> 17 `i a ]
-[; ;main.c: 264: unsigned char c;
-[; ;main.c: 265: unsigned char hc;
-[; ;main.c: 266: unsigned char lc;
-[; ;main.c: 267: unsigned char c1;
-[; ;main.c: 268: unsigned char c2;
-[; ;main.c: 269: unsigned char buf[17];
-[; ;main.c: 272: SYSTEM_Initialize();
 "272
-[e ( _SYSTEM_Initialize ..  ]
-[; ;main.c: 274: TMR1_SetInterruptHandler(Clock_ISR);
+[v _c1 `uc ~T0 @X0 1 a ]
+"273
+[v _c2 `uc ~T0 @X0 1 a ]
 "274
-[e ( _TMR1_SetInterruptHandler (1 &U _Clock_ISR ]
-[; ;main.c: 276: TMR3_SetInterruptHandler(menuLCD_ISR);
-"276
-[e ( _TMR3_SetInterruptHandler (1 &U _menuLCD_ISR ]
-[; ;main.c: 278: i2c1_driver_open();
-"278
-[e ( _i2c1_driver_open ..  ]
-[; ;main.c: 279: TRISCbits.TRISC3 = 1;
+[v _buf `uc ~T0 @X0 -> 17 `i a ]
+[; ;main.c: 272: unsigned char c1;
+[; ;main.c: 273: unsigned char c2;
+[; ;main.c: 274: unsigned char buf[17];
+[; ;main.c: 277: SYSTEM_Initialize();
+"277
+[e ( _SYSTEM_Initialize ..  ]
+[; ;main.c: 279: TMR1_SetInterruptHandler(Clock_ISR);
 "279
-[e = . . _TRISCbits 0 3 -> -> 1 `i `uc ]
-[; ;main.c: 280: TRISCbits.TRISC4 = 1;
-"280
-[e = . . _TRISCbits 0 4 -> -> 1 `i `uc ]
-[; ;main.c: 281: WPUC3 = 1;
+[e ( _TMR1_SetInterruptHandler (1 &U _Clock_ISR ]
+[; ;main.c: 281: TMR3_SetInterruptHandler(menuLCD_ISR);
 "281
-[e = _WPUC3 -> -> 1 `i `b ]
-[; ;main.c: 282: WPUC4 = 1;
-"282
-[e = _WPUC4 -> -> 1 `i `b ]
-[; ;main.c: 283: LCDinit();
+[e ( _TMR3_SetInterruptHandler (1 &U _menuLCD_ISR ]
+[; ;main.c: 283: i2c1_driver_open();
 "283
-[e ( _LCDinit ..  ]
-[; ;main.c: 286: (INTCONbits.GIE = 1);
+[e ( _i2c1_driver_open ..  ]
+[; ;main.c: 284: TRISCbits.TRISC3 = 1;
+"284
+[e = . . _TRISCbits 0 3 -> -> 1 `i `uc ]
+[; ;main.c: 285: TRISCbits.TRISC4 = 1;
+"285
+[e = . . _TRISCbits 0 4 -> -> 1 `i `uc ]
+[; ;main.c: 286: WPUC3 = 1;
 "286
-[e = . . _INTCONbits 0 3 -> -> 1 `i `uc ]
-[; ;main.c: 289: (INTCONbits.PEIE = 1);
-"289
-[e = . . _INTCONbits 0 2 -> -> 1 `i `uc ]
-[; ;main.c: 291: do { LATAbits.LATA4 = 1; } while(0);
+[e = _WPUC3 -> -> 1 `i `b ]
+[; ;main.c: 287: WPUC4 = 1;
+"287
+[e = _WPUC4 -> -> 1 `i `b ]
+[; ;main.c: 288: LCDinit();
+"288
+[e ( _LCDinit ..  ]
+[; ;main.c: 291: (INTCONbits.GIE = 1);
 "291
-[e :U 1847 ]
+[e = . . _INTCONbits 0 3 -> -> 1 `i `uc ]
+[; ;main.c: 294: (INTCONbits.PEIE = 1);
+"294
+[e = . . _INTCONbits 0 2 -> -> 1 `i `uc ]
+[; ;main.c: 296: do { LATAbits.LATA4 = 1; } while(0);
+"296
+[e :U 1848 ]
 {
 [e = . . _LATAbits 0 4 -> -> 1 `i `uc ]
 }
-[e :U 1846 ]
-"292
-[v _aux `f ~T0 @X0 1 a ]
-[; ;main.c: 292: float aux = PORTBbits.RB4;
-[e = _aux -> . . _PORTBbits 0 4 `f ]
-"293
-[v _a `i ~T0 @X0 1 a ]
-[; ;main.c: 293: int a = 1;
-[e = _a -> 1 `i ]
-[; ;main.c: 295: while (1)
-"295
-[e :U 1849 ]
-[; ;main.c: 296: {
-"296
-{
-[; ;main.c: 297: if(PORTBbits.RB4 != aux){
+[e :U 1847 ]
 "297
-[e $ ! != -> . . _PORTBbits 0 4 `f _aux 1851  ]
-{
-[; ;main.c: 298: if(a==1){
+[v _aux `f ~T0 @X0 1 a ]
+[; ;main.c: 297: float aux = PORTBbits.RB4;
+[e = _aux -> . . _PORTBbits 0 4 `f ]
 "298
-[e $ ! == _a -> 1 `i 1852  ]
+[v _a `i ~T0 @X0 1 a ]
+[; ;main.c: 298: int a = 1;
+[e = _a -> 1 `i ]
+[; ;main.c: 300: while (1)
+"300
+[e :U 1850 ]
+[; ;main.c: 301: {
+"301
 {
-[; ;main.c: 299: do { LATAbits.LATA4 = 0; } while(0);
-"299
-[e :U 1855 ]
+[; ;main.c: 302: if(PORTBbits.RB4 != aux){
+"302
+[e $ ! != -> . . _PORTBbits 0 4 `f _aux 1852  ]
+{
+[; ;main.c: 303: if(a==1){
+"303
+[e $ ! == _a -> 1 `i 1853  ]
+{
+[; ;main.c: 304: do { LATAbits.LATA4 = 0; } while(0);
+"304
+[e :U 1856 ]
 {
 [e = . . _LATAbits 0 4 -> -> 0 `i `uc ]
 }
-[e :U 1854 ]
-[; ;main.c: 300: a=0;
-"300
+[e :U 1855 ]
+[; ;main.c: 305: a=0;
+"305
 [e = _a -> 0 `i ]
-"301
+"306
 }
-[; ;main.c: 301: } else{
-[e $U 1856  ]
-[e :U 1852 ]
+[; ;main.c: 306: } else{
+[e $U 1857  ]
+[e :U 1853 ]
 {
-[; ;main.c: 302: do { LATAbits.LATA4 = 1; } while(0);
-"302
-[e :U 1859 ]
+[; ;main.c: 307: do { LATAbits.LATA4 = 1; } while(0);
+"307
+[e :U 1860 ]
 {
 [e = . . _LATAbits 0 4 -> -> 1 `i `uc ]
 }
-[e :U 1858 ]
-[; ;main.c: 303: a=1;
-"303
-[e = _a -> 1 `i ]
-"304
-}
-[e :U 1856 ]
-[; ;main.c: 304: }
-[; ;main.c: 305: aux = PORTBbits.RB4;
-"305
-[e = _aux -> . . _PORTBbits 0 4 `f ]
-"306
-}
-[e :U 1851 ]
+[e :U 1859 ]
+[; ;main.c: 308: a=1;
 "308
+[e = _a -> 1 `i ]
+"309
 }
-[e :U 1848 ]
-"295
-[e $U 1849  ]
-[e :U 1850 ]
-[; ;main.c: 306: }
-[; ;main.c: 308: }
-[; ;main.c: 333: }
-"333
-[e :UE 1844 ]
+[e :U 1857 ]
+[; ;main.c: 309: }
+[; ;main.c: 310: aux = PORTBbits.RB4;
+"310
+[e = _aux -> . . _PORTBbits 0 4 `f ]
+"311
+}
+[e :U 1852 ]
+"313
+}
+[e :U 1849 ]
+"300
+[e $U 1850  ]
+[e :U 1851 ]
+[; ;main.c: 311: }
+[; ;main.c: 313: }
+[; ;main.c: 338: }
+"338
+[e :UE 1845 ]
 }
 [p f _sprintf 8421508 ]
 [a 1C 37 48 50 100 58 37 48 50 100 58 37 48 50 100 0 ]
-[a 4C 37 100 0 ]
-[a 3C 32 67 0 ]
+[a 4C 76 32 37 100 0 ]
+[a 3C 37 48 50 100 32 67 0 ]
 [a 2C 67 84 76 32 63 0 ]
