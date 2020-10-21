@@ -18,6 +18,9 @@
         <itemPath>mcc_generated_files/tmr1.h</itemPath>
         <itemPath>mcc_generated_files/tmr3.h</itemPath>
         <itemPath>mcc_generated_files/adcc.h</itemPath>
+        <itemPath>mcc_generated_files/tmr5.h</itemPath>
+        <itemPath>mcc_generated_files/tmr2.h</itemPath>
+        <itemPath>mcc_generated_files/pwm6.h</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
@@ -41,6 +44,9 @@
         <itemPath>mcc_generated_files/tmr1.c</itemPath>
         <itemPath>mcc_generated_files/tmr3.c</itemPath>
         <itemPath>mcc_generated_files/adcc.c</itemPath>
+        <itemPath>mcc_generated_files/tmr5.c</itemPath>
+        <itemPath>mcc_generated_files/pwm6.c</itemPath>
+        <itemPath>mcc_generated_files/tmr2.c</itemPath>
       </logicalFolder>
       <itemPath>main.c</itemPath>
     </logicalFolder>

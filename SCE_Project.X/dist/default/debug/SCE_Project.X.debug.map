@@ -5,9 +5,9 @@ Linker command line:
 -W-3 --edf=E:\Microchip\xc8\v2.30\pic\dat\en_msgs.txt -cn \
   -h+dist/default/debug\SCE_Project.X.debug.sym \
   --cmf=dist/default/debug\SCE_Project.X.debug.cmf -z -Q16F18875 \
-  -oC:\Users\Andre\AppData\Local\Temp\s3n4x2 --defsym=__MPLAB_BUILD=1 \
+  -oC:\Users\Andre\AppData\Local\Temp\schcx2 --defsym=__MPLAB_BUILD=1 \
   -Mdist/default/debug/SCE_Project.X.debug.map -E1 -ver=XC8 Compiler \
-  --acfsm=1493 -ASTACK=02078h-023EFh -pstack=STACK -ACODE=00h-07FFhx4 \
+  --acfsm=1493 -ASTACK=02069h-023EFh -pstack=STACK -ACODE=00h-07FFhx4 \
   -ASTRCODE=00h-01FFFh -ASTRING=00h-0FFhx32 -ACONST=00h-0FFhx32 \
   -AENTRY=00h-0FFhx32 -ACOMMON=070h-07Fh -ABANK0=020h-06Fh \
   -ABANK1=0A0h-0EFh -ABANK2=0120h-016Fh -ABANK3=01A0h-01EFh \
@@ -32,7 +32,7 @@ Linker command line:
   -peeprom_data=EEDATA -DEEDATA=2 -DCODE=2 -DSTRCODE=2 -DSTRING=2 -DCONST=2 \
   -DENTRY=2 -preset_vec=00h,intentry=04h,init,end_init -ppowerup=CODE \
   -pcinit=CODE -pfunctab=ENTRY -k \
-  C:\Users\Andre\AppData\Local\Temp\s3n4xm.o \
+  C:\Users\Andre\AppData\Local\Temp\schcxm.o \
   dist/default/debug\SCE_Project.X.debug.o 
 
 Object code version is 3.11
@@ -42,114 +42,151 @@ Machine type is 16F18875
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\Andre\AppData\Local\Temp\s3n4xm.o
-                end_init                             34       34        2        8       0
+C:\Users\Andre\AppData\Local\Temp\schcxm.o
+                end_init                             40       40        2        8       0
                 reset_vec                             0        0        2        0       0
                 config                             8007     8007        5        0       4
 dist/default/debug\SCE_Project.X.debug.o
-                cinit                                36       36       11        8       0
-                intentry                              4        4       30        8       0
+                cinit                                42       42       2B        8       0
+                intentry                              4        4       3C        8       0
                 config                             8007     8007        5        0       4
-                text38                              E1D      E1D       12     1C3A       0
-                text37                              E82      E82       1A     1D04       0
-                text36                              79C      79C       4B        8       0
-                text35                              1E4      1E4      10D        8       0
-                text34                              7FF      7FF        1        8       0
-                text33                              FC0      FC0       40     1F80       0
-                text32                              DFB      DFB       11     1BF6       0
-                text31                              E54      E54       17     1CA8       0
-                text30                              E0C      E0C       11     1C18       0
-                text29                              3C5      3C5       B3        8       0
-                text28                              DC6      DC6        7     1B8C       0
-                text27                              DCD      DCD        8     1B9A       0
-                text26                              E9C      E9C       1B     1D38       0
-                text25                              F48      F48       3C     1E90       0
-                text24                              F14      F14       34     1E28       0
-                text23                              EB7      EB7       1F     1D6E       0
-                text22                              E2F      E2F       12     1C5E       0
-                text21                               47       47      19D        8       0
-                text20                              63E      63E       62        8       0
-                text19                              7FE      7FE        1        8       0
-                text18                              E6B      E6B       17     1CD6       0
-                text16                              6A0      6A0       5A        8       0
-                text15                              6FA      6FA       53        8       0
-                text14                              2F1      2F1       D4        8       0
-                text13                              5C8      5C8       76        8       0
-                text12                              7E7      7E7       17        8       0
-                text11                              DDD      DDD        9     1BBA       0
-                text10                              F84      F84       3C     1F08       0
-                text9                               DD5      DD5        8     1BAA       0
-                text8                               DC0      DC0        6     1B80       0
-                text7                               ED6      ED6       1F     1DAC       0
-                text6                               DE6      DE6        9     1BCC       0
-                text5                               EF5      EF5       1F     1DEA       0
-                text4                               E41      E41       13     1C82       0
-                text3                               74D      74D       4F        8       0
-                text2                               478      478       AD        8       0
-                text1                               DEF      DEF        C     1BDE       0
-                maintext                            525      525       A3        8       0
-                cstackBANK0                          20       20       28       20       1
+                text52                                2        2        1        0       0
+                text51                              6B3      6B3       69        8       0
+                text50                              C9E      C9E       11     193C       0
+                text49                              D1F      D1F       17     1A3E       0
+                text48                              CAF      CAF       11     195E       0
+                text47                              F0A      F0A       4B     1E14       0
+                text46                              51C      51C       B3        8       0
+                text45                              C39      C39        7     1872       0
+                text44                              C40      C40        8     1880       0
+                text43                              CF5      CF5       14     19EA       0
+                text42                              D09      D09       16     1A12       0
+                text41                              C17      C17        3     182E       0
+                text40                              C1D      C1D        4     183A       0
+                text39                              645      645       6E        8       0
+                text38                              E90      E90       3C     1D20       0
+                text37                              E5C      E5C       34     1CB8       0
+                text36                              DB1      DB1       1F     1B62       0
+                text35                              CD1      CD1       12     19A2       0
+                text34                               6D       6D      19D        8       0
+                text33                              20A      20A      131        8       0
+                text32                                3        3        1        6       0
+                text31                              D36      D36       17     1A6C       0
+                text30                              CC0      CC0       11     1980       0
+                text29                              CE3      CE3       12     19C6       0
+                text28                              71C      71C       60        8       0
+                text27                              7D6      7D6       25        8       0
+                text26                              D7B      D7B       1A     1AF6       0
+                text25                              33B      33B      10D        8       0
+                text24                              FA8      FA8       58     1F50       0
+                text23                              7FF      7FF        1        8       0
+                text22                              D4D      D4D       17     1A9A       0
+                text20                              77C      77C       5A        8       0
+                text19                              F55      F55       53     1EAA       0
+                text18                              448      448       D4        8       0
+                text17                              5CF      5CF       76        8       0
+                text16                              D64      D64       17     1AC8       0
+                text15                              C50      C50        9     18A0       0
+                text14                              ECC      ECC       3E     1D98       0
+                text13                              C48      C48        8     1890       0
+                text12                              C83      C83        D     1906       0
+                text11                              C21      C21        6     1842       0
+                text10                              DD0      DD0       1F     1BA0       0
+                text9                               C90      C90        E     1920       0
+                text8                               C59      C59        9     18B2       0
+                text7                               DEF      DEF       1F     1BDE       0
+                text6                               C62      C62        9     18C4       0
+                text5                               E0E      E0E       1F     1C1C       0
+                text4                               D95      D95       1C     1B2A       0
+                text3                               C1A      C1A        3     1834       0
+                text2                               7FB      7FB        4        8       0
+                text1                               C6B      C6B        C     18D6       0
+                maintext                            E2D      E2D       2F     1C5A       0
+                cstackBANK0                          20       20       2C       20       1
                 cstackCOMMON                         70       70        E       70       1
-                cstackBANK1                          A0       A0       24       A0       1
-                bssBANK0                             48       48        C       20       1
-                stringtext5                        1026     1026        5     2000       0
-                stringtext4                        1020     1020        6     2000       0
+                cstackBANK1                          A0       A0        9       A0       1
+                clrtext                             C27      C27        6     184E       0
+                inittext                            C2D      C2D        6     185A       0
+                dataBANK1                            AF       AF        6       A0       1
+                bssBANK1                             A9       A9        6       A0       1
+                dataBANK0                            5B       5B        C       20       1
+                bssBANK0                             4C       4C        F       20       1
+                stringtext4                        1020     1020        5     2000       0
                 stringtext3                        1019     1019        7     2000       0
                 stringtext2                        1000     1000        F     2000       0
-                nvBANK1                              C4       C4        4       A0       1
-                nvBANK0                              54       54        4       20       1
+                nvBANK1                              B5       B5        4       A0       1
+                nvBANK0                              67       67        8       20       1
                 stringtext1                        100F     100F        A     2000       0
+                idataBANK1                          C33      C33        6     1866       0
+                idataBANK0                          C77      C77        C     18EE       0
 
 TOTAL           Name                               Link     Load   Length     Space
         CLASS   STACK          
 
         CLASS   CODE           
-                end_init                             34       34        2         0
-                cinit                                36       36       11         0
-                intentry                              4        4       30         0
+                end_init                             40       40        2         0
+                cinit                                42       42       2B         0
+                intentry                              4        4       3C         0
                 reset_vec                             0        0        2         0
-                text38                              E1D      E1D       12         0
-                text37                              E82      E82       1A         0
-                text36                              79C      79C       4B         0
-                text35                              1E4      1E4      10D         0
-                text34                              7FF      7FF        1         0
-                text33                              FC0      FC0       40         0
-                text32                              DFB      DFB       11         0
-                text31                              E54      E54       17         0
-                text30                              E0C      E0C       11         0
-                text29                              3C5      3C5       B3         0
-                text28                              DC6      DC6        7         0
-                text27                              DCD      DCD        8         0
-                text26                              E9C      E9C       1B         0
-                text25                              F48      F48       3C         0
-                text24                              F14      F14       34         0
-                text23                              EB7      EB7       1F         0
-                text22                              E2F      E2F       12         0
-                text21                               47       47      19D         0
-                text20                              63E      63E       62         0
-                text19                              7FE      7FE        1         0
-                text18                              E6B      E6B       17         0
-                text16                              6A0      6A0       5A         0
-                text15                              6FA      6FA       53         0
-                text14                              2F1      2F1       D4         0
-                text13                              5C8      5C8       76         0
-                text12                              7E7      7E7       17         0
-                text11                              DDD      DDD        9         0
-                text10                              F84      F84       3C         0
-                text9                               DD5      DD5        8         0
-                text8                               DC0      DC0        6         0
-                text7                               ED6      ED6       1F         0
-                text6                               DE6      DE6        9         0
-                text5                               EF5      EF5       1F         0
-                text4                               E41      E41       13         0
-                text3                               74D      74D       4F         0
-                text2                               478      478       AD         0
-                text1                               DEF      DEF        C         0
-                maintext                            525      525       A3         0
+                text52                                2        2        1         0
+                text51                              6B3      6B3       69         0
+                text50                              C9E      C9E       11         0
+                text49                              D1F      D1F       17         0
+                text48                              CAF      CAF       11         0
+                text47                              F0A      F0A       4B         0
+                text46                              51C      51C       B3         0
+                text45                              C39      C39        7         0
+                text44                              C40      C40        8         0
+                text43                              CF5      CF5       14         0
+                text42                              D09      D09       16         0
+                text41                              C17      C17        3         0
+                text40                              C1D      C1D        4         0
+                text39                              645      645       6E         0
+                text38                              E90      E90       3C         0
+                text37                              E5C      E5C       34         0
+                text36                              DB1      DB1       1F         0
+                text35                              CD1      CD1       12         0
+                text34                               6D       6D      19D         0
+                text33                              20A      20A      131         0
+                text32                                3        3        1         0
+                text31                              D36      D36       17         0
+                text30                              CC0      CC0       11         0
+                text29                              CE3      CE3       12         0
+                text28                              71C      71C       60         0
+                text27                              7D6      7D6       25         0
+                text26                              D7B      D7B       1A         0
+                text25                              33B      33B      10D         0
+                text24                              FA8      FA8       58         0
+                text23                              7FF      7FF        1         0
+                text22                              D4D      D4D       17         0
+                text20                              77C      77C       5A         0
+                text19                              F55      F55       53         0
+                text18                              448      448       D4         0
+                text17                              5CF      5CF       76         0
+                text16                              D64      D64       17         0
+                text15                              C50      C50        9         0
+                text14                              ECC      ECC       3E         0
+                text13                              C48      C48        8         0
+                text12                              C83      C83        D         0
+                text11                              C21      C21        6         0
+                text10                              DD0      DD0       1F         0
+                text9                               C90      C90        E         0
+                text8                               C59      C59        9         0
+                text7                               DEF      DEF       1F         0
+                text6                               C62      C62        9         0
+                text5                               E0E      E0E       1F         0
+                text4                               D95      D95       1C         0
+                text3                               C1A      C1A        3         0
+                text2                               7FB      7FB        4         0
+                text1                               C6B      C6B        C         0
+                maintext                            E2D      E2D       2F         0
+                clrtext                             C27      C27        6         0
+                inittext                            C2D      C2D        6         0
+                idataBANK1                          C33      C33        6         0
+                idataBANK0                          C77      C77        C         0
 
         CLASS   STRCODE        
-                stringtext5                        1026     1026        5         0
-                stringtext4                        1020     1020        6         0
+                stringtext4                        1020     1020        5         0
                 stringtext3                        1019     1019        7         0
                 stringtext2                        1000     1000        F         0
                 stringtext1                        100F     100F        A         0
@@ -164,13 +201,16 @@ TOTAL           Name                               Link     Load   Length     Sp
                 cstackCOMMON                         70       70        E         1
 
         CLASS   BANK0          
-                cstackBANK0                          20       20       28         1
-                bssBANK0                             48       48        C         1
-                nvBANK0                              54       54        4         1
+                cstackBANK0                          20       20       2C         1
+                dataBANK0                            5B       5B        C         1
+                bssBANK0                             4C       4C        F         1
+                nvBANK0                              67       67        8         1
 
         CLASS   BANK1          
-                cstackBANK1                          A0       A0       24         1
-                nvBANK1                              C4       C4        4         1
+                cstackBANK1                          A0       A0        9         1
+                dataBANK1                            AF       AF        6         1
+                bssBANK1                             A9       A9        6         1
+                nvBANK1                              B5       B5        4         1
 
         CLASS   BANK2          
 
@@ -314,42 +354,61 @@ TOTAL           Name                               Link     Load   Length     Sp
 
 SEGMENTS        Name                           Load    Length   Top    Selector   Space  Class     Delta
 
-                reset_vec                      000000  000002  000002         0       0  CODE        2
+                reset_vec                      000000  000003  000003         0       0  CODE        2
+                text32                         000003  000001  000004         6       0  CODE        2
                 intentry                       000004  0007FC  000800         8       0  CODE        2
-                cstackBANK0                    000020  000038  000058        20       1  BANK0       1
+                cstackBANK0                    000020  00004F  00006F        20       1  BANK0       1
                 cstackCOMMON                   000070  00000E  00007E        70       1  COMMON      1
-                cstackBANK1                    0000A0  000028  0000C8        A0       1  BANK1       1
-                text8                          000DC0  000006  000DC6      1B80       0  CODE        2
-                text28                         000DC6  000007  000DCD      1B8C       0  CODE        2
-                text27                         000DCD  000008  000DD5      1B9A       0  CODE        2
-                text9                          000DD5  000008  000DDD      1BAA       0  CODE        2
-                text11                         000DDD  000009  000DE6      1BBA       0  CODE        2
-                text6                          000DE6  000009  000DEF      1BCC       0  CODE        2
-                text1                          000DEF  00000C  000DFB      1BDE       0  CODE        2
-                text32                         000DFB  000011  000E0C      1BF6       0  CODE        2
-                text30                         000E0C  000011  000E1D      1C18       0  CODE        2
-                text38                         000E1D  000012  000E2F      1C3A       0  CODE        2
-                text22                         000E2F  000012  000E41      1C5E       0  CODE        2
-                text4                          000E41  000013  000E54      1C82       0  CODE        2
-                text31                         000E54  000017  000E6B      1CA8       0  CODE        2
-                text18                         000E6B  000017  000E82      1CD6       0  CODE        2
-                text37                         000E82  00001A  000E9C      1D04       0  CODE        2
-                text26                         000E9C  00001B  000EB7      1D38       0  CODE        2
-                text23                         000EB7  00001F  000ED6      1D6E       0  CODE        2
-                text7                          000ED6  00001F  000EF5      1DAC       0  CODE        2
-                text5                          000EF5  00001F  000F14      1DEA       0  CODE        2
-                text24                         000F14  000034  000F48      1E28       0  CODE        2
-                text25                         000F48  00003C  000F84      1E90       0  CODE        2
-                text10                         000F84  00003C  000FC0      1F08       0  CODE        2
-                text33                         000FC0  000040  001000      1F80       0  CODE        2
-                stringtext2                    001000  00002B  00102B      2000       0  STRCODE     2
+                cstackBANK1                    0000A0  000019  0000B9        A0       1  BANK1       1
+                text41                         000C17  000003  000C1A      182E       0  CODE        2
+                text3                          000C1A  000003  000C1D      1834       0  CODE        2
+                text40                         000C1D  000004  000C21      183A       0  CODE        2
+                text11                         000C21  000006  000C27      1842       0  CODE        2
+                clrtext                        000C27  000006  000C2D      184E       0  CODE        2
+                inittext                       000C2D  000006  000C33      185A       0  CODE        2
+                idataBANK1                     000C33  000006  000C39      1866       0  CODE        2
+                text45                         000C39  000007  000C40      1872       0  CODE        2
+                text44                         000C40  000008  000C48      1880       0  CODE        2
+                text13                         000C48  000008  000C50      1890       0  CODE        2
+                text15                         000C50  000009  000C59      18A0       0  CODE        2
+                text8                          000C59  000009  000C62      18B2       0  CODE        2
+                text6                          000C62  000009  000C6B      18C4       0  CODE        2
+                text1                          000C6B  00000C  000C77      18D6       0  CODE        2
+                idataBANK0                     000C77  00000C  000C83      18EE       0  CODE        2
+                text12                         000C83  00000D  000C90      1906       0  CODE        2
+                text9                          000C90  00000E  000C9E      1920       0  CODE        2
+                text50                         000C9E  000011  000CAF      193C       0  CODE        2
+                text48                         000CAF  000011  000CC0      195E       0  CODE        2
+                text30                         000CC0  000011  000CD1      1980       0  CODE        2
+                text35                         000CD1  000012  000CE3      19A2       0  CODE        2
+                text29                         000CE3  000012  000CF5      19C6       0  CODE        2
+                text43                         000CF5  000014  000D09      19EA       0  CODE        2
+                text42                         000D09  000016  000D1F      1A12       0  CODE        2
+                text49                         000D1F  000017  000D36      1A3E       0  CODE        2
+                text31                         000D36  000017  000D4D      1A6C       0  CODE        2
+                text22                         000D4D  000017  000D64      1A9A       0  CODE        2
+                text16                         000D64  000017  000D7B      1AC8       0  CODE        2
+                text26                         000D7B  00001A  000D95      1AF6       0  CODE        2
+                text4                          000D95  00001C  000DB1      1B2A       0  CODE        2
+                text36                         000DB1  00001F  000DD0      1B62       0  CODE        2
+                text10                         000DD0  00001F  000DEF      1BA0       0  CODE        2
+                text7                          000DEF  00001F  000E0E      1BDE       0  CODE        2
+                text5                          000E0E  00001F  000E2D      1C1C       0  CODE        2
+                maintext                       000E2D  00002F  000E5C      1C5A       0  CODE        2
+                text37                         000E5C  000034  000E90      1CB8       0  CODE        2
+                text38                         000E90  00003C  000ECC      1D20       0  CODE        2
+                text14                         000ECC  00003E  000F0A      1D98       0  CODE        2
+                text47                         000F0A  00004B  000F55      1E14       0  CODE        2
+                text19                         000F55  000053  000FA8      1EAA       0  CODE        2
+                text24                         000FA8  000058  001000      1F50       0  CODE        2
+                stringtext2                    001000  000025  001025      2000       0  STRCODE     2
 
 
 UNUSED ADDRESS RANGES
 
         Name                Unused          Largest block    Delta
-        BANK0            00058-0006F              18           1
-        BANK1            000C8-000EF              28           1
+        BANK0            0006F-0006F               1           1
+        BANK1            000B9-000EF              37           1
         BANK10           00520-0056F              50           1
         BANK11           005A0-005EF              50           1
         BANK12           00620-0064F              30           1
@@ -362,19 +421,16 @@ UNUSED ADDRESS RANGES
         BANK8            00420-0046F              50           1
         BANK9            004A0-004EF              50           1
         BIGRAM           02000-023EF             3F0           1
-        CODE             00002-00003               2           2
-                         00800-00DBF             5C0
-                         0102B-01FFF             7D5
-        CONST            00002-00003               2           2
-                         00800-00DBF             100
-                         0102B-01FFF             100
+        CODE             00800-00C16             417           2
+                         01025-01FFF             7DB
+        CONST            00800-00C16             100           2
+                         01025-01FFF             100
         EEDATA           0F000-0F0FF             100           2
-        ENTRY            00002-00003               2           2
-                         00800-00DBF             100
-                         0102B-01FFF             100
+        ENTRY            00800-00C16             100           2
+                         01025-01FFF             100
         IDLOC            08000-08003               4           2
-        RAM              00058-0006F              18           1
-                         000C8-000EF              28
+        RAM              0006F-0006F               1           1
+                         000B9-000EF              37
                          00120-0016F              50
                          001A0-001EF              50
                          00220-0026F              50
@@ -418,21 +474,20 @@ UNUSED ADDRESS RANGES
         SFR7             00380-0039F              20           1
         SFR8             00400-0041F              20           1
         SFR9             00480-0049F              20           1
-        STACK            02078-023EF             378           1
-        STRCODE          00002-00003               2           2
-                         00800-00DBF             5C0
-                         0102B-01FFF             FD5
-        STRING           00002-00003               2           2
-                         00800-00DBF             100
-                         0102B-01FFF             100
+        STACK            02069-023EF             387           1
+        STRCODE          00800-00C16             417           2
+                         01025-01FFF             FDB
+        STRING           00800-00C16             100           2
+                         01025-01FFF             100
 
                                   Symbol Table
 
 ?_ADCC_GetSingleConversion                cstackCOMMON 00070
+?___awdiv                                 cstackCOMMON 00076
 ?___lwdiv                                 cstackCOMMON 00070
 ?___lwmod                                 cstackCOMMON 00078
 ?___wmul                                  cstackCOMMON 00070
-?___xxtofl                                cstackBANK1  000A0
+?_map                                     cstackBANK0  00024
 ?_sprintf                                 cstackBANK0  00020
 ADCC_GetSingleConversion@channel          cstackCOMMON 00073
 LCDchar@c                                 cstackCOMMON 00078
@@ -442,20 +497,23 @@ LCDsend2x4@hc                             cstackBANK1  000A6
 LCDsend2x4@lc                             cstackBANK1  000A7
 LCDsend2x4@mode                           cstackBANK1  000A2
 LCDsend@c                                 cstackBANK1  000A3
-LCDstr@c                                  cstackBANK0  00020
-LCDstr@p                                  cstackCOMMON 00079
+LCDstr@c                                  cstackCOMMON 0007A
+LCDstr@p                                  cstackCOMMON 0007B
+PWM6_LoadDutyValue@dutyValue              cstackCOMMON 00070
 TMR1_SetInterruptHandler@InterruptHandler cstackBANK1  000A0
 TMR1_WriteTimer@timerVal                  cstackCOMMON 00070
 TMR3_SetInterruptHandler@InterruptHandler cstackBANK1  000A0
 TMR3_WriteTimer@timerVal                  cstackCOMMON 00070
+TMR5_SetInterruptHandler@InterruptHandler cstackBANK1  000A0
+TMR5_WriteTimer@timerVal                  cstackCOMMON 00070
 WriteI2C@data_out                         cstackBANK1  000A1
 _ADACCH                                   (abs)        00091
 _ADACCL                                   (abs)        00090
 _ADACQ                                    (abs)        0009D
 _ADACT                                    (abs)        00099
 _ADCAP                                    (abs)        0009B
-_ADCC_GetSingleConversion                 text38       00E1D
-_ADCC_Initialize                          text12       007E7
+_ADCC_GetSingleConversion                 text29       00CE3
+_ADCC_Initialize                          text16       00D64
 _ADCLK                                    (abs)        00098
 _ADCNT                                    (abs)        0010C
 _ADCON0                                   (abs)        00093
@@ -491,7 +549,8 @@ _ANSELB                                   (abs)        00F43
 _ANSELC                                   (abs)        00F4E
 _ANSELD                                   (abs)        00F59
 _ANSELE                                   (abs)        00F64
-_Clock_ISR                                text33       00FC0
+_CCPTMRS1bits                             (abs)        0021F
+_Clock_ISR                                text51       006B3
 _INTCONbits                               (abs)        0000B
 _INTERRUPT_InterruptManager               intentry     00004
 _LATA                                     (abs)        00016
@@ -500,12 +559,12 @@ _LATB                                     (abs)        00017
 _LATC                                     (abs)        00018
 _LATD                                     (abs)        00019
 _LATE                                     (abs)        0001A
-_LCDchar                                  text27       00DCD
-_LCDcmd                                   text28       00DC6
-_LCDinit                                  text13       005C8
-_LCDsend                                  text15       006FA
-_LCDsend2x4                               text14       002F1
-_LCDstr                                   text26       00E9C
+_LCDchar                                  text44       00C40
+_LCDcmd                                   text45       00C39
+_LCDinit                                  text17       005CF
+_LCDsend                                  text19       00F55
+_LCDsend2x4                               text18       00448
+_LCDstr                                   text43       00CF5
 _ODCONA                                   (abs)        00F3A
 _ODCONB                                   (abs)        00F45
 _ODCONC                                   (abs)        00F50
@@ -515,11 +574,11 @@ _OSCCON1                                  (abs)        0088D
 _OSCCON3                                  (abs)        0088F
 _OSCEN                                    (abs)        00891
 _OSCFRQ                                   (abs)        00893
-_OSCILLATOR_Initialize                    text11       00DDD
+_OSCILLATOR_Initialize                    text15       00C50
 _OSCTUNE                                  (abs)        00892
 _PIE3bits                                 (abs)        00719
 _PIE4bits                                 (abs)        0071A
-_PIN_MANAGER_Initialize                   text10       00F84
+_PIN_MANAGER_Initialize                   text14       00ECC
 _PIR3bits                                 (abs)        0070F
 _PIR4bits                                 (abs)        00710
 _PMD0                                     (abs)        00796
@@ -528,11 +587,17 @@ _PMD2                                     (abs)        00798
 _PMD3                                     (abs)        00799
 _PMD4                                     (abs)        0079A
 _PMD5                                     (abs)        0079B
-_PMD_Initialize                           text9        00DD5
-_PORTBbits                                (abs)        0000D
+_PMD_Initialize                           text13       00C48
+_PR2                                      (abs)        0028D
+_PWM6CON                                  (abs)        0038E
+_PWM6DCH                                  (abs)        0038D
+_PWM6DCL                                  (abs)        0038C
+_PWM6_Initialize                          text12       00C83
+_PWM6_LoadDutyValue                       text42       00D09
+_RA6PPS                                   (abs)        00F16
 _RC3PPS                                   (abs)        00F23
 _RC4PPS                                   (abs)        00F24
-_ReadI2C                                  text37       00E82
+_ReadI2C                                  text26       00D7B
 _SLRCONA                                  (abs)        00F3B
 _SLRCONB                                  (abs)        00F46
 _SLRCONC                                  (abs)        00F51
@@ -549,35 +614,64 @@ _SSP1DATPPS                               (abs)        00EC6
 _SSP1MSK                                  (abs)        0018E
 _SSP1STAT                                 (abs)        0018F
 _SSP1STATbits                             (abs)        0018F
-_SYSTEM_Initialize                        text4        00E41
+_SYSTEM_Initialize                        text4        00D95
 _T1CLK                                    (abs)        00211
 _T1CON                                    (abs)        0020E
 _T1CONbits                                (abs)        0020E
 _T1GATE                                   (abs)        00210
 _T1GCON                                   (abs)        0020F
 _T1GCONbits                               (abs)        0020F
+_T2CLKCON                                 (abs)        00290
+_T2CON                                    (abs)        0028E
+_T2CONbits                                (abs)        0028E
+_T2HLT                                    (abs)        0028F
+_T2HLTbits                                (abs)        0028F
+_T2PR                                     (abs)        0028D
+_T2RST                                    (abs)        00291
+_T2RSTbits                                (abs)        00291
+_T2TMR                                    (abs)        0028C
 _T3CLK                                    (abs)        00217
 _T3CON                                    (abs)        00214
 _T3CONbits                                (abs)        00214
 _T3GATE                                   (abs)        00216
 _T3GCON                                   (abs)        00215
 _T3GCONbits                               (abs)        00215
+_T5CLK                                    (abs)        0021D
+_T5CON                                    (abs)        0021A
+_T5CONbits                                (abs)        0021A
+_T5GATE                                   (abs)        0021C
+_T5GCON                                   (abs)        0021B
+_T5GCONbits                               (abs)        0021B
 _TMR1H                                    (abs)        0020D
 _TMR1L                                    (abs)        0020C
-_TMR1_DefaultInterruptHandler             text34       007FF
-_TMR1_ISR                                 text31       00E54
-_TMR1_Initialize                          text7        00ED6
-_TMR1_InterruptHandler                    nvBANK1      000C4
-_TMR1_SetInterruptHandler                 text8        00DC0
-_TMR1_WriteTimer                          text32       00DFB
+_TMR1_DefaultInterruptHandler             text52       00002
+_TMR1_ISR                                 text49       00D1F
+_TMR1_Initialize                          text10       00DD0
+_TMR1_InterruptHandler                    nvBANK1      000B5
+_TMR1_SetInterruptHandler                 text11       00C21
+_TMR1_WriteTimer                          text50       00C9E
+_TMR2                                     (abs)        0028C
+_TMR2_Initialize                          text9        00C90
+_TMR2_Start                               text41       00C17
+_TMR2_StartTimer                          text40       00C1D
+_TMR2_Stop                                text3        00C1A
+_TMR2_StopTimer                           text2        007FB
 _TMR3H                                    (abs)        00213
 _TMR3L                                    (abs)        00212
-_TMR3_DefaultInterruptHandler             text19       007FE
-_TMR3_ISR                                 text18       00E6B
-_TMR3_Initialize                          text5        00EF5
-_TMR3_InterruptHandler                    nvBANK0      00054
-_TMR3_SetInterruptHandler                 text6        00DE6
-_TMR3_WriteTimer                          text30       00E0C
+_TMR3_DefaultInterruptHandler             text32       00003
+_TMR3_ISR                                 text31       00D36
+_TMR3_Initialize                          text7        00DEF
+_TMR3_InterruptHandler                    nvBANK0      0006B
+_TMR3_SetInterruptHandler                 text8        00C59
+_TMR3_WriteTimer                          text48       00CAF
+_TMR5H                                    (abs)        00219
+_TMR5L                                    (abs)        00218
+_TMR5_DefaultInterruptHandler             text23       007FF
+_TMR5_ISR                                 text22       00D4D
+_TMR5_Initialize                          text5        00E0E
+_TMR5_InterruptHandler                    nvBANK0      00067
+_TMR5_SetInterruptHandler                 text6        00C62
+_TMR5_WriteTimer                          text30       00CC0
 _TRISA                                    (abs)        00011
 _TRISB                                    (abs)        00012
 _TRISC                                    (abs)        00013
@@ -591,7 +685,7 @@ _WPUC3                                    (abs)        07A7B
 _WPUC4                                    (abs)        07A7C
 _WPUD                                     (abs)        00F5A
 _WPUE                                     (abs)        00F65
-_WriteI2C                                 text16       006A0
+_WriteI2C                                 text20       0077C
 __Habs1                                   abs1         00000
 __Hbank0                                  bank0        00000
 __Hbank1                                  bank1        00000
@@ -627,7 +721,8 @@ __Hbank8                                  bank8        00000
 __Hbank9                                  bank9        00000
 __Hbigram                                 bigram       00000
 __HbssBANK0                               bssBANK0     00000
-__Hcinit                                  cinit        00047
+__HbssBANK1                               bssBANK1     00000
+__Hcinit                                  cinit        0006D
 __Hclrtext                                clrtext      00000
 __Hcode                                   code         00000
 __Hcommon                                 common       00000
@@ -635,11 +730,16 @@ __Hconfig                                 config       0800C
 __HcstackBANK0                            cstackBANK0  00000
 __HcstackBANK1                            cstackBANK1  00000
 __HcstackCOMMON                           cstackCOMMON 00000
+__HdataBANK0                              dataBANK0    00000
+__HdataBANK1                              dataBANK1    00000
 __Heeprom_data                            eeprom_data  00000
-__Hend_init                               end_init     00036
+__Hend_init                               end_init     00042
 __Hfunctab                                functab      00000
-__Hinit                                   init         00034
-__Hintentry                               intentry     00034
+__HidataBANK0                             idataBANK0   00000
+__HidataBANK1                             idataBANK1   00000
+__Hinit                                   init         00040
+__Hinittext                               inittext     00000
+__Hintentry                               intentry     00040
 __Hmaintext                               maintext     00000
 __HnvBANK0                                nvBANK0      00000
 __HnvBANK1                                nvBANK1      00000
@@ -678,8 +778,8 @@ __Hsfr6                                   sfr6         00000
 __Hsfr7                                   sfr7         00000
 __Hsfr8                                   sfr8         00000
 __Hsfr9                                   sfr9         00000
-__Hspace_0                                (abs)        0102B
-__Hspace_1                                (abs)        000C8
+__Hspace_0                                (abs)        01025
+__Hspace_1                                (abs)        000B9
 __Hspace_2                                (abs)        00000
 __Hspace_3                                (abs)        00000
 __Hspace_4                                (abs)        10013
@@ -690,7 +790,6 @@ __Hstringtext2                            stringtext2  00000
 __Hstringtext3                            stringtext3  00000
 __Hstringtext4                            stringtext4  00000
 __Hstringtext5                            stringtext5  00000
-__Hstringtext6                            stringtext6  00000
 __Htext                                   text         00000
 __Labs1                                   abs1         00000
 __Lbank0                                  bank0        00000
@@ -727,7 +826,8 @@ __Lbank8                                  bank8        00000
 __Lbank9                                  bank9        00000
 __Lbigram                                 bigram       00000
 __LbssBANK0                               bssBANK0     00000
-__Lcinit                                  cinit        00036
+__LbssBANK1                               bssBANK1     00000
+__Lcinit                                  cinit        00042
 __Lclrtext                                clrtext      00000
 __Lcode                                   code         00000
 __Lcommon                                 common       00000
@@ -735,10 +835,15 @@ __Lconfig                                 config       00000
 __LcstackBANK0                            cstackBANK0  00000
 __LcstackBANK1                            cstackBANK1  00000
 __LcstackCOMMON                           cstackCOMMON 00000
+__LdataBANK0                              dataBANK0    00000
+__LdataBANK1                              dataBANK1    00000
 __Leeprom_data                            eeprom_data  00000
-__Lend_init                               end_init     00034
+__Lend_init                               end_init     00040
 __Lfunctab                                functab      00000
-__Linit                                   init         00034
+__LidataBANK0                             idataBANK0   00000
+__LidataBANK1                             idataBANK1   00000
+__Linit                                   init         00040
+__Linittext                               inittext     00000
 __Lintentry                               intentry     00004
 __Lmaintext                               maintext     00000
 __LnvBANK0                                nvBANK0      00000
@@ -790,131 +895,160 @@ __Lstringtext2                            stringtext2  00000
 __Lstringtext3                            stringtext3  00000
 __Lstringtext4                            stringtext4  00000
 __Lstringtext5                            stringtext5  00000
-__Lstringtext6                            stringtext6  00000
 __Ltext                                   text         00000
-__S0                                      (abs)        0102B
-__S1                                      (abs)        000C8
+__S0                                      (abs)        01025
+__S1                                      (abs)        000B9
 __S2                                      (abs)        00000
 __S3                                      (abs)        00000
-___fleq                                   text3        0074D
-___fleq@ff1                               cstackBANK1  000AE
-___fleq@ff2                               cstackBANK1  000B2
+___awdiv                                  text28       0071C
+___awdiv@counter                          cstackBANK0  00020
+___awdiv@dividend                         cstackCOMMON 00078
+___awdiv@divisor                          cstackCOMMON 00076
+___awdiv@quotient                         cstackBANK0  00022
+___awdiv@sign                             cstackBANK0  00021
 ___int_sp                                 stack        00000
 ___latbits                                (abs)        00002
-___lwdiv                                  text25       00F48
+___lwdiv                                  text38       00E90
 ___lwdiv@counter                          cstackCOMMON 00077
 ___lwdiv@dividend                         cstackCOMMON 00072
 ___lwdiv@divisor                          cstackCOMMON 00070
 ___lwdiv@quotient                         cstackCOMMON 00075
-___lwmod                                  text24       00F14
+___lwmod                                  text37       00E5C
 ___lwmod@counter                          cstackCOMMON 0007D
 ___lwmod@dividend                         cstackCOMMON 0007A
 ___lwmod@divisor                          cstackCOMMON 00078
 ___sp                                     stack        00000
 ___stackhi                                (abs)        023EF
-___stacklo                                (abs)        02078
-___wmul                                   text23       00EB7
+___stacklo                                (abs)        02069
+___wmul                                   text36       00DB1
 ___wmul@multiplicand                      cstackCOMMON 00072
 ___wmul@multiplier                        cstackCOMMON 00070
 ___wmul@product                           cstackCOMMON 00074
-___xxtofl                                 text2        00478
-___xxtofl@arg                             cstackBANK1  000AA
-___xxtofl@exp                             cstackBANK1  000A9
-___xxtofl@sign                            cstackBANK1  000A8
-___xxtofl@val                             cstackBANK1  000A0
-__end_of_ADCC_GetSingleConversion         text38       00E2F
-__end_of_ADCC_Initialize                  text12       007FE
-__end_of_Clock_ISR                        text33       01000
-__end_of_INTERRUPT_InterruptManager       intentry     00034
-__end_of_LCDchar                          text27       00DD5
-__end_of_LCDcmd                           text28       00DCD
-__end_of_LCDinit                          text13       0063E
-__end_of_LCDsend                          text15       0074D
-__end_of_LCDsend2x4                       text14       003C5
-__end_of_LCDstr                           text26       00EB7
-__end_of_OSCILLATOR_Initialize            text11       00DE6
-__end_of_PIN_MANAGER_Initialize           text10       00FC0
-__end_of_PMD_Initialize                   text9        00DDD
-__end_of_ReadI2C                          text37       00E9C
-__end_of_SYSTEM_Initialize                text4        00E54
-__end_of_TMR1_DefaultInterruptHandler     text34       00800
-__end_of_TMR1_ISR                         text31       00E6B
-__end_of_TMR1_Initialize                  text7        00EF5
-__end_of_TMR1_SetInterruptHandler         text8        00DC6
-__end_of_TMR1_WriteTimer                  text32       00E0C
-__end_of_TMR3_DefaultInterruptHandler     text19       007FF
-__end_of_TMR3_ISR                         text18       00E82
-__end_of_TMR3_Initialize                  text5        00F14
-__end_of_TMR3_SetInterruptHandler         text6        00DEF
-__end_of_TMR3_WriteTimer                  text30       00E1D
-__end_of_WriteI2C                         text16       006FA
-__end_of___fleq                           text3        0079C
-__end_of___lwdiv                          text25       00F84
-__end_of___lwmod                          text24       00F48
-__end_of___wmul                           text23       00ED6
-__end_of___xxtofl                         text2        00525
-__end_of__initialization                  cinit        00043
+__end_of_ADCC_GetSingleConversion         text29       00CF5
+__end_of_ADCC_Initialize                  text16       00D7B
+__end_of_Clock_ISR                        text51       0071C
+__end_of_INTERRUPT_InterruptManager       intentry     00040
+__end_of_LCDchar                          text44       00C48
+__end_of_LCDcmd                           text45       00C40
+__end_of_LCDinit                          text17       00645
+__end_of_LCDsend                          text19       00FA8
+__end_of_LCDsend2x4                       text18       0051C
+__end_of_LCDstr                           text43       00D09
+__end_of_OSCILLATOR_Initialize            text15       00C59
+__end_of_PIN_MANAGER_Initialize           text14       00F0A
+__end_of_PMD_Initialize                   text13       00C50
+__end_of_PWM6_Initialize                  text12       00C90
+__end_of_PWM6_LoadDutyValue               text42       00D1F
+__end_of_ReadI2C                          text26       00D95
+__end_of_SYSTEM_Initialize                text4        00DB1
+__end_of_TMR1_DefaultInterruptHandler     text52       00003
+__end_of_TMR1_ISR                         text49       00D36
+__end_of_TMR1_Initialize                  text10       00DEF
+__end_of_TMR1_SetInterruptHandler         text11       00C27
+__end_of_TMR1_WriteTimer                  text50       00CAF
+__end_of_TMR2_Initialize                  text9        00C9E
+__end_of_TMR2_Start                       text41       00C1A
+__end_of_TMR2_StartTimer                  text40       00C21
+__end_of_TMR2_Stop                        text3        00C1D
+__end_of_TMR2_StopTimer                   text2        007FF
+__end_of_TMR3_DefaultInterruptHandler     text32       00004
+__end_of_TMR3_ISR                         text31       00D4D
+__end_of_TMR3_Initialize                  text7        00E0E
+__end_of_TMR3_SetInterruptHandler         text8        00C62
+__end_of_TMR3_WriteTimer                  text48       00CC0
+__end_of_TMR5_DefaultInterruptHandler     text23       00800
+__end_of_TMR5_ISR                         text22       00D64
+__end_of_TMR5_Initialize                  text5        00E2D
+__end_of_TMR5_SetInterruptHandler         text6        00C6B
+__end_of_TMR5_WriteTimer                  text30       00CD1
+__end_of_WriteI2C                         text20       007D6
+__end_of___awdiv                          text28       0077C
+__end_of___lwdiv                          text38       00ECC
+__end_of___lwmod                          text37       00E90
+__end_of___wmul                           text36       00DD0
+__end_of__initialization                  cinit        00069
+__end_of_differenceBetweenTimePeriod      text39       006B3
 __end_of_dpowers                          stringtext1  01019
-__end_of_i2c1_driver_open                 text1        00DFB
-__end_of_isdigit                          text22       00E41
-__end_of_main                             maintext     005C8
-__end_of_menuLCD_ISR                      text20       006A0
-__end_of_sprintf                          text21       001E4
-__end_of_tsttc                            text35       002F1
-__end_ofi1_LCDsend2x4                     text29       00478
-__end_ofi1_WriteI2C                       text36       007E7
-__initialization                          cinit        00036
-__pbssBANK0                               bssBANK0     00048
+__end_of_i2c1_driver_open                 text1        00C77
+__end_of_isdigit                          text35       00CE3
+__end_of_main                             maintext     00E5C
+__end_of_map                              text27       007FB
+__end_of_menuLCD_ISR                      text33       0033B
+__end_of_monitoring_ISR                   text24       01000
+__end_of_sprintf                          text34       0020A
+__end_of_tsttc                            text25       00448
+__end_ofi1_LCDsend2x4                     text46       005CF
+__end_ofi1_WriteI2C                       text47       00F55
+__initialization                          cinit        00042
+__pbssBANK0                               bssBANK0     0004C
+__pbssBANK1                               bssBANK1     000A9
 __pcstackBANK0                            cstackBANK0  00020
 __pcstackBANK1                            cstackBANK1  000A0
 __pcstackCOMMON                           cstackCOMMON 00070
+__pdataBANK0                              dataBANK0    0005B
+__pdataBANK1                              dataBANK1    000AF
+__pidataBANK0                             idataBANK0   00C77
+__pidataBANK1                             idataBANK1   00C33
 __pintentry                               intentry     00004
-__pmaintext                               maintext     00525
-__pnvBANK0                                nvBANK0      00054
-__pnvBANK1                                nvBANK1      000C4
+__pmaintext                               maintext     00E2D
+__pnvBANK0                                nvBANK0      00067
+__pnvBANK1                                nvBANK1      000B5
 __pstringtext1                            stringtext1  0100F
 __pstringtext2                            stringtext2  01000
 __pstringtext3                            stringtext3  01019
 __pstringtext4                            stringtext4  01020
-__pstringtext5                            stringtext5  01026
-__pstringtext6                            stringtext6  00000
-__ptext1                                  text1        00DEF
-__ptext10                                 text10       00F84
-__ptext11                                 text11       00DDD
-__ptext12                                 text12       007E7
-__ptext13                                 text13       005C8
-__ptext14                                 text14       002F1
-__ptext15                                 text15       006FA
-__ptext16                                 text16       006A0
-__ptext18                                 text18       00E6B
-__ptext19                                 text19       007FE
-__ptext2                                  text2        00478
-__ptext20                                 text20       0063E
-__ptext21                                 text21       00047
-__ptext22                                 text22       00E2F
-__ptext23                                 text23       00EB7
-__ptext24                                 text24       00F14
-__ptext25                                 text25       00F48
-__ptext26                                 text26       00E9C
-__ptext27                                 text27       00DCD
-__ptext28                                 text28       00DC6
-__ptext29                                 text29       003C5
-__ptext3                                  text3        0074D
-__ptext30                                 text30       00E0C
-__ptext31                                 text31       00E54
-__ptext32                                 text32       00DFB
-__ptext33                                 text33       00FC0
-__ptext34                                 text34       007FF
-__ptext35                                 text35       001E4
-__ptext36                                 text36       0079C
-__ptext37                                 text37       00E82
-__ptext38                                 text38       00E1D
-__ptext4                                  text4        00E41
-__ptext5                                  text5        00EF5
-__ptext6                                  text6        00DE6
-__ptext7                                  text7        00ED6
-__ptext8                                  text8        00DC0
-__ptext9                                  text9        00DD5
+__pstringtext5                            stringtext5  00000
+__ptext1                                  text1        00C6B
+__ptext10                                 text10       00DD0
+__ptext11                                 text11       00C21
+__ptext12                                 text12       00C83
+__ptext13                                 text13       00C48
+__ptext14                                 text14       00ECC
+__ptext15                                 text15       00C50
+__ptext16                                 text16       00D64
+__ptext17                                 text17       005CF
+__ptext18                                 text18       00448
+__ptext19                                 text19       00F55
+__ptext2                                  text2        007FB
+__ptext20                                 text20       0077C
+__ptext22                                 text22       00D4D
+__ptext23                                 text23       007FF
+__ptext24                                 text24       00FA8
+__ptext25                                 text25       0033B
+__ptext26                                 text26       00D7B
+__ptext27                                 text27       007D6
+__ptext28                                 text28       0071C
+__ptext29                                 text29       00CE3
+__ptext3                                  text3        00C1A
+__ptext30                                 text30       00CC0
+__ptext31                                 text31       00D36
+__ptext32                                 text32       00003
+__ptext33                                 text33       0020A
+__ptext34                                 text34       0006D
+__ptext35                                 text35       00CD1
+__ptext36                                 text36       00DB1
+__ptext37                                 text37       00E5C
+__ptext38                                 text38       00E90
+__ptext39                                 text39       00645
+__ptext4                                  text4        00D95
+__ptext40                                 text40       00C1D
+__ptext41                                 text41       00C17
+__ptext42                                 text42       00D09
+__ptext43                                 text43       00CF5
+__ptext44                                 text44       00C40
+__ptext45                                 text45       00C39
+__ptext46                                 text46       0051C
+__ptext47                                 text47       00F0A
+__ptext48                                 text48       00CAF
+__ptext49                                 text49       00D1F
+__ptext5                                  text5        00E0E
+__ptext50                                 text50       00C9E
+__ptext51                                 text51       006B3
+__ptext52                                 text52       00002
+__ptext6                                  text6        00C62
+__ptext7                                  text7        00DEF
+__ptext8                                  text8        00C59
+__ptext9                                  text9        00C90
 __size_of_ADCC_GetSingleConversion        (abs)        00000
 __size_of_ADCC_Initialize                 (abs)        00000
 __size_of_Clock_ISR                       (abs)        00000
@@ -928,6 +1062,8 @@ __size_of_LCDstr                          (abs)        00000
 __size_of_OSCILLATOR_Initialize           (abs)        00000
 __size_of_PIN_MANAGER_Initialize          (abs)        00000
 __size_of_PMD_Initialize                  (abs)        00000
+__size_of_PWM6_Initialize                 (abs)        00000
+__size_of_PWM6_LoadDutyValue              (abs)        00000
 __size_of_ReadI2C                         (abs)        00000
 __size_of_SYSTEM_Initialize               (abs)        00000
 __size_of_TMR1_DefaultInterruptHandler    (abs)        00000
@@ -935,49 +1071,76 @@ __size_of_TMR1_ISR                        (abs)        00000
 __size_of_TMR1_Initialize                 (abs)        00000
 __size_of_TMR1_SetInterruptHandler        (abs)        00000
 __size_of_TMR1_WriteTimer                 (abs)        00000
+__size_of_TMR2_Initialize                 (abs)        00000
+__size_of_TMR2_Start                      (abs)        00000
+__size_of_TMR2_StartTimer                 (abs)        00000
+__size_of_TMR2_Stop                       (abs)        00000
+__size_of_TMR2_StopTimer                  (abs)        00000
 __size_of_TMR3_DefaultInterruptHandler    (abs)        00000
 __size_of_TMR3_ISR                        (abs)        00000
 __size_of_TMR3_Initialize                 (abs)        00000
 __size_of_TMR3_SetInterruptHandler        (abs)        00000
 __size_of_TMR3_WriteTimer                 (abs)        00000
+__size_of_TMR5_DefaultInterruptHandler    (abs)        00000
+__size_of_TMR5_ISR                        (abs)        00000
+__size_of_TMR5_Initialize                 (abs)        00000
+__size_of_TMR5_SetInterruptHandler        (abs)        00000
+__size_of_TMR5_WriteTimer                 (abs)        00000
 __size_of_WriteI2C                        (abs)        00000
-__size_of___fleq                          (abs)        00000
+__size_of___awdiv                         (abs)        00000
 __size_of___lwdiv                         (abs)        00000
 __size_of___lwmod                         (abs)        00000
 __size_of___wmul                          (abs)        00000
-__size_of___xxtofl                        (abs)        00000
+__size_of_differenceBetweenTimePeriod     (abs)        00000
 __size_of_i2c1_driver_open                (abs)        00000
 __size_of_isdigit                         (abs)        00000
 __size_of_main                            (abs)        00000
+__size_of_map                             (abs)        00000
 __size_of_menuLCD_ISR                     (abs)        00000
+__size_of_monitoring_ISR                  (abs)        00000
 __size_of_sprintf                         (abs)        00000
 __size_of_tsttc                           (abs)        00000
 __size_ofi1_LCDsend2x4                    (abs)        00000
 __size_ofi1_WriteI2C                      (abs)        00000
-_c                                        bssBANK0     00053
+_alarmPWMStart                            dataBANK1    000AF
+_alarmsEnable                             dataBANK0    00066
+_clkAlarm                                 dataBANK0    0005B
+_differenceBetweenTimePeriod              text39       00645
+_dimingLed                                bssBANK0     00052
 _dpowers                                  stringtext1  0100F
-_i2c1_driver_busCollisionISR              bssBANK0     00050
-_i2c1_driver_i2cISR                       bssBANK0     0004E
-_i2c1_driver_open                         text1        00DEF
-_isdigit                                  text22       00E2F
-_isdigit$2255                             cstackCOMMON 00070
-_lum                                      bssBANK0     00052
-_main                                     maintext     00525
-_menuLCD_ISR                              text20       0063E
-_sprintf                                  text21       00047
-_t                                        bssBANK0     00048
-_timer1ReloadVal                          nvBANK1      000C6
-_timer3ReloadVal                          nvBANK0      00056
-_tsttc                                    text35       001E4
+_i2c1_driver_busCollisionISR              bssBANK0     00058
+_i2c1_driver_i2cISR                       bssBANK0     00056
+_i2c1_driver_open                         text1        00C6B
+_isdigit                                  text35       00CD1
+_isdigit$2747                             cstackCOMMON 00070
+_lumAlarm                                 dataBANK0    00062
+_lumLevel                                 bssBANK0     00054
+_main                                     maintext     00E2D
+_map                                      text27       007D6
+_menuLCD_ISR                              text33       0020A
+_monitoring_ISR                           text24       00FA8
+_sprintf                                  text34       0006D
+_t                                        bssBANK0     0004C
+_temp                                     bssBANK0     0005A
+_tempAlarm                                dataBANK0    00064
+_timer1ReloadVal                          nvBANK1      000B7
+_timer3ReloadVal                          nvBANK0      0006D
+_timer5ReloadVal                          nvBANK0      00069
+_tsttc                                    text25       0033B
 btemp                                     (abs)        0007E
-end_of_initialization                     cinit        00043
+clear_ram0                                clrtext      00C27
+differenceBetweenTimePeriod@diff          cstackCOMMON 0007C
+differenceBetweenTimePeriod@start         cstackCOMMON 00070
+differenceBetweenTimePeriod@stop          cstackCOMMON 00076
+end_of_initialization                     cinit        00069
 i1LCDsend2x4@c                            cstackCOMMON 00075
 i1LCDsend2x4@hc                           cstackCOMMON 00076
 i1LCDsend2x4@lc                           cstackCOMMON 00077
 i1LCDsend2x4@mode                         cstackCOMMON 00072
 i1WriteI2C@data_out                       cstackCOMMON 00071
-i1_LCDsend2x4                             text29       003C5
-i1_WriteI2C                               text36       0079C
+i1_LCDsend2x4                             text46       0051C
+i1_WriteI2C                               text47       00F0A
+init_ram                                  inittext     00C2D
 int$flags                                 (abs)        0007E
 intlevel0                                 functab      00000
 intlevel1                                 functab      00000
@@ -986,11 +1149,17 @@ intlevel3                                 functab      00000
 intlevel4                                 functab      00000
 intlevel5                                 functab      00000
 isdigit@c                                 cstackCOMMON 00071
-main@a                                    cstackBANK1  000C2
-main@aux                                  cstackBANK1  000BE
-menuLCD_ISR@l                             cstackBANK0  0003F
+map@in_max                                cstackBANK0  00028
+map@in_min                                cstackBANK0  00026
+map@out_max                               cstackBANK0  0002C
+map@out_min                               cstackBANK0  0002A
+map@x                                     cstackBANK0  00024
+menuLCD_ISR@F12782                        bssBANK1     000A9
+menuLCD_ISR@diff                          cstackBANK0  00046
+menuLCD_ISR@l                             cstackBANK0  00043
 menuLCD_ISR@str                           cstackBANK0  00037
-menuLCD_ISR@tt                            cstackBANK0  00044
+menuLCD_ISR@tt                            cstackBANK0  0003F
+monitoring_ISR@lum                        cstackBANK0  0002E
 reset_vec                                 reset_vec    00000
 sprintf@ap                                cstackBANK0  0002C
 sprintf@c                                 cstackBANK0  00034
@@ -1000,8 +1169,8 @@ sprintf@prec                              cstackBANK0  0002D
 sprintf@sp                                cstackBANK0  00033
 sprintf@val                               cstackBANK0  0002E
 sprintf@width                             cstackBANK0  00031
-start                                     init         00034
-start_initialization                      cinit        00036
+start                                     init         00040
+start_initialization                      cinit        00042
 tsttc@value                               cstackCOMMON 00073
 wtemp0                                    (abs)        0007E
 
@@ -1010,15 +1179,11 @@ FUNCTION INFORMATION:
 
  *************** function _main *****************
  Defined at:
-		line 262 in file "main.c"
+		line 406 in file "main.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
-  buf            17    0        unsigned char [17]
-  aux             4   30[BANK1 ] float 
-  a               2   34[BANK1 ] int 
-  c2              1    0        unsigned char 
-  c1              1    0        unsigned char 
+		None
  Return value:  Size  Location     Type
                   1    wreg      void 
  Registers used:
@@ -1029,18 +1194,18 @@ FUNCTION INFORMATION:
 		Unchanged: 
  Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
       Params:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
-      Locals:         0       0       6       0       0       0       0       0       0       0       0       0       0       0
-      Temps:          0       0       4       0       0       0       0       0       0       0       0       0       0       0
-      Totals:         0       0      10       0       0       0       0       0       0       0       0       0       0       0
-Total ram usage:       10 bytes
+      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Totals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+Total ram usage:        0 bytes
  Hardware stack levels required when called:   10
  This function calls:
 		_LCDinit
 		_SYSTEM_Initialize
 		_TMR1_SetInterruptHandler
+		_TMR2_StopTimer
 		_TMR3_SetInterruptHandler
-		___fleq
-		___xxtofl
+		_TMR5_SetInterruptHandler
 		_i2c1_driver_open
  This function is called by:
 		Startup code after reset
@@ -1077,67 +1242,63 @@ Total ram usage:        0 bytes
  This function uses a non-reentrant model
 
 
- *************** function ___xxtofl *****************
+ *************** function _TMR2_StopTimer *****************
  Defined at:
-		line 10 in file "E:\Microchip\xc8\v2.30\pic\sources\c90\common\xxtofl.c"
+		line 117 in file "mcc_generated_files/tmr2.c"
  Parameters:    Size  Location     Type
-  sign            1    wreg     unsigned char 
-  val             4    0[BANK1 ] long 
+		None
  Auto vars:     Size  Location     Type
-  sign            1    8[BANK1 ] unsigned char 
-  arg             4   10[BANK1 ] unsigned long 
-  exp             1    9[BANK1 ] unsigned char 
+		None
  Return value:  Size  Location     Type
-                  4    0[BANK1 ] unsigned char 
+                  1    wreg      void 
  Registers used:
-		wreg, status,2, status,0
+		status,2, status,0, pclath, cstack
  Tracked objects:
 		On entry : 
 		On exit  : 
 		Unchanged: 
  Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
-      Params:         0       0       4       0       0       0       0       0       0       0       0       0       0       0
-      Locals:         0       0       6       0       0       0       0       0       0       0       0       0       0       0
-      Temps:          0       0       4       0       0       0       0       0       0       0       0       0       0       0
-      Totals:         0       0      14       0       0       0       0       0       0       0       0       0       0       0
-Total ram usage:       14 bytes
+      Params:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Totals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+Total ram usage:        0 bytes
  Hardware stack levels used:    1
- Hardware stack levels required when called:    7
+ Hardware stack levels required when called:    8
  This function calls:
-		Nothing
+		_TMR2_Stop
  This function is called by:
 		_main
  This function uses a non-reentrant model
 
 
- *************** function ___fleq *****************
+ *************** function _TMR2_Stop *****************
  Defined at:
-		line 4 in file "E:\Microchip\xc8\v2.30\pic\sources\c90\common\fleq.c"
+		line 111 in file "mcc_generated_files/tmr2.c"
  Parameters:    Size  Location     Type
-  ff1             4   14[BANK1 ] unsigned char 
-  ff2             4   18[BANK1 ] unsigned char 
+		None
  Auto vars:     Size  Location     Type
 		None
  Return value:  Size  Location     Type
-		None               void
+                  1    wreg      void 
  Registers used:
-		wreg, status,2, status,0
+		None
  Tracked objects:
 		On entry : 
 		On exit  : 
 		Unchanged: 
  Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
-      Params:         0       0       8       0       0       0       0       0       0       0       0       0       0       0
+      Params:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
       Locals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
-      Temps:          0       0       4       0       0       0       0       0       0       0       0       0       0       0
-      Totals:         0       0      12       0       0       0       0       0       0       0       0       0       0       0
-Total ram usage:       12 bytes
+      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Totals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+Total ram usage:        0 bytes
  Hardware stack levels used:    1
  Hardware stack levels required when called:    7
  This function calls:
 		Nothing
  This function is called by:
-		_main
+		_TMR2_StopTimer
  This function uses a non-reentrant model
 
 
@@ -1169,10 +1330,75 @@ Total ram usage:        0 bytes
 		_OSCILLATOR_Initialize
 		_PIN_MANAGER_Initialize
 		_PMD_Initialize
+		_PWM6_Initialize
 		_TMR1_Initialize
+		_TMR2_Initialize
 		_TMR3_Initialize
+		_TMR5_Initialize
  This function is called by:
 		_main
+ This function uses a non-reentrant model
+
+
+ *************** function _TMR5_Initialize *****************
+ Defined at:
+		line 64 in file "mcc_generated_files/tmr5.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+                  1    wreg      void 
+ Registers used:
+		wreg, status,2, status,0, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
+      Params:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Totals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+Total ram usage:        0 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    8
+ This function calls:
+		_TMR5_SetInterruptHandler
+ This function is called by:
+		_SYSTEM_Initialize
+ This function uses a non-reentrant model
+
+
+ *************** function _TMR5_SetInterruptHandler *****************
+ Defined at:
+		line 179 in file "mcc_generated_files/tmr5.c"
+ Parameters:    Size  Location     Type
+  InterruptHan    2    0[BANK1 ] PTR FTN()void 
+		 -> TMR5_DefaultInterruptHandler(1), monitoring_ISR(1), 
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+                  1    wreg      void 
+ Registers used:
+		wreg
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
+      Params:         0       0       2       0       0       0       0       0       0       0       0       0       0       0
+      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Totals:         0       0       2       0       0       0       0       0       0       0       0       0       0       0
+Total ram usage:        2 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    7
+ This function calls:
+		Nothing
+ This function is called by:
+		_main
+		_TMR5_Initialize
  This function uses a non-reentrant model
 
 
@@ -1238,6 +1464,36 @@ Total ram usage:        2 bytes
  This function uses a non-reentrant model
 
 
+ *************** function _TMR2_Initialize *****************
+ Defined at:
+		line 62 in file "mcc_generated_files/tmr2.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+                  1    wreg      void 
+ Registers used:
+		wreg, status,2
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
+      Params:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Totals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+Total ram usage:        0 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    7
+ This function calls:
+		Nothing
+ This function is called by:
+		_SYSTEM_Initialize
+ This function uses a non-reentrant model
+
+
  *************** function _TMR1_Initialize *****************
  Defined at:
 		line 64 in file "mcc_generated_files/tmr1.c"
@@ -1300,9 +1556,39 @@ Total ram usage:        2 bytes
  This function uses a non-reentrant model
 
 
+ *************** function _PWM6_Initialize *****************
+ Defined at:
+		line 58 in file "mcc_generated_files/pwm6.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+                  1    wreg      void 
+ Registers used:
+		wreg, status,2, status,0
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
+      Params:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Totals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+Total ram usage:        0 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    7
+ This function calls:
+		Nothing
+ This function is called by:
+		_SYSTEM_Initialize
+ This function uses a non-reentrant model
+
+
  *************** function _PMD_Initialize *****************
  Defined at:
-		line 74 in file "mcc_generated_files/mcc.c"
+		line 77 in file "mcc_generated_files/mcc.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -1362,7 +1648,7 @@ Total ram usage:        0 bytes
 
  *************** function _OSCILLATOR_Initialize *****************
  Defined at:
-		line 60 in file "mcc_generated_files/mcc.c"
+		line 63 in file "mcc_generated_files/mcc.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -1422,7 +1708,7 @@ Total ram usage:        0 bytes
 
  *************** function _LCDinit *****************
  Defined at:
-		line 150 in file "main.c"
+		line 155 in file "main.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -1453,7 +1739,7 @@ Total ram usage:        1 bytes
 
  *************** function _LCDsend2x4 *****************
  Defined at:
-		line 127 in file "main.c"
+		line 132 in file "main.c"
  Parameters:    Size  Location     Type
   c               1    wreg     unsigned char 
   mode            1    2[BANK1 ] unsigned char 
@@ -1486,7 +1772,7 @@ Total ram usage:        6 bytes
 
  *************** function _LCDsend *****************
  Defined at:
-		line 88 in file "main.c"
+		line 93 in file "main.c"
  Parameters:    Size  Location     Type
   c               1    wreg     unsigned char 
  Auto vars:     Size  Location     Type
@@ -1572,8 +1858,292 @@ Total ram usage:        0 bytes
  This function calls:
 		_TMR1_ISR
 		_TMR3_ISR
+		_TMR5_ISR
  This function is called by:
 		Interrupt level 1
+ This function uses a non-reentrant model
+
+
+ *************** function _TMR5_ISR *****************
+ Defined at:
+		line 165 in file "mcc_generated_files/tmr5.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+                  1    wreg      void 
+ Registers used:
+		wreg, status,2, status,0, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
+      Params:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Totals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+Total ram usage:        0 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    3
+ This function calls:
+		Absolute function
+		_TMR5_DefaultInterruptHandler
+		_TMR5_WriteTimer
+		_monitoring_ISR
+ This function is called by:
+		_INTERRUPT_InterruptManager
+ This function uses a non-reentrant model
+
+
+ *************** function _TMR5_DefaultInterruptHandler *****************
+ Defined at:
+		line 183 in file "mcc_generated_files/tmr5.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+                  1    wreg      void 
+ Registers used:
+		None
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
+      Params:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Totals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+Total ram usage:        0 bytes
+ Hardware stack levels used:    1
+ This function calls:
+		Nothing
+ This function is called by:
+		_TMR5_Initialize
+		_TMR5_ISR
+ This function uses a non-reentrant model
+
+
+ *************** function _monitoring_ISR *****************
+ Defined at:
+		line 377 in file "main.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+  lum             1   14[BANK0 ] unsigned char 
+ Return value:  Size  Location     Type
+                  1    wreg      void 
+ Registers used:
+		wreg, status,2, status,0, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
+      Params:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Locals:         0       1       0       0       0       0       0       0       0       0       0       0       0       0
+      Temps:          3       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Totals:         3       1       0       0       0       0       0       0       0       0       0       0       0       0
+Total ram usage:        4 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    2
+ This function calls:
+		_ADCC_GetSingleConversion
+		_map
+		_tsttc
+ This function is called by:
+		_main
+		_TMR5_ISR
+ This function uses a non-reentrant model
+
+
+ *************** function _tsttc *****************
+ Defined at:
+		line 58 in file "main.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+  value           1    3[COMMON] unsigned char 
+ Return value:  Size  Location     Type
+                  1    wreg      unsigned char 
+ Registers used:
+		wreg, status,2, status,0, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
+      Params:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Locals:         1       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Temps:          1       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Totals:         2       0       0       0       0       0       0       0       0       0       0       0       0       0
+Total ram usage:        2 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    1
+ This function calls:
+		_ReadI2C
+		i1_WriteI2C
+ This function is called by:
+		_monitoring_ISR
+ This function uses a non-reentrant model
+
+
+ *************** function _ReadI2C *****************
+ Defined at:
+		line 32 in file "I2C/i2c.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+                  1    wreg      unsigned char 
+ Registers used:
+		wreg, status,2, status,0
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
+      Params:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Temps:          1       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Totals:         1       0       0       0       0       0       0       0       0       0       0       0       0       0
+Total ram usage:        1 bytes
+ Hardware stack levels used:    1
+ This function calls:
+		Nothing
+ This function is called by:
+		_tsttc
+		_LCDrecv
+ This function uses a non-reentrant model
+
+
+ *************** function _map *****************
+ Defined at:
+		line 246 in file "main.c"
+ Parameters:    Size  Location     Type
+  x               2    4[BANK0 ] int 
+  in_min          2    6[BANK0 ] int 
+  in_max          2    8[BANK0 ] int 
+  out_min         2   10[BANK0 ] int 
+  out_max         2   12[BANK0 ] int 
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+                  2    4[BANK0 ] int 
+ Registers used:
+		wreg, status,2, status,0, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
+      Params:         0      10       0       0       0       0       0       0       0       0       0       0       0       0
+      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Totals:         0      10       0       0       0       0       0       0       0       0       0       0       0       0
+Total ram usage:       10 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    1
+ This function calls:
+		___awdiv
+		___wmul
+ This function is called by:
+		_monitoring_ISR
+ This function uses a non-reentrant model
+
+
+ *************** function ___awdiv *****************
+ Defined at:
+		line 5 in file "E:\Microchip\xc8\v2.30\pic\sources\c90\common\awdiv.c"
+ Parameters:    Size  Location     Type
+  divisor         2    6[COMMON] int 
+  dividend        2    8[COMMON] int 
+ Auto vars:     Size  Location     Type
+  quotient        2    2[BANK0 ] int 
+  sign            1    1[BANK0 ] unsigned char 
+  counter         1    0[BANK0 ] unsigned char 
+ Return value:  Size  Location     Type
+                  2    6[COMMON] int 
+ Registers used:
+		wreg, status,2, status,0
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
+      Params:         4       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Locals:         0       4       0       0       0       0       0       0       0       0       0       0       0       0
+      Temps:          1       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Totals:         5       4       0       0       0       0       0       0       0       0       0       0       0       0
+Total ram usage:        9 bytes
+ Hardware stack levels used:    1
+ This function calls:
+		Nothing
+ This function is called by:
+		_map
+ This function uses a non-reentrant model
+
+
+ *************** function _ADCC_GetSingleConversion *****************
+ Defined at:
+		line 130 in file "mcc_generated_files/adcc.c"
+ Parameters:    Size  Location     Type
+  channel         1    wreg     enum E12086
+ Auto vars:     Size  Location     Type
+  channel         1    3[COMMON] enum E12086
+ Return value:  Size  Location     Type
+                  2    0[COMMON] unsigned int 
+ Registers used:
+		wreg
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
+      Params:         3       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Locals:         1       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Totals:         4       0       0       0       0       0       0       0       0       0       0       0       0       0
+Total ram usage:        4 bytes
+ Hardware stack levels used:    1
+ This function calls:
+		Nothing
+ This function is called by:
+		_monitoring_ISR
+ This function uses a non-reentrant model
+
+
+ *************** function _TMR5_WriteTimer *****************
+ Defined at:
+		line 128 in file "mcc_generated_files/tmr5.c"
+ Parameters:    Size  Location     Type
+  timerVal        2    0[COMMON] unsigned int 
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+                  1    wreg      void 
+ Registers used:
+		wreg, status,2
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
+      Params:         2       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Totals:         2       0       0       0       0       0       0       0       0       0       0       0       0       0
+Total ram usage:        2 bytes
+ Hardware stack levels used:    1
+ This function calls:
+		Nothing
+ This function is called by:
+		_TMR5_ISR
+		_TMR5_Reload
  This function uses a non-reentrant model
 
 
@@ -1642,13 +2212,14 @@ Total ram usage:        0 bytes
 
  *************** function _menuLCD_ISR *****************
  Defined at:
-		line 241 in file "main.c"
+		line 309 in file "main.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
+  diff            6   38[BANK0 ] struct Time
   str             8   23[BANK0 ] unsigned char [8]
-  l               5   31[BANK0 ] unsigned char [5]
-  tt              4   36[BANK0 ] unsigned char [4]
+  tt              4   31[BANK0 ] unsigned char [4]
+  l               3   35[BANK0 ] unsigned char [3]
  Return value:  Size  Location     Type
                   1    wreg      void 
  Registers used:
@@ -1659,15 +2230,19 @@ Total ram usage:        0 bytes
 		Unchanged: 
  Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
       Params:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
-      Locals:         0      17       0       0       0       0       0       0       0       0       0       0       0       0
+      Locals:         0      21       0       0       0       0       0       0       0       0       0       0       0       0
       Temps:          0       2       0       0       0       0       0       0       0       0       0       0       0       0
-      Totals:         0      19       0       0       0       0       0       0       0       0       0       0       0       0
-Total ram usage:       19 bytes
+      Totals:         0      23       0       0       0       0       0       0       0       0       0       0       0       0
+Total ram usage:       23 bytes
  Hardware stack levels used:    1
  Hardware stack levels required when called:    4
  This function calls:
+		_LCDchar
 		_LCDcmd
 		_LCDstr
+		_PWM6_LoadDutyValue
+		_TMR2_StartTimer
+		_differenceBetweenTimePeriod
 		_sprintf
  This function is called by:
 		_main
@@ -1680,12 +2255,12 @@ Total ram usage:       19 bytes
 		line 505 in file "E:\Microchip\xc8\v2.30\pic\sources\c90\common\doprnt.c"
  Parameters:    Size  Location     Type
   sp              1    wreg     PTR unsigned char 
-		 -> menuLCD_ISR@l(5), menuLCD_ISR@tt(4), menuLCD_ISR@str(8), 
+		 -> menuLCD_ISR@l(3), menuLCD_ISR@tt(4), menuLCD_ISR@str(8), 
   f               2    0[BANK0 ] PTR const unsigned char 
-		 -> STR_4(5), STR_3(7), STR_1(15), 
+		 -> STR_3(5), STR_2(7), STR_1(15), 
  Auto vars:     Size  Location     Type
   sp              1   19[BANK0 ] PTR unsigned char 
-		 -> menuLCD_ISR@l(5), menuLCD_ISR@tt(4), menuLCD_ISR@str(8), 
+		 -> menuLCD_ISR@l(3), menuLCD_ISR@tt(4), menuLCD_ISR@str(8), 
   tmpval          4    0        struct .
   width           2   17[BANK0 ] int 
   val             2   14[BANK0 ] unsigned int 
@@ -1777,6 +2352,7 @@ Total ram usage:        6 bytes
  This function calls:
 		Nothing
  This function is called by:
+		_map
 		_sprintf
  This function uses a non-reentrant model
 
@@ -1842,28 +2418,150 @@ Total ram usage:        8 bytes
  This function uses a non-reentrant model
 
 
- *************** function _LCDstr *****************
+ *************** function _differenceBetweenTimePeriod *****************
  Defined at:
-		line 183 in file "main.c"
+		line 208 in file "main.c"
  Parameters:    Size  Location     Type
-  p               2    9[COMMON] PTR unsigned char 
-		 -> menuLCD_ISR@l(5), menuLCD_ISR@tt(4), STR_2(6), menuLCD_ISR@str(8), 
+  start           6    0[COMMON] struct Time
+  stop            6    6[COMMON] struct Time
+  diff            1   12[COMMON] PTR struct Time
+		 -> menuLCD_ISR@diff(6), 
  Auto vars:     Size  Location     Type
-  c               1    0[BANK0 ] unsigned char 
+		None
  Return value:  Size  Location     Type
                   1    wreg      void 
  Registers used:
-		wreg, fsr0l, fsr0h, status,2, status,0, pclath, cstack
+		wreg, fsr0l, fsr0h, fsr1l, fsr1h, status,2, status,0
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
+      Params:        13       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Temps:          0       2       0       0       0       0       0       0       0       0       0       0       0       0
+      Totals:        13       2       0       0       0       0       0       0       0       0       0       0       0       0
+Total ram usage:       15 bytes
+ Hardware stack levels used:    1
+ This function calls:
+		Nothing
+ This function is called by:
+		_menuLCD_ISR
+ This function uses a non-reentrant model
+
+
+ *************** function _TMR2_StartTimer *****************
+ Defined at:
+		line 106 in file "mcc_generated_files/tmr2.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+                  1    wreg      void 
+ Registers used:
+		status,2, status,0, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
+      Params:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Totals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+Total ram usage:        0 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    1
+ This function calls:
+		_TMR2_Start
+ This function is called by:
+		_menuLCD_ISR
+ This function uses a non-reentrant model
+
+
+ *************** function _TMR2_Start *****************
+ Defined at:
+		line 100 in file "mcc_generated_files/tmr2.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+                  1    wreg      void 
+ Registers used:
+		None
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
+      Params:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Totals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+Total ram usage:        0 bytes
+ Hardware stack levels used:    1
+ This function calls:
+		Nothing
+ This function is called by:
+		_TMR2_StartTimer
+ This function uses a non-reentrant model
+
+
+ *************** function _PWM6_LoadDutyValue *****************
+ Defined at:
+		line 74 in file "mcc_generated_files/pwm6.c"
+ Parameters:    Size  Location     Type
+  dutyValue       2    0[COMMON] unsigned int 
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+                  1    wreg      void 
+ Registers used:
+		wreg, status,2, status,0
  Tracked objects:
 		On entry : 
 		On exit  : 
 		Unchanged: 
  Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
       Params:         2       0       0       0       0       0       0       0       0       0       0       0       0       0
-      Locals:         0       1       0       0       0       0       0       0       0       0       0       0       0       0
-      Temps:          3       0       0       0       0       0       0       0       0       0       0       0       0       0
-      Totals:         5       1       0       0       0       0       0       0       0       0       0       0       0       0
-Total ram usage:        6 bytes
+      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Temps:          2       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Totals:         4       0       0       0       0       0       0       0       0       0       0       0       0       0
+Total ram usage:        4 bytes
+ Hardware stack levels used:    1
+ This function calls:
+		Nothing
+ This function is called by:
+		_menuLCD_ISR
+ This function uses a non-reentrant model
+
+
+ *************** function _LCDstr *****************
+ Defined at:
+		line 188 in file "main.c"
+ Parameters:    Size  Location     Type
+  p               1    wreg     PTR unsigned char 
+		 -> menuLCD_ISR@l(3), menuLCD_ISR@tt(4), menuLCD_ISR@str(8), 
+ Auto vars:     Size  Location     Type
+  p               1   11[COMMON] PTR unsigned char 
+		 -> menuLCD_ISR@l(3), menuLCD_ISR@tt(4), menuLCD_ISR@str(8), 
+  c               1   10[COMMON] unsigned char 
+ Return value:  Size  Location     Type
+                  1    wreg      void 
+ Registers used:
+		wreg, fsr1l, fsr1h, status,2, status,0, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
+      Params:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Locals:         2       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Temps:          1       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Totals:         3       0       0       0       0       0       0       0       0       0       0       0       0       0
+Total ram usage:        3 bytes
  Hardware stack levels used:    1
  Hardware stack levels required when called:    3
  This function calls:
@@ -1875,7 +2573,7 @@ Total ram usage:        6 bytes
 
  *************** function _LCDchar *****************
  Defined at:
-		line 178 in file "main.c"
+		line 183 in file "main.c"
  Parameters:    Size  Location     Type
   c               1    wreg     unsigned char 
  Auto vars:     Size  Location     Type
@@ -1900,12 +2598,13 @@ Total ram usage:        1 bytes
 		i1_LCDsend2x4
  This function is called by:
 		_LCDstr
+		_menuLCD_ISR
  This function uses a non-reentrant model
 
 
  *************** function _LCDcmd *****************
  Defined at:
-		line 173 in file "main.c"
+		line 178 in file "main.c"
  Parameters:    Size  Location     Type
   c               1    wreg     unsigned char 
  Auto vars:     Size  Location     Type
@@ -1935,7 +2634,7 @@ Total ram usage:        1 bytes
 
  *************** function i1_LCDsend2x4 *****************
  Defined at:
-		line 127 in file "main.c"
+		line 132 in file "main.c"
  Parameters:    Size  Location     Type
   c               1    wreg     unsigned char 
   mode            1    2[COMMON] unsigned char 
@@ -1964,6 +2663,36 @@ Total ram usage:        6 bytes
  This function is called by:
 		_LCDcmd
 		_LCDchar
+ This function uses a non-reentrant model
+
+
+ *************** function i1_WriteI2C *****************
+ Defined at:
+		line 47 in file "I2C/i2c.c"
+ Parameters:    Size  Location     Type
+  data_out        1    wreg     unsigned char 
+ Auto vars:     Size  Location     Type
+  data_out        1    1[COMMON] unsigned char 
+ Return value:  Size  Location     Type
+                  1    wreg      char 
+ Registers used:
+		wreg, status,2, status,0
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
+      Params:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Locals:         1       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Temps:          1       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Totals:         2       0       0       0       0       0       0       0       0       0       0       0       0       0
+Total ram usage:        2 bytes
+ Hardware stack levels used:    1
+ This function calls:
+		Nothing
+ This function is called by:
+		_tsttc
+		i1_LCDsend2x4
  This function uses a non-reentrant model
 
 
@@ -2019,7 +2748,7 @@ Total ram usage:        2 bytes
       Totals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
 Total ram usage:        0 bytes
  Hardware stack levels used:    1
- Hardware stack levels required when called:    3
+ Hardware stack levels required when called:    1
  This function calls:
 		Absolute function
 		_Clock_ISR
@@ -2062,7 +2791,7 @@ Total ram usage:        2 bytes
 
  *************** function _Clock_ISR *****************
  Defined at:
-		line 220 in file "main.c"
+		line 276 in file "main.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -2070,7 +2799,7 @@ Total ram usage:        2 bytes
  Return value:  Size  Location     Type
                   1    wreg      void 
  Registers used:
-		wreg, status,2, status,0, pclath, cstack
+		wreg, status,2, status,0
  Tracked objects:
 		On entry : 
 		On exit  : 
@@ -2078,14 +2807,12 @@ Total ram usage:        2 bytes
  Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
       Params:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
       Locals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
-      Temps:          3       0       0       0       0       0       0       0       0       0       0       0       0       0
-      Totals:         3       0       0       0       0       0       0       0       0       0       0       0       0       0
-Total ram usage:        3 bytes
+      Temps:          1       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Totals:         1       0       0       0       0       0       0       0       0       0       0       0       0       0
+Total ram usage:        1 bytes
  Hardware stack levels used:    1
- Hardware stack levels required when called:    2
  This function calls:
-		_ADCC_GetSingleConversion
-		_tsttc
+		Nothing
  This function is called by:
 		_main
 		_TMR1_ISR
@@ -2122,236 +2849,138 @@ Total ram usage:        0 bytes
  This function uses a non-reentrant model
 
 
- *************** function _tsttc *****************
- Defined at:
-		line 53 in file "main.c"
- Parameters:    Size  Location     Type
-		None
- Auto vars:     Size  Location     Type
-  value           1    3[COMMON] unsigned char 
- Return value:  Size  Location     Type
-                  1    wreg      unsigned char 
- Registers used:
-		wreg, status,2, status,0, pclath, cstack
- Tracked objects:
-		On entry : 
-		On exit  : 
-		Unchanged: 
- Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
-      Params:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
-      Locals:         1       0       0       0       0       0       0       0       0       0       0       0       0       0
-      Temps:          1       0       0       0       0       0       0       0       0       0       0       0       0       0
-      Totals:         2       0       0       0       0       0       0       0       0       0       0       0       0       0
-Total ram usage:        2 bytes
- Hardware stack levels used:    1
- Hardware stack levels required when called:    1
- This function calls:
-		_ReadI2C
-		i1_WriteI2C
- This function is called by:
-		_Clock_ISR
- This function uses a non-reentrant model
-
-
- *************** function i1_WriteI2C *****************
- Defined at:
-		line 47 in file "I2C/i2c.c"
- Parameters:    Size  Location     Type
-  data_out        1    wreg     unsigned char 
- Auto vars:     Size  Location     Type
-  data_out        1    1[COMMON] unsigned char 
- Return value:  Size  Location     Type
-                  1    wreg      char 
- Registers used:
-		wreg, status,2, status,0
- Tracked objects:
-		On entry : 
-		On exit  : 
-		Unchanged: 
- Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
-      Params:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
-      Locals:         1       0       0       0       0       0       0       0       0       0       0       0       0       0
-      Temps:          1       0       0       0       0       0       0       0       0       0       0       0       0       0
-      Totals:         2       0       0       0       0       0       0       0       0       0       0       0       0       0
-Total ram usage:        2 bytes
- Hardware stack levels used:    1
- This function calls:
-		Nothing
- This function is called by:
-		_tsttc
-		i1_LCDsend2x4
- This function uses a non-reentrant model
-
-
- *************** function _ReadI2C *****************
- Defined at:
-		line 32 in file "I2C/i2c.c"
- Parameters:    Size  Location     Type
-		None
- Auto vars:     Size  Location     Type
-		None
- Return value:  Size  Location     Type
-                  1    wreg      unsigned char 
- Registers used:
-		wreg, status,2, status,0
- Tracked objects:
-		On entry : 
-		On exit  : 
-		Unchanged: 
- Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
-      Params:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
-      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
-      Temps:          1       0       0       0       0       0       0       0       0       0       0       0       0       0
-      Totals:         1       0       0       0       0       0       0       0       0       0       0       0       0       0
-Total ram usage:        1 bytes
- Hardware stack levels used:    1
- This function calls:
-		Nothing
- This function is called by:
-		_tsttc
-		_LCDrecv
- This function uses a non-reentrant model
-
-
- *************** function _ADCC_GetSingleConversion *****************
- Defined at:
-		line 130 in file "mcc_generated_files/adcc.c"
- Parameters:    Size  Location     Type
-  channel         1    wreg     enum E12086
- Auto vars:     Size  Location     Type
-  channel         1    3[COMMON] enum E12086
- Return value:  Size  Location     Type
-                  2    0[COMMON] unsigned int 
- Registers used:
-		wreg
- Tracked objects:
-		On entry : 
-		On exit  : 
-		Unchanged: 
- Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
-      Params:         3       0       0       0       0       0       0       0       0       0       0       0       0       0
-      Locals:         1       0       0       0       0       0       0       0       0       0       0       0       0       0
-      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       0       0
-      Totals:         4       0       0       0       0       0       0       0       0       0       0       0       0       0
-Total ram usage:        4 bytes
- Hardware stack levels used:    1
- This function calls:
-		Nothing
- This function is called by:
-		_Clock_ISR
- This function uses a non-reentrant model
-
-
 
 MODULE INFORMATION
 
 Module		Function		Class		Link	Load	Size
-E:\Microchip\xc8\v2.30\pic\sources\c90\common\xxtofl.c
-		___xxtofl      		CODE           	0478	0000	173
+mcc_generated_files/pwm6.c
+		_PWM6_LoadDutyValue		CODE           	0D09	0000	22
+		_PWM6_Initialize		CODE           	0C83	0000	13
 
-E:\Microchip\xc8\v2.30\pic\sources\c90\common\xxtofl.c estimated size: 173
+mcc_generated_files/pwm6.c estimated size: 35
+
+mcc_generated_files/tmr2.c
+		_TMR2_Initialize		CODE           	0C90	0000	14
+		_TMR2_Stop     		CODE           	0C1A	0000	3
+		_TMR2_Start    		CODE           	0C17	0000	3
+		_TMR2_StopTimer		CODE           	07FB	0000	4
+		_TMR2_StartTimer		CODE           	0C1D	0000	4
+
+mcc_generated_files/tmr2.c estimated size: 28
 
 mcc_generated_files/interrupt_manager.c
-		_INTERRUPT_InterruptManager		CODE           	0004	0000	48
+		_INTERRUPT_InterruptManager		CODE           	0004	0000	60
 
-mcc_generated_files/interrupt_manager.c estimated size: 48
+mcc_generated_files/interrupt_manager.c estimated size: 60
 
 mcc_generated_files/pin_manager.c
-		_PIN_MANAGER_Initialize		CODE           	0F84	0000	60
+		_PIN_MANAGER_Initialize		CODE           	0ECC	0000	62
 
-mcc_generated_files/pin_manager.c estimated size: 60
+mcc_generated_files/pin_manager.c estimated size: 62
 
 I2C/i2c.c
-		_ReadI2C       		CODE           	0E82	0000	26
-		_WriteI2C      		CODE           	06A0	0000	90
+		_ReadI2C       		CODE           	0D7B	0000	26
+		_WriteI2C      		CODE           	077C	0000	90
 
 I2C/i2c.c estimated size: 116
 
 E:\Microchip\xc8\v2.30\pic\sources\c90\common\lwmod.c
-		___lwmod       		CODE           	0F14	0000	52
+		___lwmod       		CODE           	0E5C	0000	52
 
 E:\Microchip\xc8\v2.30\pic\sources\c90\common\lwmod.c estimated size: 52
 
 E:\Microchip\xc8\v2.30\pic\sources\c90\common\doprnt.c
-		_sprintf       		CODE           	0047	0000	413
+		_sprintf       		CODE           	006D	0000	413
 
 E:\Microchip\xc8\v2.30\pic\sources\c90\common\doprnt.c estimated size: 413
 
-E:\Microchip\xc8\v2.30\pic\sources\c90\common\fleq.c
-		___fleq        		CODE           	074D	0000	79
+mcc_generated_files/tmr5.c
+		_TMR5_ISR      		CODE           	0D4D	0000	23
+		_TMR5_Initialize		CODE           	0E0E	0000	31
+		_TMR5_SetInterruptHandler		CODE           	0C62	0000	9
+		_TMR5_DefaultInterruptHandler		CODE           	07FF	0000	1
+		_TMR5_WriteTimer		CODE           	0CC0	0000	17
 
-E:\Microchip\xc8\v2.30\pic\sources\c90\common\fleq.c estimated size: 79
+mcc_generated_files/tmr5.c estimated size: 81
 
 shared
 		_dpowers       		STRCODE        	100F	0000	10
-		__initialization		CODE           	0036	0000	13
-		i1_LCDsend2x4  		CODE           	03C5	0000	179
-		i1_WriteI2C    		CODE           	079C	0000	75
+		__initialization		CODE           	0042	0000	39
+		i1_LCDsend2x4  		CODE           	051C	0000	179
+		i1_WriteI2C    		CODE           	0F0A	0000	75
 
-shared estimated size: 277
+shared estimated size: 303
 
 mcc_generated_files/mcc.c
-		_PMD_Initialize		CODE           	0DD5	0000	8
-		_OSCILLATOR_Initialize		CODE           	0DDD	0000	9
-		_SYSTEM_Initialize		CODE           	0E41	0000	19
+		_PMD_Initialize		CODE           	0C48	0000	8
+		_OSCILLATOR_Initialize		CODE           	0C50	0000	9
+		_SYSTEM_Initialize		CODE           	0D95	0000	28
 
-mcc_generated_files/mcc.c estimated size: 36
+mcc_generated_files/mcc.c estimated size: 45
 
 mcc_generated_files/tmr3.c
-		_TMR3_ISR      		CODE           	0E6B	0000	23
-		_TMR3_Initialize		CODE           	0EF5	0000	31
-		_TMR3_SetInterruptHandler		CODE           	0DE6	0000	9
-		_TMR3_DefaultInterruptHandler		CODE           	07FE	0000	1
-		_TMR3_WriteTimer		CODE           	0E0C	0000	17
+		_TMR3_ISR      		CODE           	0D36	0000	23
+		_TMR3_Initialize		CODE           	0DEF	0000	31
+		_TMR3_SetInterruptHandler		CODE           	0C59	0000	9
+		_TMR3_DefaultInterruptHandler		CODE           	0003	0000	1
+		_TMR3_WriteTimer		CODE           	0CAF	0000	17
 
 mcc_generated_files/tmr3.c estimated size: 81
 
 mcc_generated_files/tmr1.c
-		_TMR1_Initialize		CODE           	0ED6	0000	31
-		_TMR1_SetInterruptHandler		CODE           	0DC0	0000	6
-		_TMR1_DefaultInterruptHandler		CODE           	07FF	0000	1
-		_TMR1_WriteTimer		CODE           	0DFB	0000	17
-		_TMR1_ISR      		CODE           	0E54	0000	23
+		_TMR1_Initialize		CODE           	0DD0	0000	31
+		_TMR1_SetInterruptHandler		CODE           	0C21	0000	6
+		_TMR1_DefaultInterruptHandler		CODE           	0002	0000	1
+		_TMR1_WriteTimer		CODE           	0C9E	0000	17
+		_TMR1_ISR      		CODE           	0D1F	0000	23
 
 mcc_generated_files/tmr1.c estimated size: 78
 
 E:\Microchip\xc8\v2.30\pic\sources\c90\common\lwdiv.c
-		___lwdiv       		CODE           	0F48	0000	60
+		___lwdiv       		CODE           	0E90	0000	60
 
 E:\Microchip\xc8\v2.30\pic\sources\c90\common\lwdiv.c estimated size: 60
 
 E:\Microchip\xc8\v2.30\pic\sources\c90\common\Umul16.c
-		___wmul        		CODE           	0EB7	0000	31
+		___wmul        		CODE           	0DB1	0000	31
 
 E:\Microchip\xc8\v2.30\pic\sources\c90\common\Umul16.c estimated size: 31
 
+E:\Microchip\xc8\v2.30\pic\sources\c90\common\awdiv.c
+		___awdiv       		CODE           	071C	0000	96
+
+E:\Microchip\xc8\v2.30\pic\sources\c90\common\awdiv.c estimated size: 96
+
 mcc_generated_files/i2c1_driver.c
-		_i2c1_driver_open		CODE           	0DEF	0000	12
+		_i2c1_driver_open		CODE           	0C6B	0000	12
 
 mcc_generated_files/i2c1_driver.c estimated size: 12
 
 mcc_generated_files/adcc.c
-		_ADCC_GetSingleConversion		CODE           	0E1D	0000	18
-		_ADCC_Initialize		CODE           	07E7	0000	23
+		_ADCC_GetSingleConversion		CODE           	0CE3	0000	18
+		_ADCC_Initialize		CODE           	0D64	0000	23
 
 mcc_generated_files/adcc.c estimated size: 41
 
 E:\Microchip\xc8\v2.30\pic\sources\c90\common\isdigit.c
-		_isdigit       		CODE           	0E2F	0000	18
+		_isdigit       		CODE           	0CD1	0000	18
 
 E:\Microchip\xc8\v2.30\pic\sources\c90\common\isdigit.c estimated size: 18
 
 main.c
-		_LCDinit       		CODE           	05C8	0000	118
-		_menuLCD_ISR   		CODE           	063E	0000	98
-		_LCDsend       		CODE           	06FA	0000	83
-		_LCDsend2x4    		CODE           	02F1	0000	212
-		_main          		CODE           	0525	0000	163
-		_LCDstr        		CODE           	0E9C	0000	27
-		_LCDchar       		CODE           	0DCD	0000	8
-		_Clock_ISR     		CODE           	0FC0	0000	64
-		_tsttc         		CODE           	01E4	0000	269
-		_LCDcmd        		CODE           	0DC6	0000	7
+		_differenceBetweenTimePeriod		CODE           	0645	0000	110
+		_LCDinit       		CODE           	05CF	0000	118
+		_menuLCD_ISR   		CODE           	020A	0000	305
+		_map           		CODE           	07D6	0000	37
+		_LCDsend       		CODE           	0F55	0000	83
+		_LCDsend2x4    		CODE           	0448	0000	212
+		_monitoring_ISR		CODE           	0FA8	0000	88
+		_main          		CODE           	0E2D	0000	47
+		_LCDstr        		CODE           	0CF5	0000	20
+		_LCDchar       		CODE           	0C40	0000	8
+		_Clock_ISR     		CODE           	06B3	0000	105
+		_tsttc         		CODE           	033B	0000	269
+		_LCDcmd        		CODE           	0C39	0000	7
 
-main.c estimated size: 1049
+main.c estimated size: 1409
 

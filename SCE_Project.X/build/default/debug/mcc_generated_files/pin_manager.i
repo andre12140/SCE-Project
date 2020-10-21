@@ -21121,10 +21121,10 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 
-# 172 "mcc_generated_files/pin_manager.h"
+# 244 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 
-# 184
+# 256
 void PIN_MANAGER_IOC(void);
 
 # 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
@@ -21143,17 +21143,17 @@ LATC = 0x00;
 
 # 71
 TRISE = 0x07;
-TRISA = 0xEF;
+TRISA = 0x0F;
 TRISB = 0xFF;
 TRISC = 0xFF;
 TRISD = 0xFF;
 
 # 80
 ANSELD = 0xFF;
-ANSELC = 0xE7;
+ANSELC = 0xC7;
 ANSELB = 0xEF;
 ANSELE = 0x07;
-ANSELA = 0xEF;
+ANSELA = 0x4F;
 
 # 89
 WPUD = 0x00;
@@ -21180,6 +21180,7 @@ SLRCONE = 0x07;
 SSP1CLKPPS = 0x13;
 RC3PPS = 0x14;
 RC4PPS = 0x15;
+RA6PPS = 0x0E;
 SSP1DATPPS = 0x14;
 }
 

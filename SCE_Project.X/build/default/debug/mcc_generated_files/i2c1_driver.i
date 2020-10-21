@@ -21187,10 +21187,10 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 
-# 172 "mcc_generated_files/pin_manager.h"
+# 244 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 
-# 184
+# 256
 void PIN_MANAGER_IOC(void);
 
 # 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
@@ -21246,6 +21246,303 @@ inline void i2c1_driver_setBusCollisionISR(interruptHandler handler);
 inline void i2c1_driver_setI2cISR(interruptHandler handler);
 void (*i2c1_driver_busCollisionISR)(void);
 void (*i2c1_driver_i2cISR)(void);
+
+# 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
+typedef unsigned char bool;
+
+# 100 "mcc_generated_files/tmr5.h"
+void TMR5_Initialize(void);
+
+# 129
+void TMR5_StartTimer(void);
+
+# 161
+void TMR5_StopTimer(void);
+
+# 196
+uint16_t TMR5_ReadTimer(void);
+
+# 235
+void TMR5_WriteTimer(uint16_t timerVal);
+
+# 271
+void TMR5_Reload(void);
+
+# 310
+void TMR5_StartSinglePulseAcquisition(void);
+
+# 349
+uint8_t TMR5_CheckGateValueStatus(void);
+
+# 367
+void TMR5_ISR(void);
+
+# 385
+void TMR5_SetInterruptHandler(void (* InterruptHandler)(void));
+
+# 403
+extern void (*TMR5_InterruptHandler)(void);
+
+# 421
+void TMR5_DefaultInterruptHandler(void);
+
+# 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
+typedef unsigned char bool;
+
+# 100 "mcc_generated_files/tmr3.h"
+void TMR3_Initialize(void);
+
+# 129
+void TMR3_StartTimer(void);
+
+# 161
+void TMR3_StopTimer(void);
+
+# 196
+uint16_t TMR3_ReadTimer(void);
+
+# 235
+void TMR3_WriteTimer(uint16_t timerVal);
+
+# 271
+void TMR3_Reload(void);
+
+# 310
+void TMR3_StartSinglePulseAcquisition(void);
+
+# 349
+uint8_t TMR3_CheckGateValueStatus(void);
+
+# 367
+void TMR3_ISR(void);
+
+# 385
+void TMR3_SetInterruptHandler(void (* InterruptHandler)(void));
+
+# 403
+extern void (*TMR3_InterruptHandler)(void);
+
+# 421
+void TMR3_DefaultInterruptHandler(void);
+
+# 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
+typedef unsigned char bool;
+
+# 100 "mcc_generated_files/tmr1.h"
+void TMR1_Initialize(void);
+
+# 129
+void TMR1_StartTimer(void);
+
+# 161
+void TMR1_StopTimer(void);
+
+# 196
+uint16_t TMR1_ReadTimer(void);
+
+# 235
+void TMR1_WriteTimer(uint16_t timerVal);
+
+# 271
+void TMR1_Reload(void);
+
+# 310
+void TMR1_StartSinglePulseAcquisition(void);
+
+# 349
+uint8_t TMR1_CheckGateValueStatus(void);
+
+# 367
+void TMR1_ISR(void);
+
+# 385
+void TMR1_SetInterruptHandler(void (* InterruptHandler)(void));
+
+# 403
+extern void (*TMR1_InterruptHandler)(void);
+
+# 421
+void TMR1_DefaultInterruptHandler(void);
+
+# 102 "mcc_generated_files/pwm6.h"
+void PWM6_Initialize(void);
+
+# 129
+void PWM6_LoadDutyValue(uint16_t dutyValue);
+
+# 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
+typedef unsigned char bool;
+
+# 79 "mcc_generated_files/tmr2.h"
+typedef enum
+{
+
+# 89
+TMR2_ROP_STARTS_TMRON,
+
+# 94
+TMR2_ROP_STARTS_TMRON_ERSHIGH,
+
+# 99
+TMR2_ROP_STARTS_TMRON_ERSLOW,
+
+# 104
+TMR2_ROP_RESETS_ERSBOTHEDGE,
+
+# 109
+TMR2_ROP_RESETS_ERSRISINGEDGE,
+
+# 114
+TMR2_ROP_RESETS_ERSFALLINGEDGE,
+
+# 119
+TMR2_ROP_RESETS_ERSLOW,
+
+# 124
+TMR2_ROP_RESETS_ERSHIGH,
+
+# 135
+TMR2_OS_STARTS_TMRON,
+
+# 140
+TMR2_OS_STARTS_ERSRISINGEDGE ,
+
+# 145
+TMR2_OS_STARTS_ERSFALLINGEDGE ,
+
+# 150
+TMR2_OS_STARTS_ERSBOTHEDGE,
+
+# 156
+TMR2_OS_STARTS_ERSFIRSTRISINGEDGE,
+
+# 162
+TMR2_OS_STARTS_ERSFIRSTFALLINGEDGE,
+
+# 168
+TMR2_OS_STARTS_ERSRISINGEDGEDETECT,
+
+# 173
+TMR2_OS_STARTS_ERSFALLINGEDGEDETECT,
+
+# 178
+TMR2_OS_STARTS_TMRON_ERSHIGH = 0x16,
+
+# 183
+TMR2_OS_STARTS_TMRON_ERSLOW = 0x17,
+
+# 192
+TMR2_MS_STARTS_TMRON_ERSRISINGEDGEDETECT = 0x11,
+
+# 197
+TMR2_MS_STARTS_TMRON_ERSFALLINGEDGEDETECT = 0x12,
+
+# 203
+TMR2_MS_STARTS_TMRON_ERSBOTHEDGE = 0x13
+
+} TMR2_HLT_MODE;
+
+# 220
+typedef enum
+{
+
+# 224
+TMR2_T2INPPS,
+
+# 228
+TMR2_RESERVED,
+
+# 232
+TMR2_T4POSTSCALED,
+
+# 236
+TMR2_T6POSTSCALED,
+
+# 239
+TMR2_CCP1_OUT,
+
+# 243
+TMR2_CCP2_OUT,
+
+# 247
+TMR2_CCP3_OUT,
+
+# 251
+TMR2_CCP4_OUT,
+
+# 255
+TMR2_CCP5_OUT,
+
+# 259
+TMR2_PWM6_OUT,
+
+# 263
+TMR2_PWM7_OUT,
+
+# 267
+TMR2_C1_OUT_SYNC,
+
+# 271
+TMR2_C2_OUT_SYNC,
+
+# 275
+TMR2_ZCD_OUTPUT,
+
+# 279
+TMR2_CLC1_OUT,
+
+# 283
+TMR2_CLC2_OUT,
+
+# 287
+TMR2_CLC3_OUT,
+
+# 291
+TMR2_CLC4_OUT
+
+} TMR2_HLT_EXT_RESET_SOURCE;
+
+# 335
+void TMR2_Initialize(void);
+
+# 371
+void TMR2_ModeSet(TMR2_HLT_MODE mode);
+
+# 406
+void TMR2_ExtResetSourceSet(TMR2_HLT_EXT_RESET_SOURCE reset);
+
+# 435
+void TMR2_Start(void);
+
+# 464
+void TMR2_StartTimer(void);
+
+# 496
+void TMR2_Stop(void);
+
+# 528
+void TMR2_StopTimer(void);
+
+# 563
+uint8_t TMR2_Counter8BitGet(void);
+
+# 598
+uint8_t TMR2_ReadTimer(void);
+
+# 637
+void TMR2_Counter8BitSet(uint8_t timerVal);
+
+# 676
+void TMR2_WriteTimer(uint8_t timerVal);
+
+# 728
+void TMR2_Period8BitSet(uint8_t periodVal);
+
+# 780
+void TMR2_LoadPeriodRegister(uint8_t periodVal);
+
+# 818
+bool TMR2_HasOverflowOccured(void);
 
 # 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
 typedef unsigned char bool;
@@ -21344,91 +21641,13 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 827
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
-typedef unsigned char bool;
-
-# 100 "mcc_generated_files/tmr3.h"
-void TMR3_Initialize(void);
-
-# 129
-void TMR3_StartTimer(void);
-
-# 161
-void TMR3_StopTimer(void);
-
-# 196
-uint16_t TMR3_ReadTimer(void);
-
-# 235
-void TMR3_WriteTimer(uint16_t timerVal);
-
-# 271
-void TMR3_Reload(void);
-
-# 310
-void TMR3_StartSinglePulseAcquisition(void);
-
-# 349
-uint8_t TMR3_CheckGateValueStatus(void);
-
-# 367
-void TMR3_ISR(void);
-
-# 385
-void TMR3_SetInterruptHandler(void (* InterruptHandler)(void));
-
-# 403
-extern void (*TMR3_InterruptHandler)(void);
-
-# 421
-void TMR3_DefaultInterruptHandler(void);
-
-# 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
-typedef unsigned char bool;
-
-# 100 "mcc_generated_files/tmr1.h"
-void TMR1_Initialize(void);
-
-# 129
-void TMR1_StartTimer(void);
-
-# 161
-void TMR1_StopTimer(void);
-
-# 196
-uint16_t TMR1_ReadTimer(void);
-
-# 235
-void TMR1_WriteTimer(uint16_t timerVal);
-
-# 271
-void TMR1_Reload(void);
-
-# 310
-void TMR1_StartSinglePulseAcquisition(void);
-
-# 349
-uint8_t TMR1_CheckGateValueStatus(void);
-
-# 367
-void TMR1_ISR(void);
-
-# 385
-void TMR1_SetInterruptHandler(void (* InterruptHandler)(void));
-
-# 403
-extern void (*TMR1_InterruptHandler)(void);
-
-# 421
-void TMR1_DefaultInterruptHandler(void);
-
-# 73 "mcc_generated_files/mcc.h"
+# 76 "mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
 
-# 86
+# 89
 void OSCILLATOR_Initialize(void);
 
-# 99
+# 102
 void PMD_Initialize(void);
 
 
