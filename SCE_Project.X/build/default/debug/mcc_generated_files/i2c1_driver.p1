@@ -13926,6 +13926,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;tmr3.h: 385: void TMR3_SetInterruptHandler(void (* InterruptHandler)(void));
 [; ;tmr3.h: 403: extern void (*TMR3_InterruptHandler)(void);
 [; ;tmr3.h: 421: void TMR3_DefaultInterruptHandler(void);
+[; ;pwm6.h: 102: void PWM6_Initialize(void);
+[; ;pwm6.h: 129: void PWM6_LoadDutyValue(uint16_t dutyValue);
 [; ;stdbool.h: 15: typedef unsigned char bool;
 [; ;tmr1.h: 100: void TMR1_Initialize(void);
 [; ;tmr1.h: 129: void TMR1_StartTimer(void);
@@ -13939,8 +13941,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;tmr1.h: 385: void TMR1_SetInterruptHandler(void (* InterruptHandler)(void));
 [; ;tmr1.h: 403: extern void (*TMR1_InterruptHandler)(void);
 [; ;tmr1.h: 421: void TMR1_DefaultInterruptHandler(void);
-[; ;pwm6.h: 102: void PWM6_Initialize(void);
-[; ;pwm6.h: 129: void PWM6_LoadDutyValue(uint16_t dutyValue);
 [; ;stdbool.h: 15: typedef unsigned char bool;
 [; ;tmr2.h: 79: typedef enum
 [; ;tmr2.h: 80: {

@@ -21322,6 +21322,12 @@ extern void (*TMR3_InterruptHandler)(void);
 # 421
 void TMR3_DefaultInterruptHandler(void);
 
+# 102 "mcc_generated_files/pwm6.h"
+void PWM6_Initialize(void);
+
+# 129
+void PWM6_LoadDutyValue(uint16_t dutyValue);
+
 # 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
 typedef unsigned char bool;
 
@@ -21360,12 +21366,6 @@ extern void (*TMR1_InterruptHandler)(void);
 
 # 421
 void TMR1_DefaultInterruptHandler(void);
-
-# 102 "mcc_generated_files/pwm6.h"
-void PWM6_Initialize(void);
-
-# 129
-void PWM6_LoadDutyValue(uint16_t dutyValue);
 
 # 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
 typedef unsigned char bool;
@@ -21934,6 +21934,14 @@ diff->m = start.m - stop.m;
 diff->h = start.h - stop.h;
 }
 
+void PWM_Output_D4_Enable (void){
+PWM6EN = 1;
+}
+
+void PWM_Output_D4_Disable (void){
+PWM6EN = 0;
+}
+
 # 246
 int map(int x, int in_min, int in_max, int out_min, int out_max) {
 return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
@@ -21957,13 +21965,24 @@ bool trigger;
 };
 
 struct Time t = {0,0,0};
+
 unsigned char temp;
-int lumLevel;
+uint8_t lumLevel;
 bool alarmsEnable = 1;
 
 struct clockAlarm clkAlarm = {{0,1,0}, 0};
 struct temperatureAlarm tempAlarm = {28, 0};
 struct luminosityAlarm lumAlarm = {4, 0};
+
+int dimingLed = 0;
+struct Time alarmPWMStart = {-1,-1,-1};
+
+int editingClockAlarm = 0;
+bool editingTempAlarm = 0;
+bool editingLumAlarm = 0;
+bool togglingAlarm = 0;
+
+int mode = 0;
 
 void Clock_ISR(void) {
 
@@ -21984,20 +22003,23 @@ t.h=0;
 
 
 if(alarmsEnable == 1 && t.s >= clkAlarm.alarmVal.s && t.m >= clkAlarm.alarmVal.m && t.h >= clkAlarm.alarmVal.h){
+alarmPWMStart.h = -1;
 clkAlarm.trigger = 1;
-
+clkAlarm.alarmVal.h = 25;
 }
 
-# 304
 do { LATAbits.LATA7 = ~LATAbits.LATA7; } while(0);
 }
-int dimingLed = 0;
-struct Time alarmPWMStart = {-1,-1,-1};
+
+
 
 void menuLCD_ISR(){
 char str[8];
+if(editingClockAlarm){
+sprintf(str, "%02d:%02d:%02d", clkAlarm.alarmVal.h,clkAlarm.alarmVal.m,clkAlarm.alarmVal.s);
+} else {
 sprintf(str, "%02d:%02d:%02d", t.h,t.m,t.s);
-
+}
 LCDcmd(0x80);
 LCDstr(str);
 
@@ -22010,18 +22032,27 @@ LCDchar('A');
 if(clkAlarm.trigger == 1){
 LCDcmd(0x8B);
 LCDchar('C');
+} else{
+LCDcmd(0x8B);
+LCDchar(' ');
 }
 
 
 if(tempAlarm.trigger == 1){
 LCDcmd(0x8C);
 LCDchar('T');
+} else{
+LCDcmd(0x8C);
+LCDchar(' ');
 }
 
 
 if(lumAlarm.trigger == 1){
 LCDcmd(0x8D);
 LCDchar('L');
+} else{
+LCDcmd(0x8D);
+LCDchar(' ');
 }
 if(clkAlarm.trigger || tempAlarm.trigger || lumAlarm.trigger){
 if(alarmPWMStart.h == -1){
@@ -22032,18 +22063,21 @@ alarmPWMStart.s = t.s;
 struct Time diff = {0,0,0};
 differenceBetweenTimePeriod( t, alarmPWMStart, &diff);
 
-
-if(diff.s < 5){
+if(diff.s <= 5){
+if(PWM6EN==0){
 TMR2_StartTimer();
-
+PWM_Output_D4_Enable();
+}
 if(dimingLed <= 1023){
-dimingLed += 30;
+dimingLed += 200;
 } else{
 dimingLed = 0;
 }
 PWM6_LoadDutyValue(dimingLed);
-} else{
+} else if(PWM6EN==1){
 PWM6_LoadDutyValue(0);
+TMR2_StopTimer();
+PWM_Output_D4_Disable();
 }
 }
 } else{
@@ -22060,35 +22094,83 @@ LCDcmd(0xcd);
 char l[3];
 sprintf(l, "L %d", lumLevel);
 LCDstr(l);
+
+if(editingClockAlarm == 1){
+LCDcmd(0x81);
+} else if(editingClockAlarm == 2){
+LCDcmd(0x83);
+} else if(editingClockAlarm == 3){
+LCDcmd(0x85);
+}
 }
 
 void monitoring_ISR(){
 temp = tsttc();
 
-uint8_t lum = ADCC_GetSingleConversion(channel_ANA0) >> 12;
-
-lumLevel = map(lum,1,15,0,7);
+lumLevel = ADCC_GetSingleConversion(channel_ANA0) >> 13;
 
 
 if(lumAlarm.alarmLum > lumLevel){
+alarmPWMStart.h = -1;
 lumAlarm.trigger = 1;
 do { LATAbits.LATA4 = 1; } while(0);
 } else{
-lumAlarm.trigger = 0;
 do { LATAbits.LATA4 = 0; } while(0);
 }
 
 
 if(tempAlarm.alarmTemp < temp){
+alarmPWMStart.h = -1;
 tempAlarm.trigger = 1;
 do { LATAbits.LATA5 = 1; } while(0);
 } else {
-tempAlarm.trigger = 0;
 do { LATAbits.LATA5 = 0; } while(0);
 }
 
 
 
+}
+
+
+
+void editClock(){
+
+editingClockAlarm = 1;
+
+while(1){
+if(PORTBbits.RB4 == 1){
+editingClockAlarm++;
+if(editingClockAlarm > 3){
+editingClockAlarm = 0;
+mode++;
+break;
+}
+while(PORTBbits.RB4==1){};
+}
+
+if(PORTCbits.RC5 == 1){
+if(editingClockAlarm == 1){
+if(clkAlarm.alarmVal.h == 24){
+clkAlarm.alarmVal.h = 0;
+} else{
+clkAlarm.alarmVal.h++;
+}
+} else if(editingClockAlarm == 2){
+if(clkAlarm.alarmVal.m == 59){
+clkAlarm.alarmVal.m = 0;
+} else{
+clkAlarm.alarmVal.m++;
+}
+} else if(editingClockAlarm == 3){
+if(clkAlarm.alarmVal.s == 59){
+clkAlarm.alarmVal.s = 0;
+} else{
+clkAlarm.alarmVal.s++;
+}
+}
+_delay((unsigned long)((100)*(1000000/4000.0)));
+}
+}
 }
 
 void main(void)
@@ -22097,7 +22179,7 @@ void main(void)
 SYSTEM_Initialize();
 
 TMR2_StopTimer();
-
+PWM_Output_D4_Disable();
 
 TMR1_SetInterruptHandler(Clock_ISR);
 
@@ -22120,9 +22202,37 @@ LCDinit();
 
 while (1)
 {
+if(PORTBbits.RB4 == 1){
+_delay((unsigned long)((100)*(1000000/4000.0)));
 
-# 444
+if(mode == 0 && (clkAlarm.trigger || tempAlarm.trigger || lumAlarm.trigger)){
+clkAlarm.trigger = 0;
+tempAlarm.trigger = 0;
+lumAlarm.trigger = 0;
+}
+else{
+mode = 1;
+}
+while(PORTBbits.RB4==1){};
+_delay((unsigned long)((100)*(1000000/4000.0)));
 }
 
+switch(mode){
+case 0: continue;
+case 1:
+editClock();
+case 2:
+
+continue;
+case 3:
+
+continue;
+case 4:
+
+continue;
+}
+
+# 538
+}
 }
 

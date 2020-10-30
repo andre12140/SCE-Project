@@ -13839,9 +13839,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pin_manager.c: 91: WPUB = 0x00;
 "91
 [e = _WPUB -> -> 0 `i `uc ]
-[; ;pin_manager.c: 92: WPUA = 0x01;
+[; ;pin_manager.c: 92: WPUA = 0x00;
 "92
-[e = _WPUA -> -> 1 `i `uc ]
+[e = _WPUA -> -> 0 `i `uc ]
 [; ;pin_manager.c: 93: WPUC = 0x00;
 "93
 [e = _WPUC -> -> 0 `i `uc ]
