@@ -21772,7 +21772,7 @@ extern char * strichr(const char *, int);
 extern char * strrchr(const char *, int);
 extern char * strrichr(const char *, int);
 
-# 58 "main.c"
+# 60 "main.c"
 unsigned char tsttc (void)
 {
 unsigned char value;
@@ -21802,7 +21802,7 @@ SSP1CON2bits.PEN = 1;while(SSP1CON2bits.PEN);
 return value;
 }
 
-# 93
+# 95
 void LCDsend(unsigned char c)
 {
 while ((SSP1CON2 & 0x1F) | (SSP1STATbits.R_W));
@@ -21942,7 +21942,7 @@ void PWM_Output_D4_Disable (void){
 PWM6EN = 0;
 }
 
-# 246
+# 248
 int map(int x, int in_min, int in_max, int out_min, int out_max) {
 return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
@@ -21957,11 +21957,13 @@ bool trigger;
 struct temperatureAlarm{
 unsigned char alarmTemp;
 bool trigger;
+bool triggered;
 };
 
 struct luminosityAlarm{
 unsigned char alarmLum;
 bool trigger;
+bool triggered;
 };
 
 struct Time t = {0,0,0};
@@ -21971,8 +21973,8 @@ uint8_t lumLevel;
 bool alarmsEnable = 1;
 
 struct clockAlarm clkAlarm = {{1,0,0}, 0};
-struct temperatureAlarm tempAlarm = {28, 0};
-struct luminosityAlarm lumAlarm = {4, 0};
+struct temperatureAlarm tempAlarm = {28, 0, 0};
+struct luminosityAlarm lumAlarm = {4, 0, 0};
 
 int dimingLed = 0;
 struct Time alarmPWMStart = {-1,-1,-1};
@@ -21980,7 +21982,6 @@ struct Time alarmPWMStart = {-1,-1,-1};
 int editingClockAlarm = 0;
 bool editingTempAlarm = 0;
 bool editingLumAlarm = 0;
-bool togglingAlarm = 0;
 
 int mode = 0;
 
@@ -22002,7 +22003,7 @@ t.h=0;
 }
 
 
-if(alarmsEnable == 1 && t.s >= clkAlarm.alarmVal.s && t.m >= clkAlarm.alarmVal.m && t.h >= clkAlarm.alarmVal.h && editingClockAlarm == 0){
+if(alarmsEnable && t.s >= clkAlarm.alarmVal.s && t.m >= clkAlarm.alarmVal.m && t.h >= clkAlarm.alarmVal.h && editingClockAlarm == 0){
 alarmPWMStart.h = -1;
 clkAlarm.trigger = 1;
 clkAlarm.alarmVal.h = 25;
@@ -22097,7 +22098,12 @@ LCDstr(tt);
 
 LCDcmd(0xcd);
 char l[3];
+
+if(editingLumAlarm){
+sprintf(l, "L %d", lumAlarm.alarmLum);
+} else{
 sprintf(l, "L %d", lumLevel);
+}
 LCDstr(l);
 
 if(mode == 1){
@@ -22110,6 +22116,10 @@ LCDcmd(0x87);
 }
 } else if(mode == 2){
 LCDcmd(0xc1);
+} else if(mode == 3){
+LCDcmd(0xcf);
+} else if(mode == 4){
+LCDcmd(0x8f);
 }
 
 }
@@ -22119,24 +22129,37 @@ temp = tsttc();
 
 lumLevel = ADCC_GetSingleConversion(channel_ANA0) >> 13;
 
+if(alarmsEnable){
 
 if((lumAlarm.alarmLum > lumLevel) && (editingLumAlarm == 0)){
+if(!lumAlarm.triggered){
 alarmPWMStart.h = -1;
+}
+lumAlarm.triggered = 1;
+
 lumAlarm.trigger = 1;
 do { LATAbits.LATA4 = 1; } while(0);
 } else{
+lumAlarm.triggered = 0;
 do { LATAbits.LATA4 = 0; } while(0);
 }
 
 
 if((tempAlarm.alarmTemp < temp) && (editingTempAlarm == 0)){
+if(!tempAlarm.triggered){
 alarmPWMStart.h = -1;
+}
+
+tempAlarm.triggered = 1;
+
 tempAlarm.trigger = 1;
 do { LATAbits.LATA5 = 1; } while(0);
 } else {
+
+tempAlarm.triggered = 0;
 do { LATAbits.LATA5 = 0; } while(0);
 }
-
+}
 
 
 }
@@ -22157,7 +22180,7 @@ editingClockAlarm++;
 while(PORTBbits.RB4==0){};
 if(editingClockAlarm > 3){
 editingClockAlarm = 0;
-mode++;
+mode = 2;
 break;
 }
 }
@@ -22182,7 +22205,7 @@ clkAlarm.alarmVal.s = 0;
 clkAlarm.alarmVal.s++;
 }
 }
-_delay((unsigned long)((50)*(1000000/4000.0)));
+_delay((unsigned long)((100)*(1000000/4000.0)));
 }
 }
 }
@@ -22196,7 +22219,7 @@ while(1){
 if(PORTBbits.RB4 == 0){
 _delay((unsigned long)((50)*(1000000/4000.0)));
 editingTempAlarm = 0;
-mode++;
+mode = 3;
 while(PORTBbits.RB4==0){};
 break;
 }
@@ -22206,10 +22229,49 @@ tempAlarm.alarmTemp++;
 if(tempAlarm.alarmTemp > 50){
 tempAlarm.alarmTemp = 0;
 }
-_delay((unsigned long)((50)*(1000000/4000.0)));
+_delay((unsigned long)((100)*(1000000/4000.0)));
+}
 }
 }
 
+void editLum(){
+editingLumAlarm = 1;
+lumAlarm.alarmLum = 0;
+
+while(1){
+if(PORTBbits.RB4 == 0){
+_delay((unsigned long)((50)*(1000000/4000.0)));
+editingLumAlarm = 0;
+mode = 4;
+while(PORTBbits.RB4==0){};
+break;
+}
+
+if(PORTCbits.RC5 == 0){
+lumAlarm.alarmLum++;
+if(lumAlarm.alarmLum > 7){
+lumAlarm.alarmLum = 0;
+}
+_delay((unsigned long)((100)*(1000000/4000.0)));
+}
+}
+}
+
+void toggleAlarms(){
+
+while(1){
+if(PORTBbits.RB4 == 0){
+_delay((unsigned long)((50)*(1000000/4000.0)));
+mode = 0;
+while(PORTBbits.RB4==0){};
+break;
+}
+
+if(PORTCbits.RC5 == 0){
+alarmsEnable = !alarmsEnable;
+_delay((unsigned long)((100)*(1000000/4000.0)));
+}
+}
 }
 
 void main(void)
@@ -22217,6 +22279,7 @@ void main(void)
 
 SYSTEM_Initialize();
 
+PWM6_LoadDutyValue(0);
 TMR2_StopTimer();
 PWM_Output_D4_Disable();
 
@@ -22262,14 +22325,12 @@ editClock();
 case 2:
 editTemp();
 case 3:
-
-continue;
+editLum();
 case 4:
-
-continue;
+toggleAlarms();
 }
 
-# 575
+# 638
 }
 }
 

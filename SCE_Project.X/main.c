@@ -51,6 +51,8 @@
 #define ALAT 28
 #define ALAL 4
 
+#define S2DELAY 100 //Use to define time to wait for debounce
+
 /*
                          Main application
  */
@@ -257,11 +259,13 @@ struct clockAlarm{
 struct temperatureAlarm{
     unsigned char alarmTemp;
     bool trigger;
+    bool triggered;
 };
 
 struct luminosityAlarm{
     unsigned char alarmLum;
     bool trigger;
+    bool triggered;
 };
 
 struct Time t = {0,0,0}; // Time struct for current time
@@ -271,8 +275,8 @@ uint8_t lumLevel;
 bool alarmsEnable = true;
 
 struct clockAlarm clkAlarm = {{1,0,0}, false};// Time struct for editing clock alarm
-struct temperatureAlarm tempAlarm = {ALAT, false};
-struct luminosityAlarm lumAlarm = {ALAL, false};
+struct temperatureAlarm tempAlarm = {ALAT, false, false};
+struct luminosityAlarm lumAlarm = {ALAL, false, false};
 
 int dimingLed = 0;
 struct Time alarmPWMStart = {-1,-1,-1};
@@ -280,7 +284,6 @@ struct Time alarmPWMStart = {-1,-1,-1};
 int editingClockAlarm = 0;
 bool editingTempAlarm = false;
 bool editingLumAlarm = false;
-bool togglingAlarm = false;
 
 int mode = 0; //Mode of operation (0 no edit, 1 edit CLK, 2 edit Temp, 3 edit Lum, 4 toggle Alarm Enable/Disable)
 
@@ -302,7 +305,7 @@ void Clock_ISR(void) {
     }
     
     //Check alarm trigger 
-    if(alarmsEnable == true && t.s >= clkAlarm.alarmVal.s && t.m >= clkAlarm.alarmVal.m && t.h >= clkAlarm.alarmVal.h && editingClockAlarm == 0){
+    if(alarmsEnable && t.s >= clkAlarm.alarmVal.s && t.m >= clkAlarm.alarmVal.m && t.h >= clkAlarm.alarmVal.h && editingClockAlarm == 0){
         alarmPWMStart.h = -1; //For the PWM LED to start
         clkAlarm.trigger = true;
         clkAlarm.alarmVal.h = 25; //Only triggered once until new val is given by user
@@ -397,7 +400,12 @@ void menuLCD_ISR(){
     
     LCDcmd(0xcd);
     char l[3];
-    sprintf(l, "L %d", lumLevel);
+    
+    if(editingLumAlarm){
+        sprintf(l, "L %d", lumAlarm.alarmLum);
+    } else{
+        sprintf(l, "L %d", lumLevel);
+    }
     LCDstr(l);
     
     if(mode == 1){
@@ -410,6 +418,10 @@ void menuLCD_ISR(){
         }
     } else if(mode == 2){
         LCDcmd(0xc1);
+    } else if(mode == 3){
+        LCDcmd(0xcf);
+    } else if(mode == 4){
+        LCDcmd(0x8f);
     }
     
 }
@@ -417,27 +429,40 @@ void menuLCD_ISR(){
 void monitoring_ISR(){
     temp = tsttc(); //Get temp
     
-    lumLevel = ADCC_GetSingleConversion(channel_ANA0) >> 13; //Shift 3 para ter de 0 a 7, Shit de 6 para ter os 10 bits de resolucao
+    lumLevel = ADCC_GetSingleConversion(channel_ANA0) >> 13; //Shift of 13 to get only 3 most significant bits = 8 levels
+    
+    if(alarmsEnable){
+        //Check luminosity alarm trigger
+        if((lumAlarm.alarmLum > lumLevel) && (editingLumAlarm == false)){
+            if(!lumAlarm.triggered){
+                alarmPWMStart.h = -1;//For the PWM LED to start
+            }
+            lumAlarm.triggered = true;
+            
+            lumAlarm.trigger = true;
+            LED_D2_SetHigh();
+        } else{
+            lumAlarm.triggered = false;
+            LED_D2_SetLow();
+        }
 
-    //Check luminosity alarm trigger
-    if((lumAlarm.alarmLum > lumLevel) && (editingLumAlarm == false)){
-        alarmPWMStart.h = -1;//For the PWM LED to start
-        lumAlarm.trigger = true;
-        LED_D2_SetHigh();
-    } else{
-        LED_D2_SetLow();
+        //Check temperature alarm trigger
+        if((tempAlarm.alarmTemp < temp) && (editingTempAlarm == false)){
+            if(!tempAlarm.triggered){
+                alarmPWMStart.h = -1;//For the PWM LED to start
+            }
+            
+            tempAlarm.triggered = true;
+            
+            tempAlarm.trigger = true;
+            LED_D3_SetHigh();
+        } else {
+            
+            tempAlarm.triggered = false;
+            LED_D3_SetLow();
+        }
     }
-    
-    //Check temperature alarm trigger
-    if((tempAlarm.alarmTemp < temp) && (editingTempAlarm == false)){
-        alarmPWMStart.h = -1;//For the PWM LED to start
-        tempAlarm.trigger = true;
-        LED_D3_SetHigh();
-    } else {
-        LED_D3_SetLow();
-    }
-    
-    
+
     //DAR SAVE NA EEPROM E ASSOCIAR ALARMES
 }
 
@@ -457,7 +482,7 @@ void editClock(){
             while(S1_GetValue()==LOW){}; //Waiting for user to stop pressing S1
             if(editingClockAlarm > 3){
                 editingClockAlarm = 0;
-                mode++;
+                mode = 2;
                 break;
             }
         }
@@ -482,7 +507,7 @@ void editClock(){
                     clkAlarm.alarmVal.s++; 
                 }
             }
-            __delay_ms(50);
+            __delay_ms(S2DELAY);
         }
     }
 }
@@ -496,7 +521,7 @@ void editTemp(){
         if(S1_GetValue() == LOW){
             __delay_ms(50);
             editingTempAlarm = false;
-            mode++;
+            mode = 3;
             while(S1_GetValue()==LOW){}; //Waiting for user to stop pressing S1
             break;
         }
@@ -506,10 +531,49 @@ void editTemp(){
             if(tempAlarm.alarmTemp > 50){
                 tempAlarm.alarmTemp = 0;
             }
+            __delay_ms(S2DELAY);
+        }
+    }    
+}
+
+void editLum(){
+    editingLumAlarm = true;
+    lumAlarm.alarmLum = 0;
+    
+    while(1){
+        if(S1_GetValue() == LOW){
             __delay_ms(50);
+            editingLumAlarm = false;
+            mode = 4;
+            while(S1_GetValue()==LOW){}; //Waiting for user to stop pressing S1
+            break;
+        }
+        
+        if(S2_GetValue() == LOW){ //Switch 2 pressed
+            lumAlarm.alarmLum++;
+            if(lumAlarm.alarmLum > 7){ //Se o user meter 0 nunca vai passar abaixo desse valor o que significa que o alarme nao dispara
+                lumAlarm.alarmLum = 0;
+            }
+            __delay_ms(S2DELAY);
+        }
+    }  
+}
+
+void toggleAlarms(){
+    
+    while(1){
+        if(S1_GetValue() == LOW){
+            __delay_ms(50);
+            mode = 0;
+            while(S1_GetValue()==LOW){}; //Waiting for user to stop pressing S1
+            break;
+        }
+        
+        if(S2_GetValue() == LOW){ //Switch 2 pressed
+            alarmsEnable = !alarmsEnable;
+            __delay_ms(S2DELAY);
         }
     }
-    
 }
 
 void main(void)
@@ -517,6 +581,7 @@ void main(void)
     // initialize the device
     SYSTEM_Initialize();
     
+    PWM6_LoadDutyValue(0);
     TMR2_StopTimer();
     PWM_Output_D4_Disable();
     
@@ -562,11 +627,9 @@ void main(void)
             case 2:
                 editTemp(); //Temperature Edit Handler
             case 3:
-                //editLum(); //Luminosity Edit Handler
-                continue;
+                editLum(); //Luminosity Edit Handler
             case 4:
-                //toggleAlarms(); //Enables/Disables Alarms
-                continue;
+                toggleAlarms(); //Enables/Disables Alarms
         }
         
         /*if(S2_GetValue() == HIGH){ //Switch 2 pressed
