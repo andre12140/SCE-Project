@@ -270,7 +270,7 @@ unsigned char temp;
 uint8_t lumLevel;
 bool alarmsEnable = true;
 
-struct clockAlarm clkAlarm = {{0,1,0}, false};// Time struct for editing clock alarm
+struct clockAlarm clkAlarm = {{1,0,0}, false};// Time struct for editing clock alarm
 struct temperatureAlarm tempAlarm = {ALAT, false};
 struct luminosityAlarm lumAlarm = {ALAL, false};
 
@@ -302,7 +302,7 @@ void Clock_ISR(void) {
     }
     
     //Check alarm trigger 
-    if(alarmsEnable == true && t.s >= clkAlarm.alarmVal.s && t.m >= clkAlarm.alarmVal.m && t.h >= clkAlarm.alarmVal.h){
+    if(alarmsEnable == true && t.s >= clkAlarm.alarmVal.s && t.m >= clkAlarm.alarmVal.m && t.h >= clkAlarm.alarmVal.h && editingClockAlarm == 0){
         alarmPWMStart.h = -1; //For the PWM LED to start
         clkAlarm.trigger = true;
         clkAlarm.alarmVal.h = 25; //Only triggered once until new val is given by user
@@ -388,7 +388,11 @@ void menuLCD_ISR(){
     
     LCDcmd(0xc0);
     char tt[4];
-	sprintf(tt, "%02d C", temp);
+    if(editingTempAlarm){
+        sprintf(tt, "%02d C", tempAlarm.alarmTemp);
+    } else{
+        sprintf(tt, "%02d C", temp);
+    }
 	LCDstr(tt);
     
     LCDcmd(0xcd);
@@ -396,13 +400,18 @@ void menuLCD_ISR(){
     sprintf(l, "L %d", lumLevel);
     LCDstr(l);
     
-    if(editingClockAlarm == 1){
-        LCDcmd(0x81);
-    } else if(editingClockAlarm == 2){
-        LCDcmd(0x84);
-    } else if(editingClockAlarm == 3){
-        LCDcmd(0x87);
+    if(mode == 1){
+        if(editingClockAlarm == 1){
+            LCDcmd(0x81);
+        } else if(editingClockAlarm == 2){
+            LCDcmd(0x84);
+        } else if(editingClockAlarm == 3){
+            LCDcmd(0x87);
+        }
+    } else if(mode == 2){
+        LCDcmd(0xc1);
     }
+    
 }
 
 void monitoring_ISR(){
@@ -411,7 +420,7 @@ void monitoring_ISR(){
     lumLevel = ADCC_GetSingleConversion(channel_ANA0) >> 13; //Shift 3 para ter de 0 a 7, Shit de 6 para ter os 10 bits de resolucao
 
     //Check luminosity alarm trigger
-    if(lumAlarm.alarmLum > lumLevel){
+    if((lumAlarm.alarmLum > lumLevel) && (editingLumAlarm == false)){
         alarmPWMStart.h = -1;//For the PWM LED to start
         lumAlarm.trigger = true;
         LED_D2_SetHigh();
@@ -420,7 +429,7 @@ void monitoring_ISR(){
     }
     
     //Check temperature alarm trigger
-    if(tempAlarm.alarmTemp < temp){
+    if((tempAlarm.alarmTemp < temp) && (editingTempAlarm == false)){
         alarmPWMStart.h = -1;//For the PWM LED to start
         tempAlarm.trigger = true;
         LED_D3_SetHigh();
@@ -437,17 +446,20 @@ void monitoring_ISR(){
 void editClock(){
     
     editingClockAlarm = 1;
+    clkAlarm.alarmVal.h = 0; //Reseting Clock Alarm for editing
+    clkAlarm.alarmVal.m = 0;
+    clkAlarm.alarmVal.s = 0;
     
     while(1){
         if(S1_GetValue() == LOW){
             __delay_ms(50);
             editingClockAlarm++;
+            while(S1_GetValue()==LOW){}; //Waiting for user to stop pressing S1
             if(editingClockAlarm > 3){
                 editingClockAlarm = 0;
                 mode++;
                 break;
             }
-            while(S1_GetValue()==LOW){}; //Waiting for user to stop pressing S1
         }
         
         if(S2_GetValue() == LOW){ //Switch 2 pressed
@@ -473,6 +485,31 @@ void editClock(){
             __delay_ms(50);
         }
     }
+}
+
+void editTemp(){
+    editingTempAlarm = true;
+    
+    tempAlarm.alarmTemp = 0;
+    
+    while(1){
+        if(S1_GetValue() == LOW){
+            __delay_ms(50);
+            editingTempAlarm = false;
+            mode++;
+            while(S1_GetValue()==LOW){}; //Waiting for user to stop pressing S1
+            break;
+        }
+        
+        if(S2_GetValue() == LOW){ //Switch 2 pressed
+            tempAlarm.alarmTemp++;
+            if(tempAlarm.alarmTemp > 50){
+                tempAlarm.alarmTemp = 0;
+            }
+            __delay_ms(50);
+        }
+    }
+    
 }
 
 void main(void)
@@ -523,8 +560,7 @@ void main(void)
             case 1: 
                 editClock(); //Clock Edit Handler
             case 2:
-                //editTemp(); //Temperature Edit Handler
-                continue;
+                editTemp(); //Temperature Edit Handler
             case 3:
                 //editLum(); //Luminosity Edit Handler
                 continue;

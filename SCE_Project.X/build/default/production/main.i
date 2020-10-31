@@ -21970,7 +21970,7 @@ unsigned char temp;
 uint8_t lumLevel;
 bool alarmsEnable = 1;
 
-struct clockAlarm clkAlarm = {{0,1,0}, 0};
+struct clockAlarm clkAlarm = {{1,0,0}, 0};
 struct temperatureAlarm tempAlarm = {28, 0};
 struct luminosityAlarm lumAlarm = {4, 0};
 
@@ -22002,7 +22002,7 @@ t.h=0;
 }
 
 
-if(alarmsEnable == 1 && t.s >= clkAlarm.alarmVal.s && t.m >= clkAlarm.alarmVal.m && t.h >= clkAlarm.alarmVal.h){
+if(alarmsEnable == 1 && t.s >= clkAlarm.alarmVal.s && t.m >= clkAlarm.alarmVal.m && t.h >= clkAlarm.alarmVal.h && editingClockAlarm == 0){
 alarmPWMStart.h = -1;
 clkAlarm.trigger = 1;
 clkAlarm.alarmVal.h = 25;
@@ -22088,7 +22088,11 @@ LCDchar('a');
 
 LCDcmd(0xc0);
 char tt[4];
+if(editingTempAlarm){
+sprintf(tt, "%02d C", tempAlarm.alarmTemp);
+} else{
 sprintf(tt, "%02d C", temp);
+}
 LCDstr(tt);
 
 LCDcmd(0xcd);
@@ -22096,6 +22100,7 @@ char l[3];
 sprintf(l, "L %d", lumLevel);
 LCDstr(l);
 
+if(mode == 1){
 if(editingClockAlarm == 1){
 LCDcmd(0x81);
 } else if(editingClockAlarm == 2){
@@ -22103,6 +22108,10 @@ LCDcmd(0x84);
 } else if(editingClockAlarm == 3){
 LCDcmd(0x87);
 }
+} else if(mode == 2){
+LCDcmd(0xc1);
+}
+
 }
 
 void monitoring_ISR(){
@@ -22111,7 +22120,7 @@ temp = tsttc();
 lumLevel = ADCC_GetSingleConversion(channel_ANA0) >> 13;
 
 
-if(lumAlarm.alarmLum > lumLevel){
+if((lumAlarm.alarmLum > lumLevel) && (editingLumAlarm == 0)){
 alarmPWMStart.h = -1;
 lumAlarm.trigger = 1;
 do { LATAbits.LATA4 = 1; } while(0);
@@ -22120,7 +22129,7 @@ do { LATAbits.LATA4 = 0; } while(0);
 }
 
 
-if(tempAlarm.alarmTemp < temp){
+if((tempAlarm.alarmTemp < temp) && (editingTempAlarm == 0)){
 alarmPWMStart.h = -1;
 tempAlarm.trigger = 1;
 do { LATAbits.LATA5 = 1; } while(0);
@@ -22137,17 +22146,20 @@ do { LATAbits.LATA5 = 0; } while(0);
 void editClock(){
 
 editingClockAlarm = 1;
+clkAlarm.alarmVal.h = 0;
+clkAlarm.alarmVal.m = 0;
+clkAlarm.alarmVal.s = 0;
 
 while(1){
 if(PORTBbits.RB4 == 0){
 _delay((unsigned long)((50)*(1000000/4000.0)));
 editingClockAlarm++;
+while(PORTBbits.RB4==0){};
 if(editingClockAlarm > 3){
 editingClockAlarm = 0;
 mode++;
 break;
 }
-while(PORTBbits.RB4==0){};
 }
 
 if(PORTCbits.RC5 == 0){
@@ -22173,6 +22185,31 @@ clkAlarm.alarmVal.s++;
 _delay((unsigned long)((50)*(1000000/4000.0)));
 }
 }
+}
+
+void editTemp(){
+editingTempAlarm = 1;
+
+tempAlarm.alarmTemp = 0;
+
+while(1){
+if(PORTBbits.RB4 == 0){
+_delay((unsigned long)((50)*(1000000/4000.0)));
+editingTempAlarm = 0;
+mode++;
+while(PORTBbits.RB4==0){};
+break;
+}
+
+if(PORTCbits.RC5 == 0){
+tempAlarm.alarmTemp++;
+if(tempAlarm.alarmTemp > 50){
+tempAlarm.alarmTemp = 0;
+}
+_delay((unsigned long)((50)*(1000000/4000.0)));
+}
+}
+
 }
 
 void main(void)
@@ -22223,8 +22260,7 @@ case 0: continue;
 case 1:
 editClock();
 case 2:
-
-continue;
+editTemp();
 case 3:
 
 continue;
@@ -22233,7 +22269,7 @@ case 4:
 continue;
 }
 
-# 539
+# 575
 }
 }
 
