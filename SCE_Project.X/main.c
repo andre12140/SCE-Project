@@ -53,6 +53,9 @@
 
 #define S2DELAY 100 //Use to define time to wait for debounce
 
+#define EEAddr    0x7000        // EEPROM starting address
+#define NREG 25                 // Number of registers
+
 /*
                          Main application
  */
@@ -201,9 +204,9 @@ int LCDbusy()
 }
 
 struct Time {
-    int h;
-    int m;
-    int s;
+    uint8_t h;
+    uint8_t m;
+    uint8_t s;
 }; 
 
 // Computes difference between time periods
@@ -270,7 +273,7 @@ struct luminosityAlarm{
 
 struct Time t = {0,0,0}; // Time struct for current time
 
-unsigned char temp;
+uint8_t temp;
 uint8_t lumLevel;
 bool alarmsEnable = true;
 
@@ -286,6 +289,8 @@ bool editingTempAlarm = false;
 bool editingLumAlarm = false;
 
 int mode = 0; //Mode of operation (0 no edit, 1 edit CLK, 2 edit Temp, 3 edit Lum, 4 toggle Alarm Enable/Disable)
+
+int regIdx = 0; //Index of Ring Buffer to EEPROM
 
 void Clock_ISR(void) {    
     // Clock handler increment timer
@@ -426,10 +431,30 @@ void menuLCD_ISR(){
     
 }
 
+int prevTemp = -1;
+int prevLumLevel = -1;
+
 void monitoring_ISR(){
-    temp = tsttc(); //Get temp
+    temp = (uint8_t)tsttc(); //Get temp
     
     lumLevel = ADCC_GetSingleConversion(channel_ANA0) >> 13; //Shift of 13 to get only 3 most significant bits = 8 levels
+    
+    if(prevTemp != temp || prevLumLevel != lumLevel){ //If Different values saving in eeprom
+        
+        DATAEE_WriteByte( (regIdx * 0x28) + EEAddr + (sizeof(uint8_t)*0) , t.h);
+        DATAEE_WriteByte( (regIdx * 0x28) + EEAddr + (sizeof(uint8_t)*1) , t.m);
+        DATAEE_WriteByte( (regIdx * 0x28) + EEAddr + (sizeof(uint8_t)*2) , t.s);
+        DATAEE_WriteByte( (regIdx * 0x28) + EEAddr + (sizeof(uint8_t)*3) , temp);
+        DATAEE_WriteByte( (regIdx * 0x28) + EEAddr + (sizeof(uint8_t)*4) , lumLevel);
+        
+        regIdx++;
+        if(regIdx > 2){
+            regIdx = 0;
+        }
+        prevTemp = temp;
+        prevLumLevel = lumLevel;
+    }
+    
     
     if(alarmsEnable){
         //Check luminosity alarm trigger
@@ -590,6 +615,12 @@ void main(void)
     TMR3_SetInterruptHandler(menuLCD_ISR);
     
     TMR5_SetInterruptHandler(monitoring_ISR);
+    
+    //DEBBUG
+    /*DATAEE_WriteByte( EEAddr, 0xAA);
+    uint8_t test = DATAEE_ReadByte(EEAddr);*/
+    
+    //Inicializar timeStamp
     
     i2c1_driver_open();
     I2C_SCL = 1;

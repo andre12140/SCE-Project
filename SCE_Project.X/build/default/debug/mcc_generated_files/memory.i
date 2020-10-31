@@ -1,5 +1,5 @@
 
-# 1 "mcc_generated_files/mcc.c"
+# 1 "mcc_generated_files/memory.c"
 
 # 18 "C:/Users/Andre/.mchp_packs/Microchip/PIC16F1xxxx_DFP/1.5.133/xc8\pic\include\xc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -21121,523 +21121,6 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 
-# 244 "mcc_generated_files/pin_manager.h"
-void PIN_MANAGER_Initialize (void);
-
-# 256
-void PIN_MANAGER_IOC(void);
-
-# 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
-typedef unsigned char bool;
-
-# 4 "C:/Users/Andre/.mchp_packs/Microchip/PIC16F1xxxx_DFP/1.5.133/xc8\pic\include\__size_t.h"
-typedef unsigned size_t;
-
-# 7 "E:\Microchip\xc8\v2.30\pic\include\c90\stdarg.h"
-typedef void * va_list[1];
-
-#pragma intrinsic(__va_start)
-extern void * __va_start(void);
-
-#pragma intrinsic(__va_arg)
-extern void * __va_arg(void *, ...);
-
-# 43 "E:\Microchip\xc8\v2.30\pic\include\c90\stdio.h"
-struct __prbuf
-{
-char * ptr;
-void (* func)(char);
-};
-
-# 29 "E:\Microchip\xc8\v2.30\pic\include\c90\errno.h"
-extern int errno;
-
-# 12 "E:\Microchip\xc8\v2.30\pic\include\c90\conio.h"
-extern void init_uart(void);
-
-extern char getch(void);
-extern char getche(void);
-extern void putch(char);
-extern void ungetch(char);
-
-extern __bit kbhit(void);
-
-# 23
-extern char * cgets(char *);
-extern void cputs(const char *);
-
-# 88 "E:\Microchip\xc8\v2.30\pic\include\c90\stdio.h"
-extern int cprintf(char *, ...);
-#pragma printf_check(cprintf)
-
-
-
-extern int _doprnt(struct __prbuf *, const register char *, register va_list);
-
-
-# 180
-#pragma printf_check(vprintf) const
-#pragma printf_check(vsprintf) const
-
-extern char * gets(char *);
-extern int puts(const char *);
-extern int scanf(const char *, ...) __attribute__((unsupported("scanf() is not supported by this compiler")));
-extern int sscanf(const char *, const char *, ...) __attribute__((unsupported("sscanf() is not supported by this compiler")));
-extern int vprintf(const char *, va_list) __attribute__((unsupported("vprintf() is not supported by this compiler")));
-extern int vsprintf(char *, const char *, va_list) __attribute__((unsupported("vsprintf() is not supported by this compiler")));
-extern int vscanf(const char *, va_list ap) __attribute__((unsupported("vscanf() is not supported by this compiler")));
-extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
-
-#pragma printf_check(printf) const
-#pragma printf_check(sprintf) const
-extern int sprintf(char *, const char *, ...);
-extern int printf(const char *, ...);
-
-# 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
-typedef unsigned char bool;
-
-# 33 "mcc_generated_files/i2c1_driver.h"
-typedef void (*interruptHandler)(void);
-
-
-inline void i2c1_driver_close(void);
-
-
-inline void mssp1_enableIRQ(void);
-inline __bit mssp1_IRQisEnabled(void);
-inline void mssp1_disableIRQ(void);
-inline void mssp1_clearIRQ(void);
-inline void mssp1_setIRQ(void);
-inline __bit mssp1_IRQisSet(void);
-inline void mssp1_waitForEvent(uint16_t*);
-
-
-__bit i2c1_driver_open(void);
-inline char i2c1_driver_getRXData(void);
-inline char i2c1_driver_getAddr(void);
-inline void i2c1_driver_setAddr(char addr);
-inline void i2c1_driver_setMask(char mask);
-inline void i2c1_driver_TXData(char d);
-inline void i2c1_driver_resetBus(void);
-inline void i2c1_driver_start(void);
-inline void i2c1_driver_restart(void);
-inline void i2c1_driver_stop(void);
-inline __bit i2c1_driver_isNACK(void);
-inline void i2c1_driver_startRX(void);
-inline void i2c1_driver_sendACK(void);
-inline void i2c1_driver_sendNACK(void);
-inline void i2c1_driver_clearBusCollision(void);
-
-__bit i2c1_driver_initSlaveHardware(void);
-inline void i2c1_driver_releaseClock(void);
-inline __bit i2c1_driver_isBufferFull(void);
-inline __bit i2c1_driver_isStart(void);
-inline __bit i2c1_driver_isStop(void);
-inline __bit i2c1_driver_isAddress(void);
-inline __bit i2c1_driver_isData(void);
-inline __bit i2c1_driver_isRead(void);
-inline __bit i2c1_driver_isWriteCollision(void);
-inline __bit i2c1_driver_isReceiveOverflow(void);
-
-inline void i2c1_driver_setBusCollisionISR(interruptHandler handler);
-inline void i2c1_driver_setI2cISR(interruptHandler handler);
-void (*i2c1_driver_busCollisionISR)(void);
-void (*i2c1_driver_i2cISR)(void);
-
-# 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
-typedef unsigned char bool;
-
-# 100 "mcc_generated_files/tmr5.h"
-void TMR5_Initialize(void);
-
-# 129
-void TMR5_StartTimer(void);
-
-# 161
-void TMR5_StopTimer(void);
-
-# 196
-uint16_t TMR5_ReadTimer(void);
-
-# 235
-void TMR5_WriteTimer(uint16_t timerVal);
-
-# 271
-void TMR5_Reload(void);
-
-# 310
-void TMR5_StartSinglePulseAcquisition(void);
-
-# 349
-uint8_t TMR5_CheckGateValueStatus(void);
-
-# 367
-void TMR5_ISR(void);
-
-# 385
-void TMR5_SetInterruptHandler(void (* InterruptHandler)(void));
-
-# 403
-extern void (*TMR5_InterruptHandler)(void);
-
-# 421
-void TMR5_DefaultInterruptHandler(void);
-
-# 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
-typedef unsigned char bool;
-
-# 100 "mcc_generated_files/tmr3.h"
-void TMR3_Initialize(void);
-
-# 129
-void TMR3_StartTimer(void);
-
-# 161
-void TMR3_StopTimer(void);
-
-# 196
-uint16_t TMR3_ReadTimer(void);
-
-# 235
-void TMR3_WriteTimer(uint16_t timerVal);
-
-# 271
-void TMR3_Reload(void);
-
-# 310
-void TMR3_StartSinglePulseAcquisition(void);
-
-# 349
-uint8_t TMR3_CheckGateValueStatus(void);
-
-# 367
-void TMR3_ISR(void);
-
-# 385
-void TMR3_SetInterruptHandler(void (* InterruptHandler)(void));
-
-# 403
-extern void (*TMR3_InterruptHandler)(void);
-
-# 421
-void TMR3_DefaultInterruptHandler(void);
-
-# 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
-typedef unsigned char bool;
-
-# 100 "mcc_generated_files/tmr1.h"
-void TMR1_Initialize(void);
-
-# 129
-void TMR1_StartTimer(void);
-
-# 161
-void TMR1_StopTimer(void);
-
-# 196
-uint16_t TMR1_ReadTimer(void);
-
-# 235
-void TMR1_WriteTimer(uint16_t timerVal);
-
-# 271
-void TMR1_Reload(void);
-
-# 310
-void TMR1_StartSinglePulseAcquisition(void);
-
-# 349
-uint8_t TMR1_CheckGateValueStatus(void);
-
-# 367
-void TMR1_ISR(void);
-
-# 385
-void TMR1_SetInterruptHandler(void (* InterruptHandler)(void));
-
-# 403
-extern void (*TMR1_InterruptHandler)(void);
-
-# 421
-void TMR1_DefaultInterruptHandler(void);
-
-# 102 "mcc_generated_files/pwm6.h"
-void PWM6_Initialize(void);
-
-# 129
-void PWM6_LoadDutyValue(uint16_t dutyValue);
-
-# 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
-typedef unsigned char bool;
-
-# 79 "mcc_generated_files/tmr2.h"
-typedef enum
-{
-
-# 89
-TMR2_ROP_STARTS_TMRON,
-
-# 94
-TMR2_ROP_STARTS_TMRON_ERSHIGH,
-
-# 99
-TMR2_ROP_STARTS_TMRON_ERSLOW,
-
-# 104
-TMR2_ROP_RESETS_ERSBOTHEDGE,
-
-# 109
-TMR2_ROP_RESETS_ERSRISINGEDGE,
-
-# 114
-TMR2_ROP_RESETS_ERSFALLINGEDGE,
-
-# 119
-TMR2_ROP_RESETS_ERSLOW,
-
-# 124
-TMR2_ROP_RESETS_ERSHIGH,
-
-# 135
-TMR2_OS_STARTS_TMRON,
-
-# 140
-TMR2_OS_STARTS_ERSRISINGEDGE ,
-
-# 145
-TMR2_OS_STARTS_ERSFALLINGEDGE ,
-
-# 150
-TMR2_OS_STARTS_ERSBOTHEDGE,
-
-# 156
-TMR2_OS_STARTS_ERSFIRSTRISINGEDGE,
-
-# 162
-TMR2_OS_STARTS_ERSFIRSTFALLINGEDGE,
-
-# 168
-TMR2_OS_STARTS_ERSRISINGEDGEDETECT,
-
-# 173
-TMR2_OS_STARTS_ERSFALLINGEDGEDETECT,
-
-# 178
-TMR2_OS_STARTS_TMRON_ERSHIGH = 0x16,
-
-# 183
-TMR2_OS_STARTS_TMRON_ERSLOW = 0x17,
-
-# 192
-TMR2_MS_STARTS_TMRON_ERSRISINGEDGEDETECT = 0x11,
-
-# 197
-TMR2_MS_STARTS_TMRON_ERSFALLINGEDGEDETECT = 0x12,
-
-# 203
-TMR2_MS_STARTS_TMRON_ERSBOTHEDGE = 0x13
-
-} TMR2_HLT_MODE;
-
-# 220
-typedef enum
-{
-
-# 224
-TMR2_T2INPPS,
-
-# 228
-TMR2_RESERVED,
-
-# 232
-TMR2_T4POSTSCALED,
-
-# 236
-TMR2_T6POSTSCALED,
-
-# 239
-TMR2_CCP1_OUT,
-
-# 243
-TMR2_CCP2_OUT,
-
-# 247
-TMR2_CCP3_OUT,
-
-# 251
-TMR2_CCP4_OUT,
-
-# 255
-TMR2_CCP5_OUT,
-
-# 259
-TMR2_PWM6_OUT,
-
-# 263
-TMR2_PWM7_OUT,
-
-# 267
-TMR2_C1_OUT_SYNC,
-
-# 271
-TMR2_C2_OUT_SYNC,
-
-# 275
-TMR2_ZCD_OUTPUT,
-
-# 279
-TMR2_CLC1_OUT,
-
-# 283
-TMR2_CLC2_OUT,
-
-# 287
-TMR2_CLC3_OUT,
-
-# 291
-TMR2_CLC4_OUT
-
-} TMR2_HLT_EXT_RESET_SOURCE;
-
-# 335
-void TMR2_Initialize(void);
-
-# 371
-void TMR2_ModeSet(TMR2_HLT_MODE mode);
-
-# 406
-void TMR2_ExtResetSourceSet(TMR2_HLT_EXT_RESET_SOURCE reset);
-
-# 435
-void TMR2_Start(void);
-
-# 464
-void TMR2_StartTimer(void);
-
-# 496
-void TMR2_Stop(void);
-
-# 528
-void TMR2_StopTimer(void);
-
-# 563
-uint8_t TMR2_Counter8BitGet(void);
-
-# 598
-uint8_t TMR2_ReadTimer(void);
-
-# 637
-void TMR2_Counter8BitSet(uint8_t timerVal);
-
-# 676
-void TMR2_WriteTimer(uint8_t timerVal);
-
-# 728
-void TMR2_Period8BitSet(uint8_t periodVal);
-
-# 780
-void TMR2_LoadPeriodRegister(uint8_t periodVal);
-
-# 818
-bool TMR2_HasOverflowOccured(void);
-
-# 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
-typedef unsigned char bool;
-
-# 72 "mcc_generated_files/adcc.h"
-typedef uint16_t adc_result_t;
-
-# 89
-typedef enum
-{
-channel_ANA0 = 0x0,
-channel_VSS = 0x3C,
-channel_Temp = 0x3D,
-channel_DAC1 = 0x3E,
-channel_FVR_buf1 = 0x3F
-} adcc_channel_t;
-
-# 130
-void ADCC_Initialize(void);
-
-# 159
-void ADCC_StartConversion(adcc_channel_t channel);
-
-# 189
-bool ADCC_IsConversionDone();
-
-# 221
-adc_result_t ADCC_GetConversionResult(void);
-
-# 252
-adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel);
-
-# 277
-void ADCC_StopConversion(void);
-
-# 304
-void ADCC_SetStopOnInterrupt(void);
-
-# 329
-void ADCC_DischargeSampleCapacitor(void);
-
-# 355
-void ADCC_LoadAcquisitionRegister(uint8_t);
-
-# 381
-void ADCC_SetPrechargeTime(uint8_t);
-
-# 406
-void ADCC_SetRepeatCount(uint8_t);
-
-# 434
-uint8_t ADCC_GetCurrentCountofConversions(void);
-
-# 458
-void ADCC_ClearAccumulator(void);
-
-# 483
-uint16_t ADCC_GetAccumulatorValue(void);
-
-# 511
-bool ADCC_HasAccumulatorOverflowed(void);
-
-# 536
-uint16_t ADCC_GetFilterValue(void);
-
-# 564
-uint16_t ADCC_GetPreviousResult(void);
-
-# 590
-void ADCC_DefineSetPoint(uint16_t);
-
-# 616
-void ADCC_SetUpperThreshold(uint16_t);
-
-# 642
-void ADCC_SetLowerThreshold(uint16_t);
-
-# 669
-uint16_t ADCC_GetErrorCalculation(void);
-
-# 696
-void ADCC_EnableDoubleSampling(void);
-
-# 720
-void ADCC_EnableContinuousConversion(void);
-
-# 744
-void ADCC_DisableContinuousConversion(void);
-
-# 772
-bool ADCC_HasErrorCrossedUpperThreshold(void);
-
-# 800
-bool ADCC_HasErrorCrossedLowerThreshold(void);
-
-# 827
-uint8_t ADCC_GetConversionStageStatus(void);
-
 # 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
 typedef unsigned char bool;
 
@@ -21659,56 +21142,157 @@ void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
 # 248
 uint8_t DATAEE_ReadByte(uint16_t bAdd);
 
-# 77 "mcc_generated_files/mcc.h"
-void SYSTEM_Initialize(void);
-
-# 90
-void OSCILLATOR_Initialize(void);
-
-# 103
-void PMD_Initialize(void);
-
-# 50 "mcc_generated_files/mcc.c"
-void SYSTEM_Initialize(void)
+# 58 "mcc_generated_files/memory.c"
+uint16_t FLASH_ReadWord(uint16_t flashAddr)
 {
-PMD_Initialize();
-PIN_MANAGER_Initialize();
-OSCILLATOR_Initialize();
-PWM6_Initialize();
-ADCC_Initialize();
-TMR3_Initialize();
-TMR5_Initialize();
-TMR2_Initialize();
-TMR1_Initialize();
+uint8_t GIEBitValue = INTCONbits.GIE;
+
+INTCONbits.GIE = 0;
+NVMADRL = (flashAddr & 0x00FF);
+NVMADRH = ((flashAddr & 0xFF00) >> 8);
+
+NVMCON1bits.NVMREGS = 0;
+NVMCON1bits.RD = 1;
+__nop();
+__nop();
+INTCONbits.GIE = GIEBitValue;
+
+return ((uint16_t)((NVMDATH << 8) | NVMDATL));
 }
 
-void OSCILLATOR_Initialize(void)
+void FLASH_WriteWord(uint16_t flashAddr, uint16_t *ramBuf, uint16_t word)
 {
+uint16_t blockStartAddr = (uint16_t)(flashAddr & ((0x2000-1) ^ (32-1)));
+uint8_t offset = (uint8_t)(flashAddr & (32-1));
+uint8_t i;
 
-OSCCON1 = 0x62;
 
-OSCCON3 = 0x00;
-
-OSCEN = 0x00;
-
-OSCFRQ = 0x02;
-
-OSCTUNE = 0x00;
+for (i=0; i<32; i++)
+{
+ramBuf[i] = FLASH_ReadWord((blockStartAddr+i));
 }
 
-void PMD_Initialize(void)
+
+ramBuf[offset] = word;
+
+
+FLASH_WriteBlock(blockStartAddr, ramBuf);
+}
+
+int8_t FLASH_WriteBlock(uint16_t writeAddr, uint16_t *flashWordArray)
+{
+uint16_t blockStartAddr = (uint16_t )(writeAddr & ((0x2000-1) ^ (32-1)));
+uint8_t GIEBitValue = INTCONbits.GIE;
+uint8_t i;
+
+
+
+if( writeAddr != blockStartAddr )
+{
+return -1;
+}
+
+INTCONbits.GIE = 0;
+
+
+FLASH_EraseBlock(writeAddr);
+
+
+NVMCON1bits.NVMREGS = 0;
+NVMCON1bits.WREN = 1;
+NVMCON1bits.LWLO = 1;
+
+for (i=0; i<32; i++)
 {
 
-PMD0 = 0x00;
+NVMADRL = (writeAddr & 0xFF);
 
-PMD1 = 0x00;
+NVMADRH = ((writeAddr & 0xFF00) >> 8);
 
-PMD2 = 0x00;
 
-PMD3 = 0x00;
+NVMDATL = flashWordArray[i];
+NVMDATH = ((flashWordArray[i] & 0xFF00) >> 8);
 
-PMD4 = 0x00;
+if(i == (32-1))
+{
 
-PMD5 = 0x00;
+NVMCON1bits.LWLO = 0;
+}
+
+NVMCON2 = 0x55;
+NVMCON2 = 0xAA;
+NVMCON1bits.WR = 1;
+__nop();
+__nop();
+
+writeAddr++;
+}
+
+NVMCON1bits.WREN = 0;
+INTCONbits.GIE = GIEBitValue;
+
+return 0;
+}
+
+void FLASH_EraseBlock(uint16_t startAddr)
+{
+uint8_t GIEBitValue = INTCONbits.GIE;
+
+
+INTCONbits.GIE = 0;
+
+NVMADRL = (startAddr & 0xFF);
+
+NVMADRH = ((startAddr & 0xFF00) >> 8);
+
+
+NVMCON1bits.NVMREGS = 0;
+NVMCON1bits.FREE = 1;
+NVMCON1bits.WREN = 1;
+
+
+NVMCON2 = 0x55;
+NVMCON2 = 0xAA;
+NVMCON1bits.WR = 1;
+__nop();
+__nop();
+
+NVMCON1bits.WREN = 0;
+INTCONbits.GIE = GIEBitValue;
+}
+
+# 180
+void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData)
+{
+uint8_t GIEBitValue = INTCONbits.GIE;
+
+NVMADRH = ((bAdd >> 8) & 0xFF);
+NVMADRL = (bAdd & 0xFF);
+NVMDATL = bData;
+NVMCON1bits.NVMREGS = 1;
+NVMCON1bits.WREN = 1;
+INTCONbits.GIE = 0;
+NVMCON2 = 0x55;
+NVMCON2 = 0xAA;
+NVMCON1bits.WR = 1;
+
+while (NVMCON1bits.WR)
+{
+}
+
+NVMCON1bits.WREN = 0;
+INTCONbits.GIE = GIEBitValue;
+}
+
+uint8_t DATAEE_ReadByte(uint16_t bAdd)
+{
+NVMADRH = ((bAdd >> 8) & 0xFF);
+NVMADRL = (bAdd & 0xFF);
+NVMCON1bits.NVMREGS = 1;
+NVMCON1bits.RD = 1;
+__nop();
+__nop();
+
+return (NVMDATL);
 }
 

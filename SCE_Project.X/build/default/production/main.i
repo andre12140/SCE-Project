@@ -21322,12 +21322,6 @@ extern void (*TMR3_InterruptHandler)(void);
 # 421
 void TMR3_DefaultInterruptHandler(void);
 
-# 102 "mcc_generated_files/pwm6.h"
-void PWM6_Initialize(void);
-
-# 129
-void PWM6_LoadDutyValue(uint16_t dutyValue);
-
 # 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
 typedef unsigned char bool;
 
@@ -21366,6 +21360,12 @@ extern void (*TMR1_InterruptHandler)(void);
 
 # 421
 void TMR1_DefaultInterruptHandler(void);
+
+# 102 "mcc_generated_files/pwm6.h"
+void PWM6_Initialize(void);
+
+# 129
+void PWM6_LoadDutyValue(uint16_t dutyValue);
 
 # 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
 typedef unsigned char bool;
@@ -21638,13 +21638,34 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 827
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 76 "mcc_generated_files/mcc.h"
+# 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
+typedef unsigned char bool;
+
+# 99 "mcc_generated_files/memory.h"
+uint16_t FLASH_ReadWord(uint16_t flashAddr);
+
+# 128
+void FLASH_WriteWord(uint16_t flashAddr, uint16_t *ramBuf, uint16_t word);
+
+# 164
+int8_t FLASH_WriteBlock(uint16_t writeAddr, uint16_t *flashWordArray);
+
+# 189
+void FLASH_EraseBlock(uint16_t startAddr);
+
+# 222
+void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
+
+# 248
+uint8_t DATAEE_ReadByte(uint16_t bAdd);
+
+# 77 "mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
 
-# 89
+# 90
 void OSCILLATOR_Initialize(void);
 
-# 102
+# 103
 void PMD_Initialize(void);
 
 # 154 "I2C/i2c.h"
@@ -21772,7 +21793,7 @@ extern char * strichr(const char *, int);
 extern char * strrchr(const char *, int);
 extern char * strrichr(const char *, int);
 
-# 60 "main.c"
+# 63 "main.c"
 unsigned char tsttc (void)
 {
 unsigned char value;
@@ -21802,7 +21823,7 @@ SSP1CON2bits.PEN = 1;while(SSP1CON2bits.PEN);
 return value;
 }
 
-# 95
+# 98
 void LCDsend(unsigned char c)
 {
 while ((SSP1CON2 & 0x1F) | (SSP1STATbits.R_W));
@@ -21912,9 +21933,9 @@ return 0;
 }
 
 struct Time {
-int h;
-int m;
-int s;
+uint8_t h;
+uint8_t m;
+uint8_t s;
 };
 
 
@@ -21942,7 +21963,7 @@ void PWM_Output_D4_Disable (void){
 PWM6EN = 0;
 }
 
-# 248
+# 251
 int map(int x, int in_min, int in_max, int out_min, int out_max) {
 return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
@@ -21968,7 +21989,7 @@ bool triggered;
 
 struct Time t = {0,0,0};
 
-unsigned char temp;
+uint8_t temp;
 uint8_t lumLevel;
 bool alarmsEnable = 1;
 
@@ -21984,6 +22005,8 @@ bool editingTempAlarm = 0;
 bool editingLumAlarm = 0;
 
 int mode = 0;
+
+int regIdx = 0;
 
 void Clock_ISR(void) {
 
@@ -22124,10 +22147,30 @@ LCDcmd(0x8f);
 
 }
 
+int prevTemp = -1;
+int prevLumLevel = -1;
+
 void monitoring_ISR(){
-temp = tsttc();
+temp = (uint8_t)tsttc();
 
 lumLevel = ADCC_GetSingleConversion(channel_ANA0) >> 13;
+
+if(prevTemp != temp || prevLumLevel != lumLevel){
+
+DATAEE_WriteByte( (regIdx * 0x28) + 0x7000 + (sizeof(uint8_t)*0) , t.h);
+DATAEE_WriteByte( (regIdx * 0x28) + 0x7000 + (sizeof(uint8_t)*1) , t.m);
+DATAEE_WriteByte( (regIdx * 0x28) + 0x7000 + (sizeof(uint8_t)*2) , t.s);
+DATAEE_WriteByte( (regIdx * 0x28) + 0x7000 + (sizeof(uint8_t)*3) , temp);
+DATAEE_WriteByte( (regIdx * 0x28) + 0x7000 + (sizeof(uint8_t)*4) , lumLevel);
+
+regIdx++;
+if(regIdx > 24){
+regIdx = 0;
+}
+prevTemp = temp;
+prevLumLevel = lumLevel;
+}
+
 
 if(alarmsEnable){
 
@@ -22289,6 +22332,7 @@ TMR3_SetInterruptHandler(menuLCD_ISR);
 
 TMR5_SetInterruptHandler(monitoring_ISR);
 
+# 623
 i2c1_driver_open();
 TRISCbits.TRISC3 = 1;
 TRISCbits.TRISC4 = 1;
@@ -22330,7 +22374,7 @@ case 4:
 toggleAlarms();
 }
 
-# 638
+# 667
 }
 }
 

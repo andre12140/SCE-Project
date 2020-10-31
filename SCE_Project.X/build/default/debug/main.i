@@ -21322,12 +21322,6 @@ extern void (*TMR3_InterruptHandler)(void);
 # 421
 void TMR3_DefaultInterruptHandler(void);
 
-# 102 "mcc_generated_files/pwm6.h"
-void PWM6_Initialize(void);
-
-# 129
-void PWM6_LoadDutyValue(uint16_t dutyValue);
-
 # 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
 typedef unsigned char bool;
 
@@ -21366,6 +21360,12 @@ extern void (*TMR1_InterruptHandler)(void);
 
 # 421
 void TMR1_DefaultInterruptHandler(void);
+
+# 102 "mcc_generated_files/pwm6.h"
+void PWM6_Initialize(void);
+
+# 129
+void PWM6_LoadDutyValue(uint16_t dutyValue);
 
 # 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
 typedef unsigned char bool;
@@ -21638,13 +21638,34 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 827
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 76 "mcc_generated_files/mcc.h"
+# 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
+typedef unsigned char bool;
+
+# 99 "mcc_generated_files/memory.h"
+uint16_t FLASH_ReadWord(uint16_t flashAddr);
+
+# 128
+void FLASH_WriteWord(uint16_t flashAddr, uint16_t *ramBuf, uint16_t word);
+
+# 164
+int8_t FLASH_WriteBlock(uint16_t writeAddr, uint16_t *flashWordArray);
+
+# 189
+void FLASH_EraseBlock(uint16_t startAddr);
+
+# 222
+void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
+
+# 248
+uint8_t DATAEE_ReadByte(uint16_t bAdd);
+
+# 77 "mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
 
-# 89
+# 90
 void OSCILLATOR_Initialize(void);
 
-# 102
+# 103
 void PMD_Initialize(void);
 
 # 154 "I2C/i2c.h"
@@ -21772,7 +21793,7 @@ extern char * strichr(const char *, int);
 extern char * strrchr(const char *, int);
 extern char * strrichr(const char *, int);
 
-# 58 "main.c"
+# 63 "main.c"
 unsigned char tsttc (void)
 {
 unsigned char value;
@@ -21802,7 +21823,7 @@ SSP1CON2bits.PEN = 1;while(SSP1CON2bits.PEN);
 return value;
 }
 
-# 93
+# 98
 void LCDsend(unsigned char c)
 {
 while ((SSP1CON2 & 0x1F) | (SSP1STATbits.R_W));
@@ -21912,9 +21933,9 @@ return 0;
 }
 
 struct Time {
-int h;
-int m;
-int s;
+uint8_t h;
+uint8_t m;
+uint8_t s;
 };
 
 
@@ -21942,7 +21963,7 @@ void PWM_Output_D4_Disable (void){
 PWM6EN = 0;
 }
 
-# 246
+# 251
 int map(int x, int in_min, int in_max, int out_min, int out_max) {
 return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
@@ -21957,22 +21978,24 @@ bool trigger;
 struct temperatureAlarm{
 unsigned char alarmTemp;
 bool trigger;
+bool triggered;
 };
 
 struct luminosityAlarm{
 unsigned char alarmLum;
 bool trigger;
+bool triggered;
 };
 
 struct Time t = {0,0,0};
 
-unsigned char temp;
+uint8_t temp;
 uint8_t lumLevel;
 bool alarmsEnable = 1;
 
-struct clockAlarm clkAlarm = {{0,1,0}, 0};
-struct temperatureAlarm tempAlarm = {28, 0};
-struct luminosityAlarm lumAlarm = {4, 0};
+struct clockAlarm clkAlarm = {{1,0,0}, 0};
+struct temperatureAlarm tempAlarm = {28, 0, 0};
+struct luminosityAlarm lumAlarm = {4, 0, 0};
 
 int dimingLed = 0;
 struct Time alarmPWMStart = {-1,-1,-1};
@@ -21980,9 +22003,10 @@ struct Time alarmPWMStart = {-1,-1,-1};
 int editingClockAlarm = 0;
 bool editingTempAlarm = 0;
 bool editingLumAlarm = 0;
-bool togglingAlarm = 0;
 
 int mode = 0;
+
+int regIdx = 0;
 
 void Clock_ISR(void) {
 
@@ -22002,7 +22026,7 @@ t.h=0;
 }
 
 
-if(alarmsEnable == 1 && t.s >= clkAlarm.alarmVal.s && t.m >= clkAlarm.alarmVal.m && t.h >= clkAlarm.alarmVal.h){
+if(alarmsEnable && t.s >= clkAlarm.alarmVal.s && t.m >= clkAlarm.alarmVal.m && t.h >= clkAlarm.alarmVal.h && editingClockAlarm == 0){
 alarmPWMStart.h = -1;
 clkAlarm.trigger = 1;
 clkAlarm.alarmVal.h = 25;
@@ -22097,7 +22121,12 @@ LCDstr(tt);
 
 LCDcmd(0xcd);
 char l[3];
+
+if(editingLumAlarm){
+sprintf(l, "L %d", lumAlarm.alarmLum);
+} else{
 sprintf(l, "L %d", lumLevel);
+}
 LCDstr(l);
 
 if(mode == 1){
@@ -22110,33 +22139,76 @@ LCDcmd(0x87);
 }
 } else if(mode == 2){
 LCDcmd(0xc1);
+} else if(mode == 3){
+LCDcmd(0xcf);
+} else if(mode == 4){
+LCDcmd(0x8f);
 }
 
 }
+
+int prevTemp = -1;
+int prevLumLevel = -1;
 
 void monitoring_ISR(){
-temp = tsttc();
+temp = (uint8_t)tsttc();
 
 lumLevel = ADCC_GetSingleConversion(channel_ANA0) >> 13;
 
+if(prevTemp != temp || prevLumLevel != lumLevel){
 
-if(lumAlarm.alarmLum > lumLevel){
+DATAEE_WriteByte( (regIdx * 0x28) + 0x7000 + (sizeof(uint8_t)*0) , t.h);
+DATAEE_WriteByte( (regIdx * 0x28) + 0x7000 + (sizeof(uint8_t)*1) , t.m);
+DATAEE_WriteByte( (regIdx * 0x28) + 0x7000 + (sizeof(uint8_t)*2) , t.s);
+DATAEE_WriteByte( (regIdx * 0x28) + 0x7000 + (sizeof(uint8_t)*3) , temp);
+DATAEE_WriteByte( (regIdx * 0x28) + 0x7000 + (sizeof(uint8_t)*4) , lumLevel);
+
+uint8_t test1 = DATAEE_ReadByte((regIdx * 0x28) + 0x7000 + (sizeof(uint8_t)*2));
+uint8_t test2 = DATAEE_ReadByte((regIdx * 0x28) + 0x7000 + (sizeof(uint8_t)*3));
+uint8_t test3 = DATAEE_ReadByte((regIdx * 0x28) + 0x7000 + (sizeof(uint8_t)*4));
+
+int a= test1 + test2 + test3;
+
+regIdx++;
+if(regIdx > 2){
+regIdx = 0;
+}
+prevTemp = temp;
+prevLumLevel = lumLevel;
+}
+
+
+if(alarmsEnable){
+
+if((lumAlarm.alarmLum > lumLevel) && (editingLumAlarm == 0)){
+if(!lumAlarm.triggered){
 alarmPWMStart.h = -1;
+}
+lumAlarm.triggered = 1;
+
 lumAlarm.trigger = 1;
 do { LATAbits.LATA4 = 1; } while(0);
 } else{
+lumAlarm.triggered = 0;
 do { LATAbits.LATA4 = 0; } while(0);
 }
 
 
-if(tempAlarm.alarmTemp < temp){
+if((tempAlarm.alarmTemp < temp) && (editingTempAlarm == 0)){
+if(!tempAlarm.triggered){
 alarmPWMStart.h = -1;
+}
+
+tempAlarm.triggered = 1;
+
 tempAlarm.trigger = 1;
 do { LATAbits.LATA5 = 1; } while(0);
 } else {
+
+tempAlarm.triggered = 0;
 do { LATAbits.LATA5 = 0; } while(0);
 }
-
+}
 
 
 }
@@ -22146,17 +22218,20 @@ do { LATAbits.LATA5 = 0; } while(0);
 void editClock(){
 
 editingClockAlarm = 1;
+clkAlarm.alarmVal.h = 0;
+clkAlarm.alarmVal.m = 0;
+clkAlarm.alarmVal.s = 0;
 
 while(1){
 if(PORTBbits.RB4 == 0){
 _delay((unsigned long)((50)*(1000000/4000.0)));
 editingClockAlarm++;
+while(PORTBbits.RB4==0){};
 if(editingClockAlarm > 3){
 editingClockAlarm = 0;
-mode++;
+mode = 2;
 break;
 }
-while(PORTBbits.RB4==0){};
 }
 
 if(PORTCbits.RC5 == 0){
@@ -22179,7 +22254,7 @@ clkAlarm.alarmVal.s = 0;
 clkAlarm.alarmVal.s++;
 }
 }
-_delay((unsigned long)((50)*(1000000/4000.0)));
+_delay((unsigned long)((100)*(1000000/4000.0)));
 }
 }
 }
@@ -22193,8 +22268,9 @@ while(1){
 if(PORTBbits.RB4 == 0){
 _delay((unsigned long)((50)*(1000000/4000.0)));
 editingTempAlarm = 0;
-mode++;
+mode = 3;
 while(PORTBbits.RB4==0){};
+break;
 }
 
 if(PORTCbits.RC5 == 0){
@@ -22202,10 +22278,49 @@ tempAlarm.alarmTemp++;
 if(tempAlarm.alarmTemp > 50){
 tempAlarm.alarmTemp = 0;
 }
-_delay((unsigned long)((50)*(1000000/4000.0)));
+_delay((unsigned long)((100)*(1000000/4000.0)));
+}
 }
 }
 
+void editLum(){
+editingLumAlarm = 1;
+lumAlarm.alarmLum = 0;
+
+while(1){
+if(PORTBbits.RB4 == 0){
+_delay((unsigned long)((50)*(1000000/4000.0)));
+editingLumAlarm = 0;
+mode = 4;
+while(PORTBbits.RB4==0){};
+break;
+}
+
+if(PORTCbits.RC5 == 0){
+lumAlarm.alarmLum++;
+if(lumAlarm.alarmLum > 7){
+lumAlarm.alarmLum = 0;
+}
+_delay((unsigned long)((100)*(1000000/4000.0)));
+}
+}
+}
+
+void toggleAlarms(){
+
+while(1){
+if(PORTBbits.RB4 == 0){
+_delay((unsigned long)((50)*(1000000/4000.0)));
+mode = 0;
+while(PORTBbits.RB4==0){};
+break;
+}
+
+if(PORTCbits.RC5 == 0){
+alarmsEnable = !alarmsEnable;
+_delay((unsigned long)((100)*(1000000/4000.0)));
+}
+}
 }
 
 void main(void)
@@ -22213,6 +22328,7 @@ void main(void)
 
 SYSTEM_Initialize();
 
+PWM6_LoadDutyValue(0);
 TMR2_StopTimer();
 PWM_Output_D4_Disable();
 
@@ -22222,6 +22338,7 @@ TMR3_SetInterruptHandler(menuLCD_ISR);
 
 TMR5_SetInterruptHandler(monitoring_ISR);
 
+# 629
 i2c1_driver_open();
 TRISCbits.TRISC3 = 1;
 TRISCbits.TRISC4 = 1;
@@ -22257,16 +22374,13 @@ case 1:
 editClock();
 case 2:
 editTemp();
-continue;
 case 3:
-
-continue;
+editLum();
 case 4:
-
-continue;
+toggleAlarms();
 }
 
-# 572
+# 673
 }
 }
 
