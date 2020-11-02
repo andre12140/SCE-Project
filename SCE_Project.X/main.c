@@ -48,17 +48,30 @@
 #include <string.h>
 
 
-#define ALAT 28
-#define ALAL 4
+
 
 #define S2DELAY 100 //Use to define time to wait for debounce
 
-#define EEAddr    0x7000        // EEPROM starting address
-#define NREG 25                 // Number of registers
+#define EEAddr_INIT    0x7000        // EEPROM starting address (Used for storing init data)
+#define EEAddr_RING    0x7140        // Ring Buffer starting address
 
 /*
                          Main application
  */
+
+uint8_t NREG = 0;   //Number of registers
+uint8_t PMON = 0;   //Monitoring period //////////////// MISSING
+uint8_t TALA = 0;   //Duration of alarm signal (PWM)
+/*uint8_t ALAH = 0;   //Hours of alarm clock
+uint8_t ALAM = 0;   //Minutes of alarm clock
+uint8_t ALAS = 0;   //Seconds of alarm clock
+uint8_t ALAT = 0;   //Alarm threshold for Temperature
+uint8_t ALAL = 0;*/   //Alarm threshold for Luminosity
+uint8_t ALAF = 0;   //Alarm Flag (Initially disabled)
+/*uint8_t CLKH = 0;   //Initial value for clock hours
+uint8_t CLKM = 0;*/   //Initial value for clock minutes
+uint8_t IDX = 0; //Index of Ring Buffer to EEPROM
+
 
 unsigned char tsttc (void)
 {
@@ -234,25 +247,9 @@ void PWM_Output_D4_Disable (void){
     PWM6EN = 0;
 }
 
-//long unsigned int counter = 70190;
-
-//void LAB_ISR(void) {    
-    
-    /*counter++;
-    
-    long unsigned int h = counter/3600;
-    if(h==24){
-        h = 0;
-        counter=0;
-    }
-    long unsigned int m = (counter-3600*h)/60;
-    long unsigned int s = ((counter-3600*h)-60*m);*/
-
 int map(int x, int in_min, int in_max, int out_min, int out_max) {
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
-
-
 
 struct clockAlarm{
     struct Time alarmVal;
@@ -275,11 +272,10 @@ struct Time t = {0,0,0}; // Time struct for current time
 
 uint8_t temp;
 uint8_t lumLevel;
-bool alarmsEnable = true;
 
-struct clockAlarm clkAlarm = {{1,0,0}, false};// Time struct for editing clock alarm
-struct temperatureAlarm tempAlarm = {ALAT, false, false};
-struct luminosityAlarm lumAlarm = {ALAL, false, false};
+struct clockAlarm clkAlarm;// Time struct for editing clock alarm
+struct temperatureAlarm tempAlarm;
+struct luminosityAlarm lumAlarm;
 
 int dimingLed = 0;
 struct Time alarmPWMStart = {0xff,0xff,0xff};
@@ -290,8 +286,6 @@ bool editingLumAlarm = false;
 
 int mode = 0; //Mode of operation (0 no edit, 1 edit CLK, 2 edit Temp, 3 edit Lum, 4 toggle Alarm Enable/Disable)
 
-int regIdx = 0; //Index of Ring Buffer to EEPROM
-
 void Clock_ISR(void) {    
     // Clock handler increment timer
     t.s++;
@@ -299,9 +293,23 @@ void Clock_ISR(void) {
     if(t.s==60){
         t.m++;
         t.s=0;
+        
+        //Save variables to EEPROM
+        DATAEE_WriteByte( EEAddr_INIT + (1 * 8), NREG); // NREG
+        DATAEE_WriteByte( EEAddr_INIT + (2 * 8), PMON); // PMON
+        DATAEE_WriteByte( EEAddr_INIT + (3 * 8), TALA); // TALA
+        DATAEE_WriteByte( EEAddr_INIT + (4 * 8), clkAlarm.alarmVal.h); // ALAH
+        DATAEE_WriteByte( EEAddr_INIT + (5 * 8), clkAlarm.alarmVal.m); // ALAM
+        DATAEE_WriteByte( EEAddr_INIT + (6 * 8), clkAlarm.alarmVal.s); // ALAS
+        DATAEE_WriteByte( EEAddr_INIT + (7 * 8), tempAlarm.alarmTemp); // ALAT
+        DATAEE_WriteByte( EEAddr_INIT + (8 * 8), lumAlarm.alarmLum); // ALAL
+        DATAEE_WriteByte( EEAddr_INIT + (9 * 8), ALAF); // ALAF
+        DATAEE_WriteByte( EEAddr_INIT + (10 * 8), t.h); // CLKH
+        DATAEE_WriteByte( EEAddr_INIT + (11 * 8), t.m); // CLKM
+        DATAEE_WriteByte( EEAddr_INIT + (12 * 8), IDX); // Index of last ring buffer write
+        DATAEE_WriteByte( EEAddr_INIT + (13 * 8), NREG + PMON + TALA + clkAlarm.alarmVal.h + clkAlarm.alarmVal.m + clkAlarm.alarmVal.s + tempAlarm.alarmTemp + lumAlarm.alarmLum + ALAF + t.h + t.m + IDX); // Check Sum
     }
     if(t.m==60){
-        //GRAVAR RELOGIO NA EEPROM
         t.h++;
         t.m=0;
     }
@@ -310,7 +318,7 @@ void Clock_ISR(void) {
     }
     
     //Check alarm trigger 
-    if(alarmsEnable && t.s >= clkAlarm.alarmVal.s && t.m >= clkAlarm.alarmVal.m && t.h >= clkAlarm.alarmVal.h && editingClockAlarm == 0){
+    if((ALAF == 'A') && t.s >= clkAlarm.alarmVal.s && t.m >= clkAlarm.alarmVal.m && t.h >= clkAlarm.alarmVal.h && editingClockAlarm == 0){
         alarmPWMStart.h = 0xff; //For the PWM LED to start
         clkAlarm.trigger = true;
         clkAlarm.alarmVal.h = 25; //Only triggered once until new val is given by user
@@ -332,9 +340,9 @@ void menuLCD_ISR(){
     LCDstr(str);
     
     //If alarms are enable
-    if(alarmsEnable){
+    if(ALAF == 'A'){
         LCDcmd(0x8F);
-        LCDchar('A');
+        LCDchar(ALAF);
         
         //If alarm is triggered by clock
         if(clkAlarm.trigger == true){
@@ -372,7 +380,7 @@ void menuLCD_ISR(){
             differenceBetweenTimePeriod( t, alarmPWMStart, &diff);
             
             //PWM AINDA ESTA MAL
-            if(diff.s <= 5){
+            if(diff.s <= TALA){
                 if(PWM6EN==0){ //Verifica se o Timer2 e PWM esta desligado
                     TMR2_StartTimer();
                     PWM_Output_D4_Enable();
@@ -391,7 +399,7 @@ void menuLCD_ISR(){
         }
     } else{ //If alarms are disabled
         LCDcmd(0x8F);
-        LCDchar('a');
+        LCDchar(ALAF);
     }
     
     LCDcmd(0xc0);
@@ -441,22 +449,22 @@ void monitoring_ISR(){
     
     if(prevTemp != temp || prevLumLevel != lumLevel){ //If Different values saving in eeprom
         
-        DATAEE_WriteByte( (regIdx * 0x28) + EEAddr + (sizeof(uint8_t)*0) , t.h);
-        DATAEE_WriteByte( (regIdx * 0x28) + EEAddr + (sizeof(uint8_t)*1) , t.m);
-        DATAEE_WriteByte( (regIdx * 0x28) + EEAddr + (sizeof(uint8_t)*2) , t.s);
-        DATAEE_WriteByte( (regIdx * 0x28) + EEAddr + (sizeof(uint8_t)*3) , temp);
-        DATAEE_WriteByte( (regIdx * 0x28) + EEAddr + (sizeof(uint8_t)*4) , lumLevel);
+        DATAEE_WriteByte( (IDX * 0x28) + EEAddr_RING + (8*0) , t.h);
+        DATAEE_WriteByte( (IDX * 0x28) + EEAddr_RING + (8*1) , t.m);
+        DATAEE_WriteByte( (IDX * 0x28) + EEAddr_RING + (8*2) , t.s);
+        DATAEE_WriteByte( (IDX * 0x28) + EEAddr_RING + (8*3) , temp);
+        DATAEE_WriteByte( (IDX * 0x28) + EEAddr_RING + (8*4) , lumLevel);
         
-        regIdx++;
-        if(regIdx > NREG){
-            regIdx = 0;
+        IDX++;
+        if(IDX > NREG){
+            IDX = 0;
         }
         prevTemp = temp;
-        prevLumLevel = lumLevel;
+        prevLumLevel = lumLevel;  
     }
     
     
-    if(alarmsEnable){
+    if(ALAF == 'A'){
         //Check luminosity alarm trigger
         if((lumAlarm.alarmLum > lumLevel) && (editingLumAlarm == false)){
             if(!lumAlarm.triggered){
@@ -487,18 +495,11 @@ void monitoring_ISR(){
             LED_D3_SetLow();
         }
     }
-
-    //DAR SAVE NA EEPROM E ASSOCIAR ALARMES
 }
-
-
 
 void editClock(){
     
     editingClockAlarm = 1;
-    clkAlarm.alarmVal.h = 0; //Reseting Clock Alarm for editing
-    clkAlarm.alarmVal.m = 0;
-    clkAlarm.alarmVal.s = 0;
     
     while(1){
         if(S1_GetValue() == LOW){
@@ -539,9 +540,7 @@ void editClock(){
 
 void editTemp(){
     editingTempAlarm = true;
-    
-    tempAlarm.alarmTemp = 0;
-    
+        
     while(1){
         if(S1_GetValue() == LOW){
             __delay_ms(50);
@@ -563,7 +562,6 @@ void editTemp(){
 
 void editLum(){
     editingLumAlarm = true;
-    lumAlarm.alarmLum = 0;
     
     while(1){
         if(S1_GetValue() == LOW){
@@ -595,7 +593,11 @@ void toggleAlarms(){
         }
         
         if(S2_GetValue() == LOW){ //Switch 2 pressed
-            alarmsEnable = !alarmsEnable;
+            if(ALAF == 'A'){
+                ALAF = 'a';
+            } else {
+                ALAF = 'A';
+            }
             __delay_ms(S2DELAY);
         }
     }
@@ -619,8 +621,57 @@ void main(void)
     //DEBBUG
     /*DATAEE_WriteByte( EEAddr, 0xAA);
     uint8_t test = DATAEE_ReadByte(EEAddr);*/
+    uint8_t checkSumAux = 0;
+    bool notInit = true;
+    bool corrupted = false;
+    if(DATAEE_ReadByte(EEAddr_INIT) == 'S'){
+        notInit = false;
+        for(int i = 1; i < 13; i++){
+            checkSumAux += DATAEE_ReadByte(EEAddr_INIT + (i*8));
+        }
+        if(checkSumAux != DATAEE_ReadByte(EEAddr_INIT + (13*8))){
+            corrupted = true;
+        }
+    }
     
-    //Inicializar timeStamp
+    if(notInit || corrupted){
+        DATAEE_WriteByte( EEAddr_INIT + (0 * 8), 'S'); //Magic word if = S means that the program ran at least once
+        DATAEE_WriteByte( EEAddr_INIT + (1 * 8), 25); // NREG
+        DATAEE_WriteByte( EEAddr_INIT + (2 * 8), 3); // PMON
+        DATAEE_WriteByte( EEAddr_INIT + (3 * 8), 5); // TALA
+        DATAEE_WriteByte( EEAddr_INIT + (4 * 8), 12); // ALAH
+        DATAEE_WriteByte( EEAddr_INIT + (5 * 8), 0); // ALAM
+        DATAEE_WriteByte( EEAddr_INIT + (6 * 8), 0); // ALAS
+        DATAEE_WriteByte( EEAddr_INIT + (7 * 8), 28); // ALAT
+        DATAEE_WriteByte( EEAddr_INIT + (8 * 8), 4); // ALAL
+        DATAEE_WriteByte( EEAddr_INIT + (9 * 8), 'a'); // ALAF
+        DATAEE_WriteByte( EEAddr_INIT + (10 * 8), 0); // CLKH
+        DATAEE_WriteByte( EEAddr_INIT + (11 * 8), 0); // CLKM
+        DATAEE_WriteByte( EEAddr_INIT + (12 * 8), 0); // Index of last ring buffer write
+        DATAEE_WriteByte( EEAddr_INIT + (13 * 8), 174); // Check Sum
+    }
+    
+    PMON = DATAEE_ReadByte(EEAddr_INIT + (2*8));
+    TALA = DATAEE_ReadByte(EEAddr_INIT + (3*8));
+    clkAlarm.alarmVal.h = DATAEE_ReadByte(EEAddr_INIT + (4*8)); //ALAH
+    clkAlarm.alarmVal.m = DATAEE_ReadByte(EEAddr_INIT + (5*8)); //ALAM
+    clkAlarm.alarmVal.s = DATAEE_ReadByte(EEAddr_INIT + (6*8)); //ALAS
+    tempAlarm.alarmTemp = DATAEE_ReadByte(EEAddr_INIT + (7*8)); //ALAT
+    lumAlarm.alarmLum = DATAEE_ReadByte(EEAddr_INIT + (8*8)); //ALAL
+    ALAF = DATAEE_ReadByte(EEAddr_INIT + (9*8));
+    t.h = DATAEE_ReadByte(EEAddr_INIT + (10*8));
+    t.m = DATAEE_ReadByte(EEAddr_INIT + (11*8));
+    IDX = DATAEE_ReadByte(EEAddr_INIT + (12*8));
+    
+    
+    //Init struct, needs improvements
+    tempAlarm.trigger = false;
+    tempAlarm.triggered = false;
+    
+    lumAlarm.trigger = false;
+    lumAlarm.triggered = false;
+    
+    clkAlarm.trigger = false;
     
     
     i2c1_driver_open();

@@ -21793,7 +21793,18 @@ extern char * strichr(const char *, int);
 extern char * strrchr(const char *, int);
 extern char * strrichr(const char *, int);
 
-# 63 "main.c"
+# 62 "main.c"
+uint8_t NREG = 0;
+uint8_t PMON = 0;
+uint8_t TALA = 0;
+
+# 70
+uint8_t ALAF = 0;
+
+# 73
+uint8_t IDX = 0;
+
+
 unsigned char tsttc (void)
 {
 unsigned char value;
@@ -21823,7 +21834,7 @@ SSP1CON2bits.PEN = 1;while(SSP1CON2bits.PEN);
 return value;
 }
 
-# 98
+# 111
 void LCDsend(unsigned char c)
 {
 while ((SSP1CON2 & 0x1F) | (SSP1STATbits.R_W));
@@ -21963,12 +21974,9 @@ void PWM_Output_D4_Disable (void){
 PWM6EN = 0;
 }
 
-# 251
 int map(int x, int in_min, int in_max, int out_min, int out_max) {
 return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
-
-
 
 struct clockAlarm{
 struct Time alarmVal;
@@ -21991,11 +21999,10 @@ struct Time t = {0,0,0};
 
 uint8_t temp;
 uint8_t lumLevel;
-bool alarmsEnable = 1;
 
-struct clockAlarm clkAlarm = {{1,0,0}, 0};
-struct temperatureAlarm tempAlarm = {28, 0, 0};
-struct luminosityAlarm lumAlarm = {4, 0, 0};
+struct clockAlarm clkAlarm;
+struct temperatureAlarm tempAlarm;
+struct luminosityAlarm lumAlarm;
 
 int dimingLed = 0;
 struct Time alarmPWMStart = {0xff,0xff,0xff};
@@ -22006,8 +22013,6 @@ bool editingLumAlarm = 0;
 
 int mode = 0;
 
-int regIdx = 0;
-
 void Clock_ISR(void) {
 
 t.s++;
@@ -22015,9 +22020,23 @@ t.s++;
 if(t.s==60){
 t.m++;
 t.s=0;
+
+
+DATAEE_WriteByte( 0x7000 + (1 * 8), NREG);
+DATAEE_WriteByte( 0x7000 + (2 * 8), PMON);
+DATAEE_WriteByte( 0x7000 + (3 * 8), TALA);
+DATAEE_WriteByte( 0x7000 + (4 * 8), clkAlarm.alarmVal.h);
+DATAEE_WriteByte( 0x7000 + (5 * 8), clkAlarm.alarmVal.m);
+DATAEE_WriteByte( 0x7000 + (6 * 8), clkAlarm.alarmVal.s);
+DATAEE_WriteByte( 0x7000 + (7 * 8), tempAlarm.alarmTemp);
+DATAEE_WriteByte( 0x7000 + (8 * 8), lumAlarm.alarmLum);
+DATAEE_WriteByte( 0x7000 + (9 * 8), ALAF);
+DATAEE_WriteByte( 0x7000 + (10 * 8), t.h);
+DATAEE_WriteByte( 0x7000 + (11 * 8), t.m);
+DATAEE_WriteByte( 0x7000 + (12 * 8), IDX);
+DATAEE_WriteByte( 0x7000 + (13 * 8), NREG + PMON + TALA + clkAlarm.alarmVal.h + clkAlarm.alarmVal.m + clkAlarm.alarmVal.s + tempAlarm.alarmTemp + lumAlarm.alarmLum + ALAF + t.h + t.m + IDX);
 }
 if(t.m==60){
-
 t.h++;
 t.m=0;
 }
@@ -22026,7 +22045,7 @@ t.h=0;
 }
 
 
-if(alarmsEnable && t.s >= clkAlarm.alarmVal.s && t.m >= clkAlarm.alarmVal.m && t.h >= clkAlarm.alarmVal.h && editingClockAlarm == 0){
+if((ALAF == 'A') && t.s >= clkAlarm.alarmVal.s && t.m >= clkAlarm.alarmVal.m && t.h >= clkAlarm.alarmVal.h && editingClockAlarm == 0){
 alarmPWMStart.h = 0xff;
 clkAlarm.trigger = 1;
 clkAlarm.alarmVal.h = 25;
@@ -22048,9 +22067,9 @@ LCDcmd(0x80);
 LCDstr(str);
 
 
-if(alarmsEnable){
+if(ALAF == 'A'){
 LCDcmd(0x8F);
-LCDchar('A');
+LCDchar(ALAF);
 
 
 if(clkAlarm.trigger == 1){
@@ -22088,7 +22107,7 @@ struct Time diff = {0,0,0};
 differenceBetweenTimePeriod( t, alarmPWMStart, &diff);
 
 
-if(diff.s <= 5){
+if(diff.s <= TALA){
 if(PWM6EN==0){
 TMR2_StartTimer();
 PWM_Output_D4_Enable();
@@ -22107,7 +22126,7 @@ PWM_Output_D4_Disable();
 }
 } else{
 LCDcmd(0x8F);
-LCDchar('a');
+LCDchar(ALAF);
 }
 
 LCDcmd(0xc0);
@@ -22157,22 +22176,22 @@ lumLevel = ADCC_GetSingleConversion(channel_ANA0) >> 13;
 
 if(prevTemp != temp || prevLumLevel != lumLevel){
 
-DATAEE_WriteByte( (regIdx * 0x28) + 0x7000 + (sizeof(uint8_t)*0) , t.h);
-DATAEE_WriteByte( (regIdx * 0x28) + 0x7000 + (sizeof(uint8_t)*1) , t.m);
-DATAEE_WriteByte( (regIdx * 0x28) + 0x7000 + (sizeof(uint8_t)*2) , t.s);
-DATAEE_WriteByte( (regIdx * 0x28) + 0x7000 + (sizeof(uint8_t)*3) , temp);
-DATAEE_WriteByte( (regIdx * 0x28) + 0x7000 + (sizeof(uint8_t)*4) , lumLevel);
+DATAEE_WriteByte( (IDX * 0x28) + 0x7140 + (8*0) , t.h);
+DATAEE_WriteByte( (IDX * 0x28) + 0x7140 + (8*1) , t.m);
+DATAEE_WriteByte( (IDX * 0x28) + 0x7140 + (8*2) , t.s);
+DATAEE_WriteByte( (IDX * 0x28) + 0x7140 + (8*3) , temp);
+DATAEE_WriteByte( (IDX * 0x28) + 0x7140 + (8*4) , lumLevel);
 
-regIdx++;
-if(regIdx > 25){
-regIdx = 0;
+IDX++;
+if(IDX > NREG){
+IDX = 0;
 }
 prevTemp = temp;
 prevLumLevel = lumLevel;
 }
 
 
-if(alarmsEnable){
+if(ALAF == 'A'){
 
 if((lumAlarm.alarmLum > lumLevel) && (editingLumAlarm == 0)){
 if(!lumAlarm.triggered){
@@ -22203,18 +22222,11 @@ tempAlarm.triggered = 0;
 do { LATAbits.LATA5 = 0; } while(0);
 }
 }
-
-
 }
-
-
 
 void editClock(){
 
 editingClockAlarm = 1;
-clkAlarm.alarmVal.h = 0;
-clkAlarm.alarmVal.m = 0;
-clkAlarm.alarmVal.s = 0;
 
 while(1){
 if(PORTBbits.RB4 == 0){
@@ -22256,8 +22268,6 @@ _delay((unsigned long)((100)*(1000000/4000.0)));
 void editTemp(){
 editingTempAlarm = 1;
 
-tempAlarm.alarmTemp = 0;
-
 while(1){
 if(PORTBbits.RB4 == 0){
 _delay((unsigned long)((50)*(1000000/4000.0)));
@@ -22279,7 +22289,6 @@ _delay((unsigned long)((100)*(1000000/4000.0)));
 
 void editLum(){
 editingLumAlarm = 1;
-lumAlarm.alarmLum = 0;
 
 while(1){
 if(PORTBbits.RB4 == 0){
@@ -22311,7 +22320,11 @@ break;
 }
 
 if(PORTCbits.RC5 == 0){
-alarmsEnable = !alarmsEnable;
+if(ALAF == 'A'){
+ALAF = 'a';
+} else {
+ALAF = 'A';
+}
 _delay((unsigned long)((100)*(1000000/4000.0)));
 }
 }
@@ -22332,7 +22345,60 @@ TMR3_SetInterruptHandler(menuLCD_ISR);
 
 TMR5_SetInterruptHandler(monitoring_ISR);
 
-# 626
+# 624
+uint8_t checkSumAux = 0;
+bool notInit = 1;
+bool corrupted = 0;
+if(DATAEE_ReadByte(0x7000) == 'S'){
+notInit = 0;
+for(int i = 1; i < 13; i++){
+checkSumAux += DATAEE_ReadByte(0x7000 + (i*8));
+}
+if(checkSumAux != DATAEE_ReadByte(0x7000 + (13*8))){
+corrupted = 1;
+}
+}
+
+if(notInit || corrupted){
+DATAEE_WriteByte( 0x7000 + (0 * 8), 'S');
+DATAEE_WriteByte( 0x7000 + (1 * 8), 25);
+DATAEE_WriteByte( 0x7000 + (2 * 8), 3);
+DATAEE_WriteByte( 0x7000 + (3 * 8), 5);
+DATAEE_WriteByte( 0x7000 + (4 * 8), 12);
+DATAEE_WriteByte( 0x7000 + (5 * 8), 0);
+DATAEE_WriteByte( 0x7000 + (6 * 8), 0);
+DATAEE_WriteByte( 0x7000 + (7 * 8), 28);
+DATAEE_WriteByte( 0x7000 + (8 * 8), 4);
+DATAEE_WriteByte( 0x7000 + (9 * 8), 'a');
+DATAEE_WriteByte( 0x7000 + (10 * 8), 0);
+DATAEE_WriteByte( 0x7000 + (11 * 8), 0);
+DATAEE_WriteByte( 0x7000 + (12 * 8), 0);
+DATAEE_WriteByte( 0x7000 + (13 * 8), 174);
+}
+
+PMON = DATAEE_ReadByte(0x7000 + (2*8));
+TALA = DATAEE_ReadByte(0x7000 + (3*8));
+clkAlarm.alarmVal.h = DATAEE_ReadByte(0x7000 + (4*8));
+clkAlarm.alarmVal.m = DATAEE_ReadByte(0x7000 + (5*8));
+clkAlarm.alarmVal.s = DATAEE_ReadByte(0x7000 + (6*8));
+tempAlarm.alarmTemp = DATAEE_ReadByte(0x7000 + (7*8));
+lumAlarm.alarmLum = DATAEE_ReadByte(0x7000 + (8*8));
+ALAF = DATAEE_ReadByte(0x7000 + (9*8));
+t.h = DATAEE_ReadByte(0x7000 + (10*8));
+t.m = DATAEE_ReadByte(0x7000 + (11*8));
+IDX = DATAEE_ReadByte(0x7000 + (12*8));
+
+
+
+tempAlarm.trigger = 0;
+tempAlarm.triggered = 0;
+
+lumAlarm.trigger = 0;
+lumAlarm.triggered = 0;
+
+clkAlarm.trigger = 0;
+
+
 i2c1_driver_open();
 TRISCbits.TRISC3 = 1;
 TRISCbits.TRISC4 = 1;
@@ -22374,7 +22440,7 @@ case 4:
 toggleAlarms();
 }
 
-# 670
+# 721
 }
 }
 
