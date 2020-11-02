@@ -53,7 +53,7 @@
 #define S2DELAY 100 //Use to define time to wait for debounce
 
 #define EEAddr_INIT    0x7000        // EEPROM starting address (Used for storing init data)
-#define EEAddr_RING    0x7140        // Ring Buffer starting address
+#define EEAddr_RING    0x7014        // Ring Buffer starting address
 
 /*
                          Main application
@@ -70,7 +70,7 @@ uint8_t ALAL = 0;*/   //Alarm threshold for Luminosity
 uint8_t ALAF = 0;   //Alarm Flag (Initially disabled)
 /*uint8_t CLKH = 0;   //Initial value for clock hours
 uint8_t CLKM = 0;*/   //Initial value for clock minutes
-uint8_t IDX = 0; //Index of Ring Buffer to EEPROM
+uint8_t idx_RingBuffer = 0; //Index of Ring Buffer to EEPROM
 
 
 unsigned char tsttc (void)
@@ -306,8 +306,8 @@ void Clock_ISR(void) {
         DATAEE_WriteByte( EEAddr_INIT + (9 * 8), ALAF); // ALAF
         DATAEE_WriteByte( EEAddr_INIT + (10 * 8), t.h); // CLKH
         DATAEE_WriteByte( EEAddr_INIT + (11 * 8), t.m); // CLKM
-        DATAEE_WriteByte( EEAddr_INIT + (12 * 8), IDX); // Index of last ring buffer write
-        DATAEE_WriteByte( EEAddr_INIT + (13 * 8), NREG + PMON + TALA + clkAlarm.alarmVal.h + clkAlarm.alarmVal.m + clkAlarm.alarmVal.s + tempAlarm.alarmTemp + lumAlarm.alarmLum + ALAF + t.h + t.m + IDX); // Check Sum
+        DATAEE_WriteByte( EEAddr_INIT + (12 * 8), idx_RingBuffer); // Index of last ring buffer write
+        DATAEE_WriteByte( EEAddr_INIT + (13 * 8), NREG + PMON + TALA + clkAlarm.alarmVal.h + clkAlarm.alarmVal.m + clkAlarm.alarmVal.s + tempAlarm.alarmTemp + lumAlarm.alarmLum + ALAF + t.h + t.m + idx_RingBuffer); // Check Sum
     }
     if(t.m==60){
         t.h++;
@@ -449,15 +449,15 @@ void monitoring_ISR(){
     
     if(prevTemp != temp || prevLumLevel != lumLevel){ //If Different values saving in eeprom
         
-        DATAEE_WriteByte( (IDX * 0x28) + EEAddr_RING + (8*0) , t.h);
-        DATAEE_WriteByte( (IDX * 0x28) + EEAddr_RING + (8*1) , t.m);
-        DATAEE_WriteByte( (IDX * 0x28) + EEAddr_RING + (8*2) , t.s);
-        DATAEE_WriteByte( (IDX * 0x28) + EEAddr_RING + (8*3) , temp);
-        DATAEE_WriteByte( (IDX * 0x28) + EEAddr_RING + (8*4) , lumLevel);
+        DATAEE_WriteByte( (idx_RingBuffer * 0x5) + EEAddr_RING + (8*0) , t.h);
+        DATAEE_WriteByte( (idx_RingBuffer * 0x5) + EEAddr_RING + (8*1) , t.m);
+        DATAEE_WriteByte( (idx_RingBuffer * 0x5) + EEAddr_RING + (8*2) , t.s);
+        DATAEE_WriteByte( (idx_RingBuffer * 0x5) + EEAddr_RING + (8*3) , temp);
+        DATAEE_WriteByte( (idx_RingBuffer * 0x5) + EEAddr_RING + (8*4) , lumLevel);
         
-        IDX++;
-        if(IDX > NREG){
-            IDX = 0;
+        idx_RingBuffer++;
+        if(idx_RingBuffer > NREG){
+            idx_RingBuffer = 0;
         }
         prevTemp = temp;
         prevLumLevel = lumLevel;  
@@ -617,10 +617,7 @@ void main(void)
     TMR3_SetInterruptHandler(menuLCD_ISR);
     
     TMR5_SetInterruptHandler(monitoring_ISR);
-    
-    //DEBBUG
-    /*DATAEE_WriteByte( EEAddr, 0xAA);
-    uint8_t test = DATAEE_ReadByte(EEAddr);*/
+
     uint8_t checkSumAux = 0;
     bool notInit = true;
     bool corrupted = false;
@@ -651,6 +648,7 @@ void main(void)
         DATAEE_WriteByte( EEAddr_INIT + (13 * 8), 174); // Check Sum
     }
     
+    NREG = DATAEE_ReadByte(EEAddr_INIT + (1*8));
     PMON = DATAEE_ReadByte(EEAddr_INIT + (2*8));
     TALA = DATAEE_ReadByte(EEAddr_INIT + (3*8));
     clkAlarm.alarmVal.h = DATAEE_ReadByte(EEAddr_INIT + (4*8)); //ALAH
@@ -661,7 +659,7 @@ void main(void)
     ALAF = DATAEE_ReadByte(EEAddr_INIT + (9*8));
     t.h = DATAEE_ReadByte(EEAddr_INIT + (10*8));
     t.m = DATAEE_ReadByte(EEAddr_INIT + (11*8));
-    IDX = DATAEE_ReadByte(EEAddr_INIT + (12*8));
+    idx_RingBuffer = DATAEE_ReadByte(EEAddr_INIT + (12*8));
     
     
     //Init struct, needs improvements

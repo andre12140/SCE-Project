@@ -119,15 +119,15 @@ channel_FVR_buf1 63
 [v _menuLCD_ISR menuLCD_ISR `(v  1 e 1 0 ]
 "445
 [v _monitoring_ISR monitoring_ISR `(v  1 e 1 0 ]
-"500
+"508
 [v _editClock editClock `(v  1 e 1 0 ]
-"541
+"549
 [v _editTemp editTemp `(v  1 e 1 0 ]
-"563
+"571
 [v _editLum editLum `(v  1 e 1 0 ]
-"585
+"593
 [v _toggleAlarms toggleAlarms `(v  1 e 1 0 ]
-"606
+"614
 [v _main main `(v  1 e 1 0 ]
 "63 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\SCE_Project.X\mcc_generated_files/adcc.c
 [v _ADCC_Initialize ADCC_Initialize `(v  1 e 1 0 ]
@@ -154,6 +154,7 @@ channel_FVR_buf1 63
 [v i1_DATAEE_WriteByte DATAEE_WriteByte `(v  1 e 1 0 ]
 "202
 [v _DATAEE_ReadByte DATAEE_ReadByte `(uc  1 e 1 0 ]
+[v i1_DATAEE_ReadByte DATAEE_ReadByte `(uc  1 e 1 0 ]
 "57 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\SCE_Project.X\mcc_generated_files/pin_manager.c
 [v _PIN_MANAGER_Initialize PIN_MANAGER_Initialize `(v  1 e 1 0 ]
 "58 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\SCE_Project.X\mcc_generated_files/pwm6.c
@@ -217,7 +218,7 @@ channel_FVR_buf1 63
 "365 C:/Users/Andre/.mchp_packs/Microchip/PIC16F1xxxx_DFP/1.5.133/xc8\pic\include\proc\pic16f18875.h
 [u S783 . 1 `S778 1 . 1 0 ]
 [v _INTCONbits INTCONbits `VES783  1 e 1 @11 ]
-[s S2120 . 1 `uc 1 RB0 1 0 :1:0 
+[s S2125 . 1 `uc 1 RB0 1 0 :1:0 
 `uc 1 RB1 1 0 :1:1 
 `uc 1 RB2 1 0 :1:2 
 `uc 1 RB3 1 0 :1:3 
@@ -227,9 +228,9 @@ channel_FVR_buf1 63
 `uc 1 RB7 1 0 :1:7 
 ]
 "464
-[u S2129 . 1 `S2120 1 . 1 0 ]
-[v _PORTBbits PORTBbits `VES2129  1 e 1 @13 ]
-[s S2141 . 1 `uc 1 RC0 1 0 :1:0 
+[u S2134 . 1 `S2125 1 . 1 0 ]
+[v _PORTBbits PORTBbits `VES2134  1 e 1 @13 ]
+[s S2146 . 1 `uc 1 RC0 1 0 :1:0 
 `uc 1 RC1 1 0 :1:1 
 `uc 1 RC2 1 0 :1:2 
 `uc 1 RC3 1 0 :1:3 
@@ -239,8 +240,8 @@ channel_FVR_buf1 63
 `uc 1 RC7 1 0 :1:7 
 ]
 "526
-[u S2150 . 1 `S2141 1 . 1 0 ]
-[v _PORTCbits PORTCbits `VES2150  1 e 1 @14 ]
+[u S2155 . 1 `S2146 1 . 1 0 ]
+[v _PORTCbits PORTCbits `VES2155  1 e 1 @14 ]
 "671
 [v _TRISA TRISA `VEuc  1 e 1 @17 ]
 "733
@@ -892,7 +893,7 @@ channel_FVR_buf1 63
 [v _NVMDATL NVMDATL `VEuc  1 e 1 @2076 ]
 "23338
 [v _NVMDATH NVMDATH `VEuc  1 e 1 @2077 ]
-[s S2385 . 1 `uc 1 RD 1 0 :1:0 
+[s S2389 . 1 `uc 1 RD 1 0 :1:0 
 `uc 1 WR 1 0 :1:1 
 `uc 1 WREN 1 0 :1:2 
 `uc 1 WRERR 1 0 :1:3 
@@ -901,8 +902,8 @@ channel_FVR_buf1 63
 `uc 1 NVMREGS 1 0 :1:6 
 ]
 "23404
-[u S2393 . 1 `S2385 1 . 1 0 ]
-[v _NVMCON1bits NVMCON1bits `VES2393  1 e 1 @2078 ]
+[u S2397 . 1 `S2389 1 . 1 0 ]
+[v _NVMCON1bits NVMCON1bits `VES2397  1 e 1 @2078 ]
 "23444
 [v _NVMCON2 NVMCON2 `VEuc  1 e 1 @2079 ]
 "23508
@@ -982,7 +983,7 @@ channel_FVR_buf1 63
 "70
 [v _ALAF ALAF `uc  1 e 1 0 ]
 "73
-[v _IDX IDX `uc  1 e 1 0 ]
+[v _idx_RingBuffer idx_RingBuffer `uc  1 e 1 0 ]
 [s S2061 Time 3 `uc 1 h 1 0 `uc 1 m 1 1 `uc 1 s 1 2 ]
 "271
 [v _t t `S2061  1 e 3 0 ]
@@ -1031,43 +1032,43 @@ channel_FVR_buf1 63
 [v _timer5ReloadVal timer5ReloadVal `VEui  1 e 2 0 ]
 "58
 [v _TMR5_InterruptHandler TMR5_InterruptHandler `*.37(v  1 e 2 0 ]
-"606 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\SCE_Project.X\main.c
+"614 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\SCE_Project.X\main.c
 [v _main main `(v  1 e 1 0 ]
 {
-"629
+"634
 [v main@i i `i  1 a 2 15 ]
-"626
+"631
 [v main@corrupted corrupted `uc  1 a 1 14 ]
-"625
+"630
 [v main@notInit notInit `uc  1 a 1 13 ]
-"624
+"629
 [v main@checkSumAux checkSumAux `uc  1 a 1 12 ]
-"722
+"728
 } 0
-"585
+"593
 [v _toggleAlarms toggleAlarms `(v  1 e 1 0 ]
 {
-"604
+"612
 } 0
 "83 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\SCE_Project.X\mcc_generated_files/i2c1_driver.c
 [v _i2c1_driver_open i2c1_driver_open `(b  1 e 0 0 ]
 {
 "95
 } 0
-"541 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\SCE_Project.X\main.c
+"549 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\SCE_Project.X\main.c
 [v _editTemp editTemp `(v  1 e 1 0 ]
 {
-"561
+"569
 } 0
-"563
+"571
 [v _editLum editLum `(v  1 e 1 0 ]
 {
-"583
+"591
 } 0
-"500
+"508
 [v _editClock editClock `(v  1 e 1 0 ]
 {
-"539
+"547
 } 0
 "117 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\SCE_Project.X\mcc_generated_files/tmr2.c
 [v _TMR2_StopTimer TMR2_StopTimer `(v  1 e 1 0 ]
@@ -1229,9 +1230,21 @@ channel_FVR_buf1 63
 "445 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\SCE_Project.X\main.c
 [v _monitoring_ISR monitoring_ISR `(v  1 e 1 0 ]
 {
-"498
+"463
+[v monitoring_ISR@aux3 aux3 `uc  1 a 1 3 ]
+"462
+[v monitoring_ISR@aux2 aux2 `uc  1 a 1 2 ]
+"461
+[v monitoring_ISR@aux1 aux1 `uc  1 a 1 1 ]
+"506
 } 0
-"76
+"202 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\SCE_Project.X\mcc_generated_files/memory.c
+[v i1_DATAEE_ReadByte DATAEE_ReadByte `(uc  1 e 1 0 ]
+{
+[v i1DATAEE_ReadByte@bAdd bAdd `ui  1 p 2 6 ]
+"212
+} 0
+"76 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\SCE_Project.X\main.c
 [v _tsttc tsttc `(uc  1 e 1 0 ]
 {
 "78

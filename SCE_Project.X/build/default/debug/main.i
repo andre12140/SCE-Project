@@ -21802,7 +21802,7 @@ uint8_t TALA = 0;
 uint8_t ALAF = 0;
 
 # 73
-uint8_t IDX = 0;
+uint8_t idx_RingBuffer = 0;
 
 
 unsigned char tsttc (void)
@@ -22033,8 +22033,8 @@ DATAEE_WriteByte( 0x7000 + (8 * 8), lumAlarm.alarmLum);
 DATAEE_WriteByte( 0x7000 + (9 * 8), ALAF);
 DATAEE_WriteByte( 0x7000 + (10 * 8), t.h);
 DATAEE_WriteByte( 0x7000 + (11 * 8), t.m);
-DATAEE_WriteByte( 0x7000 + (12 * 8), IDX);
-DATAEE_WriteByte( 0x7000 + (13 * 8), NREG + PMON + TALA + clkAlarm.alarmVal.h + clkAlarm.alarmVal.m + clkAlarm.alarmVal.s + tempAlarm.alarmTemp + lumAlarm.alarmLum + ALAF + t.h + t.m + IDX);
+DATAEE_WriteByte( 0x7000 + (12 * 8), idx_RingBuffer);
+DATAEE_WriteByte( 0x7000 + (13 * 8), NREG + PMON + TALA + clkAlarm.alarmVal.h + clkAlarm.alarmVal.m + clkAlarm.alarmVal.s + tempAlarm.alarmTemp + lumAlarm.alarmLum + ALAF + t.h + t.m + idx_RingBuffer);
 }
 if(t.m==60){
 t.h++;
@@ -22176,15 +22176,21 @@ lumLevel = ADCC_GetSingleConversion(channel_ANA0) >> 13;
 
 if(prevTemp != temp || prevLumLevel != lumLevel){
 
-DATAEE_WriteByte( (IDX * 0x28) + 0x7140 + (8*0) , t.h);
-DATAEE_WriteByte( (IDX * 0x28) + 0x7140 + (8*1) , t.m);
-DATAEE_WriteByte( (IDX * 0x28) + 0x7140 + (8*2) , t.s);
-DATAEE_WriteByte( (IDX * 0x28) + 0x7140 + (8*3) , temp);
-DATAEE_WriteByte( (IDX * 0x28) + 0x7140 + (8*4) , lumLevel);
+DATAEE_WriteByte( (idx_RingBuffer * 0x5) + 0x7014 + (8*0) , t.h);
+DATAEE_WriteByte( (idx_RingBuffer * 0x5) + 0x7014 + (8*1) , t.m);
+DATAEE_WriteByte( (idx_RingBuffer * 0x5) + 0x7014 + (8*2) , t.s);
+DATAEE_WriteByte( (idx_RingBuffer * 0x5) + 0x7014 + (8*3) , temp);
+DATAEE_WriteByte( (idx_RingBuffer * 0x5) + 0x7014 + (8*4) , lumLevel);
 
-IDX++;
-if(IDX > NREG){
-IDX = 0;
+# 461
+uint8_t aux1 = DATAEE_ReadByte((idx_RingBuffer * 0x5) + 0x7014 + (8*2));
+uint8_t aux2 = DATAEE_ReadByte((idx_RingBuffer * 0x5) + 0x7014 + (8*3));
+uint8_t aux3 = DATAEE_ReadByte((idx_RingBuffer * 0x5) + 0x7014 + (8*4));
+uint8_t a = aux1 + aux2 + aux3;
+
+idx_RingBuffer++;
+if(idx_RingBuffer > NREG){
+idx_RingBuffer = 0;
 }
 prevTemp = temp;
 prevLumLevel = lumLevel;
@@ -22345,7 +22351,6 @@ TMR3_SetInterruptHandler(menuLCD_ISR);
 
 TMR5_SetInterruptHandler(monitoring_ISR);
 
-# 624
 uint8_t checkSumAux = 0;
 bool notInit = 1;
 bool corrupted = 0;
@@ -22376,6 +22381,7 @@ DATAEE_WriteByte( 0x7000 + (12 * 8), 0);
 DATAEE_WriteByte( 0x7000 + (13 * 8), 174);
 }
 
+NREG = DATAEE_ReadByte(0x7000 + (1*8));
 PMON = DATAEE_ReadByte(0x7000 + (2*8));
 TALA = DATAEE_ReadByte(0x7000 + (3*8));
 clkAlarm.alarmVal.h = DATAEE_ReadByte(0x7000 + (4*8));
@@ -22386,7 +22392,7 @@ lumAlarm.alarmLum = DATAEE_ReadByte(0x7000 + (8*8));
 ALAF = DATAEE_ReadByte(0x7000 + (9*8));
 t.h = DATAEE_ReadByte(0x7000 + (10*8));
 t.m = DATAEE_ReadByte(0x7000 + (11*8));
-IDX = DATAEE_ReadByte(0x7000 + (12*8));
+idx_RingBuffer = DATAEE_ReadByte(0x7000 + (12*8));
 
 
 
@@ -22440,7 +22446,7 @@ case 4:
 toggleAlarms();
 }
 
-# 721
+# 727
 }
 }
 
