@@ -282,7 +282,7 @@ struct temperatureAlarm tempAlarm = {ALAT, false, false};
 struct luminosityAlarm lumAlarm = {ALAL, false, false};
 
 int dimingLed = 0;
-struct Time alarmPWMStart = {-1,-1,-1};
+struct Time alarmPWMStart = {0xff,0xff,0xff};
 
 int editingClockAlarm = 0;
 bool editingTempAlarm = false;
@@ -311,7 +311,7 @@ void Clock_ISR(void) {
     
     //Check alarm trigger 
     if(alarmsEnable && t.s >= clkAlarm.alarmVal.s && t.m >= clkAlarm.alarmVal.m && t.h >= clkAlarm.alarmVal.h && editingClockAlarm == 0){
-        alarmPWMStart.h = -1; //For the PWM LED to start
+        alarmPWMStart.h = 0xff; //For the PWM LED to start
         clkAlarm.trigger = true;
         clkAlarm.alarmVal.h = 25; //Only triggered once until new val is given by user
     }
@@ -363,7 +363,7 @@ void menuLCD_ISR(){
             LCDchar(' ');
         }
         if(clkAlarm.trigger || tempAlarm.trigger || lumAlarm.trigger){
-            if(alarmPWMStart.h == -1){
+            if(alarmPWMStart.h == 0xff){
                 alarmPWMStart.h = t.h;
                 alarmPWMStart.m = t.m;
                 alarmPWMStart.s = t.s;
@@ -448,7 +448,7 @@ void monitoring_ISR(){
         DATAEE_WriteByte( (regIdx * 0x28) + EEAddr + (sizeof(uint8_t)*4) , lumLevel);
         
         regIdx++;
-        if(regIdx > 2){
+        if(regIdx > NREG){
             regIdx = 0;
         }
         prevTemp = temp;
@@ -460,7 +460,7 @@ void monitoring_ISR(){
         //Check luminosity alarm trigger
         if((lumAlarm.alarmLum > lumLevel) && (editingLumAlarm == false)){
             if(!lumAlarm.triggered){
-                alarmPWMStart.h = -1;//For the PWM LED to start
+                alarmPWMStart.h = 0xff;//For the PWM LED to start
             }
             lumAlarm.triggered = true;
             
@@ -474,7 +474,7 @@ void monitoring_ISR(){
         //Check temperature alarm trigger
         if((tempAlarm.alarmTemp < temp) && (editingTempAlarm == false)){
             if(!tempAlarm.triggered){
-                alarmPWMStart.h = -1;//For the PWM LED to start
+                alarmPWMStart.h = 0xff;//For the PWM LED to start
             }
             
             tempAlarm.triggered = true;
@@ -621,6 +621,7 @@ void main(void)
     uint8_t test = DATAEE_ReadByte(EEAddr);*/
     
     //Inicializar timeStamp
+    
     
     i2c1_driver_open();
     I2C_SCL = 1;

@@ -22164,7 +22164,7 @@ DATAEE_WriteByte( (regIdx * 0x28) + 0x7000 + (sizeof(uint8_t)*3) , temp);
 DATAEE_WriteByte( (regIdx * 0x28) + 0x7000 + (sizeof(uint8_t)*4) , lumLevel);
 
 regIdx++;
-if(regIdx > 24){
+if(regIdx > 2){
 regIdx = 0;
 }
 prevTemp = temp;
@@ -22332,7 +22332,7 @@ TMR3_SetInterruptHandler(menuLCD_ISR);
 
 TMR5_SetInterruptHandler(monitoring_ISR);
 
-# 623
+# 626
 i2c1_driver_open();
 TRISCbits.TRISC3 = 1;
 TRISCbits.TRISC4 = 1;
@@ -22374,7 +22374,7 @@ case 4:
 toggleAlarms();
 }
 
-# 667
+# 670
 }
 }
 

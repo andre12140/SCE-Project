@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V2.30 build 20200825195618 
-                                                                                               Sat Oct 31 12:43:13 2020
+                                                                                               Mon Nov 02 08:07:52 2020
 
 Microchip MPLAB XC8 C Compiler v2.30 (Free license) build 20200825195618 Og1 
      1                           	processor	16F18875
@@ -8829,40 +8829,40 @@ Microchip MPLAB XC8 C Compiler v2.30 (Free license) build 20200825195618 Og1
   8810  078D  00AB               	movwf	(TMR5_SetInterruptHandler@InterruptHandler^(0+128)+1)
   8811  078E  318A  220B  3187   	fcall	_TMR5_SetInterruptHandler
   8812                           
-  8813                           ;main.c: 623: i2c1_driver_open();
+  8813                           ;main.c: 626: i2c1_driver_open();
   8814  0791  318A  2234  3187   	fcall	_i2c1_driver_open
   8815  0794                     l4791:
   8816                           
-  8817                           ;main.c: 624: TRISCbits.TRISC3 = 1;
+  8817                           ;main.c: 627: TRISCbits.TRISC3 = 1;
   8818  0794  0020               	movlb	0	; select bank0
   8819  0795  1593               	bsf	19,3	;volatile
   8820  0796                     l4793:
   8821                           
-  8822                           ;main.c: 625: TRISCbits.TRISC4 = 1;
+  8822                           ;main.c: 628: TRISCbits.TRISC4 = 1;
   8823  0796  1613               	bsf	19,4	;volatile
   8824  0797                     l4795:
   8825                           
-  8826                           ;main.c: 626: WPUC3 = 1;
+  8826                           ;main.c: 629: WPUC3 = 1;
   8827  0797  003E               	movlb	30	; select bank30
   8828  0798  15CF               	bsf	79,3	;volatile
   8829  0799                     l4797:
   8830                           
-  8831                           ;main.c: 627: WPUC4 = 1;
+  8831                           ;main.c: 630: WPUC4 = 1;
   8832  0799  164F               	bsf	79,4	;volatile
   8833                           
-  8834                           ;main.c: 628: LCDinit();
+  8834                           ;main.c: 631: LCDinit();
   8835  079A  318F  2704  3187   	fcall	_LCDinit
   8836  079D                     l4799:
   8837                           
-  8838                           ;main.c: 631: (INTCONbits.GIE = 1);
+  8838                           ;main.c: 634: (INTCONbits.GIE = 1);
   8839  079D  178B               	bsf	11,7	;volatile
   8840  079E                     l4801:
   8841                           
-  8842                           ;main.c: 634: (INTCONbits.PEIE = 1);
+  8842                           ;main.c: 637: (INTCONbits.PEIE = 1);
   8843  079E  170B               	bsf	11,6	;volatile
   8844  079F                     l4803:
   8845                           
-  8846                           ;main.c: 637: {;main.c: 638: if(PORTBbits.RB4 == 0){
+  8846                           ;main.c: 640: {;main.c: 641: if(PORTBbits.RB4 == 0){
   8847  079F  0020               	movlb	0	; select bank0
   8848  07A0  1A0D               	btfsc	13,4	;volatile
   8849  07A1  2FA3               	goto	u4731
@@ -8872,7 +8872,7 @@ Microchip MPLAB XC8 C Compiler v2.30 (Free license) build 20200825195618 Og1
   8853  07A4                     u4730:
   8854  07A4                     l4805:
   8855                           
-  8856                           ;main.c: 639: _delay((unsigned long)((50)*(1000000/4000.0)));
+  8856                           ;main.c: 642: _delay((unsigned long)((50)*(1000000/4000.0)));
   8857  07A4  3011               	movlw	17
   8858  07A5  0021               	movlb	1	; select bank1
   8859  07A6  00B3               	movwf	??_main^(0+128)
@@ -8885,7 +8885,7 @@ Microchip MPLAB XC8 C Compiler v2.30 (Free license) build 20200825195618 Og1
   8866  07AC  0000               	nop
   8867  07AD                     l4807:
   8868                           
-  8869                           ;main.c: 641: if(mode == 0 && (clkAlarm.trigger || tempAlarm.trigger || lumAlarm.trigger
+  8869                           ;main.c: 644: if(mode == 0 && (clkAlarm.trigger || tempAlarm.trigger || lumAlarm.trigger
       +                          )){
   8870  07AD  0020               	movlb	0	; select bank0
   8871  07AE  0864               	movf	_mode,w
@@ -8922,20 +8922,20 @@ Microchip MPLAB XC8 C Compiler v2.30 (Free license) build 20200825195618 Og1
   8902  07C3                     u4770:
   8903  07C3                     l4815:
   8904                           
-  8905                           ;main.c: 642: clkAlarm.trigger = 0;
+  8905                           ;main.c: 645: clkAlarm.trigger = 0;
   8906  07C3  01D0               	clrf	_clkAlarm+3
   8907                           
-  8908                           ;main.c: 643: tempAlarm.trigger = 0;
+  8908                           ;main.c: 646: tempAlarm.trigger = 0;
   8909  07C4  01D8               	clrf	_tempAlarm+1
   8910                           
-  8911                           ;main.c: 644: lumAlarm.trigger = 0;
+  8911                           ;main.c: 647: lumAlarm.trigger = 0;
   8912  07C5  01D5               	clrf	_lumAlarm+1
   8913                           
-  8914                           ;main.c: 645: }
+  8914                           ;main.c: 648: }
   8915  07C6  2FCB               	goto	l1268
   8916  07C7                     l4817:
   8917                           
-  8918                           ;main.c: 646: else{;main.c: 647: mode = 1;
+  8918                           ;main.c: 649: else{;main.c: 650: mode = 1;
   8919  07C7  3001               	movlw	1
   8920  07C8  00E4               	movwf	_mode
   8921  07C9  3000               	movlw	0
@@ -8950,28 +8950,28 @@ Microchip MPLAB XC8 C Compiler v2.30 (Free license) build 20200825195618 Og1
   8930  07CF  2FDD               	goto	l4821
   8931  07D0                     l4819:
   8932                           
-  8933                           ;main.c: 655: editClock();
+  8933                           ;main.c: 658: editClock();
   8934  07D0  318F  277A  3187   	fcall	_editClock
   8935  07D3                     l1275:	
-  8936                           ;main.c: 656: case 2:
+  8936                           ;main.c: 659: case 2:
   8937                           
   8938                           
-  8939                           ;main.c: 657: editTemp();
+  8939                           ;main.c: 660: editTemp();
   8940  07D3  318D  2505  3187   	fcall	_editTemp
   8941  07D6                     l1276:	
-  8942                           ;main.c: 658: case 3:
+  8942                           ;main.c: 661: case 3:
   8943                           
   8944                           
-  8945                           ;main.c: 659: editLum();
+  8945                           ;main.c: 662: editLum();
   8946  07D6  318C  24CC  3187   	fcall	_editLum
   8947  07D9                     l1277:	
-  8948                           ;main.c: 660: case 4:
+  8948                           ;main.c: 663: case 4:
   8949                           
   8950                           
-  8951                           ;main.c: 661: toggleAlarms();
+  8951                           ;main.c: 664: toggleAlarms();
   8952  07D9  318C  2433  3187   	fcall	_toggleAlarms
   8953                           
-  8954                           ;main.c: 662: }
+  8954                           ;main.c: 665: }
   8955  07DC  2F9F               	goto	l4803
   8956  07DD                     l4821:
   8957                           
@@ -12618,7 +12618,7 @@ Microchip MPLAB XC8 C Compiler v2.30 (Free license) build 20200825195618 Og1
  12430  0477  3DE3               	addwfc	_regIdx+1,f
  12431  0478                     i1l4445:
  12432                           
- 12433                           ;main.c: 451: if(regIdx > 24){
+ 12433                           ;main.c: 451: if(regIdx > 2){
  12434  0478  0863               	movf	_regIdx+1,w
  12435  0479  3A80               	xorlw	128
  12436  047A  00FA               	movwf	??_monitoring_ISR
@@ -12626,7 +12626,7 @@ Microchip MPLAB XC8 C Compiler v2.30 (Free license) build 20200825195618 Og1
  12438  047C  027A               	subwf	??_monitoring_ISR,w
  12439  047D  1D03               	skipz
  12440  047E  2C81               	goto	u400_25
- 12441  047F  3019               	movlw	25
+ 12441  047F  3003               	movlw	3
  12442  0480  0262               	subwf	_regIdx,w
  12443  0481                     u400_25:
  12444  0481  1C03               	skipc
@@ -17854,7 +17854,7 @@ SFR31                0      0       0      32        0.0%
 
 
 Microchip Technology PIC Macro Assembler V2.30 build 20200825195618 
-Symbol Table                                                                                   Sat Oct 31 12:43:13 2020
+Symbol Table                                                                                   Mon Nov 02 08:07:52 2020
 
                                        _t 005F          __end_of_TMR5_SetInterruptHandler 0A11  
                               i1_WriteI2C 0DB7                                        l30 0F03  

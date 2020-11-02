@@ -21998,7 +21998,7 @@ struct temperatureAlarm tempAlarm = {28, 0, 0};
 struct luminosityAlarm lumAlarm = {4, 0, 0};
 
 int dimingLed = 0;
-struct Time alarmPWMStart = {-1,-1,-1};
+struct Time alarmPWMStart = {0xff,0xff,0xff};
 
 int editingClockAlarm = 0;
 bool editingTempAlarm = 0;
@@ -22027,7 +22027,7 @@ t.h=0;
 
 
 if(alarmsEnable && t.s >= clkAlarm.alarmVal.s && t.m >= clkAlarm.alarmVal.m && t.h >= clkAlarm.alarmVal.h && editingClockAlarm == 0){
-alarmPWMStart.h = -1;
+alarmPWMStart.h = 0xff;
 clkAlarm.trigger = 1;
 clkAlarm.alarmVal.h = 25;
 }
@@ -22079,7 +22079,7 @@ LCDcmd(0x8D);
 LCDchar(' ');
 }
 if(clkAlarm.trigger || tempAlarm.trigger || lumAlarm.trigger){
-if(alarmPWMStart.h == -1){
+if(alarmPWMStart.h == 0xff){
 alarmPWMStart.h = t.h;
 alarmPWMStart.m = t.m;
 alarmPWMStart.s = t.s;
@@ -22163,14 +22163,8 @@ DATAEE_WriteByte( (regIdx * 0x28) + 0x7000 + (sizeof(uint8_t)*2) , t.s);
 DATAEE_WriteByte( (regIdx * 0x28) + 0x7000 + (sizeof(uint8_t)*3) , temp);
 DATAEE_WriteByte( (regIdx * 0x28) + 0x7000 + (sizeof(uint8_t)*4) , lumLevel);
 
-uint8_t test1 = DATAEE_ReadByte((regIdx * 0x28) + 0x7000 + (sizeof(uint8_t)*2));
-uint8_t test2 = DATAEE_ReadByte((regIdx * 0x28) + 0x7000 + (sizeof(uint8_t)*3));
-uint8_t test3 = DATAEE_ReadByte((regIdx * 0x28) + 0x7000 + (sizeof(uint8_t)*4));
-
-int a= test1 + test2 + test3;
-
 regIdx++;
-if(regIdx > 2){
+if(regIdx > 25){
 regIdx = 0;
 }
 prevTemp = temp;
@@ -22182,7 +22176,7 @@ if(alarmsEnable){
 
 if((lumAlarm.alarmLum > lumLevel) && (editingLumAlarm == 0)){
 if(!lumAlarm.triggered){
-alarmPWMStart.h = -1;
+alarmPWMStart.h = 0xff;
 }
 lumAlarm.triggered = 1;
 
@@ -22196,7 +22190,7 @@ do { LATAbits.LATA4 = 0; } while(0);
 
 if((tempAlarm.alarmTemp < temp) && (editingTempAlarm == 0)){
 if(!tempAlarm.triggered){
-alarmPWMStart.h = -1;
+alarmPWMStart.h = 0xff;
 }
 
 tempAlarm.triggered = 1;
@@ -22338,7 +22332,7 @@ TMR3_SetInterruptHandler(menuLCD_ISR);
 
 TMR5_SetInterruptHandler(monitoring_ISR);
 
-# 629
+# 626
 i2c1_driver_open();
 TRISCbits.TRISC3 = 1;
 TRISCbits.TRISC4 = 1;
@@ -22380,7 +22374,7 @@ case 4:
 toggleAlarms();
 }
 
-# 673
+# 670
 }
 }
 
