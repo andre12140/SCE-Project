@@ -21197,7 +21197,7 @@ PIE4bits.TMR3IE = 1;
 TMR3_SetInterruptHandler(TMR3_DefaultInterruptHandler);
 
 
-T3CON = 0x01;
+T3CON = 0x05;
 }
 
 void TMR3_StartTimer(void)

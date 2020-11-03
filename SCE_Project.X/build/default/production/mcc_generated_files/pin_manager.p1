@@ -59,6 +59,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _SLRCOND `Vuc ~T0 @X0 0 e@3932 ]
 "36135
 [v _SLRCONE `Vuc ~T0 @X0 0 e@3943 ]
+"29967
+[v _INTPPS `Vuc ~T0 @X0 0 e@3728 ]
 "31573
 [v _SSP1CLKPPS `Vuc ~T0 @X0 0 e@3781 ]
 "32939
@@ -13774,8 +13776,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;xc8\pic\include\pic.h: 127: extern __bank0 unsigned char __resetbits;
 [; ;xc8\pic\include\pic.h: 128: extern __bank0 __bit __powerdown;
 [; ;xc8\pic\include\pic.h: 129: extern __bank0 __bit __timeout;
-[; ;pin_manager.h: 244: void PIN_MANAGER_Initialize (void);
-[; ;pin_manager.h: 256: void PIN_MANAGER_IOC(void);
+[; ;pin_manager.h: 236: void PIN_MANAGER_Initialize (void);
+[; ;pin_manager.h: 248: void PIN_MANAGER_IOC(void);
 [; ;stdbool.h: 15: typedef unsigned char bool;
 "57 mcc_generated_files/pin_manager.c
 [v _PIN_MANAGER_Initialize `(v ~T0 @X0 1 ef ]
@@ -13875,34 +13877,37 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pin_manager.c: 111: SLRCONE = 0x07;
 "111
 [e = _SLRCONE -> -> 7 `i `uc ]
-[; ;pin_manager.c: 120: SSP1CLKPPS = 0x13;
+[; ;pin_manager.c: 120: INTPPS = 0x0C;
 "120
-[e = _SSP1CLKPPS -> -> 19 `i `uc ]
-[; ;pin_manager.c: 121: RC3PPS = 0x14;
+[e = _INTPPS -> -> 12 `i `uc ]
+[; ;pin_manager.c: 121: SSP1CLKPPS = 0x13;
 "121
-[e = _RC3PPS -> -> 20 `i `uc ]
-[; ;pin_manager.c: 122: RC4PPS = 0x15;
+[e = _SSP1CLKPPS -> -> 19 `i `uc ]
+[; ;pin_manager.c: 122: RC3PPS = 0x14;
 "122
-[e = _RC4PPS -> -> 21 `i `uc ]
-[; ;pin_manager.c: 123: RA6PPS = 0x0E;
+[e = _RC3PPS -> -> 20 `i `uc ]
+[; ;pin_manager.c: 123: RC4PPS = 0x15;
 "123
-[e = _RA6PPS -> -> 14 `i `uc ]
-[; ;pin_manager.c: 124: SSP1DATPPS = 0x14;
+[e = _RC4PPS -> -> 21 `i `uc ]
+[; ;pin_manager.c: 124: RA6PPS = 0x0E;
 "124
-[e = _SSP1DATPPS -> -> 20 `i `uc ]
-[; ;pin_manager.c: 125: }
+[e = _RA6PPS -> -> 14 `i `uc ]
+[; ;pin_manager.c: 125: SSP1DATPPS = 0x14;
 "125
+[e = _SSP1DATPPS -> -> 20 `i `uc ]
+[; ;pin_manager.c: 126: }
+"126
 [e :UE 1620 ]
 }
-"127
-[v _PIN_MANAGER_IOC `(v ~T0 @X0 1 ef ]
 "128
+[v _PIN_MANAGER_IOC `(v ~T0 @X0 1 ef ]
+"129
 {
-[; ;pin_manager.c: 127: void PIN_MANAGER_IOC(void)
-[; ;pin_manager.c: 128: {
+[; ;pin_manager.c: 128: void PIN_MANAGER_IOC(void)
+[; ;pin_manager.c: 129: {
 [e :U _PIN_MANAGER_IOC ]
 [f ]
-[; ;pin_manager.c: 129: }
-"129
+[; ;pin_manager.c: 130: }
+"130
 [e :UE 1621 ]
 }

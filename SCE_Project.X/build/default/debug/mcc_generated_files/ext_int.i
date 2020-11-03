@@ -1,5 +1,5 @@
 
-# 1 "mcc_generated_files/pin_manager.c"
+# 1 "mcc_generated_files/ext_int.c"
 
 # 18 "C:/Users/Andre/.mchp_packs/Microchip/PIC16F1xxxx_DFP/1.5.133/xc8\pic\include\xc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -21121,71 +21121,64 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 
-# 236 "mcc_generated_files/pin_manager.h"
-void PIN_MANAGER_Initialize (void);
+# 250 "mcc_generated_files/ext_int.h"
+void EXT_INT_Initialize(void);
 
-# 248
-void PIN_MANAGER_IOC(void);
+# 272
+void INT_ISR(void);
 
-# 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
-typedef unsigned char bool;
+# 296
+void INT_CallBack(void);
 
-# 57 "mcc_generated_files/pin_manager.c"
-void PIN_MANAGER_Initialize(void)
+# 319
+void INT_SetInterruptHandler(void (* InterruptHandler)(void));
+
+# 343
+extern void (*INT_InterruptHandler)(void);
+
+# 367
+void INT_DefaultInterruptHandler(void);
+
+# 30 "mcc_generated_files/ext_int.c"
+void (*INT_InterruptHandler)(void);
+
+void INT_ISR(void)
 {
+(PIR0bits.INTF = 0);
 
-# 62
-LATE = 0x00;
-LATD = 0x00;
-LATA = 0x00;
-LATB = 0x00;
-LATC = 0x00;
 
-# 71
-TRISE = 0x07;
-TRISA = 0x0F;
-TRISB = 0xFF;
-TRISC = 0xFF;
-TRISD = 0xFF;
-
-# 80
-ANSELD = 0xFF;
-ANSELC = 0xC7;
-ANSELB = 0xEF;
-ANSELE = 0x07;
-ANSELA = 0x4F;
-
-# 89
-WPUD = 0x00;
-WPUE = 0x00;
-WPUB = 0x00;
-WPUA = 0x00;
-WPUC = 0x00;
-
-# 98
-ODCONE = 0x00;
-ODCONA = 0x00;
-ODCONB = 0x00;
-ODCONC = 0x00;
-ODCOND = 0x00;
-
-# 107
-SLRCONA = 0xFF;
-SLRCONB = 0xFF;
-SLRCONC = 0xFF;
-SLRCOND = 0xFF;
-SLRCONE = 0x07;
-
-# 120
-INTPPS = 0x0C;
-SSP1CLKPPS = 0x13;
-RC3PPS = 0x14;
-RC4PPS = 0x15;
-RA6PPS = 0x0E;
-SSP1DATPPS = 0x14;
+INT_CallBack();
 }
 
-void PIN_MANAGER_IOC(void)
+
+void INT_CallBack(void)
 {
+
+if(INT_InterruptHandler)
+{
+INT_InterruptHandler();
+}
+}
+
+void INT_SetInterruptHandler(void (* InterruptHandler)(void)){
+INT_InterruptHandler = InterruptHandler;
+}
+
+void INT_DefaultInterruptHandler(void){
+
+
+}
+
+void EXT_INT_Initialize(void)
+{
+
+
+
+(PIR0bits.INTF = 0);
+(INTCONbits.INTEDG = 0);
+
+INT_SetInterruptHandler(INT_DefaultInterruptHandler);
+(PIE0bits.INTE = 1);
+
 }
 

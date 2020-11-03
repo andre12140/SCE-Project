@@ -21121,10 +21121,10 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 
-# 244 "mcc_generated_files/pin_manager.h"
+# 236 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 
-# 256
+# 248
 void PIN_MANAGER_IOC(void);
 
 # 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
@@ -21638,6 +21638,24 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 827
 uint8_t ADCC_GetConversionStageStatus(void);
 
+# 250 "mcc_generated_files/ext_int.h"
+void EXT_INT_Initialize(void);
+
+# 272
+void INT_ISR(void);
+
+# 296
+void INT_CallBack(void);
+
+# 319
+void INT_SetInterruptHandler(void (* InterruptHandler)(void));
+
+# 343
+extern void (*INT_InterruptHandler)(void);
+
+# 367
+void INT_DefaultInterruptHandler(void);
+
 # 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
 typedef unsigned char bool;
 
@@ -21659,13 +21677,13 @@ void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
 # 248
 uint8_t DATAEE_ReadByte(uint16_t bAdd);
 
-# 77 "mcc_generated_files/mcc.h"
+# 78 "mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
 
-# 90
+# 91
 void OSCILLATOR_Initialize(void);
 
-# 103
+# 104
 void PMD_Initialize(void);
 
 # 154 "I2C/i2c.h"
@@ -21793,17 +21811,18 @@ extern char * strichr(const char *, int);
 extern char * strrchr(const char *, int);
 extern char * strrichr(const char *, int);
 
-# 62 "main.c"
+# 61 "main.c"
 uint8_t NREG = 0;
 uint8_t PMON = 0;
 uint8_t TALA = 0;
 
-# 70
+# 69
 uint8_t ALAF = 0;
 
-# 73
-uint8_t IDX = 0;
+# 72
+uint8_t idx_RingBuffer = 0;
 
+bool S1_Value = 0;
 
 unsigned char tsttc (void)
 {
@@ -22033,8 +22052,8 @@ DATAEE_WriteByte( 0x7000 + (8 * 8), lumAlarm.alarmLum);
 DATAEE_WriteByte( 0x7000 + (9 * 8), ALAF);
 DATAEE_WriteByte( 0x7000 + (10 * 8), t.h);
 DATAEE_WriteByte( 0x7000 + (11 * 8), t.m);
-DATAEE_WriteByte( 0x7000 + (12 * 8), IDX);
-DATAEE_WriteByte( 0x7000 + (13 * 8), NREG + PMON + TALA + clkAlarm.alarmVal.h + clkAlarm.alarmVal.m + clkAlarm.alarmVal.s + tempAlarm.alarmTemp + lumAlarm.alarmLum + ALAF + t.h + t.m + IDX);
+DATAEE_WriteByte( 0x7000 + (12 * 8), idx_RingBuffer);
+DATAEE_WriteByte( 0x7000 + (13 * 8), NREG + PMON + TALA + clkAlarm.alarmVal.h + clkAlarm.alarmVal.m + clkAlarm.alarmVal.s + tempAlarm.alarmTemp + lumAlarm.alarmLum + ALAF + t.h + t.m + idx_RingBuffer);
 }
 if(t.m==60){
 t.h++;
@@ -22163,7 +22182,6 @@ LCDcmd(0xcf);
 } else if(mode == 4){
 LCDcmd(0x8f);
 }
-
 }
 
 int prevTemp = -1;
@@ -22176,15 +22194,15 @@ lumLevel = ADCC_GetSingleConversion(channel_ANA0) >> 13;
 
 if(prevTemp != temp || prevLumLevel != lumLevel){
 
-DATAEE_WriteByte( (IDX * 0x28) + 0x7140 + (8*0) , t.h);
-DATAEE_WriteByte( (IDX * 0x28) + 0x7140 + (8*1) , t.m);
-DATAEE_WriteByte( (IDX * 0x28) + 0x7140 + (8*2) , t.s);
-DATAEE_WriteByte( (IDX * 0x28) + 0x7140 + (8*3) , temp);
-DATAEE_WriteByte( (IDX * 0x28) + 0x7140 + (8*4) , lumLevel);
+DATAEE_WriteByte( (idx_RingBuffer * 0x5) + 0x7014 + (8*0) , t.h);
+DATAEE_WriteByte( (idx_RingBuffer * 0x5) + 0x7014 + (8*1) , t.m);
+DATAEE_WriteByte( (idx_RingBuffer * 0x5) + 0x7014 + (8*2) , t.s);
+DATAEE_WriteByte( (idx_RingBuffer * 0x5) + 0x7014 + (8*3) , temp);
+DATAEE_WriteByte( (idx_RingBuffer * 0x5) + 0x7014 + (8*4) , lumLevel);
 
-IDX++;
-if(IDX > NREG){
-IDX = 0;
+idx_RingBuffer++;
+if(idx_RingBuffer > NREG){
+idx_RingBuffer = 0;
 }
 prevTemp = temp;
 prevLumLevel = lumLevel;
@@ -22226,20 +22244,9 @@ do { LATAbits.LATA5 = 0; } while(0);
 
 void editClock(){
 
-editingClockAlarm = 1;
-
 while(1){
-if(PORTBbits.RB4 == 0){
-_delay((unsigned long)((50)*(1000000/4000.0)));
-editingClockAlarm++;
-while(PORTBbits.RB4==0){};
-if(editingClockAlarm > 3){
-editingClockAlarm = 0;
-mode = 2;
-break;
-}
-}
 
+# 513
 if(PORTCbits.RC5 == 0){
 if(editingClockAlarm == 1){
 if(clkAlarm.alarmVal.h >= 23){
@@ -22262,6 +22269,10 @@ clkAlarm.alarmVal.s++;
 }
 _delay((unsigned long)((100)*(1000000/4000.0)));
 }
+if(mode != 1){
+editingClockAlarm = 0;
+break;
+}
 }
 }
 
@@ -22269,20 +22280,18 @@ void editTemp(){
 editingTempAlarm = 1;
 
 while(1){
-if(PORTBbits.RB4 == 0){
-_delay((unsigned long)((50)*(1000000/4000.0)));
-editingTempAlarm = 0;
-mode = 3;
-while(PORTBbits.RB4==0){};
-break;
-}
 
+# 554
 if(PORTCbits.RC5 == 0){
 tempAlarm.alarmTemp++;
 if(tempAlarm.alarmTemp > 50){
 tempAlarm.alarmTemp = 0;
 }
 _delay((unsigned long)((100)*(1000000/4000.0)));
+}
+if(mode != 2){
+editingTempAlarm = 0;
+break;
 }
 }
 }
@@ -22291,14 +22300,8 @@ void editLum(){
 editingLumAlarm = 1;
 
 while(1){
-if(PORTBbits.RB4 == 0){
-_delay((unsigned long)((50)*(1000000/4000.0)));
-editingLumAlarm = 0;
-mode = 4;
-while(PORTBbits.RB4==0){};
-break;
-}
 
+# 580
 if(PORTCbits.RC5 == 0){
 lumAlarm.alarmLum++;
 if(lumAlarm.alarmLum > 7){
@@ -22306,19 +22309,18 @@ lumAlarm.alarmLum = 0;
 }
 _delay((unsigned long)((100)*(1000000/4000.0)));
 }
+if(mode != 3){
+editingLumAlarm = 0;
+break;
+}
 }
 }
 
 void toggleAlarms(){
 
 while(1){
-if(PORTBbits.RB4 == 0){
-_delay((unsigned long)((50)*(1000000/4000.0)));
-mode = 0;
-while(PORTBbits.RB4==0){};
-break;
-}
 
+# 604
 if(PORTCbits.RC5 == 0){
 if(ALAF == 'A'){
 ALAF = 'a';
@@ -22326,6 +22328,29 @@ ALAF = 'a';
 ALAF = 'A';
 }
 _delay((unsigned long)((100)*(1000000/4000.0)));
+}
+if(mode != 4){
+mode = 0;
+break;
+}
+}
+}
+
+void S1_ISR(){
+
+if(mode == 0 && (clkAlarm.trigger || tempAlarm.trigger || lumAlarm.trigger)){
+clkAlarm.trigger = 0;
+tempAlarm.trigger = 0;
+lumAlarm.trigger = 0;
+} else{
+if(mode == 1){
+editingClockAlarm++;
+if(editingClockAlarm > 3){
+editingClockAlarm = 0;
+mode++;
+}
+} else{
+mode++;
 }
 }
 }
@@ -22345,7 +22370,8 @@ TMR3_SetInterruptHandler(menuLCD_ISR);
 
 TMR5_SetInterruptHandler(monitoring_ISR);
 
-# 624
+INT_SetInterruptHandler(S1_ISR);
+
 uint8_t checkSumAux = 0;
 bool notInit = 1;
 bool corrupted = 0;
@@ -22376,6 +22402,7 @@ DATAEE_WriteByte( 0x7000 + (12 * 8), 0);
 DATAEE_WriteByte( 0x7000 + (13 * 8), 174);
 }
 
+NREG = DATAEE_ReadByte(0x7000 + (1*8));
 PMON = DATAEE_ReadByte(0x7000 + (2*8));
 TALA = DATAEE_ReadByte(0x7000 + (3*8));
 clkAlarm.alarmVal.h = DATAEE_ReadByte(0x7000 + (4*8));
@@ -22386,7 +22413,7 @@ lumAlarm.alarmLum = DATAEE_ReadByte(0x7000 + (8*8));
 ALAF = DATAEE_ReadByte(0x7000 + (9*8));
 t.h = DATAEE_ReadByte(0x7000 + (10*8));
 t.m = DATAEE_ReadByte(0x7000 + (11*8));
-IDX = DATAEE_ReadByte(0x7000 + (12*8));
+idx_RingBuffer = DATAEE_ReadByte(0x7000 + (12*8));
 
 
 
@@ -22412,24 +22439,12 @@ LCDinit();
 
 (INTCONbits.PEIE = 1);
 
+asm("sleep");
+
 while (1)
 {
-if(PORTBbits.RB4 == 0){
-_delay((unsigned long)((50)*(1000000/4000.0)));
-
-if(mode == 0 && (clkAlarm.trigger || tempAlarm.trigger || lumAlarm.trigger)){
-clkAlarm.trigger = 0;
-tempAlarm.trigger = 0;
-lumAlarm.trigger = 0;
-}
-else{
-mode = 1;
-}
-while(PORTBbits.RB4 == 0){};
-}
-
 switch(mode){
-case 0: continue;
+case 0: asm("sleep");
 case 1:
 editClock();
 case 2:
@@ -22439,8 +22454,6 @@ editLum();
 case 4:
 toggleAlarms();
 }
-
-# 721
 }
 }
 

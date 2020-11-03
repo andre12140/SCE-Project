@@ -21197,7 +21197,7 @@ PIE4bits.TMR1IE = 1;
 TMR1_SetInterruptHandler(TMR1_DefaultInterruptHandler);
 
 
-T1CON = 0x01;
+T1CON = 0x05;
 }
 
 void TMR1_StartTimer(void)

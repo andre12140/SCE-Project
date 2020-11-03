@@ -21121,10 +21121,10 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 
-# 244 "mcc_generated_files/pin_manager.h"
+# 236 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 
-# 256
+# 248
 void PIN_MANAGER_IOC(void);
 
 # 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
@@ -21177,6 +21177,7 @@ SLRCOND = 0xFF;
 SLRCONE = 0x07;
 
 # 120
+INTPPS = 0x0C;
 SSP1CLKPPS = 0x13;
 RC3PPS = 0x14;
 RC4PPS = 0x15;

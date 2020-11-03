@@ -151,25 +151,17 @@
 #define LED_D5_SetAnalogMode()      do { ANSELAbits.ANSA7 = 1; } while(0)
 #define LED_D5_SetDigitalMode()     do { ANSELAbits.ANSA7 = 0; } while(0)
 
-// get/set S1 aliases
-#define S1_TRIS                 TRISBbits.TRISB4
-#define S1_LAT                  LATBbits.LATB4
-#define S1_PORT                 PORTBbits.RB4
-#define S1_WPU                  WPUBbits.WPUB4
-#define S1_OD                   ODCONBbits.ODCB4
-#define S1_ANS                  ANSELBbits.ANSB4
-#define S1_SetHigh()            do { LATBbits.LATB4 = 1; } while(0)
-#define S1_SetLow()             do { LATBbits.LATB4 = 0; } while(0)
-#define S1_Toggle()             do { LATBbits.LATB4 = ~LATBbits.LATB4; } while(0)
-#define S1_GetValue()           PORTBbits.RB4
-#define S1_SetDigitalInput()    do { TRISBbits.TRISB4 = 1; } while(0)
-#define S1_SetDigitalOutput()   do { TRISBbits.TRISB4 = 0; } while(0)
-#define S1_SetPullup()          do { WPUBbits.WPUB4 = 1; } while(0)
-#define S1_ResetPullup()        do { WPUBbits.WPUB4 = 0; } while(0)
-#define S1_SetPushPull()        do { ODCONBbits.ODCB4 = 0; } while(0)
-#define S1_SetOpenDrain()       do { ODCONBbits.ODCB4 = 1; } while(0)
-#define S1_SetAnalogMode()      do { ANSELBbits.ANSB4 = 1; } while(0)
-#define S1_SetDigitalMode()     do { ANSELBbits.ANSB4 = 0; } while(0)
+// get/set RB4 procedures
+#define RB4_SetHigh()            do { LATBbits.LATB4 = 1; } while(0)
+#define RB4_SetLow()             do { LATBbits.LATB4 = 0; } while(0)
+#define RB4_Toggle()             do { LATBbits.LATB4 = ~LATBbits.LATB4; } while(0)
+#define RB4_GetValue()              PORTBbits.RB4
+#define RB4_SetDigitalInput()    do { TRISBbits.TRISB4 = 1; } while(0)
+#define RB4_SetDigitalOutput()   do { TRISBbits.TRISB4 = 0; } while(0)
+#define RB4_SetPullup()             do { WPUBbits.WPUB4 = 1; } while(0)
+#define RB4_ResetPullup()           do { WPUBbits.WPUB4 = 0; } while(0)
+#define RB4_SetAnalogMode()         do { ANSELBbits.ANSB4 = 1; } while(0)
+#define RB4_SetDigitalMode()        do { ANSELBbits.ANSB4 = 0; } while(0)
 
 // get/set SCL1 aliases
 #define SCL1_TRIS                 TRISCbits.TRISC3

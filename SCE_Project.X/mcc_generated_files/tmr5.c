@@ -73,8 +73,7 @@ void TMR5_Initialize(void)
 
     //CS LFINTOSC; 
     T5CLK = 0x04;
-    
-    //SET initial value to get interrupts within 3 seconds (PMON)
+
     //TMR5H 74; 
     TMR5H = 0x4A;
 
@@ -93,8 +92,8 @@ void TMR5_Initialize(void)
     // Set Default Interrupt Handler
     TMR5_SetInterruptHandler(TMR5_DefaultInterruptHandler);
 
-    // CKPS 1:2; nT5SYNC synchronize; TMR5ON enabled; T5RD16 disabled; 
-    T5CON = 0x11;
+    // CKPS 1:2; nT5SYNC do_not_synchronize; TMR5ON enabled; T5RD16 disabled; 
+    T5CON = 0x15;
 }
 
 void TMR5_StartTimer(void)

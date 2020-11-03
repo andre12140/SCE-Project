@@ -52,7 +52,11 @@
 void __interrupt() INTERRUPT_InterruptManager (void)
 {
     // interrupt handler
-    if(INTCONbits.PEIE == 1)
+    if(PIE0bits.INTE == 1 && PIR0bits.INTF == 1)
+    {
+        INT_ISR();
+    }
+    else if(INTCONbits.PEIE == 1)
     {
         if(PIE4bits.TMR5IE == 1 && PIR4bits.TMR5IF == 1)
         {

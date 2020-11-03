@@ -49,7 +49,6 @@
 
 
 
-
 #define S2DELAY 100 //Use to define time to wait for debounce
 
 #define EEAddr_INIT    0x7000        // EEPROM starting address (Used for storing init data)
@@ -72,6 +71,7 @@ uint8_t ALAF = 0;   //Alarm Flag (Initially disabled)
 uint8_t CLKM = 0;*/   //Initial value for clock minutes
 uint8_t idx_RingBuffer = 0; //Index of Ring Buffer to EEPROM
 
+bool S1_Value = false;
 
 unsigned char tsttc (void)
 {
@@ -436,7 +436,6 @@ void menuLCD_ISR(){
     } else if(mode == 4){
         LCDcmd(0x8f);
     }
-    
 }
 
 int prevTemp = -1;
@@ -499,10 +498,8 @@ void monitoring_ISR(){
 
 void editClock(){
     
-    editingClockAlarm = 1;
-    
     while(1){
-        if(S1_GetValue() == LOW){
+        /*if(S1_GetValue() == LOW){
             __delay_ms(50);
             editingClockAlarm++;
             while(S1_GetValue()==LOW){}; //Waiting for user to stop pressing S1
@@ -511,7 +508,7 @@ void editClock(){
                 mode = 2;
                 break;
             }
-        }
+        }*/
         
         if(S2_GetValue() == LOW){ //Switch 2 pressed
             if(editingClockAlarm == 1){ //Editing Hours
@@ -535,6 +532,10 @@ void editClock(){
             }
             __delay_ms(S2DELAY);
         }
+        if(mode != 1){
+            editingClockAlarm = 0;
+            break;
+        }
     }
 }
 
@@ -542,13 +543,13 @@ void editTemp(){
     editingTempAlarm = true;
         
     while(1){
-        if(S1_GetValue() == LOW){
+        /*if(S1_GetValue() == LOW){
             __delay_ms(50);
             editingTempAlarm = false;
             mode = 3;
             while(S1_GetValue()==LOW){}; //Waiting for user to stop pressing S1
             break;
-        }
+        }*/
         
         if(S2_GetValue() == LOW){ //Switch 2 pressed
             tempAlarm.alarmTemp++;
@@ -557,6 +558,10 @@ void editTemp(){
             }
             __delay_ms(S2DELAY);
         }
+        if(mode != 2){
+            editingTempAlarm = false;
+            break;
+        }
     }    
 }
 
@@ -564,13 +569,13 @@ void editLum(){
     editingLumAlarm = true;
     
     while(1){
-        if(S1_GetValue() == LOW){
+        /*if(S1_GetValue() == LOW){
             __delay_ms(50);
             editingLumAlarm = false;
             mode = 4;
             while(S1_GetValue()==LOW){}; //Waiting for user to stop pressing S1
             break;
-        }
+        }*/
         
         if(S2_GetValue() == LOW){ //Switch 2 pressed
             lumAlarm.alarmLum++;
@@ -579,18 +584,22 @@ void editLum(){
             }
             __delay_ms(S2DELAY);
         }
+        if(mode != 3){
+            editingLumAlarm = false;
+            break;
+        }
     }  
 }
 
 void toggleAlarms(){
     
     while(1){
-        if(S1_GetValue() == LOW){
+        /*if(S1_GetValue() == LOW){
             __delay_ms(50);
             mode = 0;
             while(S1_GetValue()==LOW){}; //Waiting for user to stop pressing S1
             break;
-        }
+        }*/
         
         if(S2_GetValue() == LOW){ //Switch 2 pressed
             if(ALAF == 'A'){
@@ -599,6 +608,31 @@ void toggleAlarms(){
                 ALAF = 'A';
             }
             __delay_ms(S2DELAY);
+        }
+        if(mode != 4){
+            mode = 0;
+            break;
+        }
+    }
+}
+
+void S1_ISR(){
+    __delay_ms(50);
+    
+    // First clears LCD and only switches mode when S1 is pressed again and theirs no alarms
+    if(mode == 0 && (clkAlarm.trigger || tempAlarm.trigger || lumAlarm.trigger)){
+        clkAlarm.trigger = false;
+        tempAlarm.trigger = false;
+        lumAlarm.trigger = false;
+    } else{
+        if(mode == 1){
+            editingClockAlarm++;
+            if(editingClockAlarm > 3){
+                editingClockAlarm = 0;
+                mode++;
+            }
+        } else{
+            mode++;
         }
     }
 }
@@ -617,6 +651,8 @@ void main(void)
     TMR3_SetInterruptHandler(menuLCD_ISR);
     
     TMR5_SetInterruptHandler(monitoring_ISR);
+    
+    INT_SetInterruptHandler(S1_ISR);
 
     uint8_t checkSumAux = 0;
     bool notInit = true;
@@ -684,38 +720,22 @@ void main(void)
 
     // Enable the Peripheral Interrupts
     INTERRUPT_PeripheralInterruptEnable();
+    
+    SLEEP();
 
     while (1)
     {
-        if(S1_GetValue() == LOW){ //Switch 1 pressed
-            __delay_ms(50);
-            // First clears LCD and only switches mode when S1 is pressed again and theirs no alarms
-            if(mode == 0 && (clkAlarm.trigger || tempAlarm.trigger || lumAlarm.trigger)){
-                clkAlarm.trigger = false;
-                tempAlarm.trigger = false;
-                lumAlarm.trigger = false;
-            }
-            else{
-                mode = 1;
-            }
-            while(S1_GetValue() == LOW){}; //Waiting for user to stop pressing S1
-        }
-        
         switch(mode){
-            case 0: continue;
-            case 1: 
-                editClock(); //Clock Edit Handler
-            case 2:
-                editTemp(); //Temperature Edit Handler
-            case 3:
-                editLum(); //Luminosity Edit Handler
-            case 4:
-                toggleAlarms(); //Enables/Disables Alarms
-        }
-        
-        /*if(S2_GetValue() == HIGH){ //Switch 2 pressed
-            __delay_ms(100);
-        }*/
+                case 0: SLEEP();
+                case 1: 
+                    editClock(); //Clock Edit Handler
+                case 2:
+                    editTemp(); //Temperature Edit Handler
+                case 3:
+                    editLum(); //Luminosity Edit Handler
+                case 4:
+                    toggleAlarms(); //Enables/Disables Alarms
+            }
     }   
 }
 /**

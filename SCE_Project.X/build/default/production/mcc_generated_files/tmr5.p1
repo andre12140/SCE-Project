@@ -13805,250 +13805,250 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;tmr5.c: 75: T5CLK = 0x04;
 "75
 [e = _T5CLK -> -> 4 `i `uc ]
-[; ;tmr5.c: 79: TMR5H = 0x4A;
-"79
+[; ;tmr5.c: 78: TMR5H = 0x4A;
+"78
 [e = _TMR5H -> -> 74 `i `uc ]
-[; ;tmr5.c: 82: TMR5L = 0x5C;
-"82
+[; ;tmr5.c: 81: TMR5L = 0x5C;
+"81
 [e = _TMR5L -> -> 92 `i `uc ]
-[; ;tmr5.c: 85: timer5ReloadVal=(uint16_t)((TMR5H << 8) | TMR5L);
-"85
+[; ;tmr5.c: 84: timer5ReloadVal=(uint16_t)((TMR5H << 8) | TMR5L);
+"84
 [e = _timer5ReloadVal -> | << -> _TMR5H `i -> 8 `i -> _TMR5L `i `ui ]
-[; ;tmr5.c: 88: PIR4bits.TMR5IF = 0;
-"88
+[; ;tmr5.c: 87: PIR4bits.TMR5IF = 0;
+"87
 [e = . . _PIR4bits 0 4 -> -> 0 `i `uc ]
-[; ;tmr5.c: 91: PIE4bits.TMR5IE = 1;
-"91
+[; ;tmr5.c: 90: PIE4bits.TMR5IE = 1;
+"90
 [e = . . _PIE4bits 0 4 -> -> 1 `i `uc ]
-[; ;tmr5.c: 94: TMR5_SetInterruptHandler(TMR5_DefaultInterruptHandler);
-"94
+[; ;tmr5.c: 93: TMR5_SetInterruptHandler(TMR5_DefaultInterruptHandler);
+"93
 [e ( _TMR5_SetInterruptHandler (1 &U _TMR5_DefaultInterruptHandler ]
-[; ;tmr5.c: 97: T5CON = 0x11;
+[; ;tmr5.c: 96: T5CON = 0x15;
+"96
+[e = _T5CON -> -> 21 `i `uc ]
+[; ;tmr5.c: 97: }
 "97
-[e = _T5CON -> -> 17 `i `uc ]
-[; ;tmr5.c: 98: }
-"98
 [e :UE 1620 ]
 }
-"100
+"99
 [v _TMR5_StartTimer `(v ~T0 @X0 1 ef ]
-"101
+"100
 {
-[; ;tmr5.c: 100: void TMR5_StartTimer(void)
-[; ;tmr5.c: 101: {
+[; ;tmr5.c: 99: void TMR5_StartTimer(void)
+[; ;tmr5.c: 100: {
 [e :U _TMR5_StartTimer ]
 [f ]
-[; ;tmr5.c: 103: T5CONbits.TMR5ON = 1;
-"103
+[; ;tmr5.c: 102: T5CONbits.TMR5ON = 1;
+"102
 [e = . . _T5CONbits 1 0 -> -> 1 `i `uc ]
-[; ;tmr5.c: 104: }
-"104
+[; ;tmr5.c: 103: }
+"103
 [e :UE 1621 ]
 }
-"106
+"105
 [v _TMR5_StopTimer `(v ~T0 @X0 1 ef ]
-"107
+"106
 {
-[; ;tmr5.c: 106: void TMR5_StopTimer(void)
-[; ;tmr5.c: 107: {
+[; ;tmr5.c: 105: void TMR5_StopTimer(void)
+[; ;tmr5.c: 106: {
 [e :U _TMR5_StopTimer ]
 [f ]
-[; ;tmr5.c: 109: T5CONbits.TMR5ON = 0;
-"109
+[; ;tmr5.c: 108: T5CONbits.TMR5ON = 0;
+"108
 [e = . . _T5CONbits 1 0 -> -> 0 `i `uc ]
-[; ;tmr5.c: 110: }
-"110
+[; ;tmr5.c: 109: }
+"109
 [e :UE 1622 ]
 }
-"112
+"111
 [v _TMR5_ReadTimer `(ui ~T0 @X0 1 ef ]
-"113
+"112
 {
-[; ;tmr5.c: 112: uint16_t TMR5_ReadTimer(void)
-[; ;tmr5.c: 113: {
+[; ;tmr5.c: 111: uint16_t TMR5_ReadTimer(void)
+[; ;tmr5.c: 112: {
 [e :U _TMR5_ReadTimer ]
 [f ]
-"114
+"113
 [v _readVal `ui ~T0 @X0 1 a ]
-"115
+"114
 [v _readValHigh `uc ~T0 @X0 1 a ]
-"116
+"115
 [v _readValLow `uc ~T0 @X0 1 a ]
-[; ;tmr5.c: 114: uint16_t readVal;
-[; ;tmr5.c: 115: uint8_t readValHigh;
-[; ;tmr5.c: 116: uint8_t readValLow;
-[; ;tmr5.c: 118: T5CONbits.T5RD16 = 1;
-"118
+[; ;tmr5.c: 113: uint16_t readVal;
+[; ;tmr5.c: 114: uint8_t readValHigh;
+[; ;tmr5.c: 115: uint8_t readValLow;
+[; ;tmr5.c: 117: T5CONbits.T5RD16 = 1;
+"117
 [e = . . _T5CONbits 1 1 -> -> 1 `i `uc ]
-[; ;tmr5.c: 120: readValLow = TMR5L;
-"120
+[; ;tmr5.c: 119: readValLow = TMR5L;
+"119
 [e = _readValLow _TMR5L ]
-[; ;tmr5.c: 121: readValHigh = TMR5H;
-"121
+[; ;tmr5.c: 120: readValHigh = TMR5H;
+"120
 [e = _readValHigh _TMR5H ]
-[; ;tmr5.c: 123: readVal = ((uint16_t)readValHigh << 8) | readValLow;
-"123
+[; ;tmr5.c: 122: readVal = ((uint16_t)readValHigh << 8) | readValLow;
+"122
 [e = _readVal | << -> _readValHigh `ui -> 8 `i -> _readValLow `ui ]
-[; ;tmr5.c: 125: return readVal;
-"125
+[; ;tmr5.c: 124: return readVal;
+"124
 [e ) _readVal ]
 [e $UE 1623  ]
-[; ;tmr5.c: 126: }
-"126
+[; ;tmr5.c: 125: }
+"125
 [e :UE 1623 ]
 }
-"128
+"127
 [v _TMR5_WriteTimer `(v ~T0 @X0 1 ef1`ui ]
-"129
-{
-[; ;tmr5.c: 128: void TMR5_WriteTimer(uint16_t timerVal)
-[; ;tmr5.c: 129: {
-[e :U _TMR5_WriteTimer ]
 "128
+{
+[; ;tmr5.c: 127: void TMR5_WriteTimer(uint16_t timerVal)
+[; ;tmr5.c: 128: {
+[e :U _TMR5_WriteTimer ]
+"127
 [v _timerVal `ui ~T0 @X0 1 r1 ]
-"129
+"128
 [f ]
-[; ;tmr5.c: 130: if (T5CONbits.nT5SYNC == 1)
-"130
+[; ;tmr5.c: 129: if (T5CONbits.nT5SYNC == 1)
+"129
 [e $ ! == -> . . _T5CONbits 1 2 `i -> 1 `i 1625  ]
-[; ;tmr5.c: 131: {
-"131
+[; ;tmr5.c: 130: {
+"130
 {
-[; ;tmr5.c: 133: T5CONbits.TMR5ON = 0;
-"133
+[; ;tmr5.c: 132: T5CONbits.TMR5ON = 0;
+"132
 [e = . . _T5CONbits 1 0 -> -> 0 `i `uc ]
-[; ;tmr5.c: 136: TMR5H = (timerVal >> 8);
+[; ;tmr5.c: 135: TMR5H = (timerVal >> 8);
+"135
+[e = _TMR5H -> >> _timerVal -> 8 `i `uc ]
+[; ;tmr5.c: 136: TMR5L = timerVal;
 "136
-[e = _TMR5H -> >> _timerVal -> 8 `i `uc ]
-[; ;tmr5.c: 137: TMR5L = timerVal;
-"137
 [e = _TMR5L -> _timerVal `uc ]
-[; ;tmr5.c: 140: T5CONbits.TMR5ON =1;
-"140
+[; ;tmr5.c: 139: T5CONbits.TMR5ON =1;
+"139
 [e = . . _T5CONbits 1 0 -> -> 1 `i `uc ]
-"141
+"140
 }
-[; ;tmr5.c: 141: }
+[; ;tmr5.c: 140: }
 [e $U 1626  ]
-"142
+"141
 [e :U 1625 ]
-[; ;tmr5.c: 142: else
-[; ;tmr5.c: 143: {
-"143
+[; ;tmr5.c: 141: else
+[; ;tmr5.c: 142: {
+"142
 {
-[; ;tmr5.c: 145: TMR5H = (timerVal >> 8);
-"145
+[; ;tmr5.c: 144: TMR5H = (timerVal >> 8);
+"144
 [e = _TMR5H -> >> _timerVal -> 8 `i `uc ]
-[; ;tmr5.c: 146: TMR5L = timerVal;
-"146
+[; ;tmr5.c: 145: TMR5L = timerVal;
+"145
 [e = _TMR5L -> _timerVal `uc ]
-"147
+"146
 }
 [e :U 1626 ]
+[; ;tmr5.c: 146: }
 [; ;tmr5.c: 147: }
-[; ;tmr5.c: 148: }
-"148
+"147
 [e :UE 1624 ]
 }
-"150
+"149
 [v _TMR5_Reload `(v ~T0 @X0 1 ef ]
-"151
+"150
 {
-[; ;tmr5.c: 150: void TMR5_Reload(void)
-[; ;tmr5.c: 151: {
+[; ;tmr5.c: 149: void TMR5_Reload(void)
+[; ;tmr5.c: 150: {
 [e :U _TMR5_Reload ]
 [f ]
-[; ;tmr5.c: 152: TMR5_WriteTimer(timer5ReloadVal);
-"152
+[; ;tmr5.c: 151: TMR5_WriteTimer(timer5ReloadVal);
+"151
 [e ( _TMR5_WriteTimer (1 _timer5ReloadVal ]
-[; ;tmr5.c: 153: }
-"153
+[; ;tmr5.c: 152: }
+"152
 [e :UE 1627 ]
 }
-"155
+"154
 [v _TMR5_StartSinglePulseAcquisition `(v ~T0 @X0 1 ef ]
-"156
+"155
 {
-[; ;tmr5.c: 155: void TMR5_StartSinglePulseAcquisition(void)
-[; ;tmr5.c: 156: {
+[; ;tmr5.c: 154: void TMR5_StartSinglePulseAcquisition(void)
+[; ;tmr5.c: 155: {
 [e :U _TMR5_StartSinglePulseAcquisition ]
 [f ]
-[; ;tmr5.c: 157: T5GCONbits.T5GGO = 1;
-"157
+[; ;tmr5.c: 156: T5GCONbits.T5GGO = 1;
+"156
 [e = . . _T5GCONbits 2 1 -> -> 1 `i `uc ]
-[; ;tmr5.c: 158: }
-"158
+[; ;tmr5.c: 157: }
+"157
 [e :UE 1628 ]
 }
-"160
+"159
 [v _TMR5_CheckGateValueStatus `(uc ~T0 @X0 1 ef ]
-"161
+"160
 {
-[; ;tmr5.c: 160: uint8_t TMR5_CheckGateValueStatus(void)
-[; ;tmr5.c: 161: {
+[; ;tmr5.c: 159: uint8_t TMR5_CheckGateValueStatus(void)
+[; ;tmr5.c: 160: {
 [e :U _TMR5_CheckGateValueStatus ]
 [f ]
-[; ;tmr5.c: 162: return (T5GCONbits.T5GVAL);
-"162
+[; ;tmr5.c: 161: return (T5GCONbits.T5GVAL);
+"161
 [e ) . . _T5GCONbits 1 1 ]
 [e $UE 1629  ]
-[; ;tmr5.c: 163: }
-"163
+[; ;tmr5.c: 162: }
+"162
 [e :UE 1629 ]
 }
-"165
+"164
 [v _TMR5_ISR `(v ~T0 @X0 1 ef ]
-"166
+"165
 {
-[; ;tmr5.c: 165: void TMR5_ISR(void)
-[; ;tmr5.c: 166: {
+[; ;tmr5.c: 164: void TMR5_ISR(void)
+[; ;tmr5.c: 165: {
 [e :U _TMR5_ISR ]
 [f ]
-[; ;tmr5.c: 169: PIR4bits.TMR5IF = 0;
-"169
+[; ;tmr5.c: 168: PIR4bits.TMR5IF = 0;
+"168
 [e = . . _PIR4bits 0 4 -> -> 0 `i `uc ]
-[; ;tmr5.c: 170: TMR5_WriteTimer(timer5ReloadVal);
-"170
+[; ;tmr5.c: 169: TMR5_WriteTimer(timer5ReloadVal);
+"169
 [e ( _TMR5_WriteTimer (1 _timer5ReloadVal ]
-[; ;tmr5.c: 172: if(TMR5_InterruptHandler)
-"172
+[; ;tmr5.c: 171: if(TMR5_InterruptHandler)
+"171
 [e $ ! != _TMR5_InterruptHandler -> -> 0 `i `*F12108 1631  ]
-[; ;tmr5.c: 173: {
-"173
+[; ;tmr5.c: 172: {
+"172
 {
-[; ;tmr5.c: 174: TMR5_InterruptHandler();
-"174
+[; ;tmr5.c: 173: TMR5_InterruptHandler();
+"173
 [e ( *U _TMR5_InterruptHandler ..  ]
-"175
+"174
 }
 [e :U 1631 ]
+[; ;tmr5.c: 174: }
 [; ;tmr5.c: 175: }
-[; ;tmr5.c: 176: }
-"176
+"175
 [e :UE 1630 ]
 }
-"179
+"178
 [v _TMR5_SetInterruptHandler `(v ~T0 @X0 1 ef1`*F12105 ]
 {
-[; ;tmr5.c: 179: void TMR5_SetInterruptHandler(void (* InterruptHandler)(void)){
+[; ;tmr5.c: 178: void TMR5_SetInterruptHandler(void (* InterruptHandler)(void)){
 [e :U _TMR5_SetInterruptHandler ]
 [v F12131 `(v ~T0 @X0 0 tf ]
 [v _InterruptHandler `*F12131 ~T0 @X0 1 r1 ]
 [f ]
-[; ;tmr5.c: 180: TMR5_InterruptHandler = InterruptHandler;
-"180
+[; ;tmr5.c: 179: TMR5_InterruptHandler = InterruptHandler;
+"179
 [e = _TMR5_InterruptHandler _InterruptHandler ]
-[; ;tmr5.c: 181: }
-"181
+[; ;tmr5.c: 180: }
+"180
 [e :UE 1632 ]
 }
-"183
+"182
 [v _TMR5_DefaultInterruptHandler `(v ~T0 @X0 1 ef ]
 {
-[; ;tmr5.c: 183: void TMR5_DefaultInterruptHandler(void){
+[; ;tmr5.c: 182: void TMR5_DefaultInterruptHandler(void){
 [e :U _TMR5_DefaultInterruptHandler ]
 [f ]
-[; ;tmr5.c: 186: }
-"186
+[; ;tmr5.c: 185: }
+"185
 [e :UE 1633 ]
 }

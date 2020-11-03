@@ -21179,7 +21179,6 @@ T5GATE = 0x00;
 T5CLK = 0x04;
 
 
-
 TMR5H = 0x4A;
 
 
@@ -21198,7 +21197,7 @@ PIE4bits.TMR5IE = 1;
 TMR5_SetInterruptHandler(TMR5_DefaultInterruptHandler);
 
 
-T5CON = 0x11;
+T5CON = 0x15;
 }
 
 void TMR5_StartTimer(void)

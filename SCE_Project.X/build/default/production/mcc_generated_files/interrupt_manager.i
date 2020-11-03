@@ -21121,10 +21121,10 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 
-# 244 "mcc_generated_files/pin_manager.h"
+# 236 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 
-# 256
+# 248
 void PIN_MANAGER_IOC(void);
 
 # 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
@@ -21638,6 +21638,24 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 827
 uint8_t ADCC_GetConversionStageStatus(void);
 
+# 250 "mcc_generated_files/ext_int.h"
+void EXT_INT_Initialize(void);
+
+# 272
+void INT_ISR(void);
+
+# 296
+void INT_CallBack(void);
+
+# 319
+void INT_SetInterruptHandler(void (* InterruptHandler)(void));
+
+# 343
+extern void (*INT_InterruptHandler)(void);
+
+# 367
+void INT_DefaultInterruptHandler(void);
+
 # 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
 typedef unsigned char bool;
 
@@ -21659,20 +21677,24 @@ void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
 # 248
 uint8_t DATAEE_ReadByte(uint16_t bAdd);
 
-# 77 "mcc_generated_files/mcc.h"
+# 78 "mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
 
-# 90
+# 91
 void OSCILLATOR_Initialize(void);
 
-# 103
+# 104
 void PMD_Initialize(void);
 
 # 52 "mcc_generated_files/interrupt_manager.c"
 void __interrupt() INTERRUPT_InterruptManager (void)
 {
 
-if(INTCONbits.PEIE == 1)
+if(PIE0bits.INTE == 1 && PIR0bits.INTF == 1)
+{
+INT_ISR();
+}
+else if(INTCONbits.PEIE == 1)
 {
 if(PIE4bits.TMR5IE == 1 && PIR4bits.TMR5IF == 1)
 {

@@ -13823,9 +13823,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;tmr3.c: 93: TMR3_SetInterruptHandler(TMR3_DefaultInterruptHandler);
 "93
 [e ( _TMR3_SetInterruptHandler (1 &U _TMR3_DefaultInterruptHandler ]
-[; ;tmr3.c: 96: T3CON = 0x01;
+[; ;tmr3.c: 96: T3CON = 0x05;
 "96
-[e = _T3CON -> -> 1 `i `uc ]
+[e = _T3CON -> -> 5 `i `uc ]
 [; ;tmr3.c: 97: }
 "97
 [e :UE 1620 ]

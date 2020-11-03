@@ -59,6 +59,7 @@
 #include "pwm6.h"
 #include "tmr2.h"
 #include "adcc.h"
+#include "ext_int.h"
 #include "memory.h"
 
 

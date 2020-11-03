@@ -92,8 +92,8 @@ void TMR3_Initialize(void)
     // Set Default Interrupt Handler
     TMR3_SetInterruptHandler(TMR3_DefaultInterruptHandler);
 
-    // CKPS 1:1; nT3SYNC synchronize; TMR3ON enabled; T3RD16 disabled; 
-    T3CON = 0x01;
+    // CKPS 1:1; nT3SYNC do_not_synchronize; TMR3ON enabled; T3RD16 disabled; 
+    T3CON = 0x05;
 }
 
 void TMR3_StartTimer(void)
