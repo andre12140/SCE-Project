@@ -22074,7 +22074,7 @@ do { LATAbits.LATA7 = ~LATAbits.LATA7; } while(0);
 }
 
 
-
+bool PWM_on=0;
 void menuLCD_ISR(){
 char str[8];
 if(editingClockAlarm){
@@ -22127,17 +22127,19 @@ differenceBetweenTimePeriod( t, alarmPWMStart, &diff);
 
 
 if(diff.s <= TALA){
+PWM_on = 1;
 if(PWM6EN==0){
 TMR2_StartTimer();
 PWM_Output_D4_Enable();
 }
-if(dimingLed <= 1023){
-dimingLed += 200;
+if(dimingLed <= 330){
+dimingLed += 30;
 } else{
 dimingLed = 0;
 }
 PWM6_LoadDutyValue(dimingLed);
 } else if(PWM6EN==1){
+PWM_on = 0;
 PWM6_LoadDutyValue(0);
 TMR2_StopTimer();
 PWM_Output_D4_Disable();
@@ -22246,7 +22248,7 @@ void editClock(){
 
 while(1){
 
-# 513
+# 515
 if(PORTCbits.RC5 == 0){
 if(editingClockAlarm == 1){
 if(clkAlarm.alarmVal.h >= 23){
@@ -22281,7 +22283,7 @@ editingTempAlarm = 1;
 
 while(1){
 
-# 554
+# 556
 if(PORTCbits.RC5 == 0){
 tempAlarm.alarmTemp++;
 if(tempAlarm.alarmTemp > 50){
@@ -22301,7 +22303,7 @@ editingLumAlarm = 1;
 
 while(1){
 
-# 580
+# 582
 if(PORTCbits.RC5 == 0){
 lumAlarm.alarmLum++;
 if(lumAlarm.alarmLum > 7){
@@ -22320,7 +22322,7 @@ void toggleAlarms(){
 
 while(1){
 
-# 604
+# 606
 if(PORTCbits.RC5 == 0){
 if(ALAF == 'A'){
 ALAF = 'a';
@@ -22338,19 +22340,22 @@ break;
 
 void S1_ISR(){
 
+
+
 if(mode == 0 && (clkAlarm.trigger || tempAlarm.trigger || lumAlarm.trigger)){
 clkAlarm.trigger = 0;
 tempAlarm.trigger = 0;
 lumAlarm.trigger = 0;
 } else{
+if(mode != 1){
+mode++;
+}
 if(mode == 1){
 editingClockAlarm++;
 if(editingClockAlarm > 3){
 editingClockAlarm = 0;
 mode++;
 }
-} else{
-mode++;
 }
 }
 }
@@ -22444,7 +22449,7 @@ asm("sleep");
 while (1)
 {
 switch(mode){
-case 0: asm("sleep");
+case 0: if(PWM_on){ continue;} else {asm("sleep");}
 case 1:
 editClock();
 case 2:

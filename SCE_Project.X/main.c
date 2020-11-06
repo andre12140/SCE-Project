@@ -328,7 +328,7 @@ void Clock_ISR(void) {
 }
 
 
-
+bool PWM_on=false;
 void menuLCD_ISR(){
     char str[8];
     if(editingClockAlarm){
@@ -381,17 +381,19 @@ void menuLCD_ISR(){
             
             //PWM AINDA ESTA MAL
             if(diff.s <= TALA){
+                PWM_on = true;
                 if(PWM6EN==0){ //Verifica se o Timer2 e PWM esta desligado
                     TMR2_StartTimer();
                     PWM_Output_D4_Enable();
                 }
-                if(dimingLed <= 1023){
-                    dimingLed += 200;
+                if(dimingLed <= 330){ //max 1023 mas como nao se nota muita diferenca para valores altos meteu se mais baix
+                    dimingLed += 30;
                 } else{
                     dimingLed = 0;
                 }
                 PWM6_LoadDutyValue(dimingLed);
             } else if(PWM6EN==1){ //Verifica se o Timer2 e PWM esta ligado
+                PWM_on = false;
                 PWM6_LoadDutyValue(0);
                 TMR2_StopTimer();
                 PWM_Output_D4_Disable();
@@ -617,7 +619,6 @@ void toggleAlarms(){
 }
 
 void S1_ISR(){
-    __delay_ms(50);
     
     // First clears LCD and only switches mode when S1 is pressed again and theirs no alarms
     if(mode == 0 && (clkAlarm.trigger || tempAlarm.trigger || lumAlarm.trigger)){
@@ -625,14 +626,15 @@ void S1_ISR(){
         tempAlarm.trigger = false;
         lumAlarm.trigger = false;
     } else{
+        if(mode != 1){
+            mode++;
+        }
         if(mode == 1){
             editingClockAlarm++;
             if(editingClockAlarm > 3){
                 editingClockAlarm = 0;
                 mode++;
             }
-        } else{
-            mode++;
         }
     }
 }
@@ -726,7 +728,7 @@ void main(void)
     while (1)
     {
         switch(mode){
-                case 0: SLEEP();
+                case 0: if(PWM_on){ continue;} else {SLEEP();}
                 case 1: 
                     editClock(); //Clock Edit Handler
                 case 2:
