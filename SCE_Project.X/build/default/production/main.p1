@@ -15375,9 +15375,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _LCDchar (1 -> -> 67 `ui `uc ]
 "351
 }
-[; ;main.c: 351: } else{
+[; ;main.c: 351: } else if(mode == 0){
 [e $U 1869  ]
 [e :U 1868 ]
+[e $ ! == _mode -> 0 `i 1870  ]
 {
 [; ;main.c: 352: LCDcmd(0x8B);
 "352
@@ -15387,11 +15388,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _LCDchar (1 -> -> 32 `ui `uc ]
 "354
 }
+[e :U 1870 ]
+"357
 [e :U 1869 ]
 [; ;main.c: 354: }
 [; ;main.c: 357: if(tempAlarm.trigger == 1){
-"357
-[e $ ! == -> . _tempAlarm 1 `i -> 1 `i 1870  ]
+[e $ ! == -> . _tempAlarm 1 `i -> 1 `i 1871  ]
 {
 [; ;main.c: 358: LCDcmd(0x8C);
 "358
@@ -15401,9 +15403,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _LCDchar (1 -> -> 84 `ui `uc ]
 "360
 }
-[; ;main.c: 360: } else{
-[e $U 1871  ]
-[e :U 1870 ]
+[; ;main.c: 360: } else if(mode == 0){
+[e $U 1872  ]
+[e :U 1871 ]
+[e $ ! == _mode -> 0 `i 1873  ]
 {
 [; ;main.c: 361: LCDcmd(0x8C);
 "361
@@ -15413,11 +15416,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _LCDchar (1 -> -> 32 `ui `uc ]
 "363
 }
-[e :U 1871 ]
+[e :U 1873 ]
+"366
+[e :U 1872 ]
 [; ;main.c: 363: }
 [; ;main.c: 366: if(lumAlarm.trigger == 1){
-"366
-[e $ ! == -> . _lumAlarm 1 `i -> 1 `i 1872  ]
+[e $ ! == -> . _lumAlarm 1 `i -> 1 `i 1874  ]
 {
 [; ;main.c: 367: LCDcmd(0x8D);
 "367
@@ -15427,9 +15431,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _LCDchar (1 -> -> 76 `ui `uc ]
 "369
 }
-[; ;main.c: 369: } else{
-[e $U 1873  ]
-[e :U 1872 ]
+[; ;main.c: 369: } else if(mode == 0){
+[e $U 1875  ]
+[e :U 1874 ]
+[e $ ! == _mode -> 0 `i 1876  ]
 {
 [; ;main.c: 370: LCDcmd(0x8D);
 "370
@@ -15439,15 +15444,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _LCDchar (1 -> -> 32 `ui `uc ]
 "372
 }
-[e :U 1873 ]
+[e :U 1876 ]
+"373
+[e :U 1875 ]
 [; ;main.c: 372: }
 [; ;main.c: 373: if(clkAlarm.trigger || tempAlarm.trigger || lumAlarm.trigger){
-"373
-[e $ ! || || != -> . _clkAlarm 1 `i -> -> -> 0 `i `uc `i != -> . _tempAlarm 1 `i -> -> -> 0 `i `uc `i != -> . _lumAlarm 1 `i -> -> -> 0 `i `uc `i 1874  ]
+[e $ ! || || != -> . _clkAlarm 1 `i -> -> -> 0 `i `uc `i != -> . _tempAlarm 1 `i -> -> -> 0 `i `uc `i != -> . _lumAlarm 1 `i -> -> -> 0 `i `uc `i 1877  ]
 {
 [; ;main.c: 374: if(alarmPWMStart.h == 0xff){
 "374
-[e $ ! == -> . _alarmPWMStart 0 `i -> 255 `i 1875  ]
+[e $ ! == -> . _alarmPWMStart 0 `i -> 255 `i 1878  ]
 {
 [; ;main.c: 375: alarmPWMStart.h = t.h;
 "375
@@ -15460,7 +15466,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . _alarmPWMStart 2 . _t 2 ]
 "378
 }
-[e :U 1875 ]
+[e :U 1878 ]
 "379
 [v _diff `S1842 ~T0 @X0 1 a ]
 [v F12829 `S1842 ~T0 @X0 1 s ]
@@ -15481,14 +15487,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _differenceBetweenTimePeriod (3 , , _t _alarmPWMStart &U _diff ]
 [; ;main.c: 382: if(diff.s <= TALA){
 "382
-[e $ ! <= -> . _diff 2 `i -> _TALA `i 1876  ]
+[e $ ! <= -> . _diff 2 `i -> _TALA `i 1879  ]
 {
 [; ;main.c: 383: PWM_on = 1;
 "383
 [e = _PWM_on -> -> 1 `i `uc ]
 [; ;main.c: 384: if(PWM6EN==0){
 "384
-[e $ ! == -> _PWM6EN `i -> 0 `i 1877  ]
+[e $ ! == -> _PWM6EN `i -> 0 `i 1880  ]
 {
 [; ;main.c: 385: TMR2_StartTimer();
 "385
@@ -15498,11 +15504,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _PWM_Output_D4_Enable ..  ]
 "387
 }
-[e :U 1877 ]
+[e :U 1880 ]
 [; ;main.c: 387: }
 [; ;main.c: 388: if(dimingLed <= 330){
 "388
-[e $ ! <= _dimingLed -> 330 `i 1878  ]
+[e $ ! <= _dimingLed -> 330 `i 1881  ]
 {
 [; ;main.c: 389: dimingLed += 30;
 "389
@@ -15510,15 +15516,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 "390
 }
 [; ;main.c: 390: } else{
-[e $U 1879  ]
-[e :U 1878 ]
+[e $U 1882  ]
+[e :U 1881 ]
 {
 [; ;main.c: 391: dimingLed = 0;
 "391
 [e = _dimingLed -> 0 `i ]
 "392
 }
-[e :U 1879 ]
+[e :U 1882 ]
 [; ;main.c: 392: }
 [; ;main.c: 393: PWM6_LoadDutyValue(dimingLed);
 "393
@@ -15526,9 +15532,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 "394
 }
 [; ;main.c: 394: } else if(PWM6EN==1){
-[e $U 1880  ]
-[e :U 1876 ]
-[e $ ! == -> _PWM6EN `i -> 1 `i 1881  ]
+[e $U 1883  ]
+[e :U 1879 ]
+[e $ ! == -> _PWM6EN `i -> 1 `i 1884  ]
 {
 [; ;main.c: 395: PWM_on = 0;
 "395
@@ -15544,18 +15550,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _PWM_Output_D4_Disable ..  ]
 "399
 }
-[e :U 1881 ]
+[e :U 1884 ]
 "400
-[e :U 1880 ]
+[e :U 1883 ]
 }
 [; ;main.c: 399: }
 [; ;main.c: 400: } else{
-[e $U 1882  ]
-[e :U 1874 ]
+[e $U 1885  ]
+[e :U 1877 ]
 {
 [; ;main.c: 401: if(PWM6EN==1){
 "401
-[e $ ! == -> _PWM6EN `i -> 1 `i 1883  ]
+[e $ ! == -> _PWM6EN `i -> 1 `i 1886  ]
 {
 [; ;main.c: 402: PWM_on = 0;
 "402
@@ -15571,16 +15577,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _PWM_Output_D4_Disable ..  ]
 "406
 }
-[e :U 1883 ]
+[e :U 1886 ]
 "407
 }
-[e :U 1882 ]
+[e :U 1885 ]
 "408
 }
 [; ;main.c: 406: }
 [; ;main.c: 407: }
 [; ;main.c: 408: } else{
-[e $U 1884  ]
+[e $U 1887  ]
 [e :U 1867 ]
 {
 [; ;main.c: 409: LCDcmd(0x8F);
@@ -15591,7 +15597,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _LCDchar (1 _ALAF ]
 "411
 }
-[e :U 1884 ]
+[e :U 1887 ]
 [; ;main.c: 411: }
 [; ;main.c: 413: LCDcmd(0xc0);
 "413
@@ -15601,7 +15607,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 414: char tt[4];
 [; ;main.c: 415: if(editingTempAlarm){
 "415
-[e $ ! != -> _editingTempAlarm `i -> -> -> 0 `i `uc `i 1885  ]
+[e $ ! != -> _editingTempAlarm `i -> -> -> 0 `i `uc `i 1888  ]
 {
 [; ;main.c: 416: sprintf(tt, "%02d C", tempAlarm.alarmTemp);
 "416
@@ -15609,15 +15615,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 "417
 }
 [; ;main.c: 417: } else{
-[e $U 1886  ]
-[e :U 1885 ]
+[e $U 1889  ]
+[e :U 1888 ]
 {
 [; ;main.c: 418: sprintf(tt, "%02d C", temp);
 "418
 [e ( _sprintf (1 , (. , &U _tt :s 4C -> _temp `i ]
 "419
 }
-[e :U 1886 ]
+[e :U 1889 ]
 [; ;main.c: 419: }
 [; ;main.c: 420: LCDstr(tt);
 "420
@@ -15630,7 +15636,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 423: char l[3];
 [; ;main.c: 425: if(editingLumAlarm){
 "425
-[e $ ! != -> _editingLumAlarm `i -> -> -> 0 `i `uc `i 1887  ]
+[e $ ! != -> _editingLumAlarm `i -> -> -> 0 `i `uc `i 1890  ]
 {
 [; ;main.c: 426: sprintf(l, "L %d", lumAlarm.alarmLum);
 "426
@@ -15638,22 +15644,22 @@ Version 3.2 HI-TECH Software Intermediate Code
 "427
 }
 [; ;main.c: 427: } else{
-[e $U 1888  ]
-[e :U 1887 ]
+[e $U 1891  ]
+[e :U 1890 ]
 {
 [; ;main.c: 428: sprintf(l, "L %d", lumLevel);
 "428
 [e ( _sprintf (1 , (. , &U _l :s 6C -> _lumLevel `i ]
 "429
 }
-[e :U 1888 ]
+[e :U 1891 ]
 [; ;main.c: 429: }
 [; ;main.c: 430: LCDstr(l);
 "430
 [e ( _LCDstr (1 &U _l ]
 [; ;main.c: 432: if(mode != 0){
 "432
-[e $ ! != _mode -> 0 `i 1889  ]
+[e $ ! != _mode -> 0 `i 1892  ]
 {
 [; ;main.c: 433: LCDcmd(0x8B);
 "433
@@ -15663,15 +15669,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _LCDstr (1 -> :s 7C `*uc ]
 "435
 }
-[e :U 1889 ]
+[e :U 1892 ]
 [; ;main.c: 435: }
 [; ;main.c: 437: if(mode == 1){
 "437
-[e $ ! == _mode -> 1 `i 1890  ]
+[e $ ! == _mode -> 1 `i 1893  ]
 {
 [; ;main.c: 438: if(editingClockAlarm == 0){
 "438
-[e $ ! == _editingClockAlarm -> 0 `i 1891  ]
+[e $ ! == _editingClockAlarm -> 0 `i 1894  ]
 {
 [; ;main.c: 439: LCDcmd(0x8B);
 "439
@@ -15679,12 +15685,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 "440
 }
 [; ;main.c: 440: } else{
-[e $U 1892  ]
-[e :U 1891 ]
+[e $U 1895  ]
+[e :U 1894 ]
 {
 [; ;main.c: 441: if(editingClockAlarm == 1){
 "441
-[e $ ! == _editingClockAlarm -> 1 `i 1893  ]
+[e $ ! == _editingClockAlarm -> 1 `i 1896  ]
 {
 [; ;main.c: 442: LCDcmd(0x81);
 "442
@@ -15692,9 +15698,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 "443
 }
 [; ;main.c: 443: } else if(editingClockAlarm == 2){
-[e $U 1894  ]
-[e :U 1893 ]
-[e $ ! == _editingClockAlarm -> 2 `i 1895  ]
+[e $U 1897  ]
+[e :U 1896 ]
+[e $ ! == _editingClockAlarm -> 2 `i 1898  ]
 {
 [; ;main.c: 444: LCDcmd(0x84);
 "444
@@ -15702,33 +15708,33 @@ Version 3.2 HI-TECH Software Intermediate Code
 "445
 }
 [; ;main.c: 445: } else if(editingClockAlarm == 3){
-[e $U 1896  ]
-[e :U 1895 ]
-[e $ ! == _editingClockAlarm -> 3 `i 1897  ]
+[e $U 1899  ]
+[e :U 1898 ]
+[e $ ! == _editingClockAlarm -> 3 `i 1900  ]
 {
 [; ;main.c: 446: LCDcmd(0x87);
 "446
 [e ( _LCDcmd (1 -> -> 135 `i `uc ]
 "447
 }
-[e :U 1897 ]
+[e :U 1900 ]
 "448
-[e :U 1896 ]
-[e :U 1894 ]
+[e :U 1899 ]
+[e :U 1897 ]
 }
-[e :U 1892 ]
+[e :U 1895 ]
 "449
 }
 [; ;main.c: 447: }
 [; ;main.c: 448: }
 [; ;main.c: 449: } else if(mode == 2){
-[e $U 1898  ]
-[e :U 1890 ]
-[e $ ! == _mode -> 2 `i 1899  ]
+[e $U 1901  ]
+[e :U 1893 ]
+[e $ ! == _mode -> 2 `i 1902  ]
 {
 [; ;main.c: 451: if(editingTempAlarm == 0){
 "451
-[e $ ! == -> _editingTempAlarm `i -> 0 `i 1900  ]
+[e $ ! == -> _editingTempAlarm `i -> 0 `i 1903  ]
 {
 [; ;main.c: 452: LCDcmd(0x8c);
 "452
@@ -15736,26 +15742,26 @@ Version 3.2 HI-TECH Software Intermediate Code
 "453
 }
 [; ;main.c: 453: }else {
-[e $U 1901  ]
-[e :U 1900 ]
+[e $U 1904  ]
+[e :U 1903 ]
 {
-[; ;main.c: 454: LCDcmd(0xc0);
+[; ;main.c: 454: LCDcmd(0xc1);
 "454
-[e ( _LCDcmd (1 -> -> 192 `i `uc ]
+[e ( _LCDcmd (1 -> -> 193 `i `uc ]
 "455
 }
-[e :U 1901 ]
+[e :U 1904 ]
 "457
 }
 [; ;main.c: 455: }
 [; ;main.c: 457: } else if(mode == 3){
-[e $U 1902  ]
-[e :U 1899 ]
-[e $ ! == _mode -> 3 `i 1903  ]
+[e $U 1905  ]
+[e :U 1902 ]
+[e $ ! == _mode -> 3 `i 1906  ]
 {
-[; ;main.c: 459: if(editingTempAlarm == 0){
+[; ;main.c: 459: if(editingLumAlarm == 0){
 "459
-[e $ ! == -> _editingTempAlarm `i -> 0 `i 1904  ]
+[e $ ! == -> _editingLumAlarm `i -> 0 `i 1907  ]
 {
 [; ;main.c: 460: LCDcmd(0x8d);
 "460
@@ -15763,33 +15769,33 @@ Version 3.2 HI-TECH Software Intermediate Code
 "461
 }
 [; ;main.c: 461: }else {
-[e $U 1905  ]
-[e :U 1904 ]
+[e $U 1908  ]
+[e :U 1907 ]
 {
-[; ;main.c: 462: LCDcmd(0xcd);
+[; ;main.c: 462: LCDcmd(0xcf);
 "462
-[e ( _LCDcmd (1 -> -> 205 `i `uc ]
+[e ( _LCDcmd (1 -> -> 207 `i `uc ]
 "463
 }
-[e :U 1905 ]
+[e :U 1908 ]
 "465
 }
 [; ;main.c: 463: }
 [; ;main.c: 465: } else if(mode == 4){
-[e $U 1906  ]
-[e :U 1903 ]
-[e $ ! == _mode -> 4 `i 1907  ]
+[e $U 1909  ]
+[e :U 1906 ]
+[e $ ! == _mode -> 4 `i 1910  ]
 {
 [; ;main.c: 466: LCDcmd(0x8f);
 "466
 [e ( _LCDcmd (1 -> -> 143 `i `uc ]
 "467
 }
-[e :U 1907 ]
+[e :U 1910 ]
 "468
-[e :U 1906 ]
-[e :U 1902 ]
-[e :U 1898 ]
+[e :U 1909 ]
+[e :U 1905 ]
+[e :U 1901 ]
 [; ;main.c: 467: }
 [; ;main.c: 468: }
 [e :UE 1864 ]
@@ -15820,7 +15826,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _lumLevel -> >> ( _ADCC_GetSingleConversion (1 . `E12420 0 -> 13 `i `uc ]
 [; ;main.c: 478: if(prevTemp != temp || prevLumLevel != lumLevel){
 "478
-[e $ ! || != _prevTemp -> _temp `i != _prevLumLevel -> _lumLevel `i 1909  ]
+[e $ ! || != _prevTemp -> _temp `i != _prevLumLevel -> _lumLevel `i 1912  ]
 {
 [; ;main.c: 480: DATAEE_WriteByte( (idx_RingBuffer * 0x5) + 0x7014 + (8*0) , t.h);
 "480
@@ -15842,14 +15848,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ++ _idx_RingBuffer -> -> 1 `i `uc ]
 [; ;main.c: 487: if(idx_RingBuffer > NREG){
 "487
-[e $ ! > -> _idx_RingBuffer `i -> _NREG `i 1910  ]
+[e $ ! > -> _idx_RingBuffer `i -> _NREG `i 1913  ]
 {
 [; ;main.c: 488: idx_RingBuffer = 0;
 "488
 [e = _idx_RingBuffer -> -> 0 `i `uc ]
 "489
 }
-[e :U 1910 ]
+[e :U 1913 ]
 [; ;main.c: 489: }
 [; ;main.c: 490: prevTemp = temp;
 "490
@@ -15859,26 +15865,26 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _prevLumLevel -> _lumLevel `i ]
 "492
 }
-[e :U 1909 ]
+[e :U 1912 ]
 [; ;main.c: 492: }
 [; ;main.c: 495: if(ALAF == 'A'){
 "495
-[e $ ! == -> _ALAF `ui -> 65 `ui 1911  ]
+[e $ ! == -> _ALAF `ui -> 65 `ui 1914  ]
 {
 [; ;main.c: 497: if((lumAlarm.alarmLum > lumLevel) && (editingLumAlarm == 0)){
 "497
-[e $ ! && > -> . _lumAlarm 0 `i -> _lumLevel `i == -> _editingLumAlarm `i -> 0 `i 1912  ]
+[e $ ! && > -> . _lumAlarm 0 `i -> _lumLevel `i == -> _editingLumAlarm `i -> 0 `i 1915  ]
 {
 [; ;main.c: 498: if(!lumAlarm.triggered){
 "498
-[e $ ! ! != -> . _lumAlarm 2 `i -> -> -> 0 `i `uc `i 1913  ]
+[e $ ! ! != -> . _lumAlarm 2 `i -> -> -> 0 `i `uc `i 1916  ]
 {
 [; ;main.c: 499: alarmPWMStart.h = 0xff;
 "499
 [e = . _alarmPWMStart 0 -> -> 255 `i `uc ]
 "500
 }
-[e :U 1913 ]
+[e :U 1916 ]
 [; ;main.c: 500: }
 [; ;main.c: 501: lumAlarm.triggered = 1;
 "501
@@ -15888,45 +15894,45 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . _lumAlarm 1 -> -> 1 `i `uc ]
 [; ;main.c: 504: do { LATAbits.LATA4 = 1; } while(0);
 "504
-[e :U 1916 ]
+[e :U 1919 ]
 {
 [e = . . _LATAbits 0 4 -> -> 1 `i `uc ]
 }
-[e :U 1915 ]
+[e :U 1918 ]
 "505
 }
 [; ;main.c: 505: } else{
-[e $U 1917  ]
-[e :U 1912 ]
+[e $U 1920  ]
+[e :U 1915 ]
 {
 [; ;main.c: 506: lumAlarm.triggered = 0;
 "506
 [e = . _lumAlarm 2 -> -> 0 `i `uc ]
 [; ;main.c: 507: do { LATAbits.LATA4 = 0; } while(0);
 "507
-[e :U 1920 ]
+[e :U 1923 ]
 {
 [e = . . _LATAbits 0 4 -> -> 0 `i `uc ]
 }
-[e :U 1919 ]
+[e :U 1922 ]
 "508
 }
-[e :U 1917 ]
+[e :U 1920 ]
 [; ;main.c: 508: }
 [; ;main.c: 511: if((tempAlarm.alarmTemp < temp) && (editingTempAlarm == 0)){
 "511
-[e $ ! && < -> . _tempAlarm 0 `i -> _temp `i == -> _editingTempAlarm `i -> 0 `i 1921  ]
+[e $ ! && < -> . _tempAlarm 0 `i -> _temp `i == -> _editingTempAlarm `i -> 0 `i 1924  ]
 {
 [; ;main.c: 512: if(!tempAlarm.triggered){
 "512
-[e $ ! ! != -> . _tempAlarm 2 `i -> -> -> 0 `i `uc `i 1922  ]
+[e $ ! ! != -> . _tempAlarm 2 `i -> -> -> 0 `i `uc `i 1925  ]
 {
 [; ;main.c: 513: alarmPWMStart.h = 0xff;
 "513
 [e = . _alarmPWMStart 0 -> -> 255 `i `uc ]
 "514
 }
-[e :U 1922 ]
+[e :U 1925 ]
 [; ;main.c: 514: }
 [; ;main.c: 516: tempAlarm.triggered = 1;
 "516
@@ -15936,38 +15942,38 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . _tempAlarm 1 -> -> 1 `i `uc ]
 [; ;main.c: 519: do { LATAbits.LATA5 = 1; } while(0);
 "519
-[e :U 1925 ]
+[e :U 1928 ]
 {
 [e = . . _LATAbits 0 5 -> -> 1 `i `uc ]
 }
-[e :U 1924 ]
+[e :U 1927 ]
 "520
 }
 [; ;main.c: 520: } else {
-[e $U 1926  ]
-[e :U 1921 ]
+[e $U 1929  ]
+[e :U 1924 ]
 {
 [; ;main.c: 522: tempAlarm.triggered = 0;
 "522
 [e = . _tempAlarm 2 -> -> 0 `i `uc ]
 [; ;main.c: 523: do { LATAbits.LATA5 = 0; } while(0);
 "523
-[e :U 1929 ]
+[e :U 1932 ]
 {
 [e = . . _LATAbits 0 5 -> -> 0 `i `uc ]
 }
-[e :U 1928 ]
+[e :U 1931 ]
 "524
 }
-[e :U 1926 ]
+[e :U 1929 ]
 "525
 }
-[e :U 1911 ]
+[e :U 1914 ]
 [; ;main.c: 524: }
 [; ;main.c: 525: }
 [; ;main.c: 526: }
 "526
-[e :UE 1908 ]
+[e :UE 1911 ]
 }
 "528
 [v _editClock `(v ~T0 @X0 1 ef ]
@@ -15977,688 +15983,732 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;main.c: 530: while(1){
 "530
-[e :U 1932 ]
-{
-[; ;main.c: 542: if(PORTCbits.RC5 == 0){
-"542
-[e $ ! == -> . . _PORTCbits 0 5 `i -> 0 `i 1934  ]
-{
-[; ;main.c: 543: if(editingClockAlarm == 1){
-"543
-[e $ ! == _editingClockAlarm -> 1 `i 1935  ]
-{
-[; ;main.c: 544: if(clkAlarm.alarmVal.h >= 23){
-"544
-[e $ ! >= -> . . _clkAlarm 0 0 `i -> 23 `i 1936  ]
-{
-[; ;main.c: 545: clkAlarm.alarmVal.h = 0;
-"545
-[e = . . _clkAlarm 0 0 -> -> 0 `i `uc ]
-"546
-}
-[; ;main.c: 546: } else{
-[e $U 1937  ]
-[e :U 1936 ]
-{
-[; ;main.c: 547: clkAlarm.alarmVal.h++;
-"547
-[e ++ . . _clkAlarm 0 0 -> -> 1 `i `uc ]
-"548
-}
-[e :U 1937 ]
-"549
-}
-[; ;main.c: 548: }
-[; ;main.c: 549: } else if(editingClockAlarm == 2){
-[e $U 1938  ]
 [e :U 1935 ]
-[e $ ! == _editingClockAlarm -> 2 `i 1939  ]
 {
-[; ;main.c: 550: if(clkAlarm.alarmVal.m == 59){
-"550
-[e $ ! == -> . . _clkAlarm 0 1 `i -> 59 `i 1940  ]
+[; ;main.c: 532: if(PORTCbits.RC5 == 0){
+"532
+[e $ ! == -> . . _PORTCbits 0 5 `i -> 0 `i 1937  ]
 {
-[; ;main.c: 551: clkAlarm.alarmVal.m = 0;
-"551
-[e = . . _clkAlarm 0 1 -> -> 0 `i `uc ]
-"552
-}
-[; ;main.c: 552: } else{
-[e $U 1941  ]
-[e :U 1940 ]
+[; ;main.c: 533: if(editingClockAlarm == 0){
+"533
+[e $ ! == _editingClockAlarm -> 0 `i 1938  ]
 {
-[; ;main.c: 553: clkAlarm.alarmVal.m++;
-"553
-[e ++ . . _clkAlarm 0 1 -> -> 1 `i `uc ]
-"554
+[; ;main.c: 534: editingClockAlarm = 1;
+"534
+[e = _editingClockAlarm -> 1 `i ]
+"536
 }
-[e :U 1941 ]
-"555
-}
-[; ;main.c: 554: }
-[; ;main.c: 555: } else if(editingClockAlarm == 3){
-[e $U 1942  ]
-[e :U 1939 ]
-[e $ ! == _editingClockAlarm -> 3 `i 1943  ]
-{
-[; ;main.c: 556: if(clkAlarm.alarmVal.s == 59){
-"556
-[e $ ! == -> . . _clkAlarm 0 2 `i -> 59 `i 1944  ]
-{
-[; ;main.c: 557: clkAlarm.alarmVal.s = 0;
-"557
-[e = . . _clkAlarm 0 2 -> -> 0 `i `uc ]
-"558
-}
-[; ;main.c: 558: } else{
-[e $U 1945  ]
-[e :U 1944 ]
-{
-[; ;main.c: 559: clkAlarm.alarmVal.s++;
-"559
-[e ++ . . _clkAlarm 0 2 -> -> 1 `i `uc ]
-"560
-}
-[e :U 1945 ]
-"561
-}
-[e :U 1943 ]
-"562
-[e :U 1942 ]
+[; ;main.c: 536: } else if(editingClockAlarm == 1){
+[e $U 1939  ]
 [e :U 1938 ]
-[; ;main.c: 560: }
-[; ;main.c: 561: }
-[; ;main.c: 562: _delay((unsigned long)((100)*(1000000/4000.0)));
-[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-"563
-}
-[e :U 1934 ]
-[; ;main.c: 563: }
-[; ;main.c: 564: if(mode != 1){
-"564
-[e $ ! != _mode -> 1 `i 1946  ]
+[e $ ! == _editingClockAlarm -> 1 `i 1940  ]
 {
-[; ;main.c: 565: editingClockAlarm = 0;
-"565
-[e = _editingClockAlarm -> 0 `i ]
-[; ;main.c: 566: break;
-"566
-[e $U 1933  ]
-"567
+[; ;main.c: 537: if(clkAlarm.alarmVal.h >= 23){
+"537
+[e $ ! >= -> . . _clkAlarm 0 0 `i -> 23 `i 1941  ]
+{
+[; ;main.c: 538: clkAlarm.alarmVal.h = 0;
+"538
+[e = . . _clkAlarm 0 0 -> -> 0 `i `uc ]
+"539
+}
+[; ;main.c: 539: } else{
+[e $U 1942  ]
+[e :U 1941 ]
+{
+[; ;main.c: 540: clkAlarm.alarmVal.h++;
+"540
+[e ++ . . _clkAlarm 0 0 -> -> 1 `i `uc ]
+"541
+}
+[e :U 1942 ]
+"542
+}
+[; ;main.c: 541: }
+[; ;main.c: 542: } else if(editingClockAlarm == 2){
+[e $U 1943  ]
+[e :U 1940 ]
+[e $ ! == _editingClockAlarm -> 2 `i 1944  ]
+{
+[; ;main.c: 543: if(clkAlarm.alarmVal.m == 59){
+"543
+[e $ ! == -> . . _clkAlarm 0 1 `i -> 59 `i 1945  ]
+{
+[; ;main.c: 544: clkAlarm.alarmVal.m = 0;
+"544
+[e = . . _clkAlarm 0 1 -> -> 0 `i `uc ]
+"545
+}
+[; ;main.c: 545: } else{
+[e $U 1946  ]
+[e :U 1945 ]
+{
+[; ;main.c: 546: clkAlarm.alarmVal.m++;
+"546
+[e ++ . . _clkAlarm 0 1 -> -> 1 `i `uc ]
+"547
 }
 [e :U 1946 ]
-"568
+"548
 }
-[e :U 1931 ]
-"530
-[e $U 1932  ]
-[e :U 1933 ]
-[; ;main.c: 567: }
-[; ;main.c: 568: }
-[; ;main.c: 569: }
-"569
-[e :UE 1930 ]
-}
-"571
-[v _editTemp `(v ~T0 @X0 1 ef ]
+[; ;main.c: 547: }
+[; ;main.c: 548: } else if(editingClockAlarm == 3){
+[e $U 1947  ]
+[e :U 1944 ]
+[e $ ! == _editingClockAlarm -> 3 `i 1948  ]
 {
-[; ;main.c: 571: void editTemp(){
-[e :U _editTemp ]
-[f ]
-[; ;main.c: 572: editingTempAlarm = 1;
-"572
-[e = _editingTempAlarm -> -> 1 `i `uc ]
-[; ;main.c: 574: while(1){
-"574
+[; ;main.c: 549: if(clkAlarm.alarmVal.s == 59){
+"549
+[e $ ! == -> . . _clkAlarm 0 2 `i -> 59 `i 1949  ]
+{
+[; ;main.c: 550: clkAlarm.alarmVal.s = 0;
+"550
+[e = . . _clkAlarm 0 2 -> -> 0 `i `uc ]
+"551
+}
+[; ;main.c: 551: } else{
+[e $U 1950  ]
 [e :U 1949 ]
 {
-[; ;main.c: 583: if(PORTCbits.RC5 == 0){
-"583
-[e $ ! == -> . . _PORTCbits 0 5 `i -> 0 `i 1951  ]
-{
-[; ;main.c: 584: tempAlarm.alarmTemp++;
-"584
-[e ++ . _tempAlarm 0 -> -> 1 `i `uc ]
-[; ;main.c: 585: if(tempAlarm.alarmTemp > 50){
-"585
-[e $ ! > -> . _tempAlarm 0 `i -> 50 `i 1952  ]
-{
-[; ;main.c: 586: tempAlarm.alarmTemp = 0;
-"586
-[e = . _tempAlarm 0 -> -> 0 `i `uc ]
-"587
+[; ;main.c: 552: clkAlarm.alarmVal.s++;
+"552
+[e ++ . . _clkAlarm 0 2 -> -> 1 `i `uc ]
+"553
 }
-[e :U 1952 ]
-[; ;main.c: 587: }
-[; ;main.c: 588: _delay((unsigned long)((100)*(1000000/4000.0)));
-"588
-[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-"589
-}
-[e :U 1951 ]
-[; ;main.c: 589: }
-[; ;main.c: 590: if(mode != 2){
-"590
-[e $ ! != _mode -> 2 `i 1953  ]
-{
-[; ;main.c: 591: editingTempAlarm = 0;
-"591
-[e = _editingTempAlarm -> -> 0 `i `uc ]
-[; ;main.c: 592: break;
-"592
-[e $U 1950  ]
-"593
-}
-[e :U 1953 ]
-"594
+[e :U 1950 ]
+"554
 }
 [e :U 1948 ]
-"574
-[e $U 1949  ]
-[e :U 1950 ]
-[; ;main.c: 593: }
-[; ;main.c: 594: }
-[; ;main.c: 595: }
-"595
-[e :UE 1947 ]
+"555
+[e :U 1947 ]
+[e :U 1943 ]
+[e :U 1939 ]
+[; ;main.c: 553: }
+[; ;main.c: 554: }
+[; ;main.c: 555: _delay((unsigned long)((100)*(1000000/4000.0)));
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
+"556
 }
-"597
-[v _editLum `(v ~T0 @X0 1 ef ]
+[e :U 1937 ]
+[; ;main.c: 556: }
+[; ;main.c: 557: if(mode != 1){
+"557
+[e $ ! != _mode -> 1 `i 1951  ]
 {
-[; ;main.c: 597: void editLum(){
-[e :U _editLum ]
+[; ;main.c: 558: editingClockAlarm = 0;
+"558
+[e = _editingClockAlarm -> 0 `i ]
+[; ;main.c: 559: break;
+"559
+[e $U 1936  ]
+"560
+}
+[e :U 1951 ]
+"561
+}
+[e :U 1934 ]
+"530
+[e $U 1935  ]
+[e :U 1936 ]
+[; ;main.c: 560: }
+[; ;main.c: 561: }
+[; ;main.c: 562: }
+"562
+[e :UE 1933 ]
+}
+"564
+[v _editTemp `(v ~T0 @X0 1 ef ]
+{
+[; ;main.c: 564: void editTemp(){
+[e :U _editTemp ]
 [f ]
-[; ;main.c: 598: editingLumAlarm = 1;
-"598
-[e = _editingLumAlarm -> -> 1 `i `uc ]
-[; ;main.c: 600: while(1){
-"600
-[e :U 1956 ]
+[; ;main.c: 567: while(1){
+"567
+[e :U 1954 ]
 {
-[; ;main.c: 609: if(PORTCbits.RC5 == 0){
-"609
-[e $ ! == -> . . _PORTCbits 0 5 `i -> 0 `i 1958  ]
+[; ;main.c: 569: if(PORTCbits.RC5 == 0){
+"569
+[e $ ! == -> . . _PORTCbits 0 5 `i -> 0 `i 1956  ]
 {
-[; ;main.c: 610: lumAlarm.alarmLum++;
-"610
-[e ++ . _lumAlarm 0 -> -> 1 `i `uc ]
-[; ;main.c: 611: if(lumAlarm.alarmLum > 7){
-"611
-[e $ ! > -> . _lumAlarm 0 `i -> 7 `i 1959  ]
+[; ;main.c: 570: if(editingTempAlarm == 0){
+"570
+[e $ ! == -> _editingTempAlarm `i -> 0 `i 1957  ]
 {
-[; ;main.c: 612: lumAlarm.alarmLum = 0;
-"612
-[e = . _lumAlarm 0 -> -> 0 `i `uc ]
-"613
+[; ;main.c: 571: editingTempAlarm = 1;
+"571
+[e = _editingTempAlarm -> -> 1 `i `uc ]
+"572
+}
+[; ;main.c: 572: } else {
+[e $U 1958  ]
+[e :U 1957 ]
+{
+[; ;main.c: 573: tempAlarm.alarmTemp++;
+"573
+[e ++ . _tempAlarm 0 -> -> 1 `i `uc ]
+[; ;main.c: 574: if(tempAlarm.alarmTemp > 50){
+"574
+[e $ ! > -> . _tempAlarm 0 `i -> 50 `i 1959  ]
+{
+[; ;main.c: 575: tempAlarm.alarmTemp = 0;
+"575
+[e = . _tempAlarm 0 -> -> 0 `i `uc ]
+"576
 }
 [e :U 1959 ]
-[; ;main.c: 613: }
-[; ;main.c: 614: _delay((unsigned long)((100)*(1000000/4000.0)));
-"614
-[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-"615
+"577
 }
 [e :U 1958 ]
-[; ;main.c: 615: }
-[; ;main.c: 616: if(mode != 3){
-"616
-[e $ ! != _mode -> 3 `i 1960  ]
+[; ;main.c: 576: }
+[; ;main.c: 577: }
+[; ;main.c: 578: _delay((unsigned long)((100)*(1000000/4000.0)));
+"578
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
+"579
+}
+[e :U 1956 ]
+[; ;main.c: 579: }
+[; ;main.c: 580: if(mode != 2){
+"580
+[e $ ! != _mode -> 2 `i 1960  ]
 {
-[; ;main.c: 617: editingLumAlarm = 0;
-"617
-[e = _editingLumAlarm -> -> 0 `i `uc ]
-[; ;main.c: 618: break;
-"618
-[e $U 1957  ]
-"619
+[; ;main.c: 581: editingTempAlarm = 0;
+"581
+[e = _editingTempAlarm -> -> 0 `i `uc ]
+[; ;main.c: 582: break;
+"582
+[e $U 1955  ]
+"583
 }
 [e :U 1960 ]
-"620
+"584
 }
+[e :U 1953 ]
+"567
+[e $U 1954  ]
 [e :U 1955 ]
-"600
-[e $U 1956  ]
-[e :U 1957 ]
-[; ;main.c: 619: }
-[; ;main.c: 620: }
-[; ;main.c: 621: }
-"621
-[e :UE 1954 ]
+[; ;main.c: 583: }
+[; ;main.c: 584: }
+[; ;main.c: 585: }
+"585
+[e :UE 1952 ]
 }
-"623
-[v _toggleAlarms `(v ~T0 @X0 1 ef ]
+"587
+[v _editLum `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 623: void toggleAlarms(){
-[e :U _toggleAlarms ]
+[; ;main.c: 587: void editLum(){
+[e :U _editLum ]
 [f ]
-[; ;main.c: 625: while(1){
-"625
+[; ;main.c: 590: while(1){
+"590
 [e :U 1963 ]
 {
-[; ;main.c: 633: if(PORTCbits.RC5 == 0){
-"633
+[; ;main.c: 592: if(PORTCbits.RC5 == 0){
+"592
 [e $ ! == -> . . _PORTCbits 0 5 `i -> 0 `i 1965  ]
 {
-[; ;main.c: 634: if(ALAF == 'A'){
-"634
-[e $ ! == -> _ALAF `ui -> 65 `ui 1966  ]
+[; ;main.c: 593: if(editingLumAlarm == 0){
+"593
+[e $ ! == -> _editingLumAlarm `i -> 0 `i 1966  ]
 {
-[; ;main.c: 635: ALAF = 'a';
-"635
-[e = _ALAF -> -> 97 `ui `uc ]
-"636
+[; ;main.c: 594: editingLumAlarm = 1;
+"594
+[e = _editingLumAlarm -> -> 1 `i `uc ]
+"595
 }
-[; ;main.c: 636: } else {
+[; ;main.c: 595: } else {
 [e $U 1967  ]
 [e :U 1966 ]
 {
-[; ;main.c: 637: ALAF = 'A';
-"637
-[e = _ALAF -> -> 65 `ui `uc ]
-"638
-}
-[e :U 1967 ]
-[; ;main.c: 638: }
-[; ;main.c: 639: _delay((unsigned long)((100)*(1000000/4000.0)));
-"639
-[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-"640
-}
-[e :U 1965 ]
-[; ;main.c: 640: }
-[; ;main.c: 641: if(mode != 4){
-"641
-[e $ ! != _mode -> 4 `i 1968  ]
+[; ;main.c: 596: lumAlarm.alarmLum++;
+"596
+[e ++ . _lumAlarm 0 -> -> 1 `i `uc ]
+[; ;main.c: 597: if(lumAlarm.alarmLum > 7){
+"597
+[e $ ! > -> . _lumAlarm 0 `i -> 7 `i 1968  ]
 {
-[; ;main.c: 642: mode = 0;
-"642
-[e = _mode -> 0 `i ]
-[; ;main.c: 643: break;
-"643
-[e $U 1964  ]
-"644
+[; ;main.c: 598: lumAlarm.alarmLum = 0;
+"598
+[e = . _lumAlarm 0 -> -> 0 `i `uc ]
+"599
 }
 [e :U 1968 ]
-"645
+"600
+}
+[e :U 1967 ]
+[; ;main.c: 599: }
+[; ;main.c: 600: }
+[; ;main.c: 601: _delay((unsigned long)((100)*(1000000/4000.0)));
+"601
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
+"602
+}
+[e :U 1965 ]
+[; ;main.c: 602: }
+[; ;main.c: 603: if(mode != 3){
+"603
+[e $ ! != _mode -> 3 `i 1969  ]
+{
+[; ;main.c: 604: editingLumAlarm = 0;
+"604
+[e = _editingLumAlarm -> -> 0 `i `uc ]
+[; ;main.c: 605: break;
+"605
+[e $U 1964  ]
+"606
+}
+[e :U 1969 ]
+"607
 }
 [e :U 1962 ]
-"625
+"590
 [e $U 1963  ]
 [e :U 1964 ]
-[; ;main.c: 644: }
-[; ;main.c: 645: }
-[; ;main.c: 646: }
-"646
+[; ;main.c: 606: }
+[; ;main.c: 607: }
+[; ;main.c: 608: }
+"608
 [e :UE 1961 ]
 }
-"648
-[v _S1_ISR `(v ~T0 @X0 1 ef ]
+"610
+[v _toggleAlarms `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 648: void S1_ISR(){
-[e :U _S1_ISR ]
+[; ;main.c: 610: void toggleAlarms(){
+[e :U _toggleAlarms ]
 [f ]
-[; ;main.c: 649: PIE0bits.INTE = 0;
-"649
-[e = . . _PIE0bits 0 0 -> -> 0 `i `uc ]
-[; ;main.c: 650: _delay((unsigned long)((200)*(1000000/4000.0)));
-"650
-[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-[; ;main.c: 652: if(mode == 0 && (clkAlarm.trigger || tempAlarm.trigger || lumAlarm.trigger)){
-"652
-[e $ ! && == _mode -> 0 `i || || != -> . _clkAlarm 1 `i -> -> -> 0 `i `uc `i != -> . _tempAlarm 1 `i -> -> -> 0 `i `uc `i != -> . _lumAlarm 1 `i -> -> -> 0 `i `uc `i 1970  ]
-{
-[; ;main.c: 653: clkAlarm.trigger = 0;
-"653
-[e = . _clkAlarm 1 -> -> 0 `i `uc ]
-[; ;main.c: 654: tempAlarm.trigger = 0;
-"654
-[e = . _tempAlarm 1 -> -> 0 `i `uc ]
-[; ;main.c: 655: lumAlarm.trigger = 0;
-"655
-[e = . _lumAlarm 1 -> -> 0 `i `uc ]
-"656
-}
-[; ;main.c: 656: } else{
-[e $U 1971  ]
-[e :U 1970 ]
-{
-[; ;main.c: 657: if(mode != 1){
-"657
-[e $ ! != _mode -> 1 `i 1972  ]
-{
-[; ;main.c: 658: mode++;
-"658
-[e ++ _mode -> 1 `i ]
-"659
-}
+[; ;main.c: 612: while(1){
+"612
 [e :U 1972 ]
-[; ;main.c: 659: }
-[; ;main.c: 660: if(mode == 1){
-"660
-[e $ ! == _mode -> 1 `i 1973  ]
 {
-[; ;main.c: 661: editingClockAlarm++;
-"661
-[e ++ _editingClockAlarm -> 1 `i ]
-[; ;main.c: 662: if(editingClockAlarm > 3){
-"662
-[e $ ! > _editingClockAlarm -> 3 `i 1974  ]
+[; ;main.c: 614: if(PORTCbits.RC5 == 0){
+"614
+[e $ ! == -> . . _PORTCbits 0 5 `i -> 0 `i 1974  ]
 {
-[; ;main.c: 663: editingClockAlarm = 0;
-"663
-[e = _editingClockAlarm -> 0 `i ]
-[; ;main.c: 664: mode++;
-"664
-[e ++ _mode -> 1 `i ]
-"665
+[; ;main.c: 615: if(ALAF == 'A'){
+"615
+[e $ ! == -> _ALAF `ui -> 65 `ui 1975  ]
+{
+[; ;main.c: 616: ALAF = 'a';
+"616
+[e = _ALAF -> -> 97 `ui `uc ]
+"617
+}
+[; ;main.c: 617: } else {
+[e $U 1976  ]
+[e :U 1975 ]
+{
+[; ;main.c: 618: ALAF = 'A';
+"618
+[e = _ALAF -> -> 65 `ui `uc ]
+"619
+}
+[e :U 1976 ]
+[; ;main.c: 619: }
+[; ;main.c: 620: _delay((unsigned long)((100)*(1000000/4000.0)));
+"620
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
+"621
 }
 [e :U 1974 ]
-"666
+[; ;main.c: 621: }
+[; ;main.c: 622: if(mode != 4){
+"622
+[e $ ! != _mode -> 4 `i 1977  ]
+{
+[; ;main.c: 623: mode = 0;
+"623
+[e = _mode -> 0 `i ]
+[; ;main.c: 624: break;
+"624
+[e $U 1973  ]
+"625
 }
-[e :U 1973 ]
-"667
+[e :U 1977 ]
+"626
 }
 [e :U 1971 ]
-[; ;main.c: 665: }
-[; ;main.c: 666: }
-[; ;main.c: 667: }
-[; ;main.c: 668: (PIR0bits.INTF = 0);
-"668
+"612
+[e $U 1972  ]
+[e :U 1973 ]
+[; ;main.c: 625: }
+[; ;main.c: 626: }
+[; ;main.c: 627: }
+"627
+[e :UE 1970 ]
+}
+"629
+[v _S1_ISR `(v ~T0 @X0 1 ef ]
+{
+[; ;main.c: 629: void S1_ISR(){
+[e :U _S1_ISR ]
+[f ]
+[; ;main.c: 630: PIE0bits.INTE = 0;
+"630
+[e = . . _PIE0bits 0 0 -> -> 0 `i `uc ]
+[; ;main.c: 631: _delay((unsigned long)((200)*(1000000/4000.0)));
+"631
+[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
+[; ;main.c: 633: if(mode == 0 && (clkAlarm.trigger || tempAlarm.trigger || lumAlarm.trigger)){
+"633
+[e $ ! && == _mode -> 0 `i || || != -> . _clkAlarm 1 `i -> -> -> 0 `i `uc `i != -> . _tempAlarm 1 `i -> -> -> 0 `i `uc `i != -> . _lumAlarm 1 `i -> -> -> 0 `i `uc `i 1979  ]
+{
+[; ;main.c: 634: clkAlarm.trigger = 0;
+"634
+[e = . _clkAlarm 1 -> -> 0 `i `uc ]
+[; ;main.c: 635: tempAlarm.trigger = 0;
+"635
+[e = . _tempAlarm 1 -> -> 0 `i `uc ]
+[; ;main.c: 636: lumAlarm.trigger = 0;
+"636
+[e = . _lumAlarm 1 -> -> 0 `i `uc ]
+"637
+}
+[; ;main.c: 637: } else{
+[e $U 1980  ]
+[e :U 1979 ]
+{
+[; ;main.c: 638: if(mode == 1){
+"638
+[e $ ! == _mode -> 1 `i 1981  ]
+{
+[; ;main.c: 639: if(editingClockAlarm >= 1){
+"639
+[e $ ! >= _editingClockAlarm -> 1 `i 1982  ]
+{
+[; ;main.c: 640: editingClockAlarm++;
+"640
+[e ++ _editingClockAlarm -> 1 `i ]
+"641
+}
+[e :U 1982 ]
+[; ;main.c: 641: }
+[; ;main.c: 642: if(editingClockAlarm > 3){
+"642
+[e $ ! > _editingClockAlarm -> 3 `i 1983  ]
+{
+[; ;main.c: 643: editingClockAlarm = 0;
+"643
+[e = _editingClockAlarm -> 0 `i ]
+"644
+}
+[e :U 1983 ]
+"645
+}
+[e :U 1981 ]
+[; ;main.c: 644: }
+[; ;main.c: 645: }
+[; ;main.c: 646: if(editingClockAlarm == 0){
+"646
+[e $ ! == _editingClockAlarm -> 0 `i 1984  ]
+{
+[; ;main.c: 647: mode++;
+"647
+[e ++ _mode -> 1 `i ]
+"648
+}
+[e :U 1984 ]
+"649
+}
+[e :U 1980 ]
+[; ;main.c: 648: }
+[; ;main.c: 649: }
+[; ;main.c: 650: (PIR0bits.INTF = 0);
+"650
 [e = . . _PIR0bits 0 0 -> -> 0 `i `uc ]
-[; ;main.c: 669: PIE0bits.INTE = 1;
-"669
+[; ;main.c: 651: PIE0bits.INTE = 1;
+"651
 [e = . . _PIE0bits 0 0 -> -> 1 `i `uc ]
-[; ;main.c: 670: }
-"670
-[e :UE 1969 ]
+[; ;main.c: 652: }
+"652
+[e :UE 1978 ]
 }
 [v $root$_main `(v ~T0 @X0 0 e ]
-"672
+"654
 [v _main `(v ~T0 @X0 1 ef ]
-"673
+"655
 {
-[; ;main.c: 672: void main(void)
-[; ;main.c: 673: {
+[; ;main.c: 654: void main(void)
+[; ;main.c: 655: {
 [e :U _main ]
 [f ]
-[; ;main.c: 675: SYSTEM_Initialize();
-"675
+[; ;main.c: 657: SYSTEM_Initialize();
+"657
 [e ( _SYSTEM_Initialize ..  ]
-[; ;main.c: 677: PWM6_LoadDutyValue(0);
-"677
+[; ;main.c: 659: PWM6_LoadDutyValue(0);
+"659
 [e ( _PWM6_LoadDutyValue (1 -> -> 0 `i `ui ]
-[; ;main.c: 678: TMR2_StopTimer();
-"678
+[; ;main.c: 660: TMR2_StopTimer();
+"660
 [e ( _TMR2_StopTimer ..  ]
-[; ;main.c: 679: PWM_Output_D4_Disable();
-"679
+[; ;main.c: 661: PWM_Output_D4_Disable();
+"661
 [e ( _PWM_Output_D4_Disable ..  ]
-[; ;main.c: 681: TMR1_SetInterruptHandler(Clock_ISR);
-"681
+[; ;main.c: 663: TMR1_SetInterruptHandler(Clock_ISR);
+"663
 [e ( _TMR1_SetInterruptHandler (1 &U _Clock_ISR ]
-[; ;main.c: 683: TMR3_SetInterruptHandler(menuLCD_ISR);
-"683
+[; ;main.c: 665: TMR3_SetInterruptHandler(menuLCD_ISR);
+"665
 [e ( _TMR3_SetInterruptHandler (1 &U _menuLCD_ISR ]
-[; ;main.c: 685: TMR5_SetInterruptHandler(monitoring_ISR);
-"685
+[; ;main.c: 667: TMR5_SetInterruptHandler(monitoring_ISR);
+"667
 [e ( _TMR5_SetInterruptHandler (1 &U _monitoring_ISR ]
-[; ;main.c: 687: INT_SetInterruptHandler(S1_ISR);
-"687
+[; ;main.c: 669: INT_SetInterruptHandler(S1_ISR);
+"669
 [e ( _INT_SetInterruptHandler (1 &U _S1_ISR ]
-"689
+"671
 [v _checkSumAux `uc ~T0 @X0 1 a ]
-[; ;main.c: 689: uint8_t checkSumAux = 0;
+[; ;main.c: 671: uint8_t checkSumAux = 0;
 [e = _checkSumAux -> -> 0 `i `uc ]
-"690
+"672
 [v _notInit `uc ~T0 @X0 1 a ]
-[; ;main.c: 690: bool notInit = 1;
+[; ;main.c: 672: bool notInit = 1;
 [e = _notInit -> -> 1 `i `uc ]
-"691
+"673
 [v _corrupted `uc ~T0 @X0 1 a ]
-[; ;main.c: 691: bool corrupted = 0;
+[; ;main.c: 673: bool corrupted = 0;
 [e = _corrupted -> -> 0 `i `uc ]
-[; ;main.c: 692: if(DATAEE_ReadByte(0x7000) == 'S'){
-"692
-[e $ ! == -> ( _DATAEE_ReadByte (1 -> -> 28672 `i `ui `ui -> 83 `ui 1976  ]
+[; ;main.c: 674: if(DATAEE_ReadByte(0x7000) == 'S'){
+"674
+[e $ ! == -> ( _DATAEE_ReadByte (1 -> -> 28672 `i `ui `ui -> 83 `ui 1986  ]
 {
-[; ;main.c: 693: notInit = 0;
-"693
+[; ;main.c: 675: notInit = 0;
+"675
 [e = _notInit -> -> 0 `i `uc ]
-[; ;main.c: 694: for(int i = 1; i < 13; i++){
-"694
+[; ;main.c: 676: for(int i = 1; i < 13; i++){
+"676
 {
 [v _i `i ~T0 @X0 1 a ]
 [e = _i -> 1 `i ]
-[e $ < _i -> 13 `i 1977  ]
-[e $U 1978  ]
-[e :U 1977 ]
+[e $ < _i -> 13 `i 1987  ]
+[e $U 1988  ]
+[e :U 1987 ]
 {
-[; ;main.c: 695: checkSumAux += DATAEE_ReadByte(0x7000 + (i*8));
-"695
+[; ;main.c: 677: checkSumAux += DATAEE_ReadByte(0x7000 + (i*8));
+"677
 [e =+ _checkSumAux ( _DATAEE_ReadByte (1 -> + -> 28672 `i * _i -> 8 `i `ui ]
-"696
+"678
 }
-"694
+"676
 [e ++ _i -> 1 `i ]
-[e $ < _i -> 13 `i 1977  ]
-[e :U 1978 ]
-"696
+[e $ < _i -> 13 `i 1987  ]
+[e :U 1988 ]
+"678
 }
-[; ;main.c: 696: }
-[; ;main.c: 697: if(checkSumAux != DATAEE_ReadByte(0x7000 + (13*8))){
-"697
-[e $ ! != -> _checkSumAux `i -> ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 13 `i -> 8 `i `ui `i 1980  ]
+[; ;main.c: 678: }
+[; ;main.c: 679: if(checkSumAux != DATAEE_ReadByte(0x7000 + (13*8))){
+"679
+[e $ ! != -> _checkSumAux `i -> ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 13 `i -> 8 `i `ui `i 1990  ]
 {
-[; ;main.c: 698: corrupted = 1;
-"698
+[; ;main.c: 680: corrupted = 1;
+"680
 [e = _corrupted -> -> 1 `i `uc ]
+"681
+}
+[e :U 1990 ]
+"682
+}
+[e :U 1986 ]
+[; ;main.c: 681: }
+[; ;main.c: 682: }
+[; ;main.c: 684: if(notInit || corrupted){
+"684
+[e $ ! || != -> _notInit `i -> -> -> 0 `i `uc `i != -> _corrupted `i -> -> -> 0 `i `uc `i 1991  ]
+{
+[; ;main.c: 685: DATAEE_WriteByte( 0x7000 + (0 * 8), 'S');
+"685
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 0 `i -> 8 `i `ui -> -> 83 `ui `uc ]
+[; ;main.c: 686: DATAEE_WriteByte( 0x7000 + (1 * 8), 25);
+"686
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 1 `i -> 8 `i `ui -> -> 25 `i `uc ]
+[; ;main.c: 687: DATAEE_WriteByte( 0x7000 + (2 * 8), 3);
+"687
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 2 `i -> 8 `i `ui -> -> 3 `i `uc ]
+[; ;main.c: 688: DATAEE_WriteByte( 0x7000 + (3 * 8), 5);
+"688
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 3 `i -> 8 `i `ui -> -> 5 `i `uc ]
+[; ;main.c: 689: DATAEE_WriteByte( 0x7000 + (4 * 8), 12);
+"689
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 4 `i -> 8 `i `ui -> -> 12 `i `uc ]
+[; ;main.c: 690: DATAEE_WriteByte( 0x7000 + (5 * 8), 0);
+"690
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 5 `i -> 8 `i `ui -> -> 0 `i `uc ]
+[; ;main.c: 691: DATAEE_WriteByte( 0x7000 + (6 * 8), 0);
+"691
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 6 `i -> 8 `i `ui -> -> 0 `i `uc ]
+[; ;main.c: 692: DATAEE_WriteByte( 0x7000 + (7 * 8), 28);
+"692
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 7 `i -> 8 `i `ui -> -> 28 `i `uc ]
+[; ;main.c: 693: DATAEE_WriteByte( 0x7000 + (8 * 8), 4);
+"693
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 8 `i -> 8 `i `ui -> -> 4 `i `uc ]
+[; ;main.c: 694: DATAEE_WriteByte( 0x7000 + (9 * 8), 'a');
+"694
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 9 `i -> 8 `i `ui -> -> 97 `ui `uc ]
+[; ;main.c: 695: DATAEE_WriteByte( 0x7000 + (10 * 8), 0);
+"695
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 10 `i -> 8 `i `ui -> -> 0 `i `uc ]
+[; ;main.c: 696: DATAEE_WriteByte( 0x7000 + (11 * 8), 0);
+"696
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 11 `i -> 8 `i `ui -> -> 0 `i `uc ]
+[; ;main.c: 697: DATAEE_WriteByte( 0x7000 + (12 * 8), 0);
+"697
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 12 `i -> 8 `i `ui -> -> 0 `i `uc ]
+[; ;main.c: 698: DATAEE_WriteByte( 0x7000 + (13 * 8), 174);
+"698
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 13 `i -> 8 `i `ui -> -> 174 `i `uc ]
 "699
 }
-[e :U 1980 ]
-"700
-}
-[e :U 1976 ]
-[; ;main.c: 699: }
-[; ;main.c: 700: }
-[; ;main.c: 702: if(notInit || corrupted){
-"702
-[e $ ! || != -> _notInit `i -> -> -> 0 `i `uc `i != -> _corrupted `i -> -> -> 0 `i `uc `i 1981  ]
-{
-[; ;main.c: 703: DATAEE_WriteByte( 0x7000 + (0 * 8), 'S');
-"703
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 0 `i -> 8 `i `ui -> -> 83 `ui `uc ]
-[; ;main.c: 704: DATAEE_WriteByte( 0x7000 + (1 * 8), 25);
-"704
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 1 `i -> 8 `i `ui -> -> 25 `i `uc ]
-[; ;main.c: 705: DATAEE_WriteByte( 0x7000 + (2 * 8), 3);
-"705
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 2 `i -> 8 `i `ui -> -> 3 `i `uc ]
-[; ;main.c: 706: DATAEE_WriteByte( 0x7000 + (3 * 8), 5);
-"706
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 3 `i -> 8 `i `ui -> -> 5 `i `uc ]
-[; ;main.c: 707: DATAEE_WriteByte( 0x7000 + (4 * 8), 12);
-"707
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 4 `i -> 8 `i `ui -> -> 12 `i `uc ]
-[; ;main.c: 708: DATAEE_WriteByte( 0x7000 + (5 * 8), 0);
-"708
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 5 `i -> 8 `i `ui -> -> 0 `i `uc ]
-[; ;main.c: 709: DATAEE_WriteByte( 0x7000 + (6 * 8), 0);
-"709
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 6 `i -> 8 `i `ui -> -> 0 `i `uc ]
-[; ;main.c: 710: DATAEE_WriteByte( 0x7000 + (7 * 8), 28);
-"710
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 7 `i -> 8 `i `ui -> -> 28 `i `uc ]
-[; ;main.c: 711: DATAEE_WriteByte( 0x7000 + (8 * 8), 4);
-"711
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 8 `i -> 8 `i `ui -> -> 4 `i `uc ]
-[; ;main.c: 712: DATAEE_WriteByte( 0x7000 + (9 * 8), 'a');
-"712
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 9 `i -> 8 `i `ui -> -> 97 `ui `uc ]
-[; ;main.c: 713: DATAEE_WriteByte( 0x7000 + (10 * 8), 0);
-"713
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 10 `i -> 8 `i `ui -> -> 0 `i `uc ]
-[; ;main.c: 714: DATAEE_WriteByte( 0x7000 + (11 * 8), 0);
-"714
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 11 `i -> 8 `i `ui -> -> 0 `i `uc ]
-[; ;main.c: 715: DATAEE_WriteByte( 0x7000 + (12 * 8), 0);
-"715
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 12 `i -> 8 `i `ui -> -> 0 `i `uc ]
-[; ;main.c: 716: DATAEE_WriteByte( 0x7000 + (13 * 8), 174);
-"716
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 13 `i -> 8 `i `ui -> -> 174 `i `uc ]
-"717
-}
-[e :U 1981 ]
-[; ;main.c: 717: }
-[; ;main.c: 719: NREG = DATAEE_ReadByte(0x7000 + (1*8));
-"719
-[e = _NREG ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 1 `i -> 8 `i `ui ]
-[; ;main.c: 720: PMON = DATAEE_ReadByte(0x7000 + (2*8));
-"720
-[e = _PMON ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 2 `i -> 8 `i `ui ]
-[; ;main.c: 721: TALA = DATAEE_ReadByte(0x7000 + (3*8));
-"721
-[e = _TALA ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 3 `i -> 8 `i `ui ]
-[; ;main.c: 722: clkAlarm.alarmVal.h = DATAEE_ReadByte(0x7000 + (4*8));
-"722
-[e = . . _clkAlarm 0 0 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 4 `i -> 8 `i `ui ]
-[; ;main.c: 723: clkAlarm.alarmVal.m = DATAEE_ReadByte(0x7000 + (5*8));
-"723
-[e = . . _clkAlarm 0 1 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 5 `i -> 8 `i `ui ]
-[; ;main.c: 724: clkAlarm.alarmVal.s = DATAEE_ReadByte(0x7000 + (6*8));
-"724
-[e = . . _clkAlarm 0 2 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 6 `i -> 8 `i `ui ]
-[; ;main.c: 725: tempAlarm.alarmTemp = DATAEE_ReadByte(0x7000 + (7*8));
-"725
-[e = . _tempAlarm 0 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 7 `i -> 8 `i `ui ]
-[; ;main.c: 726: lumAlarm.alarmLum = DATAEE_ReadByte(0x7000 + (8*8));
-"726
-[e = . _lumAlarm 0 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 8 `i -> 8 `i `ui ]
-[; ;main.c: 727: ALAF = DATAEE_ReadByte(0x7000 + (9*8));
-"727
-[e = _ALAF ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 9 `i -> 8 `i `ui ]
-[; ;main.c: 728: t.h = DATAEE_ReadByte(0x7000 + (10*8));
-"728
-[e = . _t 0 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 10 `i -> 8 `i `ui ]
-[; ;main.c: 729: t.m = DATAEE_ReadByte(0x7000 + (11*8));
-"729
-[e = . _t 1 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 11 `i -> 8 `i `ui ]
-[; ;main.c: 730: idx_RingBuffer = DATAEE_ReadByte(0x7000 + (12*8));
-"730
-[e = _idx_RingBuffer ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 12 `i -> 8 `i `ui ]
-[; ;main.c: 734: tempAlarm.trigger = 0;
-"734
-[e = . _tempAlarm 1 -> -> 0 `i `uc ]
-[; ;main.c: 735: tempAlarm.triggered = 0;
-"735
-[e = . _tempAlarm 2 -> -> 0 `i `uc ]
-[; ;main.c: 737: lumAlarm.trigger = 0;
-"737
-[e = . _lumAlarm 1 -> -> 0 `i `uc ]
-[; ;main.c: 738: lumAlarm.triggered = 0;
-"738
-[e = . _lumAlarm 2 -> -> 0 `i `uc ]
-[; ;main.c: 740: clkAlarm.trigger = 0;
-"740
-[e = . _clkAlarm 1 -> -> 0 `i `uc ]
-[; ;main.c: 743: i2c1_driver_open();
-"743
-[e ( _i2c1_driver_open ..  ]
-[; ;main.c: 744: TRISCbits.TRISC3 = 1;
-"744
-[e = . . _TRISCbits 0 3 -> -> 1 `i `uc ]
-[; ;main.c: 745: TRISCbits.TRISC4 = 1;
-"745
-[e = . . _TRISCbits 0 4 -> -> 1 `i `uc ]
-[; ;main.c: 746: WPUC3 = 1;
-"746
-[e = _WPUC3 -> -> 1 `i `b ]
-[; ;main.c: 747: WPUC4 = 1;
-"747
-[e = _WPUC4 -> -> 1 `i `b ]
-[; ;main.c: 748: LCDinit();
-"748
-[e ( _LCDinit ..  ]
-[; ;main.c: 751: (INTCONbits.GIE = 1);
-"751
-[e = . . _INTCONbits 0 3 -> -> 1 `i `uc ]
-[; ;main.c: 754: (INTCONbits.PEIE = 1);
-"754
-[e = . . _INTCONbits 0 2 -> -> 1 `i `uc ]
-[; ;main.c: 756: asm("sleep");
-"756
-[; <" sleep ;# ">
-[; ;main.c: 758: while (1)
-"758
-[e :U 1983 ]
-[; ;main.c: 759: {
-"759
-{
-[; ;main.c: 760: switch(mode){
-"760
-[e $U 1986  ]
-{
-[; ;main.c: 761: case 0: if(PWM_on){ continue;} else {asm("sleep");}
-"761
-[e :U 1987 ]
-[e $ ! != -> _PWM_on `i -> -> -> 0 `i `uc `i 1988  ]
-{
-[e $U 1982  ]
-}
-[e $U 1989  ]
-[e :U 1988 ]
-{
-[; <" sleep ;# ">
-}
-[e :U 1989 ]
-[; ;main.c: 762: case 1:
-"762
-[e :U 1990 ]
-[; ;main.c: 763: editClock();
-"763
-[e ( _editClock ..  ]
-[; ;main.c: 764: case 2:
-"764
 [e :U 1991 ]
-[; ;main.c: 765: editTemp();
-"765
-[e ( _editTemp ..  ]
-[; ;main.c: 766: case 3:
-"766
-[e :U 1992 ]
-[; ;main.c: 767: editLum();
-"767
-[e ( _editLum ..  ]
-[; ;main.c: 768: case 4:
-"768
+[; ;main.c: 699: }
+[; ;main.c: 701: NREG = DATAEE_ReadByte(0x7000 + (1*8));
+"701
+[e = _NREG ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 1 `i -> 8 `i `ui ]
+[; ;main.c: 702: PMON = DATAEE_ReadByte(0x7000 + (2*8));
+"702
+[e = _PMON ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 2 `i -> 8 `i `ui ]
+[; ;main.c: 703: TALA = DATAEE_ReadByte(0x7000 + (3*8));
+"703
+[e = _TALA ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 3 `i -> 8 `i `ui ]
+[; ;main.c: 704: clkAlarm.alarmVal.h = DATAEE_ReadByte(0x7000 + (4*8));
+"704
+[e = . . _clkAlarm 0 0 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 4 `i -> 8 `i `ui ]
+[; ;main.c: 705: clkAlarm.alarmVal.m = DATAEE_ReadByte(0x7000 + (5*8));
+"705
+[e = . . _clkAlarm 0 1 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 5 `i -> 8 `i `ui ]
+[; ;main.c: 706: clkAlarm.alarmVal.s = DATAEE_ReadByte(0x7000 + (6*8));
+"706
+[e = . . _clkAlarm 0 2 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 6 `i -> 8 `i `ui ]
+[; ;main.c: 707: tempAlarm.alarmTemp = DATAEE_ReadByte(0x7000 + (7*8));
+"707
+[e = . _tempAlarm 0 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 7 `i -> 8 `i `ui ]
+[; ;main.c: 708: lumAlarm.alarmLum = DATAEE_ReadByte(0x7000 + (8*8));
+"708
+[e = . _lumAlarm 0 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 8 `i -> 8 `i `ui ]
+[; ;main.c: 709: ALAF = DATAEE_ReadByte(0x7000 + (9*8));
+"709
+[e = _ALAF ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 9 `i -> 8 `i `ui ]
+[; ;main.c: 710: t.h = DATAEE_ReadByte(0x7000 + (10*8));
+"710
+[e = . _t 0 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 10 `i -> 8 `i `ui ]
+[; ;main.c: 711: t.m = DATAEE_ReadByte(0x7000 + (11*8));
+"711
+[e = . _t 1 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 11 `i -> 8 `i `ui ]
+[; ;main.c: 712: idx_RingBuffer = DATAEE_ReadByte(0x7000 + (12*8));
+"712
+[e = _idx_RingBuffer ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 12 `i -> 8 `i `ui ]
+[; ;main.c: 716: tempAlarm.trigger = 0;
+"716
+[e = . _tempAlarm 1 -> -> 0 `i `uc ]
+[; ;main.c: 717: tempAlarm.triggered = 0;
+"717
+[e = . _tempAlarm 2 -> -> 0 `i `uc ]
+[; ;main.c: 719: lumAlarm.trigger = 0;
+"719
+[e = . _lumAlarm 1 -> -> 0 `i `uc ]
+[; ;main.c: 720: lumAlarm.triggered = 0;
+"720
+[e = . _lumAlarm 2 -> -> 0 `i `uc ]
+[; ;main.c: 722: clkAlarm.trigger = 0;
+"722
+[e = . _clkAlarm 1 -> -> 0 `i `uc ]
+[; ;main.c: 725: i2c1_driver_open();
+"725
+[e ( _i2c1_driver_open ..  ]
+[; ;main.c: 726: TRISCbits.TRISC3 = 1;
+"726
+[e = . . _TRISCbits 0 3 -> -> 1 `i `uc ]
+[; ;main.c: 727: TRISCbits.TRISC4 = 1;
+"727
+[e = . . _TRISCbits 0 4 -> -> 1 `i `uc ]
+[; ;main.c: 728: WPUC3 = 1;
+"728
+[e = _WPUC3 -> -> 1 `i `b ]
+[; ;main.c: 729: WPUC4 = 1;
+"729
+[e = _WPUC4 -> -> 1 `i `b ]
+[; ;main.c: 730: LCDinit();
+"730
+[e ( _LCDinit ..  ]
+[; ;main.c: 733: (INTCONbits.GIE = 1);
+"733
+[e = . . _INTCONbits 0 3 -> -> 1 `i `uc ]
+[; ;main.c: 736: (INTCONbits.PEIE = 1);
+"736
+[e = . . _INTCONbits 0 2 -> -> 1 `i `uc ]
+[; ;main.c: 738: asm("sleep");
+"738
+[; <" sleep ;# ">
+[; ;main.c: 740: while (1)
+"740
 [e :U 1993 ]
-[; ;main.c: 769: toggleAlarms();
-"769
+[; ;main.c: 741: {
+"741
+{
+[; ;main.c: 742: switch(mode){
+"742
+[e $U 1996  ]
+{
+[; ;main.c: 743: case 0: if(PWM_on){ continue;} else {asm("sleep");}
+"743
+[e :U 1997 ]
+[e $ ! != -> _PWM_on `i -> -> -> 0 `i `uc `i 1998  ]
+{
+[e $U 1992  ]
+}
+[e $U 1999  ]
+[e :U 1998 ]
+{
+[; <" sleep ;# ">
+}
+[e :U 1999 ]
+[; ;main.c: 744: case 1:
+"744
+[e :U 2000 ]
+[; ;main.c: 745: editClock();
+"745
+[e ( _editClock ..  ]
+[; ;main.c: 746: case 2:
+"746
+[e :U 2001 ]
+[; ;main.c: 747: editTemp();
+"747
+[e ( _editTemp ..  ]
+[; ;main.c: 748: case 3:
+"748
+[e :U 2002 ]
+[; ;main.c: 749: editLum();
+"749
+[e ( _editLum ..  ]
+[; ;main.c: 750: case 4:
+"750
+[e :U 2003 ]
+[; ;main.c: 751: toggleAlarms();
+"751
 [e ( _toggleAlarms ..  ]
-"770
+"752
 }
-[; ;main.c: 770: }
-[e $U 1985  ]
-"760
-[e :U 1986 ]
-[e [\ _mode , $ -> 0 `i 1987
- , $ -> 1 `i 1990
- , $ -> 2 `i 1991
- , $ -> 3 `i 1992
- , $ -> 4 `i 1993
- 1985 ]
-"770
-[e :U 1985 ]
-"771
+[; ;main.c: 752: }
+[e $U 1995  ]
+"742
+[e :U 1996 ]
+[e [\ _mode , $ -> 0 `i 1997
+ , $ -> 1 `i 2000
+ , $ -> 2 `i 2001
+ , $ -> 3 `i 2002
+ , $ -> 4 `i 2003
+ 1995 ]
+"752
+[e :U 1995 ]
+"753
 }
-[e :U 1982 ]
-"758
-[e $U 1983  ]
-[e :U 1984 ]
-[; ;main.c: 771: }
-[; ;main.c: 772: }
-"772
-[e :UE 1975 ]
+[e :U 1992 ]
+"740
+[e $U 1993  ]
+[e :U 1994 ]
+[; ;main.c: 753: }
+[; ;main.c: 754: }
+"754
+[e :UE 1985 ]
 }
 [p f _sprintf 8421508 ]
 [a 1C 37 48 50 100 58 37 48 50 100 58 37 48 50 100 0 ]

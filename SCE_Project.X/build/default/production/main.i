@@ -22094,7 +22094,7 @@ LCDchar(ALAF);
 if(clkAlarm.trigger == 1){
 LCDcmd(0x8B);
 LCDchar('C');
-} else{
+} else if(mode == 0){
 LCDcmd(0x8B);
 LCDchar(' ');
 }
@@ -22103,7 +22103,7 @@ LCDchar(' ');
 if(tempAlarm.trigger == 1){
 LCDcmd(0x8C);
 LCDchar('T');
-} else{
+} else if(mode == 0){
 LCDcmd(0x8C);
 LCDchar(' ');
 }
@@ -22112,7 +22112,7 @@ LCDchar(' ');
 if(lumAlarm.trigger == 1){
 LCDcmd(0x8D);
 LCDchar('L');
-} else{
+} else if(mode == 0){
 LCDcmd(0x8D);
 LCDchar(' ');
 }
@@ -22197,15 +22197,15 @@ LCDcmd(0x87);
 if(editingTempAlarm == 0){
 LCDcmd(0x8c);
 }else {
-LCDcmd(0xc0);
+LCDcmd(0xc1);
 }
 
 } else if(mode == 3){
 
-if(editingTempAlarm == 0){
+if(editingLumAlarm == 0){
 LCDcmd(0x8d);
 }else {
-LCDcmd(0xcd);
+LCDcmd(0xcf);
 }
 
 } else if(mode == 4){
@@ -22275,9 +22275,11 @@ void editClock(){
 
 while(1){
 
-# 542
 if(PORTCbits.RC5 == 0){
-if(editingClockAlarm == 1){
+if(editingClockAlarm == 0){
+editingClockAlarm = 1;
+
+} else if(editingClockAlarm == 1){
 if(clkAlarm.alarmVal.h >= 23){
 clkAlarm.alarmVal.h = 0;
 } else{
@@ -22306,15 +22308,18 @@ break;
 }
 
 void editTemp(){
-editingTempAlarm = 1;
+
 
 while(1){
 
-# 583
 if(PORTCbits.RC5 == 0){
+if(editingTempAlarm == 0){
+editingTempAlarm = 1;
+} else {
 tempAlarm.alarmTemp++;
 if(tempAlarm.alarmTemp > 50){
 tempAlarm.alarmTemp = 0;
+}
 }
 _delay((unsigned long)((100)*(1000000/4000.0)));
 }
@@ -22326,15 +22331,18 @@ break;
 }
 
 void editLum(){
-editingLumAlarm = 1;
+
 
 while(1){
 
-# 609
 if(PORTCbits.RC5 == 0){
+if(editingLumAlarm == 0){
+editingLumAlarm = 1;
+} else {
 lumAlarm.alarmLum++;
 if(lumAlarm.alarmLum > 7){
 lumAlarm.alarmLum = 0;
+}
 }
 _delay((unsigned long)((100)*(1000000/4000.0)));
 }
@@ -22349,7 +22357,6 @@ void toggleAlarms(){
 
 while(1){
 
-# 633
 if(PORTCbits.RC5 == 0){
 if(ALAF == 'A'){
 ALAF = 'a';
@@ -22374,15 +22381,16 @@ clkAlarm.trigger = 0;
 tempAlarm.trigger = 0;
 lumAlarm.trigger = 0;
 } else{
-if(mode != 1){
-mode++;
-}
 if(mode == 1){
+if(editingClockAlarm >= 1){
 editingClockAlarm++;
+}
 if(editingClockAlarm > 3){
 editingClockAlarm = 0;
-mode++;
 }
+}
+if(editingClockAlarm == 0){
+mode++;
 }
 }
 (PIR0bits.INTF = 0);

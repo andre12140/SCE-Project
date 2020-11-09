@@ -281,7 +281,7 @@ int dimingLed = 0;
 struct Time alarmPWMStart = {0xff,0xff,0xff};
 
 int editingClockAlarm = 0;
-bool editingTempAlarm = false;
+ bool editingTempAlarm = false;
 bool editingLumAlarm = false;
 
 int mode = 0; //Mode of operation (0 no edit, 1 edit CLK, 2 edit Temp, 3 edit Lum, 4 toggle Alarm Enable/Disable)
@@ -348,7 +348,7 @@ void menuLCD_ISR(){
         if(clkAlarm.trigger == true){
             LCDcmd(0x8B);
             LCDchar('C');
-        } else{
+        } else if(mode == 0){
             LCDcmd(0x8B);
             LCDchar(' ');
         }
@@ -357,7 +357,7 @@ void menuLCD_ISR(){
         if(tempAlarm.trigger == true){
             LCDcmd(0x8C);
             LCDchar('T');
-        } else{
+        } else if(mode == 0){
             LCDcmd(0x8C);
             LCDchar(' ');
         }
@@ -366,7 +366,7 @@ void menuLCD_ISR(){
         if(lumAlarm.trigger == true){
             LCDcmd(0x8D);
             LCDchar('L');
-        } else{
+        } else if(mode == 0){
             LCDcmd(0x8D);
             LCDchar(' ');
         }
@@ -451,15 +451,15 @@ void menuLCD_ISR(){
         if(editingTempAlarm == false){
             LCDcmd(0x8c);
         }else {
-            LCDcmd(0xc0);
+            LCDcmd(0xc1);
         }
         
     } else if(mode == 3){
         
-        if(editingTempAlarm == false){
+        if(editingLumAlarm == false){
             LCDcmd(0x8d);
         }else {
-            LCDcmd(0xcd);
+            LCDcmd(0xcf);
         }
         
     } else if(mode == 4){
@@ -528,19 +528,12 @@ void monitoring_ISR(){
 void editClock(){
     
     while(1){
-        /*if(S1_GetValue() == LOW){
-            __delay_ms(50);
-            editingClockAlarm++;
-            while(S1_GetValue()==LOW){}; //Waiting for user to stop pressing S1
-            if(editingClockAlarm > 3){
-                editingClockAlarm = 0;
-                mode = 2;
-                break;
-            }
-        }*/
         
         if(S2_GetValue() == LOW){ //Switch 2 pressed
-            if(editingClockAlarm == 1){ //Editing Hours
+            if(editingClockAlarm == 0){
+                editingClockAlarm = 1; //Started Editing clock
+                
+            } else if(editingClockAlarm == 1){ //Editing Hours
                 if(clkAlarm.alarmVal.h >= 23){
                     clkAlarm.alarmVal.h = 0;
                 } else{
@@ -569,21 +562,18 @@ void editClock(){
 }
 
 void editTemp(){
-    editingTempAlarm = true;
+    
         
     while(1){
-        /*if(S1_GetValue() == LOW){
-            __delay_ms(50);
-            editingTempAlarm = false;
-            mode = 3;
-            while(S1_GetValue()==LOW){}; //Waiting for user to stop pressing S1
-            break;
-        }*/
         
         if(S2_GetValue() == LOW){ //Switch 2 pressed
-            tempAlarm.alarmTemp++;
-            if(tempAlarm.alarmTemp > 50){
-                tempAlarm.alarmTemp = 0;
+            if(editingTempAlarm == false){
+                editingTempAlarm = true;
+            } else {
+                tempAlarm.alarmTemp++;
+                if(tempAlarm.alarmTemp > 50){
+                    tempAlarm.alarmTemp = 0;
+                }
             }
             __delay_ms(S2DELAY);
         }
@@ -595,21 +585,18 @@ void editTemp(){
 }
 
 void editLum(){
-    editingLumAlarm = true;
+    
     
     while(1){
-        /*if(S1_GetValue() == LOW){
-            __delay_ms(50);
-            editingLumAlarm = false;
-            mode = 4;
-            while(S1_GetValue()==LOW){}; //Waiting for user to stop pressing S1
-            break;
-        }*/
         
         if(S2_GetValue() == LOW){ //Switch 2 pressed
-            lumAlarm.alarmLum++;
-            if(lumAlarm.alarmLum > 7){ //Se o user meter 0 nunca vai passar abaixo desse valor o que significa que o alarme nao dispara
-                lumAlarm.alarmLum = 0;
+            if(editingLumAlarm == false){ 
+                editingLumAlarm = true;
+            } else {
+                lumAlarm.alarmLum++;
+                if(lumAlarm.alarmLum > 7){ //Se o user meter 0 nunca vai passar abaixo desse valor o que significa que o alarme nao dispara
+                    lumAlarm.alarmLum = 0;
+                }
             }
             __delay_ms(S2DELAY);
         }
@@ -623,12 +610,6 @@ void editLum(){
 void toggleAlarms(){
     
     while(1){
-        /*if(S1_GetValue() == LOW){
-            __delay_ms(50);
-            mode = 0;
-            while(S1_GetValue()==LOW){}; //Waiting for user to stop pressing S1
-            break;
-        }*/
         
         if(S2_GetValue() == LOW){ //Switch 2 pressed
             if(ALAF == 'A'){
@@ -654,15 +635,16 @@ void S1_ISR(){
         tempAlarm.trigger = false;
         lumAlarm.trigger = false;
     } else{
-        if(mode != 1){
-            mode++;
-        }
         if(mode == 1){
-            editingClockAlarm++;
+            if(editingClockAlarm >= 1){
+                editingClockAlarm++;
+            }
             if(editingClockAlarm > 3){
                 editingClockAlarm = 0;
-                mode++;
             }
+        }
+        if(editingClockAlarm == 0){ //Verify if not editing clock otherwise always increment mode
+            mode++;
         }
     }
     EXT_INT_InterruptFlagClear();
