@@ -13,10 +13,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _ADCC_Initialize `(v ~T0 @X0 0 ef ]
 "100 mcc_generated_files/tmr3.h
 [v _TMR3_Initialize `(v ~T0 @X0 0 ef ]
-"100 mcc_generated_files/tmr5.h
-[v _TMR5_Initialize `(v ~T0 @X0 0 ef ]
 "335 mcc_generated_files/tmr2.h
 [v _TMR2_Initialize `(v ~T0 @X0 0 ef ]
+"100 mcc_generated_files/tmr5.h
+[v _TMR5_Initialize `(v ~T0 @X0 0 ef ]
 "250 mcc_generated_files/ext_int.h
 [v _EXT_INT_Initialize `(v ~T0 @X0 0 ef ]
 "100 mcc_generated_files/tmr1.h
@@ -13850,6 +13850,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;tmr3.h: 385: void TMR3_SetInterruptHandler(void (* InterruptHandler)(void));
 [; ;tmr3.h: 403: extern void (*TMR3_InterruptHandler)(void);
 [; ;tmr3.h: 421: void TMR3_DefaultInterruptHandler(void);
+[; ;pwm6.h: 102: void PWM6_Initialize(void);
+[; ;pwm6.h: 129: void PWM6_LoadDutyValue(uint16_t dutyValue);
 [; ;stdbool.h: 15: typedef unsigned char bool;
 [; ;tmr1.h: 100: void TMR1_Initialize(void);
 [; ;tmr1.h: 129: void TMR1_StartTimer(void);
@@ -13863,8 +13865,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;tmr1.h: 385: void TMR1_SetInterruptHandler(void (* InterruptHandler)(void));
 [; ;tmr1.h: 403: extern void (*TMR1_InterruptHandler)(void);
 [; ;tmr1.h: 421: void TMR1_DefaultInterruptHandler(void);
-[; ;pwm6.h: 102: void PWM6_Initialize(void);
-[; ;pwm6.h: 129: void PWM6_LoadDutyValue(uint16_t dutyValue);
 [; ;stdbool.h: 15: typedef unsigned char bool;
 [; ;tmr2.h: 79: typedef enum
 [; ;tmr2.h: 80: {
@@ -14004,12 +14004,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;mcc.c: 57: TMR3_Initialize();
 "57
 [e ( _TMR3_Initialize ..  ]
-[; ;mcc.c: 58: TMR5_Initialize();
+[; ;mcc.c: 58: TMR2_Initialize();
 "58
-[e ( _TMR5_Initialize ..  ]
-[; ;mcc.c: 59: TMR2_Initialize();
-"59
 [e ( _TMR2_Initialize ..  ]
+[; ;mcc.c: 59: TMR5_Initialize();
+"59
+[e ( _TMR5_Initialize ..  ]
 [; ;mcc.c: 60: EXT_INT_Initialize();
 "60
 [e ( _EXT_INT_Initialize ..  ]

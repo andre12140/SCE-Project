@@ -21322,6 +21322,12 @@ extern void (*TMR3_InterruptHandler)(void);
 # 421
 void TMR3_DefaultInterruptHandler(void);
 
+# 102 "mcc_generated_files/pwm6.h"
+void PWM6_Initialize(void);
+
+# 129
+void PWM6_LoadDutyValue(uint16_t dutyValue);
+
 # 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
 typedef unsigned char bool;
 
@@ -21360,12 +21366,6 @@ extern void (*TMR1_InterruptHandler)(void);
 
 # 421
 void TMR1_DefaultInterruptHandler(void);
-
-# 102 "mcc_generated_files/pwm6.h"
-void PWM6_Initialize(void);
-
-# 129
-void PWM6_LoadDutyValue(uint16_t dutyValue);
 
 # 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
 typedef unsigned char bool;
@@ -22074,7 +22074,7 @@ do { LATAbits.LATA7 = ~LATAbits.LATA7; } while(0);
 }
 
 
-bool flagAux=0;
+bool PWM_on=0;
 void menuLCD_ISR(){
 char str[8];
 if(editingClockAlarm){
@@ -22127,7 +22127,7 @@ differenceBetweenTimePeriod( t, alarmPWMStart, &diff);
 
 
 if(diff.s <= TALA){
-flagAux = 1;
+PWM_on = 1;
 if(PWM6EN==0){
 TMR2_StartTimer();
 PWM_Output_D4_Enable();
@@ -22139,7 +22139,7 @@ dimingLed = 0;
 }
 PWM6_LoadDutyValue(dimingLed);
 } else if(PWM6EN==1){
-flagAux = 0;
+PWM_on = 0;
 PWM6_LoadDutyValue(0);
 TMR2_StopTimer();
 PWM_Output_D4_Disable();
@@ -22339,8 +22339,8 @@ break;
 }
 
 void S1_ISR(){
-
-
+PIE0bits.INTE = 0;
+_delay((unsigned long)((200)*(1000000/4000.0)));
 
 if(mode == 0 && (clkAlarm.trigger || tempAlarm.trigger || lumAlarm.trigger)){
 clkAlarm.trigger = 0;
@@ -22358,6 +22358,8 @@ mode++;
 }
 }
 }
+(PIR0bits.INTF = 0);
+PIE0bits.INTE = 1;
 }
 
 void main(void)
@@ -22449,7 +22451,7 @@ asm("sleep");
 while (1)
 {
 switch(mode){
-case 0: if(flagAux){ continue;} else {asm("sleep");}
+case 0: if(PWM_on){ continue;} else {asm("sleep");}
 case 1:
 editClock();
 case 2:

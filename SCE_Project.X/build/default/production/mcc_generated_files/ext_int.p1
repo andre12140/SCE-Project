@@ -13820,16 +13820,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;ext_int.c: 64: (PIR0bits.INTF = 0);
 "64
 [e = . . _PIR0bits 0 0 -> -> 0 `i `uc ]
-[; ;ext_int.c: 65: (INTCONbits.INTEDG = 0);
-"65
-[e = . . _INTCONbits 0 0 -> -> 0 `i `uc ]
-[; ;ext_int.c: 67: INT_SetInterruptHandler(INT_DefaultInterruptHandler);
-"67
-[e ( _INT_SetInterruptHandler (1 &U _INT_DefaultInterruptHandler ]
-[; ;ext_int.c: 68: (PIE0bits.INTE = 1);
+[; ;ext_int.c: 66: (INTCONbits.INTEDG = 1);
+"66
+[e = . . _INTCONbits 0 0 -> -> 1 `i `uc ]
+[; ;ext_int.c: 68: INT_SetInterruptHandler(INT_DefaultInterruptHandler);
 "68
+[e ( _INT_SetInterruptHandler (1 &U _INT_DefaultInterruptHandler ]
+[; ;ext_int.c: 69: (PIE0bits.INTE = 1);
+"69
 [e = . . _PIE0bits 0 0 -> -> 1 `i `uc ]
-[; ;ext_int.c: 70: }
-"70
+[; ;ext_int.c: 71: }
+"71
 [e :UE 1625 ]
 }

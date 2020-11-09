@@ -21175,7 +21175,8 @@ void EXT_INT_Initialize(void)
 
 
 (PIR0bits.INTF = 0);
-(INTCONbits.INTEDG = 0);
+
+(INTCONbits.INTEDG = 1);
 
 INT_SetInterruptHandler(INT_DefaultInterruptHandler);
 (PIE0bits.INTE = 1);

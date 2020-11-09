@@ -590,7 +590,7 @@ void editLum(){
             editingLumAlarm = false;
             break;
         }
-    }  
+    }
 }
 
 void toggleAlarms(){
@@ -619,7 +619,8 @@ void toggleAlarms(){
 }
 
 void S1_ISR(){
-    
+    PIE0bits.INTE = 0;
+    __delay_ms(200);
     // First clears LCD and only switches mode when S1 is pressed again and theirs no alarms
     if(mode == 0 && (clkAlarm.trigger || tempAlarm.trigger || lumAlarm.trigger)){
         clkAlarm.trigger = false;
@@ -637,6 +638,8 @@ void S1_ISR(){
             }
         }
     }
+    EXT_INT_InterruptFlagClear();
+    PIE0bits.INTE = 1;
 }
 
 void main(void)
@@ -730,7 +733,7 @@ void main(void)
         switch(mode){
                 case 0: if(PWM_on){ continue;} else {SLEEP();}
                 case 1: 
-                    editClock(); //Clock Edit Handler
+                    editClock(); //Clock Edit Handler //
                 case 2:
                     editTemp(); //Temperature Edit Handler
                 case 3:

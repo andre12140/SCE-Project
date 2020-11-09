@@ -126,12 +126,28 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S31 . . ]
 "526
 [v _PORTCbits `VS31 ~T0 @X0 0 e@14 ]
+"21741
+[s S985 :1 `uc 1 :3 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S985 . INTE . IOCIE TMR0IE ]
+"21740
+[u S984 `S985 1 ]
+[n S984 . . ]
+"21748
+[v _PIE0bits `VS984 ~T0 @X0 0 e@1814 ]
+"21319
+[s S966 :1 `uc 1 :3 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S966 . INTF . IOCIF TMR0IF ]
+"21318
+[u S965 `S966 1 ]
+[n S965 . . ]
+"21326
+[v _PIR0bits `VS965 ~T0 @X0 0 e@1804 ]
 [p mainexit ]
 "78 mcc_generated_files/mcc.h
 [v _SYSTEM_Initialize `(v ~T0 @X0 0 ef ]
-[v F12337 `(v ~T0 @X0 0 tf ]
+[v F12341 `(v ~T0 @X0 0 tf ]
 "385 mcc_generated_files/tmr1.h
-[v _TMR1_SetInterruptHandler `(v ~T0 @X0 0 ef1`*F12337 ]
+[v _TMR1_SetInterruptHandler `(v ~T0 @X0 0 ef1`*F12341 ]
 [v F12310 `(v ~T0 @X0 0 tf ]
 "385 mcc_generated_files/tmr3.h
 [v _TMR3_SetInterruptHandler `(v ~T0 @X0 0 ef1`*F12310 ]
@@ -13972,6 +13988,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;tmr3.h: 385: void TMR3_SetInterruptHandler(void (* InterruptHandler)(void));
 [; ;tmr3.h: 403: extern void (*TMR3_InterruptHandler)(void);
 [; ;tmr3.h: 421: void TMR3_DefaultInterruptHandler(void);
+[; ;pwm6.h: 102: void PWM6_Initialize(void);
+[; ;pwm6.h: 129: void PWM6_LoadDutyValue(uint16_t dutyValue);
 [; ;stdbool.h: 15: typedef unsigned char bool;
 [; ;tmr1.h: 100: void TMR1_Initialize(void);
 [; ;tmr1.h: 129: void TMR1_StartTimer(void);
@@ -13985,8 +14003,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;tmr1.h: 385: void TMR1_SetInterruptHandler(void (* InterruptHandler)(void));
 [; ;tmr1.h: 403: extern void (*TMR1_InterruptHandler)(void);
 [; ;tmr1.h: 421: void TMR1_DefaultInterruptHandler(void);
-[; ;pwm6.h: 102: void PWM6_Initialize(void);
-[; ;pwm6.h: 129: void PWM6_LoadDutyValue(uint16_t dutyValue);
 [; ;stdbool.h: 15: typedef unsigned char bool;
 [; ;tmr2.h: 79: typedef enum
 [; ;tmr2.h: 80: {
@@ -15297,11 +15313,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 1856 ]
 }
 "331
-[v _flagAux `uc ~T0 @X0 1 e ]
-[i _flagAux
+[v _PWM_on `uc ~T0 @X0 1 e ]
+[i _PWM_on
 -> -> 0 `i `uc
 ]
-[; ;main.c: 331: bool flagAux=0;
+[; ;main.c: 331: bool PWM_on=0;
 "332
 [v _menuLCD_ISR `(v ~T0 @X0 1 ef ]
 {
@@ -15467,9 +15483,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 "383
 [e $ ! <= -> . _diff 2 `i -> _TALA `i 1876  ]
 {
-[; ;main.c: 384: flagAux = 1;
+[; ;main.c: 384: PWM_on = 1;
 "384
-[e = _flagAux -> -> 1 `i `uc ]
+[e = _PWM_on -> -> 1 `i `uc ]
 [; ;main.c: 385: if(PWM6EN==0){
 "385
 [e $ ! == -> _PWM6EN `i -> 0 `i 1877  ]
@@ -15514,9 +15530,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 1876 ]
 [e $ ! == -> _PWM6EN `i -> 1 `i 1881  ]
 {
-[; ;main.c: 396: flagAux = 0;
+[; ;main.c: 396: PWM_on = 0;
 "396
-[e = _flagAux -> -> 0 `i `uc ]
+[e = _PWM_on -> -> 0 `i `uc ]
 [; ;main.c: 397: PWM6_LoadDutyValue(0);
 "397
 [e ( _PWM6_LoadDutyValue (1 -> -> 0 `i `ui ]
@@ -16190,6 +16206,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 621: void S1_ISR(){
 [e :U _S1_ISR ]
 [f ]
+[; ;main.c: 622: PIE0bits.INTE = 0;
+"622
+[e = . . _PIE0bits 0 0 -> -> 0 `i `uc ]
+[; ;main.c: 623: _delay((unsigned long)((200)*(1000000/4000.0)));
+"623
+[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
 [; ;main.c: 625: if(mode == 0 && (clkAlarm.trigger || tempAlarm.trigger || lumAlarm.trigger)){
 "625
 [e $ ! && == _mode -> 0 `i || || != -> . _clkAlarm 1 `i -> -> -> 0 `i `uc `i != -> . _tempAlarm 1 `i -> -> -> 0 `i `uc `i != -> . _lumAlarm 1 `i -> -> -> 0 `i `uc `i 1961  ]
@@ -16249,64 +16271,70 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 638: }
 [; ;main.c: 639: }
 [; ;main.c: 640: }
-[; ;main.c: 641: }
+[; ;main.c: 641: (PIR0bits.INTF = 0);
 "641
+[e = . . _PIR0bits 0 0 -> -> 0 `i `uc ]
+[; ;main.c: 642: PIE0bits.INTE = 1;
+"642
+[e = . . _PIE0bits 0 0 -> -> 1 `i `uc ]
+[; ;main.c: 643: }
+"643
 [e :UE 1960 ]
 }
 [v $root$_main `(v ~T0 @X0 0 e ]
-"643
+"645
 [v _main `(v ~T0 @X0 1 ef ]
-"644
+"646
 {
-[; ;main.c: 643: void main(void)
-[; ;main.c: 644: {
+[; ;main.c: 645: void main(void)
+[; ;main.c: 646: {
 [e :U _main ]
 [f ]
-[; ;main.c: 646: SYSTEM_Initialize();
-"646
-[e ( _SYSTEM_Initialize ..  ]
-[; ;main.c: 648: PWM6_LoadDutyValue(0);
+[; ;main.c: 648: SYSTEM_Initialize();
 "648
-[e ( _PWM6_LoadDutyValue (1 -> -> 0 `i `ui ]
-[; ;main.c: 649: TMR2_StopTimer();
-"649
-[e ( _TMR2_StopTimer ..  ]
-[; ;main.c: 650: PWM_Output_D4_Disable();
+[e ( _SYSTEM_Initialize ..  ]
+[; ;main.c: 650: PWM6_LoadDutyValue(0);
 "650
-[e ( _PWM_Output_D4_Disable ..  ]
-[; ;main.c: 652: TMR1_SetInterruptHandler(Clock_ISR);
+[e ( _PWM6_LoadDutyValue (1 -> -> 0 `i `ui ]
+[; ;main.c: 651: TMR2_StopTimer();
+"651
+[e ( _TMR2_StopTimer ..  ]
+[; ;main.c: 652: PWM_Output_D4_Disable();
 "652
-[e ( _TMR1_SetInterruptHandler (1 &U _Clock_ISR ]
-[; ;main.c: 654: TMR3_SetInterruptHandler(menuLCD_ISR);
+[e ( _PWM_Output_D4_Disable ..  ]
+[; ;main.c: 654: TMR1_SetInterruptHandler(Clock_ISR);
 "654
-[e ( _TMR3_SetInterruptHandler (1 &U _menuLCD_ISR ]
-[; ;main.c: 656: TMR5_SetInterruptHandler(monitoring_ISR);
+[e ( _TMR1_SetInterruptHandler (1 &U _Clock_ISR ]
+[; ;main.c: 656: TMR3_SetInterruptHandler(menuLCD_ISR);
 "656
-[e ( _TMR5_SetInterruptHandler (1 &U _monitoring_ISR ]
-[; ;main.c: 658: INT_SetInterruptHandler(S1_ISR);
+[e ( _TMR3_SetInterruptHandler (1 &U _menuLCD_ISR ]
+[; ;main.c: 658: TMR5_SetInterruptHandler(monitoring_ISR);
 "658
-[e ( _INT_SetInterruptHandler (1 &U _S1_ISR ]
+[e ( _TMR5_SetInterruptHandler (1 &U _monitoring_ISR ]
+[; ;main.c: 660: INT_SetInterruptHandler(S1_ISR);
 "660
-[v _checkSumAux `uc ~T0 @X0 1 a ]
-[; ;main.c: 660: uint8_t checkSumAux = 0;
-[e = _checkSumAux -> -> 0 `i `uc ]
-"661
-[v _notInit `uc ~T0 @X0 1 a ]
-[; ;main.c: 661: bool notInit = 1;
-[e = _notInit -> -> 1 `i `uc ]
+[e ( _INT_SetInterruptHandler (1 &U _S1_ISR ]
 "662
-[v _corrupted `uc ~T0 @X0 1 a ]
-[; ;main.c: 662: bool corrupted = 0;
-[e = _corrupted -> -> 0 `i `uc ]
-[; ;main.c: 663: if(DATAEE_ReadByte(0x7000) == 'S'){
+[v _checkSumAux `uc ~T0 @X0 1 a ]
+[; ;main.c: 662: uint8_t checkSumAux = 0;
+[e = _checkSumAux -> -> 0 `i `uc ]
 "663
+[v _notInit `uc ~T0 @X0 1 a ]
+[; ;main.c: 663: bool notInit = 1;
+[e = _notInit -> -> 1 `i `uc ]
+"664
+[v _corrupted `uc ~T0 @X0 1 a ]
+[; ;main.c: 664: bool corrupted = 0;
+[e = _corrupted -> -> 0 `i `uc ]
+[; ;main.c: 665: if(DATAEE_ReadByte(0x7000) == 'S'){
+"665
 [e $ ! == -> ( _DATAEE_ReadByte (1 -> -> 28672 `i `ui `ui -> 83 `ui 1967  ]
 {
-[; ;main.c: 664: notInit = 0;
-"664
+[; ;main.c: 666: notInit = 0;
+"666
 [e = _notInit -> -> 0 `i `uc ]
-[; ;main.c: 665: for(int i = 1; i < 13; i++){
-"665
+[; ;main.c: 667: for(int i = 1; i < 13; i++){
+"667
 {
 [v _i `i ~T0 @X0 1 a ]
 [e = _i -> 1 `i ]
@@ -16314,175 +16342,175 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 1969  ]
 [e :U 1968 ]
 {
-[; ;main.c: 666: checkSumAux += DATAEE_ReadByte(0x7000 + (i*8));
-"666
+[; ;main.c: 668: checkSumAux += DATAEE_ReadByte(0x7000 + (i*8));
+"668
 [e =+ _checkSumAux ( _DATAEE_ReadByte (1 -> + -> 28672 `i * _i -> 8 `i `ui ]
-"667
+"669
 }
-"665
+"667
 [e ++ _i -> 1 `i ]
 [e $ < _i -> 13 `i 1968  ]
 [e :U 1969 ]
-"667
+"669
 }
-[; ;main.c: 667: }
-[; ;main.c: 668: if(checkSumAux != DATAEE_ReadByte(0x7000 + (13*8))){
-"668
+[; ;main.c: 669: }
+[; ;main.c: 670: if(checkSumAux != DATAEE_ReadByte(0x7000 + (13*8))){
+"670
 [e $ ! != -> _checkSumAux `i -> ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 13 `i -> 8 `i `ui `i 1971  ]
 {
-[; ;main.c: 669: corrupted = 1;
-"669
+[; ;main.c: 671: corrupted = 1;
+"671
 [e = _corrupted -> -> 1 `i `uc ]
-"670
+"672
 }
 [e :U 1971 ]
-"671
+"673
 }
 [e :U 1967 ]
-[; ;main.c: 670: }
-[; ;main.c: 671: }
-[; ;main.c: 673: if(notInit || corrupted){
-"673
+[; ;main.c: 672: }
+[; ;main.c: 673: }
+[; ;main.c: 675: if(notInit || corrupted){
+"675
 [e $ ! || != -> _notInit `i -> -> -> 0 `i `uc `i != -> _corrupted `i -> -> -> 0 `i `uc `i 1972  ]
 {
-[; ;main.c: 674: DATAEE_WriteByte( 0x7000 + (0 * 8), 'S');
-"674
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 0 `i -> 8 `i `ui -> -> 83 `ui `uc ]
-[; ;main.c: 675: DATAEE_WriteByte( 0x7000 + (1 * 8), 25);
-"675
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 1 `i -> 8 `i `ui -> -> 25 `i `uc ]
-[; ;main.c: 676: DATAEE_WriteByte( 0x7000 + (2 * 8), 3);
+[; ;main.c: 676: DATAEE_WriteByte( 0x7000 + (0 * 8), 'S');
 "676
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 2 `i -> 8 `i `ui -> -> 3 `i `uc ]
-[; ;main.c: 677: DATAEE_WriteByte( 0x7000 + (3 * 8), 5);
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 0 `i -> 8 `i `ui -> -> 83 `ui `uc ]
+[; ;main.c: 677: DATAEE_WriteByte( 0x7000 + (1 * 8), 25);
 "677
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 3 `i -> 8 `i `ui -> -> 5 `i `uc ]
-[; ;main.c: 678: DATAEE_WriteByte( 0x7000 + (4 * 8), 12);
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 1 `i -> 8 `i `ui -> -> 25 `i `uc ]
+[; ;main.c: 678: DATAEE_WriteByte( 0x7000 + (2 * 8), 3);
 "678
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 4 `i -> 8 `i `ui -> -> 12 `i `uc ]
-[; ;main.c: 679: DATAEE_WriteByte( 0x7000 + (5 * 8), 0);
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 2 `i -> 8 `i `ui -> -> 3 `i `uc ]
+[; ;main.c: 679: DATAEE_WriteByte( 0x7000 + (3 * 8), 5);
 "679
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 5 `i -> 8 `i `ui -> -> 0 `i `uc ]
-[; ;main.c: 680: DATAEE_WriteByte( 0x7000 + (6 * 8), 0);
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 3 `i -> 8 `i `ui -> -> 5 `i `uc ]
+[; ;main.c: 680: DATAEE_WriteByte( 0x7000 + (4 * 8), 12);
 "680
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 6 `i -> 8 `i `ui -> -> 0 `i `uc ]
-[; ;main.c: 681: DATAEE_WriteByte( 0x7000 + (7 * 8), 28);
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 4 `i -> 8 `i `ui -> -> 12 `i `uc ]
+[; ;main.c: 681: DATAEE_WriteByte( 0x7000 + (5 * 8), 0);
 "681
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 7 `i -> 8 `i `ui -> -> 28 `i `uc ]
-[; ;main.c: 682: DATAEE_WriteByte( 0x7000 + (8 * 8), 4);
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 5 `i -> 8 `i `ui -> -> 0 `i `uc ]
+[; ;main.c: 682: DATAEE_WriteByte( 0x7000 + (6 * 8), 0);
 "682
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 8 `i -> 8 `i `ui -> -> 4 `i `uc ]
-[; ;main.c: 683: DATAEE_WriteByte( 0x7000 + (9 * 8), 'a');
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 6 `i -> 8 `i `ui -> -> 0 `i `uc ]
+[; ;main.c: 683: DATAEE_WriteByte( 0x7000 + (7 * 8), 28);
 "683
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 9 `i -> 8 `i `ui -> -> 97 `ui `uc ]
-[; ;main.c: 684: DATAEE_WriteByte( 0x7000 + (10 * 8), 0);
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 7 `i -> 8 `i `ui -> -> 28 `i `uc ]
+[; ;main.c: 684: DATAEE_WriteByte( 0x7000 + (8 * 8), 4);
 "684
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 10 `i -> 8 `i `ui -> -> 0 `i `uc ]
-[; ;main.c: 685: DATAEE_WriteByte( 0x7000 + (11 * 8), 0);
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 8 `i -> 8 `i `ui -> -> 4 `i `uc ]
+[; ;main.c: 685: DATAEE_WriteByte( 0x7000 + (9 * 8), 'a');
 "685
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 11 `i -> 8 `i `ui -> -> 0 `i `uc ]
-[; ;main.c: 686: DATAEE_WriteByte( 0x7000 + (12 * 8), 0);
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 9 `i -> 8 `i `ui -> -> 97 `ui `uc ]
+[; ;main.c: 686: DATAEE_WriteByte( 0x7000 + (10 * 8), 0);
 "686
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 12 `i -> 8 `i `ui -> -> 0 `i `uc ]
-[; ;main.c: 687: DATAEE_WriteByte( 0x7000 + (13 * 8), 174);
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 10 `i -> 8 `i `ui -> -> 0 `i `uc ]
+[; ;main.c: 687: DATAEE_WriteByte( 0x7000 + (11 * 8), 0);
 "687
-[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 13 `i -> 8 `i `ui -> -> 174 `i `uc ]
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 11 `i -> 8 `i `ui -> -> 0 `i `uc ]
+[; ;main.c: 688: DATAEE_WriteByte( 0x7000 + (12 * 8), 0);
 "688
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 12 `i -> 8 `i `ui -> -> 0 `i `uc ]
+[; ;main.c: 689: DATAEE_WriteByte( 0x7000 + (13 * 8), 174);
+"689
+[e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i * -> 13 `i -> 8 `i `ui -> -> 174 `i `uc ]
+"690
 }
 [e :U 1972 ]
-[; ;main.c: 688: }
-[; ;main.c: 690: NREG = DATAEE_ReadByte(0x7000 + (1*8));
-"690
-[e = _NREG ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 1 `i -> 8 `i `ui ]
-[; ;main.c: 691: PMON = DATAEE_ReadByte(0x7000 + (2*8));
-"691
-[e = _PMON ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 2 `i -> 8 `i `ui ]
-[; ;main.c: 692: TALA = DATAEE_ReadByte(0x7000 + (3*8));
+[; ;main.c: 690: }
+[; ;main.c: 692: NREG = DATAEE_ReadByte(0x7000 + (1*8));
 "692
-[e = _TALA ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 3 `i -> 8 `i `ui ]
-[; ;main.c: 693: clkAlarm.alarmVal.h = DATAEE_ReadByte(0x7000 + (4*8));
+[e = _NREG ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 1 `i -> 8 `i `ui ]
+[; ;main.c: 693: PMON = DATAEE_ReadByte(0x7000 + (2*8));
 "693
-[e = . . _clkAlarm 0 0 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 4 `i -> 8 `i `ui ]
-[; ;main.c: 694: clkAlarm.alarmVal.m = DATAEE_ReadByte(0x7000 + (5*8));
+[e = _PMON ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 2 `i -> 8 `i `ui ]
+[; ;main.c: 694: TALA = DATAEE_ReadByte(0x7000 + (3*8));
 "694
-[e = . . _clkAlarm 0 1 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 5 `i -> 8 `i `ui ]
-[; ;main.c: 695: clkAlarm.alarmVal.s = DATAEE_ReadByte(0x7000 + (6*8));
+[e = _TALA ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 3 `i -> 8 `i `ui ]
+[; ;main.c: 695: clkAlarm.alarmVal.h = DATAEE_ReadByte(0x7000 + (4*8));
 "695
-[e = . . _clkAlarm 0 2 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 6 `i -> 8 `i `ui ]
-[; ;main.c: 696: tempAlarm.alarmTemp = DATAEE_ReadByte(0x7000 + (7*8));
+[e = . . _clkAlarm 0 0 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 4 `i -> 8 `i `ui ]
+[; ;main.c: 696: clkAlarm.alarmVal.m = DATAEE_ReadByte(0x7000 + (5*8));
 "696
-[e = . _tempAlarm 0 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 7 `i -> 8 `i `ui ]
-[; ;main.c: 697: lumAlarm.alarmLum = DATAEE_ReadByte(0x7000 + (8*8));
+[e = . . _clkAlarm 0 1 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 5 `i -> 8 `i `ui ]
+[; ;main.c: 697: clkAlarm.alarmVal.s = DATAEE_ReadByte(0x7000 + (6*8));
 "697
-[e = . _lumAlarm 0 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 8 `i -> 8 `i `ui ]
-[; ;main.c: 698: ALAF = DATAEE_ReadByte(0x7000 + (9*8));
+[e = . . _clkAlarm 0 2 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 6 `i -> 8 `i `ui ]
+[; ;main.c: 698: tempAlarm.alarmTemp = DATAEE_ReadByte(0x7000 + (7*8));
 "698
-[e = _ALAF ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 9 `i -> 8 `i `ui ]
-[; ;main.c: 699: t.h = DATAEE_ReadByte(0x7000 + (10*8));
+[e = . _tempAlarm 0 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 7 `i -> 8 `i `ui ]
+[; ;main.c: 699: lumAlarm.alarmLum = DATAEE_ReadByte(0x7000 + (8*8));
 "699
-[e = . _t 0 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 10 `i -> 8 `i `ui ]
-[; ;main.c: 700: t.m = DATAEE_ReadByte(0x7000 + (11*8));
+[e = . _lumAlarm 0 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 8 `i -> 8 `i `ui ]
+[; ;main.c: 700: ALAF = DATAEE_ReadByte(0x7000 + (9*8));
 "700
-[e = . _t 1 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 11 `i -> 8 `i `ui ]
-[; ;main.c: 701: idx_RingBuffer = DATAEE_ReadByte(0x7000 + (12*8));
+[e = _ALAF ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 9 `i -> 8 `i `ui ]
+[; ;main.c: 701: t.h = DATAEE_ReadByte(0x7000 + (10*8));
 "701
+[e = . _t 0 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 10 `i -> 8 `i `ui ]
+[; ;main.c: 702: t.m = DATAEE_ReadByte(0x7000 + (11*8));
+"702
+[e = . _t 1 ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 11 `i -> 8 `i `ui ]
+[; ;main.c: 703: idx_RingBuffer = DATAEE_ReadByte(0x7000 + (12*8));
+"703
 [e = _idx_RingBuffer ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 12 `i -> 8 `i `ui ]
-[; ;main.c: 705: tempAlarm.trigger = 0;
-"705
+[; ;main.c: 707: tempAlarm.trigger = 0;
+"707
 [e = . _tempAlarm 1 -> -> 0 `i `uc ]
-[; ;main.c: 706: tempAlarm.triggered = 0;
-"706
-[e = . _tempAlarm 2 -> -> 0 `i `uc ]
-[; ;main.c: 708: lumAlarm.trigger = 0;
+[; ;main.c: 708: tempAlarm.triggered = 0;
 "708
+[e = . _tempAlarm 2 -> -> 0 `i `uc ]
+[; ;main.c: 710: lumAlarm.trigger = 0;
+"710
 [e = . _lumAlarm 1 -> -> 0 `i `uc ]
-[; ;main.c: 709: lumAlarm.triggered = 0;
-"709
-[e = . _lumAlarm 2 -> -> 0 `i `uc ]
-[; ;main.c: 711: clkAlarm.trigger = 0;
+[; ;main.c: 711: lumAlarm.triggered = 0;
 "711
+[e = . _lumAlarm 2 -> -> 0 `i `uc ]
+[; ;main.c: 713: clkAlarm.trigger = 0;
+"713
 [e = . _clkAlarm 1 -> -> 0 `i `uc ]
-[; ;main.c: 714: i2c1_driver_open();
-"714
-[e ( _i2c1_driver_open ..  ]
-[; ;main.c: 715: TRISCbits.TRISC3 = 1;
-"715
-[e = . . _TRISCbits 0 3 -> -> 1 `i `uc ]
-[; ;main.c: 716: TRISCbits.TRISC4 = 1;
+[; ;main.c: 716: i2c1_driver_open();
 "716
-[e = . . _TRISCbits 0 4 -> -> 1 `i `uc ]
-[; ;main.c: 717: WPUC3 = 1;
+[e ( _i2c1_driver_open ..  ]
+[; ;main.c: 717: TRISCbits.TRISC3 = 1;
 "717
-[e = _WPUC3 -> -> 1 `i `b ]
-[; ;main.c: 718: WPUC4 = 1;
+[e = . . _TRISCbits 0 3 -> -> 1 `i `uc ]
+[; ;main.c: 718: TRISCbits.TRISC4 = 1;
 "718
-[e = _WPUC4 -> -> 1 `i `b ]
-[; ;main.c: 719: LCDinit();
+[e = . . _TRISCbits 0 4 -> -> 1 `i `uc ]
+[; ;main.c: 719: WPUC3 = 1;
 "719
+[e = _WPUC3 -> -> 1 `i `b ]
+[; ;main.c: 720: WPUC4 = 1;
+"720
+[e = _WPUC4 -> -> 1 `i `b ]
+[; ;main.c: 721: LCDinit();
+"721
 [e ( _LCDinit ..  ]
-[; ;main.c: 722: (INTCONbits.GIE = 1);
-"722
+[; ;main.c: 724: (INTCONbits.GIE = 1);
+"724
 [e = . . _INTCONbits 0 3 -> -> 1 `i `uc ]
-[; ;main.c: 725: (INTCONbits.PEIE = 1);
-"725
-[e = . . _INTCONbits 0 2 -> -> 1 `i `uc ]
-[; ;main.c: 727: asm("sleep");
+[; ;main.c: 727: (INTCONbits.PEIE = 1);
 "727
-[; <" sleep ;# ">
-[; ;main.c: 729: while (1)
+[e = . . _INTCONbits 0 2 -> -> 1 `i `uc ]
+[; ;main.c: 729: asm("sleep");
 "729
-[e :U 1974 ]
-[; ;main.c: 730: {
-"730
-{
-[; ;main.c: 731: switch(mode){
+[; <" sleep ;# ">
+[; ;main.c: 731: while (1)
 "731
+[e :U 1974 ]
+[; ;main.c: 732: {
+"732
+{
+[; ;main.c: 733: switch(mode){
+"733
 [e $U 1977  ]
 {
-[; ;main.c: 732: case 0: if(flagAux){ continue;} else {asm("sleep");}
-"732
+[; ;main.c: 734: case 0: if(PWM_on){ continue;} else {asm("sleep");}
+"734
 [e :U 1978 ]
-[e $ ! != -> _flagAux `i -> -> -> 0 `i `uc `i 1979  ]
+[e $ ! != -> _PWM_on `i -> -> -> 0 `i `uc `i 1979  ]
 {
 [e $U 1973  ]
 }
@@ -16492,35 +16520,35 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; <" sleep ;# ">
 }
 [e :U 1980 ]
-[; ;main.c: 733: case 1:
-"733
-[e :U 1981 ]
-[; ;main.c: 734: editClock();
-"734
-[e ( _editClock ..  ]
-[; ;main.c: 735: case 2:
+[; ;main.c: 735: case 1:
 "735
-[e :U 1982 ]
-[; ;main.c: 736: editTemp();
+[e :U 1981 ]
+[; ;main.c: 736: editClock();
 "736
-[e ( _editTemp ..  ]
-[; ;main.c: 737: case 3:
+[e ( _editClock ..  ]
+[; ;main.c: 737: case 2:
 "737
-[e :U 1983 ]
-[; ;main.c: 738: editLum();
+[e :U 1982 ]
+[; ;main.c: 738: editTemp();
 "738
-[e ( _editLum ..  ]
-[; ;main.c: 739: case 4:
+[e ( _editTemp ..  ]
+[; ;main.c: 739: case 3:
 "739
-[e :U 1984 ]
-[; ;main.c: 740: toggleAlarms();
+[e :U 1983 ]
+[; ;main.c: 740: editLum();
 "740
-[e ( _toggleAlarms ..  ]
+[e ( _editLum ..  ]
+[; ;main.c: 741: case 4:
 "741
+[e :U 1984 ]
+[; ;main.c: 742: toggleAlarms();
+"742
+[e ( _toggleAlarms ..  ]
+"743
 }
-[; ;main.c: 741: }
+[; ;main.c: 743: }
 [e $U 1976  ]
-"731
+"733
 [e :U 1977 ]
 [e [\ _mode , $ -> 0 `i 1978
  , $ -> 1 `i 1981
@@ -16528,17 +16556,17 @@ Version 3.2 HI-TECH Software Intermediate Code
  , $ -> 3 `i 1983
  , $ -> 4 `i 1984
  1976 ]
-"741
+"743
 [e :U 1976 ]
-"742
+"744
 }
 [e :U 1973 ]
-"729
+"731
 [e $U 1974  ]
 [e :U 1975 ]
-[; ;main.c: 742: }
-[; ;main.c: 743: }
-"743
+[; ;main.c: 744: }
+[; ;main.c: 745: }
+"745
 [e :UE 1966 ]
 }
 [p f _sprintf 8421508 ]
