@@ -379,7 +379,6 @@ void menuLCD_ISR(){
             struct Time diff = {0,0,0};
             differenceBetweenTimePeriod( t, alarmPWMStart, &diff);
             
-            //PWM AINDA ESTA MAL
             if(diff.s <= TALA){
                 PWM_on = true;
                 if(PWM6EN==0){ //Verifica se o Timer2 e PWM esta desligado
@@ -393,6 +392,13 @@ void menuLCD_ISR(){
                 }
                 PWM6_LoadDutyValue(dimingLed);
             } else if(PWM6EN==1){ //Verifica se o Timer2 e PWM esta ligado
+                PWM_on = false;
+                PWM6_LoadDutyValue(0);
+                TMR2_StopTimer();
+                PWM_Output_D4_Disable();
+            }
+        } else{
+            if(PWM6EN==1){ //Verifica se o Timer2 e PWM esta ligado
                 PWM_on = false;
                 PWM6_LoadDutyValue(0);
                 TMR2_StopTimer();
@@ -423,18 +429,39 @@ void menuLCD_ISR(){
     }
     LCDstr(l);
     
+    if(mode != 0){
+        LCDcmd(0x8B);
+        LCDstr("CTL");
+    }
+    
     if(mode == 1){
-        if(editingClockAlarm == 1){
+        if(editingClockAlarm == 0){
+            LCDcmd(0x8B);
+        } else{
+            if(editingClockAlarm == 1){
             LCDcmd(0x81);
-        } else if(editingClockAlarm == 2){
-            LCDcmd(0x84);
-        } else if(editingClockAlarm == 3){
-            LCDcmd(0x87);
+            } else if(editingClockAlarm == 2){
+                LCDcmd(0x84);
+            } else if(editingClockAlarm == 3){
+                LCDcmd(0x87);
+            }
         }
     } else if(mode == 2){
-        LCDcmd(0xc1);
+        
+        if(editingTempAlarm == false){
+            LCDcmd(0x8c);
+        }else {
+            LCDcmd(0xc0);
+        }
+        
     } else if(mode == 3){
-        LCDcmd(0xcf);
+        
+        if(editingTempAlarm == false){
+            LCDcmd(0x8d);
+        }else {
+            LCDcmd(0xcd);
+        }
+        
     } else if(mode == 4){
         LCDcmd(0x8f);
     }

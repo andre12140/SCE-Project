@@ -56,7 +56,7 @@ TMR2_CLC2_OUT 15
 TMR2_CLC3_OUT 16
 TMR2_CLC4_OUT 17
 ]
-"449 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\SCE_Project.X\main.c
+"476 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\SCE_Project.X\main.c
 [e E12420 . `uc
 channel_ANA0 0
 channel_VSS 60
@@ -117,19 +117,19 @@ channel_FVR_buf1 63
 [v _Clock_ISR Clock_ISR `(v  1 e 1 0 ]
 "332
 [v _menuLCD_ISR menuLCD_ISR `(v  1 e 1 0 ]
-"446
+"473
 [v _monitoring_ISR monitoring_ISR `(v  1 e 1 0 ]
-"501
+"528
 [v _editClock editClock `(v  1 e 1 0 ]
-"544
+"571
 [v _editTemp editTemp `(v  1 e 1 0 ]
-"570
+"597
 [v _editLum editLum `(v  1 e 1 0 ]
-"596
+"623
 [v _toggleAlarms toggleAlarms `(v  1 e 1 0 ]
-"621
+"648
 [v _S1_ISR S1_ISR `(v  1 e 1 0 ]
-"645
+"672
 [v _main main `(v  1 e 1 0 ]
 "63 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\SCE_Project.X\mcc_generated_files/adcc.c
 [v _ADCC_Initialize ADCC_Initialize `(v  1 e 1 0 ]
@@ -1031,9 +1031,9 @@ channel_FVR_buf1 63
 [v _mode mode `i  1 e 2 0 ]
 "331
 [v _PWM_on PWM_on `uc  1 e 1 0 ]
-"443
+"470
 [v _prevTemp prevTemp `i  1 e 2 0 ]
-"444
+"471
 [v _prevLumLevel prevLumLevel `i  1 e 2 0 ]
 "30 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\SCE_Project.X\mcc_generated_files/ext_int.c
 [v _INT_InterruptHandler INT_InterruptHandler `*.37(v  1 e 2 0 ]
@@ -1053,43 +1053,43 @@ channel_FVR_buf1 63
 [v _timer5ReloadVal timer5ReloadVal `VEui  1 e 2 0 ]
 "58
 [v _TMR5_InterruptHandler TMR5_InterruptHandler `*.37(v  1 e 2 0 ]
-"645 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\SCE_Project.X\main.c
+"672 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\SCE_Project.X\main.c
 [v _main main `(v  1 e 1 0 ]
 {
-"667
+"694
 [v main@i i `i  1 a 2 15 ]
-"664
+"691
 [v main@corrupted corrupted `uc  1 a 1 14 ]
-"663
+"690
 [v main@notInit notInit `uc  1 a 1 13 ]
-"662
+"689
 [v main@checkSumAux checkSumAux `uc  1 a 1 12 ]
-"745
+"772
 } 0
-"596
+"623
 [v _toggleAlarms toggleAlarms `(v  1 e 1 0 ]
 {
-"619
+"646
 } 0
 "83 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\SCE_Project.X\mcc_generated_files/i2c1_driver.c
 [v _i2c1_driver_open i2c1_driver_open `(b  1 e 0 0 ]
 {
 "95
 } 0
-"544 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\SCE_Project.X\main.c
+"571 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\SCE_Project.X\main.c
 [v _editTemp editTemp `(v  1 e 1 0 ]
 {
-"568
+"595
 } 0
-"570
+"597
 [v _editLum editLum `(v  1 e 1 0 ]
 {
-"594
+"621
 } 0
-"501
+"528
 [v _editClock editClock `(v  1 e 1 0 ]
 {
-"542
+"569
 } 0
 "117 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\SCE_Project.X\mcc_generated_files/tmr2.c
 [v _TMR2_StopTimer TMR2_StopTimer `(v  1 e 1 0 ]
@@ -1259,10 +1259,10 @@ channel_FVR_buf1 63
 {
 "185
 } 0
-"446 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\SCE_Project.X\main.c
+"473 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\SCE_Project.X\main.c
 [v _monitoring_ISR monitoring_ISR `(v  1 e 1 0 ]
 {
-"499
+"526
 } 0
 "76
 [v _tsttc tsttc `(uc  1 e 1 0 ]
@@ -1309,13 +1309,13 @@ channel_FVR_buf1 63
 [v menuLCD_ISR@diff diff `S2221  1 a 3 42 ]
 "333
 [v menuLCD_ISR@str str `[8]uc  1 a 8 27 ]
-"408
+"414
 [v menuLCD_ISR@tt tt `[4]uc  1 a 4 35 ]
-"417
+"423
 [v menuLCD_ISR@l l `[3]uc  1 a 3 39 ]
 "379
 [v menuLCD_ISR@F12829 F12829 `S2221  1 s 3 F12829 ]
-"441
+"468
 } 0
 "117 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\SCE_Project.X\mcc_generated_files/tmr2.c
 [v i1_TMR2_StopTimer TMR2_StopTimer `(v  1 e 1 0 ]
@@ -1431,12 +1431,10 @@ channel_FVR_buf1 63
 "206
 [v _LCDstr LCDstr `(v  1 e 1 0 ]
 {
-[v LCDstr@p p `*.4uc  1 a 1 wreg ]
 "208
-[v LCDstr@c c `uc  1 a 1 10 ]
+[v LCDstr@c c `uc  1 a 1 0 ]
 "206
-[v LCDstr@p p `*.4uc  1 a 1 wreg ]
-[v LCDstr@p p `*.4uc  1 a 1 11 ]
+[v LCDstr@p p `*.26uc  1 p 2 9 ]
 "211
 } 0
 "201
@@ -1533,8 +1531,8 @@ channel_FVR_buf1 63
 {
 "57
 } 0
-"621 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\SCE_Project.X\main.c
+"648 E:\Andre\IST\5ºAno_1ºSemestre\SCE\GIT\SCE_Project.X\main.c
 [v _S1_ISR S1_ISR `(v  1 e 1 0 ]
 {
-"643
+"670
 } 0

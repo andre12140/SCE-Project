@@ -22125,7 +22125,6 @@ alarmPWMStart.s = t.s;
 struct Time diff = {0,0,0};
 differenceBetweenTimePeriod( t, alarmPWMStart, &diff);
 
-
 if(diff.s <= TALA){
 PWM_on = 1;
 if(PWM6EN==0){
@@ -22139,6 +22138,13 @@ dimingLed = 0;
 }
 PWM6_LoadDutyValue(dimingLed);
 } else if(PWM6EN==1){
+PWM_on = 0;
+PWM6_LoadDutyValue(0);
+TMR2_StopTimer();
+PWM_Output_D4_Disable();
+}
+} else{
+if(PWM6EN==1){
 PWM_on = 0;
 PWM6_LoadDutyValue(0);
 TMR2_StopTimer();
@@ -22169,7 +22175,15 @@ sprintf(l, "L %d", lumLevel);
 }
 LCDstr(l);
 
+if(mode != 0){
+LCDcmd(0x8B);
+LCDstr("CTL");
+}
+
 if(mode == 1){
+if(editingClockAlarm == 0){
+LCDcmd(0x8B);
+} else{
 if(editingClockAlarm == 1){
 LCDcmd(0x81);
 } else if(editingClockAlarm == 2){
@@ -22177,10 +22191,23 @@ LCDcmd(0x84);
 } else if(editingClockAlarm == 3){
 LCDcmd(0x87);
 }
+}
 } else if(mode == 2){
-LCDcmd(0xc1);
+
+if(editingTempAlarm == 0){
+LCDcmd(0x8c);
+}else {
+LCDcmd(0xc0);
+}
+
 } else if(mode == 3){
-LCDcmd(0xcf);
+
+if(editingTempAlarm == 0){
+LCDcmd(0x8d);
+}else {
+LCDcmd(0xcd);
+}
+
 } else if(mode == 4){
 LCDcmd(0x8f);
 }
@@ -22248,7 +22275,7 @@ void editClock(){
 
 while(1){
 
-# 515
+# 542
 if(PORTCbits.RC5 == 0){
 if(editingClockAlarm == 1){
 if(clkAlarm.alarmVal.h >= 23){
@@ -22283,7 +22310,7 @@ editingTempAlarm = 1;
 
 while(1){
 
-# 556
+# 583
 if(PORTCbits.RC5 == 0){
 tempAlarm.alarmTemp++;
 if(tempAlarm.alarmTemp > 50){
@@ -22303,7 +22330,7 @@ editingLumAlarm = 1;
 
 while(1){
 
-# 582
+# 609
 if(PORTCbits.RC5 == 0){
 lumAlarm.alarmLum++;
 if(lumAlarm.alarmLum > 7){
@@ -22322,7 +22349,7 @@ void toggleAlarms(){
 
 while(1){
 
-# 606
+# 633
 if(PORTCbits.RC5 == 0){
 if(ALAF == 'A'){
 ALAF = 'a';
