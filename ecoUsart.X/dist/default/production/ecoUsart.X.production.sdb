@@ -1,0 +1,340 @@
+[p GLOBOPT AUTOSTATIC IEEE_DBL IEEE_FLT PIC14 PIC14E ]
+[d version 1.1 ]
+[d edition pro ]
+[d chip 16F18875 ]
+[d frameptr 6 ]
+"10 E:\Microchip\xc8\v2.30\pic\sources\c90\common\sprcadd.c
+[v ___fladd __fladd `(d  1 e 4 0 ]
+"15 E:\Microchip\xc8\v2.30\pic\sources\c90\common\Umul16.c
+[v ___wmul __wmul `(ui  1 e 2 0 ]
+"4 E:\Microchip\xc8\v2.30\pic\sources\c90\common\Umul8_16.c
+[v __Umul8_16 _Umul8_16 `(ui  1 e 2 0 ]
+"6 E:\Microchip\xc8\v2.30\pic\sources\c90\pic\__eeprom.c
+[v ___eecpymem __eecpymem `(v  1 e 1 0 ]
+"39
+[v ___memcpyee __memcpyee `(v  1 e 1 0 ]
+"89 E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+[v _cmd_rc cmd_rc `(v  1 e 1 0 ]
+"105
+[v _main main `(v  1 e 1 0 ]
+"75 E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+[v _EUSART_Initialize EUSART_Initialize `(v  1 e 1 0 ]
+"128
+[v _EUSART_Read EUSART_Read `(uc  1 e 1 0 ]
+"148
+[v _EUSART_Write EUSART_Write `(v  1 e 1 0 ]
+"171
+[v _getch getch `(uc  1 e 1 0 ]
+"176
+[v _putch putch `(v  1 e 1 0 ]
+"181
+[v _EUSART_Transmit_ISR EUSART_Transmit_ISR `(v  1 e 1 0 ]
+"200
+[v _EUSART_Receive_ISR EUSART_Receive_ISR `(v  1 e 1 0 ]
+"220
+[v _EUSART_SetTxInterruptHandler EUSART_SetTxInterruptHandler `(v  1 e 1 0 ]
+"224
+[v _EUSART_SetRxInterruptHandler EUSART_SetRxInterruptHandler `(v  1 e 1 0 ]
+"52 E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/interrupt_manager.c
+[v _INTERRUPT_InterruptManager INTERRUPT_InterruptManager `II(v  1 e 1 0 ]
+"50 E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/mcc.c
+[v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
+"58
+[v _OSCILLATOR_Initialize OSCILLATOR_Initialize `(v  1 e 1 0 ]
+"72
+[v _PMD_Initialize PMD_Initialize `(v  1 e 1 0 ]
+"57 E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+[v _PIN_MANAGER_Initialize PIN_MANAGER_Initialize `(v  1 e 1 0 ]
+[s S58 . 1 `uc 1 INTEDG 1 0 :1:0 
+`uc 1 . 1 0 :5:1 
+`uc 1 PEIE 1 0 :1:6 
+`uc 1 GIE 1 0 :1:7 
+]
+"365 C:/Users/Andre/.mchp_packs/Microchip/PIC16F1xxxx_DFP/1.5.133/xc8\pic\include\proc\pic16f18875.h
+[u S63 . 1 `S58 1 . 1 0 ]
+[v _INTCONbits INTCONbits `VES63  1 e 1 @11 ]
+"385
+[v _PORTA PORTA `VEuc  1 e 1 @12 ]
+"671
+[v _TRISA TRISA `VEuc  1 e 1 @17 ]
+"733
+[v _TRISB TRISB `VEuc  1 e 1 @18 ]
+"795
+[v _TRISC TRISC `VEuc  1 e 1 @19 ]
+"857
+[v _TRISD TRISD `VEuc  1 e 1 @20 ]
+"919
+[v _TRISE TRISE `VEuc  1 e 1 @21 ]
+"951
+[v _LATA LATA `VEuc  1 e 1 @22 ]
+"1013
+[v _LATB LATB `VEuc  1 e 1 @23 ]
+"1075
+[v _LATC LATC `VEuc  1 e 1 @24 ]
+"1137
+[v _LATD LATD `VEuc  1 e 1 @25 ]
+"1199
+[v _LATE LATE `VEuc  1 e 1 @26 ]
+"3771
+[v _RC1REG RC1REG `VEuc  1 e 1 @281 ]
+"3825
+[v _TX1REG TX1REG `VEuc  1 e 1 @282 ]
+"3886
+[v _SP1BRGL SP1BRGL `VEuc  1 e 1 @283 ]
+"3956
+[v _SP1BRGH SP1BRGH `VEuc  1 e 1 @284 ]
+"4010
+[v _RC1STA RC1STA `VEuc  1 e 1 @285 ]
+[s S223 . 1 `uc 1 RX9D 1 0 :1:0 
+`uc 1 OERR 1 0 :1:1 
+`uc 1 FERR 1 0 :1:2 
+`uc 1 ADDEN 1 0 :1:3 
+`uc 1 CREN 1 0 :1:4 
+`uc 1 SREN 1 0 :1:5 
+`uc 1 RX9 1 0 :1:6 
+`uc 1 SPEN 1 0 :1:7 
+]
+"4036
+[u S232 . 1 `S223 1 . 1 0 ]
+[v _RC1STAbits RC1STAbits `VES232  1 e 1 @285 ]
+"4190
+[v _TX1STA TX1STA `VEuc  1 e 1 @286 ]
+[s S201 . 1 `uc 1 TX9D 1 0 :1:0 
+`uc 1 TRMT 1 0 :1:1 
+`uc 1 BRGH 1 0 :1:2 
+`uc 1 SENDB 1 0 :1:3 
+`uc 1 SYNC 1 0 :1:4 
+`uc 1 TXEN 1 0 :1:5 
+`uc 1 TX9 1 0 :1:6 
+`uc 1 CSRC 1 0 :1:7 
+]
+"4216
+[u S210 . 1 `S201 1 . 1 0 ]
+[v _TX1STAbits TX1STAbits `VES210  1 e 1 @286 ]
+"4370
+[v _BAUD1CON BAUD1CON `VEuc  1 e 1 @287 ]
+[s S88 . 1 `uc 1 SSP1IF 1 0 :1:0 
+`uc 1 BCL1IF 1 0 :1:1 
+`uc 1 SSP2IF 1 0 :1:2 
+`uc 1 BCL2IF 1 0 :1:3 
+`uc 1 TXIF 1 0 :1:4 
+`uc 1 RCIF 1 0 :1:5 
+]
+"21433
+[u S95 . 1 `S88 1 . 1 0 ]
+[v _PIR3bits PIR3bits `VES95  1 e 1 @1807 ]
+[s S71 . 1 `uc 1 SSP1IE 1 0 :1:0 
+`uc 1 BCL1IE 1 0 :1:1 
+`uc 1 SSP2IE 1 0 :1:2 
+`uc 1 BCL2IE 1 0 :1:3 
+`uc 1 TXIE 1 0 :1:4 
+`uc 1 RCIE 1 0 :1:5 
+]
+"21855
+[u S78 . 1 `S71 1 . 1 0 ]
+[v _PIE3bits PIE3bits `VES78  1 e 1 @1817 ]
+"22157
+[v _PMD0 PMD0 `VEuc  1 e 1 @1942 ]
+"22214
+[v _PMD1 PMD1 `VEuc  1 e 1 @1943 ]
+"22285
+[v _PMD2 PMD2 `VEuc  1 e 1 @1944 ]
+"22330
+[v _PMD3 PMD3 `VEuc  1 e 1 @1945 ]
+"22386
+[v _PMD4 PMD4 `VEuc  1 e 1 @1946 ]
+"22437
+[v _PMD5 PMD5 `VEuc  1 e 1 @1947 ]
+"23508
+[v _OSCCON1 OSCCON1 `VEuc  1 e 1 @2189 ]
+"23648
+[v _OSCCON3 OSCCON3 `VEuc  1 e 1 @2191 ]
+"23745
+[v _OSCEN OSCEN `VEuc  1 e 1 @2193 ]
+"23796
+[v _OSCTUNE OSCTUNE `VEuc  1 e 1 @2194 ]
+"23854
+[v _OSCFRQ OSCFRQ `VEuc  1 e 1 @2195 ]
+"31885
+[v _RXPPS RXPPS `VEuc  1 e 1 @3787 ]
+"33089
+[v _RC6PPS RC6PPS `VEuc  1 e 1 @3878 ]
+"33739
+[v _ANSELA ANSELA `VEuc  1 e 1 @3896 ]
+"33801
+[v _WPUA WPUA `VEuc  1 e 1 @3897 ]
+"33863
+[v _ODCONA ODCONA `VEuc  1 e 1 @3898 ]
+"33925
+[v _SLRCONA SLRCONA `VEuc  1 e 1 @3899 ]
+"34359
+[v _ANSELB ANSELB `VEuc  1 e 1 @3907 ]
+"34421
+[v _WPUB WPUB `VEuc  1 e 1 @3908 ]
+"34483
+[v _ODCONB ODCONB `VEuc  1 e 1 @3909 ]
+"34545
+[v _SLRCONB SLRCONB `VEuc  1 e 1 @3910 ]
+"34979
+[v _ANSELC ANSELC `VEuc  1 e 1 @3918 ]
+"35041
+[v _WPUC WPUC `VEuc  1 e 1 @3919 ]
+"35103
+[v _ODCONC ODCONC `VEuc  1 e 1 @3920 ]
+"35165
+[v _SLRCONC SLRCONC `VEuc  1 e 1 @3921 ]
+"35599
+[v _ANSELD ANSELD `VEuc  1 e 1 @3929 ]
+"35661
+[v _WPUD WPUD `VEuc  1 e 1 @3930 ]
+"35723
+[v _ODCOND ODCOND `VEuc  1 e 1 @3931 ]
+"35785
+[v _SLRCOND SLRCOND `VEuc  1 e 1 @3932 ]
+"36033
+[v _ANSELE ANSELE `VEuc  1 e 1 @3940 ]
+"36065
+[v _WPUE WPUE `VEuc  1 e 1 @3941 ]
+"36103
+[v _ODCONE ODCONE `VEuc  1 e 1 @3942 ]
+"36135
+[v _SLRCONE SLRCONE `VEuc  1 e 1 @3943 ]
+[s S295 command_d 3 `*.37(v 1 cmd_fnct 2 0 `uc 1 cmd_name 1 2 ]
+"63 E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+[v _commands commands `DC[1]S295  1 e 3 0 ]
+"62 E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+[v _eusartTxHead eusartTxHead `VEuc  1 e 1 0 ]
+"63
+[v _eusartTxTail eusartTxTail `VEuc  1 e 1 0 ]
+"64
+[v _eusartTxBuffer eusartTxBuffer `VE[8]uc  1 e 8 0 ]
+"65
+[v _eusartTxBufferRemaining eusartTxBufferRemaining `VEuc  1 e 1 0 ]
+"67
+[v _eusartRxHead eusartRxHead `VEuc  1 e 1 0 ]
+"68
+[v _eusartRxTail eusartRxTail `VEuc  1 e 1 0 ]
+"69
+[v _eusartRxBuffer eusartRxBuffer `VE[8]uc  1 e 8 0 ]
+"70
+[v _eusartRxCount eusartRxCount `VEuc  1 e 1 0 ]
+"86 E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.h
+[v _EUSART_TxDefaultInterruptHandler EUSART_TxDefaultInterruptHandler `*.37(v  1 e 2 0 ]
+"87
+[v _EUSART_RxDefaultInterruptHandler EUSART_RxDefaultInterruptHandler `*.37(v  1 e 2 0 ]
+"105 E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+[v _main main `(v  1 e 1 0 ]
+{
+"127
+[v main@buff buff `[10]uc  1 a 10 9 ]
+"130
+[v main@i i `i  1 a 2 22 ]
+"128
+[v main@n n `i  1 a 2 20 ]
+"126
+[v main@c c `uc  1 a 1 19 ]
+"152
+} 0
+"171 E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+[v _getch getch `(uc  1 e 1 0 ]
+{
+"174
+} 0
+"128
+[v _EUSART_Read EUSART_Read `(uc  1 e 1 0 ]
+{
+"130
+[v EUSART_Read@readValue readValue `uc  1 a 1 2 ]
+"146
+} 0
+"89 E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+[v _cmd_rc cmd_rc `(v  1 e 1 0 ]
+{
+"91
+[v cmd_rc@buff buff `[6]uc  1 a 6 0 ]
+"98
+[v cmd_rc@n n `i  1 a 2 6 ]
+"89
+[v cmd_rc@12433 F12433 `i  1 p 2 7 ]
+[v cmd_rc@12434 F12434 `*.1*.1uc  1 p 1 9 ]
+"103
+} 0
+"176 E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+[v _putch putch `(v  1 e 1 0 ]
+{
+[v putch@txData txData `uc  1 a 1 wreg ]
+[v putch@txData txData `uc  1 a 1 wreg ]
+"178
+[v putch@txData txData `uc  1 a 1 3 ]
+"179
+} 0
+"148
+[v _EUSART_Write EUSART_Write `(v  1 e 1 0 ]
+{
+[v EUSART_Write@txData txData `uc  1 a 1 wreg ]
+[v EUSART_Write@txData txData `uc  1 a 1 wreg ]
+[v EUSART_Write@txData txData `uc  1 a 1 2 ]
+"169
+} 0
+"15 E:\Microchip\xc8\v2.30\pic\sources\c90\common\Umul16.c
+[v ___wmul __wmul `(ui  1 e 2 0 ]
+{
+"17
+[v ___wmul@product product `ui  1 a 2 5 ]
+"15
+[v ___wmul@multiplier multiplier `ui  1 p 2 1 ]
+[v ___wmul@multiplicand multiplicand `ui  1 p 2 3 ]
+"53
+} 0
+"50 E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/mcc.c
+[v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
+{
+"56
+} 0
+"72
+[v _PMD_Initialize PMD_Initialize `(v  1 e 1 0 ]
+{
+"86
+} 0
+"57 E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+[v _PIN_MANAGER_Initialize PIN_MANAGER_Initialize `(v  1 e 1 0 ]
+{
+"122
+} 0
+"58 E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/mcc.c
+[v _OSCILLATOR_Initialize OSCILLATOR_Initialize `(v  1 e 1 0 ]
+{
+"70
+} 0
+"75 E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+[v _EUSART_Initialize EUSART_Initialize `(v  1 e 1 0 ]
+{
+"111
+} 0
+"220
+[v _EUSART_SetTxInterruptHandler EUSART_SetTxInterruptHandler `(v  1 e 1 0 ]
+{
+[v EUSART_SetTxInterruptHandler@interruptHandler interruptHandler `*.37(v  1 p 2 1 ]
+"222
+} 0
+"224
+[v _EUSART_SetRxInterruptHandler EUSART_SetRxInterruptHandler `(v  1 e 1 0 ]
+{
+[v EUSART_SetRxInterruptHandler@interruptHandler interruptHandler `*.37(v  1 p 2 1 ]
+"226
+} 0
+"52 E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/interrupt_manager.c
+[v _INTERRUPT_InterruptManager INTERRUPT_InterruptManager `II(v  1 e 1 0 ]
+{
+"74
+} 0
+"181 E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+[v _EUSART_Transmit_ISR EUSART_Transmit_ISR `(v  1 e 1 0 ]
+{
+"198
+} 0
+"200
+[v _EUSART_Receive_ISR EUSART_Receive_ISR `(v  1 e 1 0 ]
+{
+"218
+} 0

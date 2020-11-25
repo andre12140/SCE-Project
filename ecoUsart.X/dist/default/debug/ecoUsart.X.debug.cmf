@@ -1,0 +1,784 @@
+%CMF
+# %PSECTS Section
+# For each object file, details of its psects are enumerated here.
+# The begining of the section is indicated by %PSECTS.  The first
+# line indicates the name of the first object file, e.g.
+#    $foo.obj
+# Each line that follows describes a psect in that object file, until
+# the next object file.  The lines that describe a psect have the
+# format:
+#    <psect name> <class name> <space> <link address> <load addresses> <length> <delta>
+# All addresses and the length are given in unqualified hexadecimal
+# in delta units.  Any other numeric values are decimal.
+%PSECTS
+$dist/default/debug\ecoUsart.X.debug.o
+cinit CODE 0 2D 2D E 2
+text1 CODE 0 205 205 1E 2
+text2 CODE 0 263 263 4 2
+text3 CODE 0 182 182 22 2
+text4 CODE 0 C1 C1 38 2
+text5 CODE 0 251 251 6 2
+text6 CODE 0 12F 12F 2A 2
+text7 CODE 0 1E6 1E6 1F 2
+text8 CODE 0 223 223 D 2
+text9 CODE 0 243 243 8 2
+text10 CODE 0 F9 F9 36 2
+text11 CODE 0 23A 23A 9 2
+text12 CODE 0 159 159 29 2
+text13 CODE 0 257 257 6 2
+text14 CODE 0 25D 25D 6 2
+text16 CODE 0 1A4 1A4 22 2
+text17 CODE 0 1C6 1C6 20 2
+nvBANK0 BANK0 1 4B 4B 5 1
+maintext CODE 0 3B 3B 86 2
+cstackCOMMON COMMON 1 70 70 B 1
+cstackBANK0 BANK0 1 20 20 18 1
+stringtext1 STRCODE 0 267 267 3 2
+stringtext2 STRCODE 0 230 230 A 2
+intentry CODE 0 4 4 27 2
+bssBANK0 BANK0 1 38 38 13 1
+clrtext CODE 0 24B 24B 6 2
+bssCOMMON COMMON 1 7B 7B 2 1
+config CONFIG 4 8007 8007 5 2
+$C:\Users\Andre\AppData\Local\Temp\shj4xm.o
+reset_vec CODE 0 0 0 2 2
+end_init CODE 0 2B 2B 2 2
+config CONFIG 4 8007 8007 5 2
+# %UNUSED Section
+# This section enumerates the unused ranges of each CLASS. Each entry
+# is described on a single line as follows:
+#    <class name> <range> <delta>
+# Addresses given in the range are in hexadecimal and units of delta.
+%UNUSED
+RAM 50-6F 1
+RAM A0-EF 1
+RAM 120-16F 1
+RAM 1A0-1EF 1
+RAM 220-26F 1
+RAM 2A0-2EF 1
+RAM 320-36F 1
+RAM 3A0-3EF 1
+RAM 420-46F 1
+RAM 4A0-4EF 1
+RAM 520-56F 1
+RAM 5A0-5EF 1
+RAM 620-64F 1
+BANK0 50-6F 1
+BANK1 A0-EF 1
+BANK2 120-16F 1
+BANK3 1A0-1EF 1
+BANK4 220-26F 1
+BANK5 2A0-2EF 1
+BANK6 320-36F 1
+BANK7 3A0-3EF 1
+BANK8 420-46F 1
+BANK9 4A0-4EF 1
+CONST 2-3 2
+CONST 26A-1FFF 2
+ENTRY 2-3 2
+ENTRY 26A-1FFF 2
+IDLOC 8000-8003 2
+SFR10 500-51F 1
+SFR11 580-59F 1
+SFR12 600-61F 1
+SFR13 680-6EF 1
+SFR14 700-76F 1
+SFR15 780-7EF 1
+SFR16 800-86F 1
+SFR17 880-8EF 1
+SFR18 900-96F 1
+SFR19 980-9EF 1
+SFR20 A00-A6F 1
+SFR21 A80-AEF 1
+SFR22 B00-B6F 1
+SFR23 B80-BEF 1
+SFR24 C00-C6F 1
+SFR25 C80-CEF 1
+SFR26 D00-D6F 1
+SFR27 D80-DEF 1
+SFR28 E00-E6F 1
+SFR29 E80-EEF 1
+SFR30 F00-F6F 1
+SFR31 F80-FEF 1
+STACK 2030-23EF 1
+CODE 2-3 2
+CODE 26A-1FFF 2
+SFR0 0-1F 1
+SFR1 80-9F 1
+SFR2 100-11F 1
+SFR3 180-19F 1
+SFR4 200-21F 1
+SFR5 280-29F 1
+SFR6 300-31F 1
+SFR7 380-39F 1
+SFR8 400-41F 1
+SFR9 480-49F 1
+BANK10 520-56F 1
+BANK11 5A0-5EF 1
+BANK12 620-64F 1
+BIGRAM 2000-23EF 1
+COMMON 7D-7D 1
+EEDATA F000-F0FF 2
+STRCODE 2-3 2
+STRCODE 26A-1FFF 2
+STRING 2-3 2
+STRING 26A-1FFF 2
+# %LINETAB Section
+# This section enumerates the file/line to address mappings.
+# The beginning of the section is indicated by %LINETAB.
+# The first line indicates the name of the first object file, e.g.
+#   $foo.obj
+# Each line that follows describes a single mapping until the next
+# object file.  Mappings have the following format:
+#    <address> <psect name> <class name> ><line number>:<file name>
+# The address is absolute and given given in unqualified hex 
+# in delta units of the psect. All mappings within an object file
+# are in ascending order of addresses.
+# All other numeric values are in decimal.
+%LINETAB
+$dist/default/debug\ecoUsart.X.debug.o
+2D cinit CODE >6866:C:\Users\Andre\AppData\Local\Temp\shj4x.s
+2D cinit CODE >6869:C:\Users\Andre\AppData\Local\Temp\shj4x.s
+2D cinit CODE >6914:C:\Users\Andre\AppData\Local\Temp\shj4x.s
+2E cinit CODE >6915:C:\Users\Andre\AppData\Local\Temp\shj4x.s
+2F cinit CODE >6919:C:\Users\Andre\AppData\Local\Temp\shj4x.s
+30 cinit CODE >6920:C:\Users\Andre\AppData\Local\Temp\shj4x.s
+31 cinit CODE >6921:C:\Users\Andre\AppData\Local\Temp\shj4x.s
+32 cinit CODE >6922:C:\Users\Andre\AppData\Local\Temp\shj4x.s
+33 cinit CODE >6923:C:\Users\Andre\AppData\Local\Temp\shj4x.s
+34 cinit CODE >6924:C:\Users\Andre\AppData\Local\Temp\shj4x.s
+37 cinit CODE >6930:C:\Users\Andre\AppData\Local\Temp\shj4x.s
+37 cinit CODE >6932:C:\Users\Andre\AppData\Local\Temp\shj4x.s
+38 cinit CODE >6933:C:\Users\Andre\AppData\Local\Temp\shj4x.s
+39 cinit CODE >6934:C:\Users\Andre\AppData\Local\Temp\shj4x.s
+4 intentry CODE >52:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/interrupt_manager.c
+6 intentry CODE >55:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/interrupt_manager.c
+A intentry CODE >57:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/interrupt_manager.c
+13 intentry CODE >59:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/interrupt_manager.c
+19 intentry CODE >60:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/interrupt_manager.c
+1A intentry CODE >61:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/interrupt_manager.c
+22 intentry CODE >63:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/interrupt_manager.c
+28 intentry CODE >64:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/interrupt_manager.c
+29 intentry CODE >68:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/interrupt_manager.c
+29 intentry CODE >74:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/interrupt_manager.c
+1C6 text17 CODE >200:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+1C6 text17 CODE >203:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+1CB text17 CODE >207:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+1CC text17 CODE >208:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+1CD text17 CODE >212:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+1DA text17 CODE >213:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+1E0 text17 CODE >215:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+1E1 text17 CODE >217:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+1E5 text17 CODE >218:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+1A4 text16 CODE >181:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+1A4 text16 CODE >185:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+1AB text16 CODE >187:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+1B6 text16 CODE >188:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+1BC text16 CODE >190:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+1BD text16 CODE >192:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+1C2 text16 CODE >193:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+1C3 text16 CODE >194:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+1C3 text16 CODE >196:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+1C5 text16 CODE >198:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+25D text14 CODE >224:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+25D text14 CODE >225:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+262 text14 CODE >226:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+257 text13 CODE >220:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+257 text13 CODE >221:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+25C text13 CODE >222:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+159 text12 CODE >75:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+159 text12 CODE >78:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+15B text12 CODE >79:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+162 text12 CODE >80:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+164 text12 CODE >81:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+16B text12 CODE >85:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+16E text12 CODE >88:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+170 text12 CODE >91:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+172 text12 CODE >94:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+174 text12 CODE >97:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+175 text12 CODE >101:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+176 text12 CODE >102:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+177 text12 CODE >103:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+17C text12 CODE >105:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+17D text12 CODE >106:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+17E text12 CODE >107:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+17F text12 CODE >110:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+181 text12 CODE >111:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+23A text11 CODE >58:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/mcc.c
+23A text11 CODE >61:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/mcc.c
+23D text11 CODE >63:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/mcc.c
+23E text11 CODE >65:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/mcc.c
+23F text11 CODE >67:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/mcc.c
+241 text11 CODE >69:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/mcc.c
+242 text11 CODE >70:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/mcc.c
+F9 text10 CODE >57:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+F9 text10 CODE >62:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+FB text10 CODE >63:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+FC text10 CODE >64:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+FD text10 CODE >65:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+FE text10 CODE >66:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+FF text10 CODE >71:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+101 text10 CODE >72:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+103 text10 CODE >73:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+105 text10 CODE >74:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+107 text10 CODE >75:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+109 text10 CODE >80:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+10C text10 CODE >81:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+10E text10 CODE >82:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+110 text10 CODE >83:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+112 text10 CODE >84:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+114 text10 CODE >89:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+115 text10 CODE >90:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+116 text10 CODE >91:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+117 text10 CODE >92:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+118 text10 CODE >93:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+119 text10 CODE >98:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+11A text10 CODE >99:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+11B text10 CODE >100:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+11C text10 CODE >101:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+11D text10 CODE >102:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+11E text10 CODE >107:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+120 text10 CODE >108:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+122 text10 CODE >109:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+124 text10 CODE >110:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+126 text10 CODE >111:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+128 text10 CODE >120:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+12B text10 CODE >121:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+12E text10 CODE >122:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/pin_manager.c
+243 text9 CODE >72:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/mcc.c
+243 text9 CODE >75:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/mcc.c
+245 text9 CODE >77:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/mcc.c
+246 text9 CODE >79:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/mcc.c
+247 text9 CODE >81:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/mcc.c
+248 text9 CODE >83:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/mcc.c
+249 text9 CODE >85:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/mcc.c
+24A text9 CODE >86:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/mcc.c
+223 text8 CODE >50:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/mcc.c
+223 text8 CODE >52:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/mcc.c
+226 text8 CODE >53:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/mcc.c
+229 text8 CODE >54:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/mcc.c
+22C text8 CODE >55:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/mcc.c
+22F text8 CODE >56:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/mcc.c
+1E6 text7 CODE >15:E:\Microchip\xc8\v2.30\pic\sources\c90\common\Umul16.c
+1E6 text7 CODE >43:E:\Microchip\xc8\v2.30\pic\sources\c90\common\Umul16.c
+1E8 text7 CODE >45:E:\Microchip\xc8\v2.30\pic\sources\c90\common\Umul16.c
+1EC text7 CODE >46:E:\Microchip\xc8\v2.30\pic\sources\c90\common\Umul16.c
+1F0 text7 CODE >47:E:\Microchip\xc8\v2.30\pic\sources\c90\common\Umul16.c
+1F5 text7 CODE >48:E:\Microchip\xc8\v2.30\pic\sources\c90\common\Umul16.c
+1FA text7 CODE >49:E:\Microchip\xc8\v2.30\pic\sources\c90\common\Umul16.c
+200 text7 CODE >52:E:\Microchip\xc8\v2.30\pic\sources\c90\common\Umul16.c
+204 text7 CODE >53:E:\Microchip\xc8\v2.30\pic\sources\c90\common\Umul16.c
+12F text6 CODE >148:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+130 text6 CODE >150:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+136 text6 CODE >154:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+13B text6 CODE >156:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+13E text6 CODE >157:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+13F text6 CODE >158:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+13F text6 CODE >160:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+140 text6 CODE >161:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+14C text6 CODE >162:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+152 text6 CODE >164:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+153 text6 CODE >166:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+156 text6 CODE >168:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+158 text6 CODE >169:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+251 text5 CODE >176:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+252 text5 CODE >178:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+256 text5 CODE >179:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+C1 text4 CODE >89:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+C1 text4 CODE >92:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+C6 text4 CODE >93:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+CA text4 CODE >94:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+CE text4 CODE >95:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+D2 text4 CODE >96:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+D6 text4 CODE >97:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+DA text4 CODE >98:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+DC text4 CODE >99:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+DD text4 CODE >100:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+E6 text4 CODE >101:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+EB text4 CODE >99:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+F8 text4 CODE >103:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+182 text3 CODE >128:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+182 text3 CODE >130:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+182 text3 CODE >132:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+188 text3 CODE >136:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+194 text3 CODE >137:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+19A text3 CODE >139:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+19B text3 CODE >141:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+19D text3 CODE >142:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+1A0 text3 CODE >143:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+1A2 text3 CODE >145:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+1A3 text3 CODE >146:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+263 text2 CODE >171:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+263 text2 CODE >173:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+266 text2 CODE >174:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\mcc_generated_files/eusart.c
+205 text1 CODE >477:E:\Microchip\xc8\v2.30\pic\sources\c90\common\doprnt.c
+205 text1 CODE >550:E:\Microchip\xc8\v2.30\pic\sources\c90\common\doprnt.c
+209 text1 CODE >553:E:\Microchip\xc8\v2.30\pic\sources\c90\common\doprnt.c
+20A text1 CODE >558:E:\Microchip\xc8\v2.30\pic\sources\c90\common\doprnt.c
+20E text1 CODE >553:E:\Microchip\xc8\v2.30\pic\sources\c90\common\doprnt.c
+222 text1 CODE >1567:E:\Microchip\xc8\v2.30\pic\sources\c90\common\doprnt.c
+3B maintext CODE >105:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+3B maintext CODE >108:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+3E maintext CODE >114:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+3F maintext CODE >117:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+40 maintext CODE >125:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+43 maintext CODE >128:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+45 maintext CODE >129:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+4C maintext CODE >130:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+4C maintext CODE >134:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+53 maintext CODE >135:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+5B maintext CODE >136:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+5F maintext CODE >137:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+6A maintext CODE >138:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+73 maintext CODE >140:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+75 maintext CODE >142:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+77 maintext CODE >143:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+92 maintext CODE >142:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+9C maintext CODE >145:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+A2 maintext CODE >146:E:\Andre\IST\5ºAno_1ºSemestre\SCE\part2\ecoUsart.X\main.c
+24B clrtext CODE >6903:C:\Users\Andre\AppData\Local\Temp\shj4x.s
+24B clrtext CODE >6904:C:\Users\Andre\AppData\Local\Temp\shj4x.s
+24C clrtext CODE >6905:C:\Users\Andre\AppData\Local\Temp\shj4x.s
+24C clrtext CODE >6906:C:\Users\Andre\AppData\Local\Temp\shj4x.s
+24D clrtext CODE >6907:C:\Users\Andre\AppData\Local\Temp\shj4x.s
+24E clrtext CODE >6908:C:\Users\Andre\AppData\Local\Temp\shj4x.s
+24F clrtext CODE >6909:C:\Users\Andre\AppData\Local\Temp\shj4x.s
+250 clrtext CODE >6910:C:\Users\Andre\AppData\Local\Temp\shj4x.s
+# %SYMTAB Section
+# An enumeration of all symbols in the program.
+# The beginning of the section is indicated by %SYMTAB.
+# Each line describes a single symbol as follows:
+#    <label> <value> [-]<load-adj> <class> <space> <psect> <file-name>
+# The value and load-adj are both in unqualified hexadecimal.
+# All other numeric values are in decimal.  The load-adj is the
+# quantity one needs to add to the symbol value in order to obtain the load
+# address of the symbol.  This value may be signed. If the symbol
+# was defined in a psect then <psect> will be "-". File-name
+# is the name of the object file in which the symbol was defined.
+%SYMTAB
+___latbits 2 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_EUSART_Read 304 0 CODE 0 text3 dist/default/debug\ecoUsart.X.debug.o
+__Hspace_0 26A 0 ABS 0 - -
+__Hspace_1 7D 0 ABS 0 - -
+__Hspace_2 0 0 ABS 0 - -
+__Hspace_3 0 0 ABS 0 - -
+__Hspace_4 10013 0 ABS 0 - -
+__Heeprom_data 0 0 EEDATA 3 eeprom_data -
+_PMD_Initialize 486 0 CODE 0 text9 dist/default/debug\ecoUsart.X.debug.o
+main@c 33 0 BANK0 1 cstackBANK0 dist/default/debug\ecoUsart.X.debug.o
+main@i 36 0 BANK0 1 cstackBANK0 dist/default/debug\ecoUsart.X.debug.o
+main@n 34 0 BANK0 1 cstackBANK0 dist/default/debug\ecoUsart.X.debug.o
+__Hstrings 0 0 ABS 0 strings -
+_EUSART_RxDefaultInterruptHandler 4B 0 BANK0 1 nvBANK0 dist/default/debug\ecoUsart.X.debug.o
+_LATA 16 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_LATB 17 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_LATC 18 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_LATD 19 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_LATE 1A 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_PMD0 796 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_PMD1 797 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_PMD2 798 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_PMD3 799 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_PMD4 79A 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_PMD5 79B 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_WPUA F39 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_WPUB F44 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_WPUC F4F 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_WPUD F5A 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_WPUE F65 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+___sp 0 0 STACK 2 stack C:\Users\Andre\AppData\Local\Temp\shj4xm.o
+_main 76 0 CODE 0 maintext dist/default/debug\ecoUsart.X.debug.o
+btemp 7E 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+start 56 0 CODE 0 init C:\Users\Andre\AppData\Local\Temp\shj4xm.o
+_EUSART_Write 25E 0 CODE 0 text6 dist/default/debug\ecoUsart.X.debug.o
+__size_of_main 0 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+__HbssCOMMON 0 0 ABS 0 bssCOMMON -
+?___wmul 71 0 COMMON 1 cstackCOMMON dist/default/debug\ecoUsart.X.debug.o
+__end_of_EUSART_Initialize 304 0 CODE 0 text12 dist/default/debug\ecoUsart.X.debug.o
+__Hpowerup 0 0 CODE 0 powerup -
+printf@c 7A 0 COMMON 1 cstackCOMMON dist/default/debug\ecoUsart.X.debug.o
+printf@f 74 0 COMMON 1 cstackCOMMON dist/default/debug\ecoUsart.X.debug.o
+__size_of_SYSTEM_Initialize 0 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+intlevel0 0 0 ENTRY 0 functab C:\Users\Andre\AppData\Local\Temp\shj4xm.o
+intlevel1 0 0 ENTRY 0 functab C:\Users\Andre\AppData\Local\Temp\shj4xm.o
+intlevel2 0 0 ENTRY 0 functab C:\Users\Andre\AppData\Local\Temp\shj4xm.o
+intlevel3 0 0 ENTRY 0 functab C:\Users\Andre\AppData\Local\Temp\shj4xm.o
+intlevel4 0 0 ENTRY 0 functab C:\Users\Andre\AppData\Local\Temp\shj4xm.o
+intlevel5 0 0 ENTRY 0 functab C:\Users\Andre\AppData\Local\Temp\shj4xm.o
+__LbssCOMMON 0 0 ABS 0 bssCOMMON -
+wtemp0 7E 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+__Hfunctab 0 0 ENTRY 0 functab -
+_RC1STAbits 11D 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+__end_of_PMD_Initialize 496 0 CODE 0 text9 dist/default/debug\ecoUsart.X.debug.o
+__size_of_EUSART_Write 0 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+__end_of_EUSART_Transmit_ISR 38C 0 CODE 0 text16 dist/default/debug\ecoUsart.X.debug.o
+__Hclrtext 0 0 ABS 0 clrtext -
+_eusartTxBuffer 40 0 BANK0 1 bssBANK0 dist/default/debug\ecoUsart.X.debug.o
+___wmul@multiplicand 73 0 COMMON 1 cstackCOMMON dist/default/debug\ecoUsart.X.debug.o
+_ANSELA F38 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_ANSELB F43 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_ANSELC F4E 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_ANSELD F59 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_ANSELE F64 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+__end_of_INTERRUPT_InterruptManager 56 0 CODE 0 intentry dist/default/debug\ecoUsart.X.debug.o
+__end_of___wmul 40A 0 CODE 0 text7 dist/default/debug\ecoUsart.X.debug.o
+EUSART_SetRxInterruptHandler@interruptHandler 71 0 COMMON 1 cstackCOMMON dist/default/debug\ecoUsart.X.debug.o
+__end_of_EUSART_Write 2B2 0 CODE 0 text6 dist/default/debug\ecoUsart.X.debug.o
+__Lmaintext 0 0 ABS 0 maintext -
+?_printf 74 0 COMMON 1 cstackCOMMON dist/default/debug\ecoUsart.X.debug.o
+__LnvBANK0 0 0 ABS 0 nvBANK0 -
+__end_of_cmd_rc 1F2 0 CODE 0 text4 dist/default/debug\ecoUsart.X.debug.o
+___stackhi 23EF 0 ABS 0 - C:\Users\Andre\AppData\Local\Temp\shj4xm.o
+___stacklo 2030 0 ABS 0 - C:\Users\Andre\AppData\Local\Temp\shj4xm.o
+_EUSART_Initialize 2B2 0 CODE 0 text12 dist/default/debug\ecoUsart.X.debug.o
+__size_of_getch 0 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+__size_of_putch 0 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_PIN_MANAGER_Initialize 1F2 0 CODE 0 text10 dist/default/debug\ecoUsart.X.debug.o
+start_initialization 5A 0 CODE 0 cinit dist/default/debug\ecoUsart.X.debug.o
+_ODCONA F3A 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_ODCONB F45 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_ODCONC F50 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_ODCOND F5B 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_ODCONE F66 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_OSCFRQ 893 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_eusartRxBuffer 38 0 BANK0 1 bssBANK0 dist/default/debug\ecoUsart.X.debug.o
+_RC1REG 119 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_RC1STA 11D 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_RC6PPS F26 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+__end_of_SYSTEM_Initialize 460 0 CODE 0 text8 dist/default/debug\ecoUsart.X.debug.o
+clear_ram0 496 0 CODE 0 clrtext dist/default/debug\ecoUsart.X.debug.o
+__pcstackBANK0 20 0 BANK0 1 cstackBANK0 dist/default/debug\ecoUsart.X.debug.o
+_TX1REG 11A 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_TX1STA 11E 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+__end_of_printf 446 0 CODE 0 text1 dist/default/debug\ecoUsart.X.debug.o
+_EUSART_TxDefaultInterruptHandler 4D 0 BANK0 1 nvBANK0 dist/default/debug\ecoUsart.X.debug.o
+___int_sp 0 0 STACK 2 stack C:\Users\Andre\AppData\Local\Temp\shj4xm.o
+__end_of_EUSART_Read 348 0 CODE 0 text3 dist/default/debug\ecoUsart.X.debug.o
+__Hbank0 0 0 ABS 0 bank0 -
+__Hbank1 0 0 ABS 0 bank1 -
+__Hbank2 0 0 ABS 0 bank2 -
+__Hbank3 0 0 ABS 0 bank3 -
+__Hbank4 0 0 ABS 0 bank4 -
+__Hbank5 0 0 ABS 0 bank5 -
+__Hbank6 0 0 ABS 0 bank6 -
+__Hbank7 0 0 ABS 0 bank7 -
+__Hbank8 0 0 ABS 0 bank8 -
+__Hbank9 0 0 ABS 0 bank9 -
+__Hcinit 76 0 CODE 0 cinit -
+__size_of_OSCILLATOR_Initialize 0 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+__Hsfr10 0 0 ABS 0 sfr10 -
+__Hsfr11 0 0 ABS 0 sfr11 -
+__Hsfr12 0 0 ABS 0 sfr12 -
+__Hsfr13 0 0 ABS 0 sfr13 -
+__Hsfr14 0 0 ABS 0 sfr14 -
+__Hsfr15 0 0 ABS 0 sfr15 -
+__Hsfr16 0 0 ABS 0 sfr16 -
+__Hsfr17 0 0 ABS 0 sfr17 -
+__Hsfr18 0 0 ABS 0 sfr18 -
+__Hsfr19 0 0 ABS 0 sfr19 -
+__Hsfr20 0 0 ABS 0 sfr20 -
+__Hsfr21 0 0 ABS 0 sfr21 -
+__Hsfr22 0 0 ABS 0 sfr22 -
+__Hsfr23 0 0 ABS 0 sfr23 -
+__Hsfr24 0 0 ABS 0 sfr24 -
+__Hsfr25 0 0 ABS 0 sfr25 -
+__Hsfr26 0 0 ABS 0 sfr26 -
+__Hsfr27 0 0 ABS 0 sfr27 -
+__Hsfr28 0 0 ABS 0 sfr28 -
+__Hsfr29 0 0 ABS 0 sfr29 -
+__Hsfr30 0 0 ABS 0 sfr30 -
+__Hsfr31 0 0 ABS 0 sfr31 -
+__Hstack 0 0 STACK 2 stack -
+__Hbank10 0 0 ABS 0 bank10 -
+__Hbank11 0 0 ABS 0 bank11 -
+__Hbank12 0 0 ABS 0 bank12 -
+__Hbank13 0 0 BANK13 1 bank13 -
+__Hbank14 0 0 BANK14 1 bank14 -
+__Hbank15 0 0 BANK15 1 bank15 -
+__Hbank16 0 0 BANK16 1 bank16 -
+__Hbank17 0 0 BANK17 1 bank17 -
+__Hbank18 0 0 BANK18 1 bank18 -
+__Hbank19 0 0 BANK19 1 bank19 -
+__Hbank20 0 0 BANK20 1 bank20 -
+__Hbank21 0 0 BANK21 1 bank21 -
+__Hbank22 0 0 BANK22 1 bank22 -
+__Hbank23 0 0 BANK23 1 bank23 -
+__Hbank24 0 0 BANK24 1 bank24 -
+__Hbank25 0 0 BANK25 1 bank25 -
+__Hbank26 0 0 BANK26 1 bank26 -
+__Hbank27 0 0 BANK27 1 bank27 -
+__Hbank28 0 0 BANK28 1 bank28 -
+__Hbank29 0 0 BANK29 1 bank29 -
+__Hbank30 0 0 BANK30 1 bank30 -
+__Hbank31 0 0 BANK31 1 bank31 -
+__Hbigram 0 0 ABS 0 bigram -
+__Hmaintext 0 0 ABS 0 maintext -
+_BAUD1CON 11F 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+__Hcommon 0 0 ABS 0 common -
+__Hconfig 10018 0 CONFIG 4 config -
+cmd_rc@12433 77 0 COMMON 1 cstackCOMMON dist/default/debug\ecoUsart.X.debug.o
+cmd_rc@12434 79 0 COMMON 1 cstackCOMMON dist/default/debug\ecoUsart.X.debug.o
+__Lbank0 0 0 ABS 0 bank0 -
+__Lbank1 0 0 ABS 0 bank1 -
+__Lbank2 0 0 ABS 0 bank2 -
+__Lbank3 0 0 ABS 0 bank3 -
+__Lbank4 0 0 ABS 0 bank4 -
+__Lbank5 0 0 ABS 0 bank5 -
+__Lbank6 0 0 ABS 0 bank6 -
+__Lbank7 0 0 ABS 0 bank7 -
+__Lbank8 0 0 ABS 0 bank8 -
+__Lbank9 0 0 ABS 0 bank9 -
+__Lcinit 5A 0 CODE 0 cinit -
+__Lsfr10 0 0 ABS 0 sfr10 -
+__Lsfr11 0 0 ABS 0 sfr11 -
+__Lsfr12 0 0 ABS 0 sfr12 -
+__Lsfr13 0 0 ABS 0 sfr13 -
+__Lsfr14 0 0 ABS 0 sfr14 -
+__Lsfr15 0 0 ABS 0 sfr15 -
+__Lsfr16 0 0 ABS 0 sfr16 -
+__Lsfr17 0 0 ABS 0 sfr17 -
+__Lsfr18 0 0 ABS 0 sfr18 -
+__Lsfr19 0 0 ABS 0 sfr19 -
+__Lsfr20 0 0 ABS 0 sfr20 -
+__Lsfr21 0 0 ABS 0 sfr21 -
+__Lsfr22 0 0 ABS 0 sfr22 -
+__Lsfr23 0 0 ABS 0 sfr23 -
+__Lsfr24 0 0 ABS 0 sfr24 -
+__Lsfr25 0 0 ABS 0 sfr25 -
+__Lsfr26 0 0 ABS 0 sfr26 -
+__Lsfr27 0 0 ABS 0 sfr27 -
+__Lsfr28 0 0 ABS 0 sfr28 -
+__Lsfr29 0 0 ABS 0 sfr29 -
+__Lsfr30 0 0 ABS 0 sfr30 -
+__Lsfr31 0 0 ABS 0 sfr31 -
+__Lstack 0 0 STACK 2 stack -
+_INTCONbits B 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+__Habs1 0 0 ABS 0 abs1 -
+__Hcode 0 0 ABS 0 code -
+__Hinit 56 0 CODE 0 init -
+__Hsfr0 0 0 ABS 0 sfr0 -
+__Hsfr1 0 0 ABS 0 sfr1 -
+__Hsfr2 0 0 ABS 0 sfr2 -
+__Hsfr3 0 0 ABS 0 sfr3 -
+__Hsfr4 0 0 ABS 0 sfr4 -
+__Hsfr5 0 0 ABS 0 sfr5 -
+__Hsfr6 0 0 ABS 0 sfr6 -
+__Hsfr7 0 0 ABS 0 sfr7 -
+__Hsfr8 0 0 ABS 0 sfr8 -
+__Hsfr9 0 0 ABS 0 sfr9 -
+__Htext 0 0 ABS 0 text -
+__Labs1 0 0 ABS 0 abs1 -
+__Lcode 0 0 ABS 0 code -
+__Linit 56 0 CODE 0 init -
+__Lsfr0 0 0 ABS 0 sfr0 -
+__Lsfr1 0 0 ABS 0 sfr1 -
+__Lsfr2 0 0 ABS 0 sfr2 -
+__Lsfr3 0 0 ABS 0 sfr3 -
+__Lsfr4 0 0 ABS 0 sfr4 -
+__Lsfr5 0 0 ABS 0 sfr5 -
+__Lsfr6 0 0 ABS 0 sfr6 -
+__Lsfr7 0 0 ABS 0 sfr7 -
+__Lsfr8 0 0 ABS 0 sfr8 -
+__Lsfr9 0 0 ABS 0 sfr9 -
+__Ltext 0 0 ABS 0 text -
+__pstringtext1 4CE 0 STRCODE 0 stringtext1 dist/default/debug\ecoUsart.X.debug.o
+__pstringtext2 460 0 STRCODE 0 stringtext2 dist/default/debug\ecoUsart.X.debug.o
+__pstringtext3 0 0 STRCODE 0 stringtext3 dist/default/debug\ecoUsart.X.debug.o
+__pnvBANK0 4B 0 BANK0 1 nvBANK0 dist/default/debug\ecoUsart.X.debug.o
+___wmul 3CC 0 CODE 0 text7 dist/default/debug\ecoUsart.X.debug.o
+__LcstackBANK0 0 0 ABS 0 cstackBANK0 -
+int$flags 7E 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+__HcstackCOMMON 0 0 ABS 0 cstackCOMMON -
+__size_of_INTERRUPT_InterruptManager 0 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+__S0 26A 0 ABS 0 - -
+__S1 7D 0 ABS 0 - -
+__S2 0 0 ABS 0 - -
+__S3 0 0 ABS 0 - -
+_cmd_rc 182 0 CODE 0 text4 dist/default/debug\ecoUsart.X.debug.o
+__end_of_EUSART_Receive_ISR 3CC 0 CODE 0 text17 dist/default/debug\ecoUsart.X.debug.o
+_SYSTEM_Initialize 446 0 CODE 0 text8 dist/default/debug\ecoUsart.X.debug.o
+_EUSART_SetTxInterruptHandler 4AE 0 CODE 0 text13 dist/default/debug\ecoUsart.X.debug.o
+__HnvBANK0 0 0 ABS 0 nvBANK0 -
+__Lintentry 8 0 CODE 0 intentry -
+reset_vec 0 0 CODE 0 reset_vec C:\Users\Andre\AppData\Local\Temp\shj4xm.o
+cmd_rc@n 26 0 BANK0 1 cstackBANK0 dist/default/debug\ecoUsart.X.debug.o
+EUSART_Read@readValue 72 0 COMMON 1 cstackCOMMON dist/default/debug\ecoUsart.X.debug.o
+__size_of___wmul 0 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+__LbssBANK0 0 0 ABS 0 bssBANK0 -
+__Lstringtext1 0 0 ABS 0 stringtext1 -
+__Lstringtext2 0 0 ABS 0 stringtext2 -
+__Lstringtext3 0 0 ABS 0 stringtext3 -
+_INTERRUPT_InterruptManager 8 0 CODE 0 intentry dist/default/debug\ecoUsart.X.debug.o
+cmd_rc@buff 20 0 BANK0 1 cstackBANK0 dist/default/debug\ecoUsart.X.debug.o
+__size_of_PMD_Initialize 0 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_PIE3bits 719 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+__ptext10 1F2 0 CODE 0 text10 dist/default/debug\ecoUsart.X.debug.o
+__ptext11 474 0 CODE 0 text11 dist/default/debug\ecoUsart.X.debug.o
+__ptext12 2B2 0 CODE 0 text12 dist/default/debug\ecoUsart.X.debug.o
+__ptext13 4AE 0 CODE 0 text13 dist/default/debug\ecoUsart.X.debug.o
+__ptext14 4BA 0 CODE 0 text14 dist/default/debug\ecoUsart.X.debug.o
+__ptext16 348 0 CODE 0 text16 dist/default/debug\ecoUsart.X.debug.o
+__ptext17 38C 0 CODE 0 text17 dist/default/debug\ecoUsart.X.debug.o
+_EUSART_Receive_ISR 38C 0 CODE 0 text17 dist/default/debug\ecoUsart.X.debug.o
+__end_of_PIN_MANAGER_Initialize 25E 0 CODE 0 text10 dist/default/debug\ecoUsart.X.debug.o
+__size_of_cmd_rc 0 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+__Lbank10 0 0 ABS 0 bank10 -
+__Lbank11 0 0 ABS 0 bank11 -
+__Lbank12 0 0 ABS 0 bank12 -
+__Lbank13 0 0 BANK13 1 bank13 -
+__Lbank14 0 0 BANK14 1 bank14 -
+__Lbank15 0 0 BANK15 1 bank15 -
+__Lbank16 0 0 BANK16 1 bank16 -
+__Lbank17 0 0 BANK17 1 bank17 -
+__Lbank18 0 0 BANK18 1 bank18 -
+__Lbank19 0 0 BANK19 1 bank19 -
+__Lbank20 0 0 BANK20 1 bank20 -
+__Lbank21 0 0 BANK21 1 bank21 -
+__Lbank22 0 0 BANK22 1 bank22 -
+__Lbank23 0 0 BANK23 1 bank23 -
+__Lbank24 0 0 BANK24 1 bank24 -
+__Lbank25 0 0 BANK25 1 bank25 -
+__Lbank26 0 0 BANK26 1 bank26 -
+__Lbank27 0 0 BANK27 1 bank27 -
+__Lbank28 0 0 BANK28 1 bank28 -
+__Lbank29 0 0 BANK29 1 bank29 -
+__Lbank30 0 0 BANK30 1 bank30 -
+__Lbank31 0 0 BANK31 1 bank31 -
+__pmaintext 76 0 CODE 0 maintext dist/default/debug\ecoUsart.X.debug.o
+__Lbigram 0 0 ABS 0 bigram -
+__Lcommon 0 0 ABS 0 common -
+__Lconfig 0 0 CONFIG 4 config -
+_printf 40A 0 CODE 0 text1 dist/default/debug\ecoUsart.X.debug.o
+___wmul@multiplier 71 0 COMMON 1 cstackCOMMON dist/default/debug\ecoUsart.X.debug.o
+main@buff 29 0 BANK0 1 cstackBANK0 dist/default/debug\ecoUsart.X.debug.o
+__size_of_EUSART_Read 0 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_EUSART_SetRxInterruptHandler 4BA 0 CODE 0 text14 dist/default/debug\ecoUsart.X.debug.o
+_OSCCON1 88D 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_OSCCON3 88F 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_OSCTUNE 892 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+__Lspace_0 0 0 ABS 0 - -
+__Lspace_1 0 0 ABS 0 - -
+__Lspace_2 0 0 ABS 0 - -
+__Lspace_3 0 0 ABS 0 - -
+__Lspace_4 0 0 ABS 0 - -
+__pbssCOMMON 7B 0 COMMON 1 bssCOMMON dist/default/debug\ecoUsart.X.debug.o
+EUSART_SetTxInterruptHandler@interruptHandler 71 0 COMMON 1 cstackCOMMON dist/default/debug\ecoUsart.X.debug.o
+__HcstackBANK0 0 0 ABS 0 cstackBANK0 -
+_PIR3bits 70F 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+__Lend_init 56 0 CODE 0 end_init -
+__LcstackCOMMON 0 0 ABS 0 cstackCOMMON -
+printf@ap 79 0 COMMON 1 cstackCOMMON dist/default/debug\ecoUsart.X.debug.o
+end_of_initialization 6E 0 CODE 0 cinit dist/default/debug\ecoUsart.X.debug.o
+__Hintentry 56 0 CODE 0 intentry -
+__size_of_printf 0 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_TX1STAbits 11E 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+__Lstrings 0 0 ABS 0 strings -
+__Hreset_vec 4 0 CODE 0 reset_vec -
+__HbssBANK0 0 0 ABS 0 bssBANK0 -
+__ptext1 40A 0 CODE 0 text1 dist/default/debug\ecoUsart.X.debug.o
+__ptext2 4C6 0 CODE 0 text2 dist/default/debug\ecoUsart.X.debug.o
+__ptext3 304 0 CODE 0 text3 dist/default/debug\ecoUsart.X.debug.o
+__ptext4 182 0 CODE 0 text4 dist/default/debug\ecoUsart.X.debug.o
+__ptext5 4A2 0 CODE 0 text5 dist/default/debug\ecoUsart.X.debug.o
+__ptext6 25E 0 CODE 0 text6 dist/default/debug\ecoUsart.X.debug.o
+__ptext7 3CC 0 CODE 0 text7 dist/default/debug\ecoUsart.X.debug.o
+__ptext8 446 0 CODE 0 text8 dist/default/debug\ecoUsart.X.debug.o
+__ptext9 486 0 CODE 0 text9 dist/default/debug\ecoUsart.X.debug.o
+_eusartTxBufferRemaining 4F 0 BANK0 1 nvBANK0 dist/default/debug\ecoUsart.X.debug.o
+__Lpowerup 0 0 CODE 0 powerup -
+__Leeprom_data 0 0 EEDATA 3 eeprom_data -
+__Lreset_vec 0 0 CODE 0 reset_vec -
+__Hstringtext1 0 0 ABS 0 stringtext1 -
+__Hstringtext2 0 0 ABS 0 stringtext2 -
+__Hstringtext3 0 0 ABS 0 stringtext3 -
+_SLRCONA F3B 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_SLRCONB F46 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_SLRCONC F51 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_SLRCOND F5C 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_SLRCONE F67 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+__size_of_EUSART_SetTxInterruptHandler 0 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+EUSART_Write@txData 72 0 COMMON 1 cstackCOMMON dist/default/debug\ecoUsart.X.debug.o
+__end_of__initialization 6E 0 CODE 0 cinit dist/default/debug\ecoUsart.X.debug.o
+__Lfunctab 0 0 ENTRY 0 functab -
+__end_of_EUSART_SetTxInterruptHandler 4BA 0 CODE 0 text13 dist/default/debug\ecoUsart.X.debug.o
+_SP1BRGH 11C 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_SP1BRGL 11B 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_eusartRxCount 48 0 BANK0 1 bssBANK0 dist/default/debug\ecoUsart.X.debug.o
+__size_of_EUSART_Transmit_ISR 0 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+__Lclrtext 0 0 ABS 0 clrtext -
+__size_of_EUSART_Initialize 0 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+__pcstackCOMMON 70 0 COMMON 1 cstackCOMMON dist/default/debug\ecoUsart.X.debug.o
+__Hend_init 5A 0 CODE 0 end_init -
+putch@txData 73 0 COMMON 1 cstackCOMMON dist/default/debug\ecoUsart.X.debug.o
+__end_of_main 182 0 CODE 0 maintext dist/default/debug\ecoUsart.X.debug.o
+__end_of_getch 4CE 0 CODE 0 text2 dist/default/debug\ecoUsart.X.debug.o
+_OSCEN 891 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_PORTA C 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_RXPPS ECB 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_TRISA 11 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_TRISB 12 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_TRISC 13 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_TRISD 14 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_TRISE 15 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+__end_of_putch 4AE 0 CODE 0 text5 dist/default/debug\ecoUsart.X.debug.o
+__Hram 0 0 ABS 0 ram -
+__Lram 0 0 ABS 0 ram -
+_getch 4C6 0 CODE 0 text2 dist/default/debug\ecoUsart.X.debug.o
+_putch 4A2 0 CODE 0 text5 dist/default/debug\ecoUsart.X.debug.o
+__size_of_PIN_MANAGER_Initialize 0 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+__pintentry 8 0 CODE 0 intentry dist/default/debug\ecoUsart.X.debug.o
+_commands 4CE 0 STRCODE 0 stringtext1 dist/default/debug\ecoUsart.X.debug.o
+__end_of_OSCILLATOR_Initialize 486 0 CODE 0 text11 dist/default/debug\ecoUsart.X.debug.o
+__initialization 5A 0 CODE 0 cinit dist/default/debug\ecoUsart.X.debug.o
+__pbssBANK0 38 0 BANK0 1 bssBANK0 dist/default/debug\ecoUsart.X.debug.o
+_EUSART_Transmit_ISR 348 0 CODE 0 text16 dist/default/debug\ecoUsart.X.debug.o
+_eusartRxHead 4A 0 BANK0 1 bssBANK0 dist/default/debug\ecoUsart.X.debug.o
+_eusartRxTail 49 0 BANK0 1 bssBANK0 dist/default/debug\ecoUsart.X.debug.o
+__end_of_commands 4D4 0 STRCODE 0 stringtext1 dist/default/debug\ecoUsart.X.debug.o
+___wmul@product 75 0 COMMON 1 cstackCOMMON dist/default/debug\ecoUsart.X.debug.o
+__size_of_EUSART_Receive_ISR 0 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+__size_of_EUSART_SetRxInterruptHandler 0 0 ABS 0 - dist/default/debug\ecoUsart.X.debug.o
+_eusartTxHead 7C 0 COMMON 1 bssCOMMON dist/default/debug\ecoUsart.X.debug.o
+_eusartTxTail 7B 0 COMMON 1 bssCOMMON dist/default/debug\ecoUsart.X.debug.o
+__end_of_EUSART_SetRxInterruptHandler 4C6 0 CODE 0 text14 dist/default/debug\ecoUsart.X.debug.o
+_OSCILLATOR_Initialize 474 0 CODE 0 text11 dist/default/debug\ecoUsart.X.debug.o
+# %SPLITSTAB Section
+# This section enumerates all the psect splits performed by the assembler.
+# The beginning of the section is indicated by %SPLITSTAB.
+# Each line is a record a particular split, where the parent psect is on
+# the left and the child on the right.  Note that a child psect is always
+# split form the top of the parent psect. All splits from a given parent
+# are listed in the order in which they occurred.
+%SPLITSTAB
+# %DABS Section
+# This section contains a table of all usuage of the assember
+# directive DABS in the program. Each line has the following format:
+#   <name> <space> <address> <size>
+# If the DABS was originally labelled then that shall be <name>,
+# otherwise name will be "-".  The <space> number is in decimal.
+# <address> and <size> are in byte units as unqaulified hexadecimal
+%DABS
+- 1 7E 2
+# %SEGMENTS Section
+# This sections enumerates the segments of the program.  Each segment
+# is described on a single line as follows:
+#    <name> <space> <link address> <file address> <size> <delta>
+# Addresses and size are in unqualified hexadecimal.  The link address
+# and size are in units of delta. The file address is in units of bytes.
+# All other numeric quantities are in decimal.
+%SEGMENTS
+text11 0 23A 474 2D 2
+cstackCOMMON 1 70 70 D 1
+cstackBANK0 1 20 20 30 1
+stringtext1 0 267 4CE 3 2
+stringtext2 0 230 460 A 2
+intentry 0 4 8 22C 2
+reset_vec 0 0 0 2 2
+# %NOTES Section
+# This section contains data of all the note-psects.  The beginning of the section
+# is indicated by %NOTES. The first line indicates the name and decimal
+# byte-length of the first note-psect, e.g.
+#   $codecov_info_hdr 16
+# Each line that follows contains the byte-data of the psect in hexadecimal as a
+# space-separated list. These lines are limited to 16 bytes of data.
+%NOTES
