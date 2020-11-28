@@ -459,7 +459,7 @@ channel_FVR_buf1 63
 [v _SP1BRGH SP1BRGH `VEuc  1 e 1 @284 ]
 "4010
 [v _RC1STA RC1STA `VEuc  1 e 1 @285 ]
-[s S2650 . 1 `uc 1 RX9D 1 0 :1:0 
+[s S2649 . 1 `uc 1 RX9D 1 0 :1:0 
 `uc 1 OERR 1 0 :1:1 
 `uc 1 FERR 1 0 :1:2 
 `uc 1 ADDEN 1 0 :1:3 
@@ -469,11 +469,11 @@ channel_FVR_buf1 63
 `uc 1 SPEN 1 0 :1:7 
 ]
 "4036
-[u S2659 . 1 `S2650 1 . 1 0 ]
-[v _RC1STAbits RC1STAbits `VES2659  1 e 1 @285 ]
+[u S2658 . 1 `S2649 1 . 1 0 ]
+[v _RC1STAbits RC1STAbits `VES2658  1 e 1 @285 ]
 "4190
 [v _TX1STA TX1STA `VEuc  1 e 1 @286 ]
-[s S2628 . 1 `uc 1 TX9D 1 0 :1:0 
+[s S2627 . 1 `uc 1 TX9D 1 0 :1:0 
 `uc 1 TRMT 1 0 :1:1 
 `uc 1 BRGH 1 0 :1:2 
 `uc 1 SENDB 1 0 :1:3 
@@ -483,8 +483,8 @@ channel_FVR_buf1 63
 `uc 1 CSRC 1 0 :1:7 
 ]
 "4216
-[u S2637 . 1 `S2628 1 . 1 0 ]
-[v _TX1STAbits TX1STAbits `VES2637  1 e 1 @286 ]
+[u S2636 . 1 `S2627 1 . 1 0 ]
+[v _TX1STAbits TX1STAbits `VES2636  1 e 1 @286 ]
 "4370
 [v _BAUD1CON BAUD1CON `VEuc  1 e 1 @287 ]
 "4616
@@ -1096,7 +1096,7 @@ channel_FVR_buf1 63
 "323
 [v _editingLumAlarm editingLumAlarm `uc  1 e 1 0 ]
 "325
-[v _mode mode `i  1 e 2 0 ]
+[v _modeFlag modeFlag `i  1 e 2 0 ]
 "369
 [v _PWM_on PWM_on `uc  1 e 1 0 ]
 "508
@@ -1145,22 +1145,22 @@ channel_FVR_buf1 63
 [v _main main `(v  1 e 1 0 ]
 {
 "734
-[v main@i i `i  1 a 2 46 ]
+[v main@i i `i  1 a 2 45 ]
 "799
 [v main@buff buff `[20]uc  1 a 20 21 ]
 "801
-[v main@i_2585 i `i  1 a 2 49 ]
+[v main@i_2584 i `i  1 a 2 49 ]
 "800
-[v main@n n `i  1 a 2 41 ]
+[v main@n n `i  1 a 2 47 ]
 "798
-[v main@c c `uc  1 a 1 48 ]
+[v main@c c `uc  1 a 1 44 ]
 "731
-[v main@corrupted corrupted `uc  1 a 1 45 ]
+[v main@corrupted corrupted `uc  1 a 1 43 ]
 "730
-[v main@notInit notInit `uc  1 a 1 44 ]
+[v main@notInit notInit `uc  1 a 1 42 ]
 "729
-[v main@checkSumAux checkSumAux `uc  1 a 1 43 ]
-"840
+[v main@checkSumAux checkSumAux `uc  1 a 1 41 ]
+"865
 } 0
 "648
 [v _toggleAlarms toggleAlarms `(v  1 e 1 0 ]

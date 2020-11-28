@@ -322,7 +322,7 @@ int editingClockAlarm = 0;
  bool editingTempAlarm = false;
 bool editingLumAlarm = false;
 
-int mode = 0; //Mode of operation (0 no edit, 1 edit CLK, 2 edit Temp, 3 edit Lum, 4 toggle Alarm Enable/Disable)
+int modeFlag = 0; //Mode of operation (0 no edit, 1 edit CLK, 2 edit Temp, 3 edit Lum, 4 toggle Alarm Enable/Disable)
 
 void Clock_ISR(void) {    
     // Clock handler increment timer
@@ -386,7 +386,7 @@ void menuLCD_ISR(){
         if(clkAlarm.trigger == true){
             LCDcmd(0x8B);
             LCDchar('C');
-        } else if(mode == 0){
+        } else if(modeFlag == 0){
             LCDcmd(0x8B);
             LCDchar(' ');
         }
@@ -395,7 +395,7 @@ void menuLCD_ISR(){
         if(tempAlarm.trigger == true){
             LCDcmd(0x8C);
             LCDchar('T');
-        } else if(mode == 0){
+        } else if(modeFlag == 0){
             LCDcmd(0x8C);
             LCDchar(' ');
         }
@@ -404,7 +404,7 @@ void menuLCD_ISR(){
         if(lumAlarm.trigger == true){
             LCDcmd(0x8D);
             LCDchar('L');
-        } else if(mode == 0){
+        } else if(modeFlag == 0){
             LCDcmd(0x8D);
             LCDchar(' ');
         }
@@ -467,12 +467,12 @@ void menuLCD_ISR(){
     }
     LCDstr(l);
     
-    if(mode != 0){
+    if(modeFlag != 0){
         LCDcmd(0x8B);
         LCDstr("CTL");
     }
     
-    if(mode == 1){
+    if(modeFlag == 1){
         if(editingClockAlarm == 0){
             LCDcmd(0x8B);
         } else{
@@ -484,7 +484,7 @@ void menuLCD_ISR(){
                 LCDcmd(0x87);
             }
         }
-    } else if(mode == 2){
+    } else if(modeFlag == 2){
         
         if(editingTempAlarm == false){
             LCDcmd(0x8c);
@@ -492,7 +492,7 @@ void menuLCD_ISR(){
             LCDcmd(0xc1);
         }
         
-    } else if(mode == 3){
+    } else if(modeFlag == 3){
         
         if(editingLumAlarm == false){
             LCDcmd(0x8d);
@@ -500,7 +500,7 @@ void menuLCD_ISR(){
             LCDcmd(0xcf);
         }
         
-    } else if(mode == 4){
+    } else if(modeFlag == 4){
         LCDcmd(0x8f);
     }
 }
@@ -592,7 +592,7 @@ void editClock(){
             }
             __delay_ms(S2DELAY);
         }
-        if(mode != 1){
+        if(modeFlag != 1){
             editingClockAlarm = 0;
             break;
         }
@@ -615,7 +615,7 @@ void editTemp(){
             }
             __delay_ms(S2DELAY);
         }
-        if(mode != 2){
+        if(modeFlag != 2){
             editingTempAlarm = false;
             break;
         }
@@ -638,7 +638,7 @@ void editLum(){
             }
             __delay_ms(S2DELAY);
         }
-        if(mode != 3){
+        if(modeFlag != 3){
             editingLumAlarm = false;
             break;
         }
@@ -657,8 +657,8 @@ void toggleAlarms(){
             }
             __delay_ms(S2DELAY);
         }
-        if(mode != 4){
-            mode = 0;
+        if(modeFlag != 4){
+            modeFlag = 0;
             break;
         }
     }
@@ -668,12 +668,12 @@ void S1_ISR(){
     PIE0bits.INTE = 0;
     __delay_ms(200);
     // First clears LCD and only switches mode when S1 is pressed again and theirs no alarms
-    if(mode == 0 && (clkAlarm.trigger || tempAlarm.trigger || lumAlarm.trigger)){
+    if(modeFlag == 0 && (clkAlarm.trigger || tempAlarm.trigger || lumAlarm.trigger)){
         clkAlarm.trigger = false;
         tempAlarm.trigger = false;
         lumAlarm.trigger = false;
     } else{
-        if(mode == 1){
+        if(modeFlag == 1){
             if(editingClockAlarm >= 1){
                 editingClockAlarm++;
             }
@@ -682,7 +682,7 @@ void S1_ISR(){
             }
         }
         if(editingClockAlarm == 0){ //Verify if not editing clock otherwise always increment mode
-            mode++;
+            modeFlag++;
         }
     }
     EXT_INT_InterruptFlagClear();
@@ -804,22 +804,50 @@ void main(void)
     {
         //Para podermos meter a sleep que tal colocar um modo novo que é de leitura e entra nesse modo quando num interrupt vir que existe dados para receber
         //Nao sei se funciona 
-        if(EUSART_is_rx_ready()){
+
+        while(EUSART_is_rx_ready()){
             c = getch();
-            if(c == (uint8_t)SOM || buff[0] == (uint8_t)SOM){
+            if((c == (uint8_t)SOM || buff[0] == (uint8_t)SOM)){
+                if(c == (uint8_t)SOM){
+                    n=0;
+                }
                 buff[n] = c;
                 n++;
-                if(c == (uint8_t)EOM){
+                if(n == 20){
                     buff[0] = 0x01;
                     n=0;
-                    for (i = 0; i < NCOMMANDS; i++)
-                        if (buff[1] == commands[i].cmd_name)
-                            commands[i].cmd_fnct(0, NULL);                        
                 }
             }
         }
+        if(buff[n] == (uint8_t)EOM){
+            for (i = 0; i < NCOMMANDS; i++){
+                if (buff[1] == commands[i].cmd_name){
+                    commands[i].cmd_fnct(0, NULL);
+                    break;
+                }
+            }
+            buff[0] = 0x01;
+            n=0;
+        }
 
-        switch(mode){
+        if(modeFlag == 0){
+            if(PWM_on){ 
+                continue;
+            } else {
+                continue;
+                //SLEEP();
+            }
+        } else if(modeFlag == 1){
+            editClock(); //Clock Edit Handler
+        } else if(modeFlag == 2){
+            editTemp(); //Temperature Edit Handler
+        } else if(modeFlag == 3){
+            editLum(); //Luminosity Edit Handler
+        } else if(modeFlag == 4){
+            toggleAlarms(); //Enables/Disables Alarms
+        }
+
+        /*switch(modeFlag){
                 case 0: 
                     if(PWM_on){ 
                         continue;
@@ -835,7 +863,7 @@ void main(void)
                     editLum(); //Luminosity Edit Handler
                 case 4:
                     toggleAlarms(); //Enables/Disables Alarms
-            }
+            }*/
     }   
 }
 /**

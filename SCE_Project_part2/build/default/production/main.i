@@ -22105,7 +22105,7 @@ int editingClockAlarm = 0;
 bool editingTempAlarm = 0;
 bool editingLumAlarm = 0;
 
-int mode = 0;
+int modeFlag = 0;
 
 void Clock_ISR(void) {
 
@@ -22169,7 +22169,7 @@ LCDchar(ALAF);
 if(clkAlarm.trigger == 1){
 LCDcmd(0x8B);
 LCDchar('C');
-} else if(mode == 0){
+} else if(modeFlag == 0){
 LCDcmd(0x8B);
 LCDchar(' ');
 }
@@ -22178,7 +22178,7 @@ LCDchar(' ');
 if(tempAlarm.trigger == 1){
 LCDcmd(0x8C);
 LCDchar('T');
-} else if(mode == 0){
+} else if(modeFlag == 0){
 LCDcmd(0x8C);
 LCDchar(' ');
 }
@@ -22187,7 +22187,7 @@ LCDchar(' ');
 if(lumAlarm.trigger == 1){
 LCDcmd(0x8D);
 LCDchar('L');
-} else if(mode == 0){
+} else if(modeFlag == 0){
 LCDcmd(0x8D);
 LCDchar(' ');
 }
@@ -22250,12 +22250,12 @@ sprintf(l, "L %d", lumLevel);
 }
 LCDstr(l);
 
-if(mode != 0){
+if(modeFlag != 0){
 LCDcmd(0x8B);
 LCDstr("CTL");
 }
 
-if(mode == 1){
+if(modeFlag == 1){
 if(editingClockAlarm == 0){
 LCDcmd(0x8B);
 } else{
@@ -22267,7 +22267,7 @@ LCDcmd(0x84);
 LCDcmd(0x87);
 }
 }
-} else if(mode == 2){
+} else if(modeFlag == 2){
 
 if(editingTempAlarm == 0){
 LCDcmd(0x8c);
@@ -22275,7 +22275,7 @@ LCDcmd(0x8c);
 LCDcmd(0xc1);
 }
 
-} else if(mode == 3){
+} else if(modeFlag == 3){
 
 if(editingLumAlarm == 0){
 LCDcmd(0x8d);
@@ -22283,7 +22283,7 @@ LCDcmd(0x8d);
 LCDcmd(0xcf);
 }
 
-} else if(mode == 4){
+} else if(modeFlag == 4){
 LCDcmd(0x8f);
 }
 }
@@ -22375,7 +22375,7 @@ clkAlarm.alarmVal.s++;
 }
 _delay((unsigned long)((100)*(1000000/4000.0)));
 }
-if(mode != 1){
+if(modeFlag != 1){
 editingClockAlarm = 0;
 break;
 }
@@ -22398,7 +22398,7 @@ tempAlarm.alarmTemp = 0;
 }
 _delay((unsigned long)((100)*(1000000/4000.0)));
 }
-if(mode != 2){
+if(modeFlag != 2){
 editingTempAlarm = 0;
 break;
 }
@@ -22421,7 +22421,7 @@ lumAlarm.alarmLum = 0;
 }
 _delay((unsigned long)((100)*(1000000/4000.0)));
 }
-if(mode != 3){
+if(modeFlag != 3){
 editingLumAlarm = 0;
 break;
 }
@@ -22440,8 +22440,8 @@ ALAF = 'A';
 }
 _delay((unsigned long)((100)*(1000000/4000.0)));
 }
-if(mode != 4){
-mode = 0;
+if(modeFlag != 4){
+modeFlag = 0;
 break;
 }
 }
@@ -22451,12 +22451,12 @@ void S1_ISR(){
 PIE0bits.INTE = 0;
 _delay((unsigned long)((200)*(1000000/4000.0)));
 
-if(mode == 0 && (clkAlarm.trigger || tempAlarm.trigger || lumAlarm.trigger)){
+if(modeFlag == 0 && (clkAlarm.trigger || tempAlarm.trigger || lumAlarm.trigger)){
 clkAlarm.trigger = 0;
 tempAlarm.trigger = 0;
 lumAlarm.trigger = 0;
 } else{
-if(mode == 1){
+if(modeFlag == 1){
 if(editingClockAlarm >= 1){
 editingClockAlarm++;
 }
@@ -22465,7 +22465,7 @@ editingClockAlarm = 0;
 }
 }
 if(editingClockAlarm == 0){
-mode++;
+modeFlag++;
 }
 }
 (PIR0bits.INTF = 0);
@@ -22584,38 +22584,47 @@ while (1)
 {
 
 
-if(EUSART_is_rx_ready()){
+
+while(EUSART_is_rx_ready()){
 c = getch();
-if(c == (uint8_t)0xFD || buff[0] == (uint8_t)0xFD){
+if((c == (uint8_t)0xFD || buff[0] == (uint8_t)0xFD)){
 buff[n] = c;
 n++;
-if(c == (uint8_t)0xFE){
+if(n == 20){
 buff[0] = 0x01;
 n=0;
-for (i = 0; i < (sizeof(commands) / sizeof(struct command_d)); i++)
-if (buff[1] == commands[i].cmd_name)
+}
+}
+}
+if(buff[n] == (uint8_t)0xFE){
+for (i = 0; i < (sizeof(commands) / sizeof(struct command_d)); i++){
+if (buff[1] == commands[i].cmd_name){
 commands[i].cmd_fnct(0, (0));
+break;
 }
 }
+buff[0] = 0x01;
+n=0;
 }
 
-switch(mode){
-case 0:
+if(modeFlag == 0){
 if(PWM_on){
 continue;
 } else {
-__nop();
+continue;
 
 }
-case 1:
+} else if(modeFlag == 1){
 editClock();
-case 2:
+} else if(modeFlag == 2){
 editTemp();
-case 3:
+} else if(modeFlag == 3){
 editLum();
-case 4:
+} else if(modeFlag == 4){
 toggleAlarms();
 }
+
+# 864
 }
 }
 
