@@ -11,7 +11,8 @@
 
 extern Cyg_ErrNo err;
 extern cyg_io_handle_t serH;
-extern cyg_mutex_t TX_mutex;
+extern cyg_sem_t TX_sem;
+extern cyg_sem_t RX_sem;
 
 #define SOM 0xFD       /* start of message */
 #define EOM 0xFE       /* end of message */
@@ -44,19 +45,19 @@ void tx_th_prog(cyg_addrword_t data)
   //int i;
   while (1)
   {
-    if (bufw[0] == (unsigned char)SOM && bufw[w - 1] == (unsigned char)EOM)
-    {
-      err = cyg_io_write(serH, bufw, &w);
-      /*for (i = 0; i < w; i++)
+    cyg_semaphore_wait(&TX_sem);
+    // if (bufw[0] == (unsigned char)SOM && bufw[w - 1] == (unsigned char)EOM)
+    // {
+    err = cyg_io_write(serH, bufw, &w);
+    /*for (i = 0; i < w; i++)
       {
         printf("%hhx\n", bufw[i]);
       }*/
-
-      printf("io_write err=%x, w=%d\n", err, w);
-      bufw[0] = 0x01;
-      w = 0;
-    }
-    cyg_thread_delay(20);
+    printf("io_write err=%x, w=%d\n", err, w);
+    bufw[0] = 0x01;
+    w = 0;
+    //}
+    //cyg_thread_delay(20);
   }
 }
 
@@ -71,7 +72,7 @@ void rx_th_prog(cyg_addrword_t data)
 
   while (1)
   {
-    err = cyg_io_read(serH, buf_byte, &byte);
+    err = cyg_io_read(serH, buf_byte, &byte); //Blocking by default
     if (buf_byte[0] == (unsigned char)SOM || bufr[0] == (unsigned char)SOM)
     {
       if (n >= 0 && buf_byte[0] == (unsigned char)SOM)
@@ -83,7 +84,7 @@ void rx_th_prog(cyg_addrword_t data)
       if (buf_byte[0] == (unsigned char)EOM)
       {
         //printf("io_read err=%x, r=%d\n", err, n);
-
+        cyg_semaphore_post(&RX_sem);
         bufr[0] = 0x01;
         n = 0;
       }

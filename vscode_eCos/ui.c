@@ -15,7 +15,8 @@
 
 Cyg_ErrNo err;
 cyg_io_handle_t serH;
-cyg_mutex_t TX_mutex;
+cyg_sem_t TX_sem;
+cyg_sem_t RX_sem;
 
 #define SOM 0xFD       /* start of message */
 #define EOM 0xFE       /* end of message */
@@ -408,7 +409,7 @@ void monitor(void)
   printf("%s Type sos for help\n", TitleMsg);
   for (;;) //Espera activa WARNING
   {
-    cyg_thread_delay(20);
+    //cyg_thread_delay(20);
     printf("\nCmd> ");
     /* Reading and parsing command line  ----------------------------------*/
     if ((argc = my_getline(argv, ARGVECSIZE)) > 0)
@@ -422,8 +423,11 @@ void monitor(void)
       if (i < NCOMMANDS)
       {
         commands[i].cmd_fnct(argc, argv);
-        //Wait for response
-        cyg_thread_delay(100);
+
+        cyg_semaphore_post(&TX_sem); //Write to Buffer is done so TX can begin
+        //cyg_thread_delay(100);
+        cyg_semaphore_wait(&RX_sem); //Wait for response
+
         if ((strcmp(argv[0], "sos") != 0) && (strcmp(argv[0], "ini") != 0))
         {
           commands[i].cmd_display();
@@ -438,6 +442,7 @@ void monitor(void)
 void ui_th_prog(cyg_addrword_t data)
 {
   printf("Working UI thread\n");
-  cyg_mutex_init(&TX_mutex);
+  cyg_semaphore_init(&TX_sem, 0);
+  cyg_semaphore_init(&RX_sem, 0);
   monitor();
 }
