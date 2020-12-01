@@ -94,7 +94,8 @@ uint8_t idx_RingBuffer = 0; //Index of Ring Buffer to EEPROM
 #define CMD_ERROR 0xFF /* error in command */
 
 void cmd_rc(int, char **);
-
+void cmd_rtl(int, char **);
+void cmd_ra(int, char **);
 
 struct command_d
 {
@@ -103,7 +104,9 @@ struct command_d
 }
 
 const commands[] = {
-    {cmd_rc, 0xC0}
+    {cmd_rc, RCLK},
+    {cmd_rtl, RTL},
+    {cmd_ra, RALA}
 };
 
 #define NCOMMANDS (sizeof(commands) / sizeof(struct command_d))
@@ -704,6 +707,40 @@ void cmd_rc(int, char **){
     buff[5] = (uint8_t)EOM;
     int n = 0;
     while(n<6){
+        putch(buff[n]);
+        n++;
+    }
+}
+
+void cmd_rtl(int, char **){
+
+    uint8_t buff[5];
+    buff[0] = (uint8_t)SOM;
+    buff[1] = (uint8_t)RTL;
+    buff[2] = temp;
+    buff[3] = lumLevel;
+    buff[4] = (uint8_t)EOM;
+    int n = 0;
+    while(n<5){
+        putch(buff[n]);
+        n++;
+    }
+}
+
+void cmd_ra(int, char **){
+
+    uint8_t buff[9];
+    buff[0] = (uint8_t)SOM;
+    buff[1] = (uint8_t)RALA;
+    buff[2] = clkAlarm.alarmVal.h;
+    buff[3] = clkAlarm.alarmVal.m;
+    buff[4] = clkAlarm.alarmVal.s;
+    buff[5] = tempAlarm.alarmTemp;
+    buff[6] = lumAlarm.alarmLum;
+    buff[7] = ALAF == 'A' ? 1 : 0;
+    buff[8] = (uint8_t)EOM;
+    int n = 0;
+    while(n<9){
         putch(buff[n]);
         n++;
     }

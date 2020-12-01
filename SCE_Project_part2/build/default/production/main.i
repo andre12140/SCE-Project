@@ -21882,7 +21882,8 @@ uint8_t idx_RingBuffer = 0;
 
 # 96
 void cmd_rc(int, char **);
-
+void cmd_rtl(int, char **);
+void cmd_ra(int, char **);
 
 struct command_d
 {
@@ -21891,7 +21892,9 @@ char cmd_name;
 }
 
 const commands[] = {
-{cmd_rc, 0xC0}
+{cmd_rc, 0xC0},
+{cmd_rtl, 0XC2},
+{cmd_ra, 0XC6}
 };
 
 
@@ -21928,7 +21931,7 @@ SSP1CON2bits.PEN = 1;while(SSP1CON2bits.PEN);
 return value;
 }
 
-# 149
+# 152
 void LCDsend(unsigned char c)
 {
 while ((SSP1CON2 & 0x1F) | (SSP1STATbits.R_W));
@@ -22472,7 +22475,7 @@ modeFlag++;
 PIE0bits.INTE = 1;
 }
 
-# 696
+# 699
 void cmd_rc(int, char **){
 
 uint8_t buff[6];
@@ -22484,6 +22487,40 @@ buff[4] = t.s;
 buff[5] = (uint8_t)0xFE;
 int n = 0;
 while(n<6){
+putch(buff[n]);
+n++;
+}
+}
+
+void cmd_rtl(int, char **){
+
+uint8_t buff[5];
+buff[0] = (uint8_t)0xFD;
+buff[1] = (uint8_t)0XC2;
+buff[2] = temp;
+buff[3] = lumLevel;
+buff[4] = (uint8_t)0xFE;
+int n = 0;
+while(n<5){
+putch(buff[n]);
+n++;
+}
+}
+
+void cmd_ra(int, char **){
+
+uint8_t buff[9];
+buff[0] = (uint8_t)0xFD;
+buff[1] = (uint8_t)0XC6;
+buff[2] = clkAlarm.alarmVal.h;
+buff[3] = clkAlarm.alarmVal.m;
+buff[4] = clkAlarm.alarmVal.s;
+buff[5] = tempAlarm.alarmTemp;
+buff[6] = lumAlarm.alarmLum;
+buff[7] = ALAF == 'A' ? 1 : 0;
+buff[8] = (uint8_t)0xFE;
+int n = 0;
+while(n<9){
 putch(buff[n]);
 n++;
 }
@@ -22588,6 +22625,9 @@ while (1)
 while(EUSART_is_rx_ready()){
 c = getch();
 if((c == (uint8_t)0xFD || buff[0] == (uint8_t)0xFD)){
+if(c == (uint8_t)0xFD){
+n=0;
+}
 buff[n] = c;
 n++;
 if(n == 20){
@@ -22624,7 +22664,7 @@ editLum();
 toggleAlarms();
 }
 
-# 864
+# 904
 }
 }
 
