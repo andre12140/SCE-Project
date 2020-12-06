@@ -69,24 +69,29 @@ void rx_th_prog(cyg_addrword_t data)
 
   printf("Working RX thread\n");
   cyg_thread_delay(200);
+  cyg_tick_count_t t = 0;
 
   while (1)
   {
     err = cyg_io_read(serH, buf_byte, &byte); //Blocking by default
     if (buf_byte[0] == (unsigned char)SOM || bufr[0] == (unsigned char)SOM)
     {
-      if (n >= 0 && buf_byte[0] == (unsigned char)SOM)
+      if (buf_byte[0] == (unsigned char)SOM)
       {
         n = 0;
+        t = cyg_current_time() + 50;
       }
       bufr[n] = buf_byte[0];
       n++;
       if (buf_byte[0] == (unsigned char)EOM)
       {
         //printf("io_read err=%x, r=%d\n", err, n);
-        cyg_semaphore_post(&RX_sem);
         bufr[0] = 0x01;
         n = 0;
+        if (cyg_current_time() < t) //Skip messages that took more than 50ms
+        {
+          cyg_semaphore_post(&RX_sem);
+        }
       }
     }
   }

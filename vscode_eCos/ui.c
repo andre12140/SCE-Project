@@ -17,6 +17,7 @@ Cyg_ErrNo err;
 cyg_io_handle_t serH;
 cyg_sem_t TX_sem;
 cyg_sem_t RX_sem;
+cyg_bool_t r;
 
 #define SOM 0xFD       /* start of message */
 #define EOM 0xFE       /* end of message */
@@ -37,11 +38,10 @@ cyg_sem_t RX_sem;
 #define CMD_OK 0       /* command successful */
 #define CMD_ERROR 0xFF /* error in command */
 
-//Needs logic to control read and write
 unsigned char bufw[20];
-unsigned int w;
+unsigned int w = 0; //Number of bytes written
 
-unsigned char bufr[20];
+unsigned char bufr[100];
 
 /*-------------------------------------------------------------------------+
 | Header definition
@@ -66,6 +66,11 @@ void cmd_ra_display(void);
 void cmd_dac(int argc, char **argv);
 void cmd_dtl(int argc, char **argv);
 void cmd_aa(int argc, char **argv);
+void cmd_ir(int argc, char **argv);
+void cmd_ir_display(void);
+void cmd_trc(int argc, char **argv);
+void cmd_tri(int argc, char **argv);
+void cmd_reg_display(void);
 
 /*-------------------------------------------------------------------------+
 | Variable and constants definition
@@ -94,9 +99,9 @@ const commands[] = {
     {cmd_dac, cmd_status_display, "dac", "<h> <m> <s>      define alarm clock"},
     {cmd_dtl, cmd_status_display, "dtl", "<t> <l>          define alarm temperature and luminosity"},
     {cmd_aa, cmd_status_display, "aa", "<a>               activate/deactivate alarms (1/0)"},
-    // {cmd_ir, "ir", "<p>              information about registers (NREG, nr, iread, iwrite)"},
-    // {cmd_trc, "trc", "<n>              transfer n registers from current iread position"},
-    // {cmd_tri, "tri", "<n> <i>          transfer n registers from index i (0 - oldest)"},
+    {cmd_ir, cmd_ir_display, "ir", "<p>              information about registers (NREG, nr, iread, iwrite)"},
+    {cmd_trc, cmd_reg_display, "trc", "<n>              transfer n registers from current iread position"},
+    {cmd_tri, cmd_reg_display, "tri", "<n> <i>          transfer n registers from index i (0 - oldest)"},
 
     // {cmd_irl, "irl", "                 information about local registers (NRBUF, nr, iread, iwrite)"},
     // {cmd_lr, "lr", "<n> <i>          list n registers (local memory) from index i (0 - oldest)"},
@@ -159,11 +164,11 @@ void cmd_status_display()
 {
   if (bufr[2] == CMD_OK)
   {
-    printf("CMD_OK");
+    printf("CMD_OK\n");
   }
   else if (bufr[2] == CMD_ERROR)
   {
-    printf("CMD_ERROR");
+    printf("CMD_ERROR\n");
   }
 }
 
@@ -180,6 +185,11 @@ void cmd_rc(int argc, char **argv)
 
 void cmd_rc_display()
 {
+  if (bufr[2] == CMD_ERROR)
+  {
+    printf("CMD_ERROR\n");
+    return;
+  }
   printf("Horas = %d\n", bufr[2]);
   printf("Minutos = %d\n", bufr[3]);
   printf("Segundos = %d\n", bufr[4]);
@@ -226,6 +236,11 @@ void cmd_rtl(int argc, char **argv)
 
 void cmd_rtl_display()
 {
+  if (bufr[2] == CMD_ERROR)
+  {
+    printf("CMD_ERROR\n");
+    return;
+  }
   printf("Temp = %d\n", bufr[2]);
   printf("Lum = %d\n", bufr[3]);
 }
@@ -298,6 +313,11 @@ void cmd_ra(int argc, char **argv)
 
 void cmd_ra_display()
 {
+  if (bufr[2] == CMD_ERROR)
+  {
+    printf("CMD_ERROR\n");
+    return;
+  }
   printf("Clock Alarm = %02d : %02d : %02d\n", bufr[2], bufr[3], bufr[4]);
   printf("Temp Alarm = %d\n", bufr[5]);
   printf("Lum Alarm = %d\n", bufr[6]);
@@ -374,6 +394,94 @@ void cmd_aa(int argc, char **argv)
 }
 
 /*-------------------------------------------------------------------------+
+| Function: cmd_ir - information about registers (NREG, nr, iread, iwrite)
++--------------------------------------------------------------------------*/
+void cmd_ir(int argc, char **argv)
+{
+  if (argc != 1)
+  {
+    printf("Bad inputs\n");
+    return;
+  }
+  w = 3;
+  bufw[2] = (unsigned char)EOM;
+  bufw[1] = (unsigned char)IREG;
+  bufw[0] = (unsigned char)SOM;
+}
+
+void cmd_ir_display()
+{
+  if (bufr[2] == CMD_ERROR)
+  {
+    printf("CMD_ERROR\n");
+    return;
+  }
+  printf("NREG = %d\n", bufr[2]);
+  printf("NR = %d\n", bufr[3]);
+  printf("iRead = %d\n", bufr[4]);
+  printf("iWrite = %d\n", bufr[5]);
+}
+
+/*-------------------------------------------------------------------------+
+| Function: cmd_trc - transfer n registers from current iread position
++--------------------------------------------------------------------------*/
+void cmd_trc(int argc, char **argv)
+{
+  if (argc != 2)
+  {
+    printf("Bad inputs\n");
+    return;
+  }
+  unsigned int n;
+  sscanf(argv[1], "%d", &n);
+  w = 4;
+  bufw[3] = (unsigned char)EOM;
+  bufw[2] = n;
+  bufw[1] = (unsigned char)TRGC;
+  bufw[0] = (unsigned char)SOM;
+}
+
+/*-------------------------------------------------------------------------+
+| Function: cmd_tri - transfer n registers from index i (0 - oldest)
++--------------------------------------------------------------------------*/
+void cmd_tri(int argc, char **argv)
+{
+  if (argc != 3)
+  {
+    printf("Bad inputs\n");
+    return;
+  }
+  unsigned int n, i;
+  sscanf(argv[1], "%d", &n);
+  sscanf(argv[2], "%d", &i);
+  w = 5;
+  bufw[4] = (unsigned char)EOM;
+  bufw[3] = i;
+  bufw[2] = n;
+  bufw[1] = (unsigned char)TRGI;
+  bufw[0] = (unsigned char)SOM;
+}
+
+//Falta gravar localmente os registos
+//So para debug, Só da para o TRC
+void cmd_reg_display()
+{
+  if (bufr[2] == CMD_ERROR)
+  {
+    printf("CMD_ERROR\n");
+    return;
+  }
+  int i;
+  int n = bufr[2];
+  for (i = 3; i < (n * 5) + 3; i += 5)
+  {
+    printf("Clock = %02d : %02d : %02d\n", bufr[i], bufr[i + 1], bufr[i + 2]);
+    printf("Temp = %d\n", bufr[i + 3]);
+    printf("Lum = %d\n\n", bufr[i + 4]);
+  }
+}
+
+/*-------------------------------------------------------------------------+
 | Function: getline        (called from monitor) 
 +--------------------------------------------------------------------------*/
 int my_getline(char **argv, int argvsize)
@@ -409,7 +517,6 @@ void monitor(void)
   printf("%s Type sos for help\n", TitleMsg);
   for (;;) //Espera activa WARNING
   {
-    //cyg_thread_delay(20);
     printf("\nCmd> ");
     /* Reading and parsing command line  ----------------------------------*/
     if ((argc = my_getline(argv, ARGVECSIZE)) > 0)
@@ -422,15 +529,20 @@ void monitor(void)
       /* Executing commands -----------------------------------------------*/
       if (i < NCOMMANDS)
       {
+        //Falta sincronismo quando mais theards estiverem a escrever no buffer
         commands[i].cmd_fnct(argc, argv);
-
-        cyg_semaphore_post(&TX_sem); //Write to Buffer is done so TX can begin
-        //cyg_thread_delay(100);
-        cyg_semaphore_wait(&RX_sem); //Wait for response
-
         if ((strcmp(argv[0], "sos") != 0) && (strcmp(argv[0], "ini") != 0))
         {
-          commands[i].cmd_display();
+          cyg_semaphore_post(&TX_sem);                                    //Write to Buffer is done so TX can begin
+          r = cyg_semaphore_timed_wait(&RX_sem, cyg_current_time() + 50); //Wait for response max waiting time 50ms
+          if (r)
+          {
+            commands[i].cmd_display();
+          }
+          else
+          {
+            printf("Time to recieve message exceeded");
+          }
         }
       }
       else
