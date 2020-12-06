@@ -99,6 +99,8 @@
 */
 void TMR5_Initialize(void);
 
+void setTimer5ReloadVal(uint16_t);
+
 /**
   @Summary
     This function starts the TMR5.
