@@ -21832,17 +21832,15 @@ extern __bit iscntrl(char);
 extern char toupper(char);
 extern char tolower(char);
 
-# 86 "main.c"
+# 85 "main.c"
 uint8_t NREG = 0;
 uint8_t PMON = 3;
 uint8_t TALA = 5;
 
-# 94
+# 93
 uint8_t ALAF = 0;
 
-# 97
-uint8_t idx_RingBuffer = 0;
-
+# 98
 void cmd_rc(int, char *);
 void cmd_sc(int, char *);
 void cmd_rtl(int, char *);
@@ -21853,6 +21851,9 @@ void cmd_ra(int, char *);
 void cmd_dac(int, char *);
 void cmd_dtl(int, char *);
 void cmd_aa(int, char *);
+void cmd_ir(int, char *);
+void cmd_trc(int, char *);
+void cmd_tri(int, char *);
 
 struct command_d
 {
@@ -21868,7 +21869,10 @@ char cmd_name;
 {cmd_ra, 0XC6},
 {cmd_dac, 0XC7},
 {cmd_dtl, 0XC8},
-{cmd_aa, 0XC9}
+{cmd_aa, 0XC9},
+{cmd_ir, 0XCA},
+{cmd_trc, 0XCB},
+{cmd_tri, 0XCC},
 };
 
 struct Time {
@@ -21923,6 +21927,10 @@ int prevLumLevel = -1;
 
 bool updateLCD = 1;
 bool flagS1pushed = 0;
+
+uint8_t iread = 0;
+uint8_t iwrite = 0;
+uint8_t nr = 0;
 
 unsigned char tsttc (void)
 {
@@ -22111,8 +22119,8 @@ DATAEE_WriteByte( 0x7000 + (8 * 8), lumAlarm.alarmLum);
 DATAEE_WriteByte( 0x7000 + (9 * 8), ALAF);
 DATAEE_WriteByte( 0x7000 + (10 * 8), t.h);
 DATAEE_WriteByte( 0x7000 + (11 * 8), t.m);
-DATAEE_WriteByte( 0x7000 + (12 * 8), idx_RingBuffer);
-DATAEE_WriteByte( 0x7000 + (13 * 8), NREG + PMON + TALA + clkAlarm.alarmVal.h + clkAlarm.alarmVal.m + clkAlarm.alarmVal.s + tempAlarm.alarmTemp + lumAlarm.alarmLum + ALAF + t.h + t.m + idx_RingBuffer);
+DATAEE_WriteByte( 0x7000 + (12 * 8), iwrite);
+DATAEE_WriteByte( 0x7000 + (13 * 8), NREG + PMON + TALA + clkAlarm.alarmVal.h + clkAlarm.alarmVal.m + clkAlarm.alarmVal.s + tempAlarm.alarmTemp + lumAlarm.alarmLum + ALAF + t.h + t.m + iwrite);
 }
 if(t.m==60){
 t.h++;
@@ -22188,7 +22196,7 @@ differenceBetweenTimePeriod( t, alarmPWMStart, &diff);
 if(diff.s <= TALA){
 PWM_on = 1;
 
-# 453
+# 462
 } else if(PWM6EN==1){
 PWM_on = 0;
 PWM6_LoadDutyValue(0);
@@ -22260,6 +22268,8 @@ LCDcmd(0x8f);
 }
 }
 
+bool flagNr = 0;
+
 void monitoring_ISR(){
 temp = (uint8_t)tsttc();
 
@@ -22267,16 +22277,32 @@ lumLevel = ADCC_GetSingleConversion(channel_ANA0) >> 13;
 
 if(prevTemp != temp || prevLumLevel != lumLevel){
 
-DATAEE_WriteByte( (idx_RingBuffer * 0x5) + 0x7014 + (8*0) , t.h);
-DATAEE_WriteByte( (idx_RingBuffer * 0x5) + 0x7014 + (8*1) , t.m);
-DATAEE_WriteByte( (idx_RingBuffer * 0x5) + 0x7014 + (8*2) , t.s);
-DATAEE_WriteByte( (idx_RingBuffer * 0x5) + 0x7014 + (8*3) , temp);
-DATAEE_WriteByte( (idx_RingBuffer * 0x5) + 0x7014 + (8*4) , lumLevel);
+# 547
+DATAEE_WriteByte( (iwrite * 0x5) + 0x7014 + 0x0 , t.h);
+DATAEE_WriteByte( (iwrite * 0x5) + 0x7014 + 0x1 , t.m);
+DATAEE_WriteByte( (iwrite * 0x5) + 0x7014 + 0x2 , t.s);
+DATAEE_WriteByte( (iwrite * 0x5) + 0x7014 + 0x3 , temp);
+DATAEE_WriteByte( (iwrite * 0x5) + 0x7014 + 0x4 , lumLevel);
 
-idx_RingBuffer++;
-if(idx_RingBuffer > NREG){
-idx_RingBuffer = 0;
+if((nr == NREG) && (iread == iwrite)){
+iread++;
 }
+
+iwrite++;
+if(iwrite > NREG - 1){
+flagNr = 1;
+iwrite = 0;
+}
+if(flagNr){
+nr = NREG;
+} else{
+nr++;
+}
+
+if(iread > NREG-1){
+iread = 0;
+}
+
 prevTemp = temp;
 prevLumLevel = lumLevel;
 }
@@ -22345,7 +22371,7 @@ if(flagS1pushed){
 S1button();
 flagS1pushed=0;
 
-# 611
+# 642
 }
 if(PORTCbits.RC5 == 0){
 if(editingClockAlarm == 0){
@@ -22390,7 +22416,7 @@ if(flagS1pushed){
 S1button();
 flagS1pushed=0;
 
-# 657
+# 688
 }
 if(PORTCbits.RC5 == 0){
 if(editingTempAlarm == 0){
@@ -22421,7 +22447,7 @@ if(flagS1pushed){
 S1button();
 flagS1pushed=0;
 
-# 689
+# 720
 }
 if(PORTCbits.RC5 == 0){
 if(editingLumAlarm == 0){
@@ -22453,7 +22479,7 @@ if(flagS1pushed){
 S1button();
 flagS1pushed=0;
 
-# 722
+# 753
 }
 if(PORTCbits.RC5 == 0){
 if(ALAF == 'A'){
@@ -22479,12 +22505,12 @@ void S1_ISR(){
 PIE0bits.INTE = 0;
 flagS1pushed = 1;
 
-# 764
+# 795
 (PIR0bits.INTF = 0);
 PIE0bits.INTE = 1;
 }
 
-# 772
+# 803
 void sendMessage(int num, char *buffer){
 int n = 0;
 while(n<num){
@@ -22570,7 +22596,7 @@ TMR5_StopTimer();
 } else if(buffer[2] >= 0x01 && buffer[2] <= 0x10){
 PMON = buffer[2];
 
-# 861
+# 892
 uint16_t timerValue = (uint32_t)65536 - (uint32_t)((uint32_t)((uint32_t)PMON*(uint32_t)31000)/8);
 setTimer5ReloadVal(timerValue);
 TMR5_StartTimer();
@@ -22580,14 +22606,12 @@ sendERRORMessage((uint8_t)0XC4);
 sendOKMessage((uint8_t)0XC4);
 }
 
-
 void cmd_mta(int num, char *buffer){
-
 if(buffer[2] >= 0x00 && buffer[2] < 0x3c){
-clkAlarm.alarmVal.s = buffer[2];
-sendOKMessage((uint8_t)0XC4);
+TALA = buffer[2];
+sendOKMessage((uint8_t)0XC5);
 } else {
-sendERRORMessage((uint8_t)0XC4);
+sendERRORMessage((uint8_t)0XC5);
 }
 }
 
@@ -22633,16 +22657,121 @@ sendERRORMessage((uint8_t)0XC8);
 }
 
 void cmd_aa(int num, char *buffer){
-if(buffer[2] == 0){
+if(buffer[2] == 0 && num == 4){
 ALAF = 'a';
 sendOKMessage((uint8_t)0XC9);
-} else if(buffer[2] == 1){
+} else if(buffer[2] == 1 && num == 4){
 ALAF = 'A';
 sendOKMessage((uint8_t)0XC9);
 } else {
 sendERRORMessage((uint8_t)0XC9);
 }
 }
+
+void cmd_ir(int num, char *buffer){
+uint8_t buff[7];
+buff[0] = (uint8_t)0xFD;
+buff[1] = (uint8_t)0XCA;
+buff[2] = NREG;
+buff[3] = nr;
+buff[4] = iread;
+buff[5] = iwrite;
+buff[6] = (uint8_t)0xFE;
+
+sendMessage(7,buff);
+}
+
+void cmd_trc(int num, char *buffer){
+if(num == 4){
+int n = buffer[2];
+if(n > nr){
+sendERRORMessage((uint8_t)0XCB);
+return;
+}
+
+
+
+
+uint8_t buffInit[2];
+buffInit[0] = (uint8_t)0xFD;
+buffInit[1] = (uint8_t)0XCB;
+sendMessage(2,buffInit);
+int i;
+uint8_t j;
+uint8_t buffData[5];
+uint16_t address = 0;
+for(i = 0; i < n; i++){
+for(j = 0; j < 5; j++){
+address = (iread * 0x5) + 0x7014 + j;
+buffData[j] = DATAEE_ReadByte(address);
+}
+sendMessage(5,buffData);
+iread++;
+if(iread>NREG-1){
+iread=0;
+}
+}
+uint8_t buffEOM[1];
+buffEOM[0] = (uint8_t)0xFE;
+sendMessage(1,buffEOM);
+} else{
+sendERRORMessage((uint8_t)0XCB);
+}
+}
+
+
+
+
+void cmd_tri(int num, char *buffer){
+if(num == 5){
+uint8_t n = buffer[2];
+uint8_t index = buffer[3];
+
+if((n > nr) || (index < 0) || (index > NREG-1)){
+sendERRORMessage((uint8_t)0XCC);
+return;
+}
+
+uint8_t startingIndex;
+if(((iwrite-1)-index) < 0){
+startingIndex = NREG - ((iwrite-1)-index);
+} else {
+startingIndex = ((iwrite-1)-index);
+}
+
+
+uint8_t buffInit[2];
+buffInit[0] = (uint8_t)0xFD;
+buffInit[1] = (uint8_t)0XCC;
+sendMessage(2,buffInit);
+
+
+int nMessagesSent = 0;
+int i = startingIndex;
+int indexAux = index;
+uint8_t j;
+uint8_t buffData[5];
+while(indexAux){
+for(j = 0; j < 5; j++){
+buffData[j] = DATAEE_ReadByte( (i * 0x5) + 0x7014 + j);
+}
+sendMessage(5,buffData);
+i++;
+indexAux--;
+if(i >= NREG){
+i=0;
+}
+}
+
+
+uint8_t buffEOM[1];
+buffEOM[0] = (uint8_t)0xFE;
+sendMessage(1,buffEOM);
+} else{
+sendERRORMessage((uint8_t)0XCC);
+}
+}
+
 
 void main(void)
 {
@@ -22700,7 +22829,7 @@ lumAlarm.alarmLum = DATAEE_ReadByte(0x7000 + (8*8));
 ALAF = DATAEE_ReadByte(0x7000 + (9*8));
 t.h = DATAEE_ReadByte(0x7000 + (10*8));
 t.m = DATAEE_ReadByte(0x7000 + (11*8));
-idx_RingBuffer = DATAEE_ReadByte(0x7000 + (12*8));
+iwrite = DATAEE_ReadByte(0x7000 + (12*8));
 
 
 
@@ -22736,7 +22865,7 @@ int i=0;
 while (1)
 {
 
-# 1046
+# 1180
 while(EUSART_is_rx_ready()){
 c = getch();
 if((c == (uint8_t)0xFD || buff[0] == (uint8_t)0xFD)){
@@ -22771,7 +22900,7 @@ if(flagS1pushed){
 S1button();
 flagS1pushed=0;
 
-# 1082
+# 1216
 }
 
 if(PWM_on){
@@ -22794,7 +22923,7 @@ update_menuLCD();
 updateLCD=0;
 }
 
-# 1108
+# 1242
 } else if(modeFlag == 1){
 editClock();
 } else if(modeFlag == 2){

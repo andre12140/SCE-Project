@@ -43,7 +43,6 @@
 
 #include "mcc_generated_files/mcc.h"
 #include "I2C/i2c.h"
-//#include "stdio.h"
 #include "stdlib.h"
 #include <stdio.h>
 #include <string.h>
@@ -57,6 +56,7 @@
 
 #define EEAddr_INIT    0x7000        // EEPROM starting address (Used for storing init data)
 #define EEAddr_RING    0x7014        // Ring Buffer starting address
+//If NREG = 25 Last address = 0x7095 and Last address of eeprom is 0x70FF
 
 #define LCD_ADDR 0x4e   // 0x27 << 1
 #define LCD_BL 0x08
@@ -83,7 +83,7 @@
 #define CMD_OK 0 /* command successful */
 #define CMD_ERROR 0xFF /* error in command */
 
-uint8_t NREG = 0;   //Number of registers
+uint8_t NREG = 25;   //Number of registers, Max value is 46 to still be in the eeprom
 uint8_t PMON = 3;   //Monitoring period
 uint8_t TALA = 5;   //Duration of alarm signal (PWM)
 /*uint8_t ALAH = 0;   //Hours of alarm clock
@@ -94,7 +94,7 @@ uint8_t ALAL = 0;*/   //Alarm threshold for Luminosity
 uint8_t ALAF = 0;   //Alarm Flag (Initially disabled)
 /*uint8_t CLKH = 0;   //Initial value for clock hours
 uint8_t CLKM = 0;*/   //Initial value for clock minutes
-uint8_t idx_RingBuffer = 0; //Index of Ring Buffer to EEPROM
+//uint8_t idx_RingBuffer = 0; //Index of Ring Buffer to EEPROM
 
 void cmd_rc(int, char *);
 void cmd_sc(int, char *);
@@ -106,6 +106,9 @@ void cmd_ra(int, char *);
 void cmd_dac(int, char *);
 void cmd_dtl(int, char *);
 void cmd_aa(int, char *);
+void cmd_ir(int, char *);
+void cmd_trc(int, char *);
+void cmd_tri(int, char *);
 
 struct command_d
 {
@@ -121,7 +124,10 @@ struct command_d
     {cmd_ra, RALA},
     {cmd_dac, DAC},
     {cmd_dtl, DATL},
-    {cmd_aa, AALA}
+    {cmd_aa, AALA},
+    {cmd_ir, IREG},
+    {cmd_trc, TRGC},
+    {cmd_tri, TRGI},
 };
 
 struct Time {
@@ -176,6 +182,10 @@ int prevLumLevel = -1;
 
 bool updateLCD = true;
 bool flagS1pushed = false;
+
+uint8_t iread = 0;
+uint8_t iwrite = 0;
+uint8_t nr = 0;
 
 unsigned char tsttc (void)
 {
@@ -343,7 +353,6 @@ int map(int x, int in_min, int in_max, int out_min, int out_max) {
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
-
 void Clock_ISR(void) {    
     // Clock handler increment timer
     t.s++;
@@ -364,8 +373,8 @@ void Clock_ISR(void) {
         DATAEE_WriteByte( EEAddr_INIT + (9 * 8), ALAF); // ALAF
         DATAEE_WriteByte( EEAddr_INIT + (10 * 8), t.h); // CLKH
         DATAEE_WriteByte( EEAddr_INIT + (11 * 8), t.m); // CLKM
-        DATAEE_WriteByte( EEAddr_INIT + (12 * 8), idx_RingBuffer); // Index of last ring buffer write
-        DATAEE_WriteByte( EEAddr_INIT + (13 * 8), NREG + PMON + TALA + clkAlarm.alarmVal.h + clkAlarm.alarmVal.m + clkAlarm.alarmVal.s + tempAlarm.alarmTemp + lumAlarm.alarmLum + ALAF + t.h + t.m + idx_RingBuffer); // Check Sum
+        DATAEE_WriteByte( EEAddr_INIT + (12 * 8), iwrite); // Index of last ring buffer write
+        DATAEE_WriteByte( EEAddr_INIT + (13 * 8), NREG + PMON + TALA + clkAlarm.alarmVal.h + clkAlarm.alarmVal.m + clkAlarm.alarmVal.s + tempAlarm.alarmTemp + lumAlarm.alarmLum + ALAF + t.h + t.m + iwrite); // Check Sum
     }
     if(t.m==60){
         t.h++;
@@ -386,6 +395,7 @@ void Clock_ISR(void) {
     updateLCD = true;
 }
 
+//Se fizer update muito rapido o LCD para de funcionar corretamente?
 void update_menuLCD(){
     
     char str[8];
@@ -521,7 +531,9 @@ void update_menuLCD(){
     }
 }
 
-//Chamado com um periodo de PMON
+bool flagNr = false; //It means that number of saved readings is lower than NREG
+
+//Chamado com um periodo de PMON, Não esta a funcionar?
 void monitoring_ISR(){
     temp = (uint8_t)tsttc(); //Get temp
     
@@ -529,18 +541,38 @@ void monitoring_ISR(){
     
     if(prevTemp != temp || prevLumLevel != lumLevel){ //If Different values saving in eeprom
         
-        DATAEE_WriteByte( (idx_RingBuffer * 0x5) + EEAddr_RING + (8*0) , t.h);
-        DATAEE_WriteByte( (idx_RingBuffer * 0x5) + EEAddr_RING + (8*1) , t.m);
-        DATAEE_WriteByte( (idx_RingBuffer * 0x5) + EEAddr_RING + (8*2) , t.s);
-        DATAEE_WriteByte( (idx_RingBuffer * 0x5) + EEAddr_RING + (8*3) , temp);
-        DATAEE_WriteByte( (idx_RingBuffer * 0x5) + EEAddr_RING + (8*4) , lumLevel);
+        /*DATAEE_WriteByte( (iwrite * 0x5) + EEAddr_RING + (8*0) , t.h);
+        DATAEE_WriteByte( (iwrite * 0x5) + EEAddr_RING + (8*1) , t.m);
+        DATAEE_WriteByte( (iwrite * 0x5) + EEAddr_RING + (8*2) , t.s);
+        DATAEE_WriteByte( (iwrite * 0x5) + EEAddr_RING + (8*3) , temp);
+        DATAEE_WriteByte( (iwrite * 0x5) + EEAddr_RING + (8*4) , lumLevel);*/
+        DATAEE_WriteByte( (iwrite * 0x5) + EEAddr_RING + 0x0 , t.h);
+        DATAEE_WriteByte( (iwrite * 0x5) + EEAddr_RING + 0x1 , t.m);
+        DATAEE_WriteByte( (iwrite * 0x5) + EEAddr_RING + 0x2 , t.s);
+        DATAEE_WriteByte( (iwrite * 0x5) + EEAddr_RING + 0x3 , temp);
+        DATAEE_WriteByte( (iwrite * 0x5) + EEAddr_RING + 0x4 , lumLevel);
         
-        idx_RingBuffer++;
-        if(idx_RingBuffer > NREG){
-            idx_RingBuffer = 0;
+        if((nr == NREG) && (iread == iwrite)){
+            iread++;
         }
+        
+        iwrite++;
+        if(iwrite > NREG - 1){
+            flagNr = true;
+            iwrite = 0;
+        }
+        if(flagNr){
+            nr = NREG;
+        } else{
+            nr++;
+        }
+        
+        if(iread > NREG-1){
+            iread = 0;
+        }
+        
         prevTemp = temp;
-        prevLumLevel = lumLevel;  
+        prevLumLevel = lumLevel;
     }
     
     
@@ -868,14 +900,12 @@ void cmd_mmp(int num, char *buffer){
     sendOKMessage((uint8_t)MMP);
 }
 
-//Nao entendo o que fazer
 void cmd_mta(int num, char *buffer){
-    //buffer[2] => Seconds
     if(buffer[2] >= 0x00 && buffer[2] < 0x3c){
-        clkAlarm.alarmVal.s = buffer[2];
-        sendOKMessage((uint8_t)MMP);
+        TALA = buffer[2];
+        sendOKMessage((uint8_t)MTA);
     } else {
-        sendERRORMessage((uint8_t)MMP);
+        sendERRORMessage((uint8_t)MTA);
     }
 }
 
@@ -921,16 +951,129 @@ void cmd_dtl(int num, char *buffer){
 }
 
 void cmd_aa(int num, char *buffer){
-    if(buffer[2] == 0){
+    if(buffer[2] == 0 && num == 4){
         ALAF = 'a';
         sendOKMessage((uint8_t)AALA);
-    } else if(buffer[2] == 1){
+    } else if(buffer[2] == 1 && num == 4){
         ALAF = 'A';
         sendOKMessage((uint8_t)AALA);
     } else {
         sendERRORMessage((uint8_t)AALA);
     }
 }
+
+void cmd_ir(int num, char *buffer){
+    uint8_t buff[7];
+    buff[0] = (uint8_t)SOM;
+    buff[1] = (uint8_t)IREG;
+    buff[2] = NREG;
+    buff[3] = nr;
+    buff[4] = iread;
+    buff[5] = iwrite;
+    buff[6] = (uint8_t)EOM;
+    
+    sendMessage(7,buff);
+}
+
+//Registo de vez enquanto vêm errados
+void cmd_trc(int num, char *buffer){
+    if(num == 4){
+        int n = buffer[2];
+        int aux = (iwrite-1-iread);
+        if(aux < 0){
+            aux = iwrite + 1 + (NREG - iread);
+        }
+        if((n > nr) || (n > aux)){
+            sendERRORMessage((uint8_t)TRGC);
+            return;
+        }
+        //uint8_t sizeofMessage = 5*n + 3;
+        //uint8_t buff[5*(10-1) + 3]; //Numero máximo de registos
+        //uint8_t *buff; //Numero máximo de registos
+        //buff = malloc(sizeofMessage);
+        uint8_t buffInit[3];
+        buffInit[0] = (uint8_t)SOM;
+        buffInit[1] = (uint8_t)TRGC;
+        buffInit[2] = (uint8_t)n;
+        sendMessage(3,buffInit);
+        int i;
+        uint8_t j;
+        uint8_t buffData[5];
+        uint16_t address = 0;
+        for(i = 0; i < n; i++){ //Read n registers
+            for(j = 0; j < 5; j++){ //Read one register parameters (5 bytes)
+                address =  (iread * 0x5) + EEAddr_RING + j;
+                buffData[j] = DATAEE_ReadByte(address);
+            }
+            sendMessage(5,buffData);
+            iread++;
+            if(iread>NREG-1){
+                iread=0;
+            }
+        }
+        uint8_t buffEOM[1];
+        buffEOM[0] = (uint8_t)EOM;
+        sendMessage(1,buffEOM);
+    } else{
+        sendERRORMessage((uint8_t)TRGC);
+    }
+}
+//READBYTE esta mal, nao posso simplesmente ir subtraindo i que posso sair fora do array
+//Os registos que lemos nao se leem outra vez?
+
+//Ler do indice ate iwrite ou do indice ate iread?
+void cmd_tri(int num, char *buffer){
+    if(num == 5){
+        uint8_t n = buffer[2];
+        uint8_t index = buffer[3];
+        
+        if((n > nr) || (index < 0) || (index > NREG-1)){
+            sendERRORMessage((uint8_t)TRGI);
+            return;
+        }
+        
+        uint8_t startingIndex;
+        if(((iwrite-1)-index) < 0){
+            startingIndex = NREG - ((iwrite-1)-index);
+        } else {
+            startingIndex = ((iwrite-1)-index);
+        }
+        
+        //Send starting message
+        uint8_t buffInit[4];
+        buffInit[0] = (uint8_t)SOM;
+        buffInit[1] = (uint8_t)TRGC;
+        buffInit[2] = (uint8_t)n;
+        buffInit[2] = (uint8_t)index;
+        sendMessage(4,buffInit);
+        
+        //Send data from index specified until iwrite
+        int nMessagesSent = 0;
+        int i = startingIndex;
+        int indexAux = index;
+        uint8_t j;
+        uint8_t buffData[5];
+        while(indexAux){
+            for(j = 0; j < 5; j++){ //Read one register parameters (5 bytes)
+                buffData[j] = DATAEE_ReadByte( (i * 0x5) + EEAddr_RING + j);
+            }
+            sendMessage(5,buffData);
+            i++;
+            indexAux--;
+            if(i >= NREG){
+                i=0;
+            }
+        }
+        
+        //Send End of Message
+        uint8_t buffEOM[1];
+        buffEOM[0] = (uint8_t)EOM;
+        sendMessage(1,buffEOM);
+    } else{
+        sendERRORMessage((uint8_t)TRGI);
+    }
+}
+
 
 void main(void)
 {
@@ -988,7 +1131,7 @@ void main(void)
     ALAF = DATAEE_ReadByte(EEAddr_INIT + (9*8));
     t.h = DATAEE_ReadByte(EEAddr_INIT + (10*8));
     t.m = DATAEE_ReadByte(EEAddr_INIT + (11*8));
-    idx_RingBuffer = DATAEE_ReadByte(EEAddr_INIT + (12*8));
+    iwrite = DATAEE_ReadByte(EEAddr_INIT + (12*8));
     
     
     //Init struct
@@ -1119,6 +1262,3 @@ void main(void)
         }
     }   
 }
-/**
- End of File
-*/
