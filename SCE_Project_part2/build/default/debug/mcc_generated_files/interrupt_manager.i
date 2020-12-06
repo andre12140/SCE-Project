@@ -21250,40 +21250,77 @@ typedef unsigned char bool;
 # 100 "mcc_generated_files/tmr5.h"
 void TMR5_Initialize(void);
 
-void setTimer5ReloadVal(uint16_t);
-
-# 131
+# 129
 void TMR5_StartTimer(void);
 
-# 163
+# 161
 void TMR5_StopTimer(void);
 
-# 198
+# 196
 uint16_t TMR5_ReadTimer(void);
 
-# 237
+# 235
 void TMR5_WriteTimer(uint16_t timerVal);
 
-# 273
+# 271
 void TMR5_Reload(void);
 
-# 312
+# 310
 void TMR5_StartSinglePulseAcquisition(void);
 
-# 351
+# 349
 uint8_t TMR5_CheckGateValueStatus(void);
 
-# 369
+# 367
 void TMR5_ISR(void);
 
-# 387
+# 385
 void TMR5_SetInterruptHandler(void (* InterruptHandler)(void));
 
-# 405
+# 403
 extern void (*TMR5_InterruptHandler)(void);
 
-# 423
+# 421
 void TMR5_DefaultInterruptHandler(void);
+
+# 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
+typedef unsigned char bool;
+
+# 100 "mcc_generated_files/tmr3.h"
+void TMR3_Initialize(void);
+
+# 129
+void TMR3_StartTimer(void);
+
+# 161
+void TMR3_StopTimer(void);
+
+# 196
+uint16_t TMR3_ReadTimer(void);
+
+# 235
+void TMR3_WriteTimer(uint16_t timerVal);
+
+# 271
+void TMR3_Reload(void);
+
+# 310
+void TMR3_StartSinglePulseAcquisition(void);
+
+# 349
+uint8_t TMR3_CheckGateValueStatus(void);
+
+# 367
+void TMR3_ISR(void);
+
+# 385
+void TMR3_SetInterruptHandler(void (* InterruptHandler)(void));
+
+# 403
+extern void (*TMR3_InterruptHandler)(void);
+
+# 421
+void TMR3_DefaultInterruptHandler(void);
 
 # 102 "mcc_generated_files/pwm6.h"
 void PWM6_Initialize(void);
@@ -21681,13 +21718,13 @@ void EUSART_SetTxInterruptHandler(void (* interruptHandler)(void));
 # 383
 void EUSART_SetRxInterruptHandler(void (* interruptHandler)(void));
 
-# 78 "mcc_generated_files/mcc.h"
+# 79 "mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
 
-# 91
+# 92
 void OSCILLATOR_Initialize(void);
 
-# 104
+# 105
 void PMD_Initialize(void);
 
 # 52 "mcc_generated_files/interrupt_manager.c"
@@ -21711,6 +21748,10 @@ EUSART_RxDefaultInterruptHandler();
 else if(PIE4bits.TMR5IE == 1 && PIR4bits.TMR5IF == 1)
 {
 TMR5_ISR();
+}
+else if(PIE4bits.TMR3IE == 1 && PIR4bits.TMR3IF == 1)
+{
+TMR3_ISR();
 }
 else if(PIE4bits.TMR1IE == 1 && PIR4bits.TMR1IF == 1)
 {

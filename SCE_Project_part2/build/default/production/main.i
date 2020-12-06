@@ -21250,40 +21250,77 @@ typedef unsigned char bool;
 # 100 "mcc_generated_files/tmr5.h"
 void TMR5_Initialize(void);
 
-void setTimer5ReloadVal(uint16_t);
-
-# 131
+# 129
 void TMR5_StartTimer(void);
 
-# 163
+# 161
 void TMR5_StopTimer(void);
 
-# 198
+# 196
 uint16_t TMR5_ReadTimer(void);
 
-# 237
+# 235
 void TMR5_WriteTimer(uint16_t timerVal);
 
-# 273
+# 271
 void TMR5_Reload(void);
 
-# 312
+# 310
 void TMR5_StartSinglePulseAcquisition(void);
 
-# 351
+# 349
 uint8_t TMR5_CheckGateValueStatus(void);
 
-# 369
+# 367
 void TMR5_ISR(void);
 
-# 387
+# 385
 void TMR5_SetInterruptHandler(void (* InterruptHandler)(void));
 
-# 405
+# 403
 extern void (*TMR5_InterruptHandler)(void);
 
-# 423
+# 421
 void TMR5_DefaultInterruptHandler(void);
+
+# 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
+typedef unsigned char bool;
+
+# 100 "mcc_generated_files/tmr3.h"
+void TMR3_Initialize(void);
+
+# 129
+void TMR3_StartTimer(void);
+
+# 161
+void TMR3_StopTimer(void);
+
+# 196
+uint16_t TMR3_ReadTimer(void);
+
+# 235
+void TMR3_WriteTimer(uint16_t timerVal);
+
+# 271
+void TMR3_Reload(void);
+
+# 310
+void TMR3_StartSinglePulseAcquisition(void);
+
+# 349
+uint8_t TMR3_CheckGateValueStatus(void);
+
+# 367
+void TMR3_ISR(void);
+
+# 385
+void TMR3_SetInterruptHandler(void (* InterruptHandler)(void));
+
+# 403
+extern void (*TMR3_InterruptHandler)(void);
+
+# 421
+void TMR3_DefaultInterruptHandler(void);
 
 # 102 "mcc_generated_files/pwm6.h"
 void PWM6_Initialize(void);
@@ -21681,13 +21718,13 @@ void EUSART_SetTxInterruptHandler(void (* interruptHandler)(void));
 # 383
 void EUSART_SetRxInterruptHandler(void (* interruptHandler)(void));
 
-# 78 "mcc_generated_files/mcc.h"
+# 79 "mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
 
-# 91
+# 92
 void OSCILLATOR_Initialize(void);
 
-# 104
+# 105
 void PMD_Initialize(void);
 
 # 154 "I2C/i2c.h"
@@ -21832,105 +21869,35 @@ extern __bit iscntrl(char);
 extern char toupper(char);
 extern char tolower(char);
 
-# 86 "main.c"
-uint8_t NREG = 25;
-uint8_t PMON = 3;
-uint8_t TALA = 5;
+# 64 "main.c"
+uint8_t NREG = 0;
+uint8_t PMON = 0;
+uint8_t TALA = 0;
 
-# 94
+# 72
 uint8_t ALAF = 0;
 
-# 99
-void cmd_rc(int, char *);
-void cmd_sc(int, char *);
-void cmd_rtl(int, char *);
-void cmd_rp(int, char *);
-void cmd_mmp(int, char *);
-void cmd_mta(int, char *);
-void cmd_ra(int, char *);
-void cmd_dac(int, char *);
-void cmd_dtl(int, char *);
-void cmd_aa(int, char *);
-void cmd_ir(int, char *);
-void cmd_trc(int, char *);
-void cmd_tri(int, char *);
+# 75
+uint8_t idx_RingBuffer = 0;
+
+# 96
+void cmd_rc(int, char **);
+
 
 struct command_d
 {
-void (*cmd_fnct)(int, char *);
+void (*cmd_fnct)(int, char **);
 char cmd_name;
-} const commands[] = {
-{cmd_rc, 0xC0},
-{cmd_sc, 0XC1},
-{cmd_rtl, 0XC2},
-{cmd_rp, 0XC3},
-{cmd_mmp, 0XC4},
-{cmd_mta, 0XC5},
-{cmd_ra, 0XC6},
-{cmd_dac, 0XC7},
-{cmd_dtl, 0XC8},
-{cmd_aa, 0XC9},
-{cmd_ir, 0XCA},
-{cmd_trc, 0XCB},
-{cmd_tri, 0XCC},
+}
+
+const commands[] = {
+{cmd_rc, 0xC0}
 };
 
-struct Time {
-uint8_t h;
-uint8_t m;
-uint8_t s;
-};
-
-struct clockAlarm{
-struct Time alarmVal;
-bool trigger;
-};
-
-struct temperatureAlarm{
-unsigned char alarmTemp;
-bool trigger;
-bool triggered;
-};
-
-struct luminosityAlarm{
-unsigned char alarmLum;
-bool trigger;
-bool triggered;
-};
 
 
 
 bool S1_Value = 0;
-
-struct Time t = {0,0,0};
-
-uint8_t temp;
-uint8_t lumLevel;
-
-struct clockAlarm clkAlarm;
-struct temperatureAlarm tempAlarm;
-struct luminosityAlarm lumAlarm;
-
-int dimingLed = 0;
-struct Time alarmPWMStart = {0xff,0xff,0xff};
-
-int editingClockAlarm = 0;
-bool editingTempAlarm = 0;
-bool editingLumAlarm = 0;
-
-int modeFlag = 0;
-
-bool PWM_on=0;
-
-int prevTemp = -1;
-int prevLumLevel = -1;
-
-bool updateLCD = 1;
-bool flagS1pushed = 0;
-
-uint8_t iread = 0;
-uint8_t iwrite = 0;
-uint8_t nr = 0;
 
 unsigned char tsttc (void)
 {
@@ -21961,6 +21928,7 @@ SSP1CON2bits.PEN = 1;while(SSP1CON2bits.PEN);
 return value;
 }
 
+# 149
 void LCDsend(unsigned char c)
 {
 while ((SSP1CON2 & 0x1F) | (SSP1STATbits.R_W));
@@ -22069,6 +22037,12 @@ if(LCDrecv(0) & 0x80) return 1;
 return 0;
 }
 
+struct Time {
+uint8_t h;
+uint8_t m;
+uint8_t s;
+};
+
 
 void differenceBetweenTimePeriod(struct Time start,
 struct Time stop,
@@ -22098,6 +22072,41 @@ int map(int x, int in_min, int in_max, int out_min, int out_max) {
 return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
+struct clockAlarm{
+struct Time alarmVal;
+bool trigger;
+};
+
+struct temperatureAlarm{
+unsigned char alarmTemp;
+bool trigger;
+bool triggered;
+};
+
+struct luminosityAlarm{
+unsigned char alarmLum;
+bool trigger;
+bool triggered;
+};
+
+struct Time t = {0,0,0};
+
+uint8_t temp;
+uint8_t lumLevel;
+
+struct clockAlarm clkAlarm;
+struct temperatureAlarm tempAlarm;
+struct luminosityAlarm lumAlarm;
+
+int dimingLed = 0;
+struct Time alarmPWMStart = {0xff,0xff,0xff};
+
+int editingClockAlarm = 0;
+bool editingTempAlarm = 0;
+bool editingLumAlarm = 0;
+
+int mode = 0;
+
 void Clock_ISR(void) {
 
 t.s++;
@@ -22118,8 +22127,8 @@ DATAEE_WriteByte( 0x7000 + (8 * 8), lumAlarm.alarmLum);
 DATAEE_WriteByte( 0x7000 + (9 * 8), ALAF);
 DATAEE_WriteByte( 0x7000 + (10 * 8), t.h);
 DATAEE_WriteByte( 0x7000 + (11 * 8), t.m);
-DATAEE_WriteByte( 0x7000 + (12 * 8), iwrite);
-DATAEE_WriteByte( 0x7000 + (13 * 8), NREG + PMON + TALA + clkAlarm.alarmVal.h + clkAlarm.alarmVal.m + clkAlarm.alarmVal.s + tempAlarm.alarmTemp + lumAlarm.alarmLum + ALAF + t.h + t.m + iwrite);
+DATAEE_WriteByte( 0x7000 + (12 * 8), idx_RingBuffer);
+DATAEE_WriteByte( 0x7000 + (13 * 8), NREG + PMON + TALA + clkAlarm.alarmVal.h + clkAlarm.alarmVal.m + clkAlarm.alarmVal.s + tempAlarm.alarmTemp + lumAlarm.alarmLum + ALAF + t.h + t.m + idx_RingBuffer);
 }
 if(t.m==60){
 t.h++;
@@ -22137,12 +22146,11 @@ clkAlarm.alarmVal.h = 25;
 }
 
 do { LATAbits.LATA7 = ~LATAbits.LATA7; } while(0);
-updateLCD = 1;
 }
 
 
-void update_menuLCD(){
-
+bool PWM_on=0;
+void menuLCD_ISR(){
 char str[8];
 if(editingClockAlarm){
 sprintf(str, "%02d:%02d:%02d", clkAlarm.alarmVal.h,clkAlarm.alarmVal.m,clkAlarm.alarmVal.s);
@@ -22153,10 +22161,15 @@ LCDcmd(0x80);
 LCDstr(str);
 
 
+if(ALAF == 'A'){
+LCDcmd(0x8F);
+LCDchar(ALAF);
+
+
 if(clkAlarm.trigger == 1){
 LCDcmd(0x8B);
 LCDchar('C');
-} else if(modeFlag == 0){
+} else if(mode == 0){
 LCDcmd(0x8B);
 LCDchar(' ');
 }
@@ -22165,7 +22178,7 @@ LCDchar(' ');
 if(tempAlarm.trigger == 1){
 LCDcmd(0x8C);
 LCDchar('T');
-} else if(modeFlag == 0){
+} else if(mode == 0){
 LCDcmd(0x8C);
 LCDchar(' ');
 }
@@ -22174,16 +22187,10 @@ LCDchar(' ');
 if(lumAlarm.trigger == 1){
 LCDcmd(0x8D);
 LCDchar('L');
-} else if(modeFlag == 0){
+} else if(mode == 0){
 LCDcmd(0x8D);
 LCDchar(' ');
 }
-
-LCDcmd(0x8F);
-LCDchar(ALAF);
-
-
-if(ALAF == 'A'){
 if(clkAlarm.trigger || tempAlarm.trigger || lumAlarm.trigger){
 if(alarmPWMStart.h == 0xff){
 alarmPWMStart.h = t.h;
@@ -22195,20 +22202,33 @@ differenceBetweenTimePeriod( t, alarmPWMStart, &diff);
 
 if(diff.s <= TALA){
 PWM_on = 1;
-
-# 463
+if(PWM6EN==0){
+TMR2_StartTimer();
+PWM_Output_D4_Enable();
+}
+if(dimingLed <= 330){
+dimingLed += 30;
+} else{
+dimingLed = 0;
+}
+PWM6_LoadDutyValue(dimingLed);
 } else if(PWM6EN==1){
 PWM_on = 0;
 PWM6_LoadDutyValue(0);
 TMR2_StopTimer();
 PWM_Output_D4_Disable();
 }
-} else if(PWM6EN==1){
+} else{
+if(PWM6EN==1){
 PWM_on = 0;
 PWM6_LoadDutyValue(0);
 TMR2_StopTimer();
 PWM_Output_D4_Disable();
 }
+}
+} else{
+LCDcmd(0x8F);
+LCDchar(ALAF);
 }
 
 LCDcmd(0xc0);
@@ -22230,12 +22250,12 @@ sprintf(l, "L %d", lumLevel);
 }
 LCDstr(l);
 
-if(modeFlag != 0){
+if(mode != 0){
 LCDcmd(0x8B);
 LCDstr("CTL");
 }
 
-if(modeFlag == 1){
+if(mode == 1){
 if(editingClockAlarm == 0){
 LCDcmd(0x8B);
 } else{
@@ -22247,7 +22267,7 @@ LCDcmd(0x84);
 LCDcmd(0x87);
 }
 }
-} else if(modeFlag == 2){
+} else if(mode == 2){
 
 if(editingTempAlarm == 0){
 LCDcmd(0x8c);
@@ -22255,7 +22275,7 @@ LCDcmd(0x8c);
 LCDcmd(0xc1);
 }
 
-} else if(modeFlag == 3){
+} else if(mode == 3){
 
 if(editingLumAlarm == 0){
 LCDcmd(0x8d);
@@ -22263,13 +22283,13 @@ LCDcmd(0x8d);
 LCDcmd(0xcf);
 }
 
-} else if(modeFlag == 4){
+} else if(mode == 4){
 LCDcmd(0x8f);
 }
 }
 
-bool flagNr = 0;
-
+int prevTemp = -1;
+int prevLumLevel = -1;
 
 void monitoring_ISR(){
 temp = (uint8_t)tsttc();
@@ -22278,32 +22298,16 @@ lumLevel = ADCC_GetSingleConversion(channel_ANA0) >> 13;
 
 if(prevTemp != temp || prevLumLevel != lumLevel){
 
-# 549
-DATAEE_WriteByte( (iwrite * 0x5) + 0x7014 + 0x0 , t.h);
-DATAEE_WriteByte( (iwrite * 0x5) + 0x7014 + 0x1 , t.m);
-DATAEE_WriteByte( (iwrite * 0x5) + 0x7014 + 0x2 , t.s);
-DATAEE_WriteByte( (iwrite * 0x5) + 0x7014 + 0x3 , temp);
-DATAEE_WriteByte( (iwrite * 0x5) + 0x7014 + 0x4 , lumLevel);
+DATAEE_WriteByte( (idx_RingBuffer * 0x5) + 0x7014 + (8*0) , t.h);
+DATAEE_WriteByte( (idx_RingBuffer * 0x5) + 0x7014 + (8*1) , t.m);
+DATAEE_WriteByte( (idx_RingBuffer * 0x5) + 0x7014 + (8*2) , t.s);
+DATAEE_WriteByte( (idx_RingBuffer * 0x5) + 0x7014 + (8*3) , temp);
+DATAEE_WriteByte( (idx_RingBuffer * 0x5) + 0x7014 + (8*4) , lumLevel);
 
-if((nr == NREG) && (iread == iwrite)){
-iread++;
+idx_RingBuffer++;
+if(idx_RingBuffer > NREG){
+idx_RingBuffer = 0;
 }
-
-iwrite++;
-if(iwrite > NREG - 1){
-flagNr = 1;
-iwrite = 0;
-}
-if(flagNr){
-nr = NREG;
-} else{
-nr++;
-}
-
-if(iread > NREG-1){
-iread = 0;
-}
-
 prevTemp = temp;
 prevLumLevel = lumLevel;
 }
@@ -22342,38 +22346,10 @@ do { LATAbits.LATA5 = 0; } while(0);
 }
 }
 
-void S1button(){
-
-if(modeFlag == 0 && (clkAlarm.trigger || tempAlarm.trigger || lumAlarm.trigger)){
-clkAlarm.trigger = 0;
-tempAlarm.trigger = 0;
-lumAlarm.trigger = 0;
-updateLCD = 1;
-} else{
-if(modeFlag == 1){
-if(editingClockAlarm >= 1){
-editingClockAlarm++;
-}
-if(editingClockAlarm > 3){
-editingClockAlarm = 0;
-}
-}
-if(editingClockAlarm == 0){
-modeFlag++;
-}
-}
-_delay((unsigned long)((50)*(1000000/4000.0)));
-}
-
 void editClock(){
 
 while(1){
-if(flagS1pushed){
-S1button();
-flagS1pushed=0;
 
-# 644
-}
 if(PORTCbits.RC5 == 0){
 if(editingClockAlarm == 0){
 editingClockAlarm = 1;
@@ -22397,28 +22373,20 @@ clkAlarm.alarmVal.s = 0;
 clkAlarm.alarmVal.s++;
 }
 }
-_delay((unsigned long)((400)*(1000000/4000.0)));
-update_menuLCD();
+_delay((unsigned long)((100)*(1000000/4000.0)));
 }
-if(modeFlag != 1){
+if(mode != 1){
 editingClockAlarm = 0;
 break;
-}
-if(updateLCD){
-update_menuLCD();
-updateLCD=0;
 }
 }
 }
 
 void editTemp(){
-while(1){
-if(flagS1pushed){
-S1button();
-flagS1pushed=0;
 
-# 690
-}
+
+while(1){
+
 if(PORTCbits.RC5 == 0){
 if(editingTempAlarm == 0){
 editingTempAlarm = 1;
@@ -22428,28 +22396,20 @@ if(tempAlarm.alarmTemp > 50){
 tempAlarm.alarmTemp = 0;
 }
 }
-_delay((unsigned long)((400)*(1000000/4000.0)));
-update_menuLCD();
+_delay((unsigned long)((100)*(1000000/4000.0)));
 }
-if(modeFlag != 2){
+if(mode != 2){
 editingTempAlarm = 0;
 break;
-}
-if(updateLCD){
-update_menuLCD();
-updateLCD=0;
 }
 }
 }
 
 void editLum(){
-while(1){
-if(flagS1pushed){
-S1button();
-flagS1pushed=0;
 
-# 722
-}
+
+while(1){
+
 if(PORTCbits.RC5 == 0){
 if(editingLumAlarm == 0){
 editingLumAlarm = 1;
@@ -22459,16 +22419,11 @@ if(lumAlarm.alarmLum > 7){
 lumAlarm.alarmLum = 0;
 }
 }
-_delay((unsigned long)((400)*(1000000/4000.0)));
-update_menuLCD();
+_delay((unsigned long)((100)*(1000000/4000.0)));
 }
-if(modeFlag != 3){
+if(mode != 3){
 editingLumAlarm = 0;
 break;
-}
-if(updateLCD){
-update_menuLCD();
-updateLCD=0;
 }
 }
 }
@@ -22476,71 +22431,50 @@ updateLCD=0;
 void toggleAlarms(){
 
 while(1){
-if(flagS1pushed){
-S1button();
-flagS1pushed=0;
 
-# 755
-}
 if(PORTCbits.RC5 == 0){
 if(ALAF == 'A'){
 ALAF = 'a';
 } else {
 ALAF = 'A';
 }
-_delay((unsigned long)((400)*(1000000/4000.0)));
-update_menuLCD();
+_delay((unsigned long)((100)*(1000000/4000.0)));
 }
-if(modeFlag != 4){
-modeFlag = 0;
+if(mode != 4){
+mode = 0;
 break;
-}
-if(updateLCD){
-update_menuLCD();
-updateLCD=0;
 }
 }
 }
 
 void S1_ISR(){
 PIE0bits.INTE = 0;
-flagS1pushed = 1;
+_delay((unsigned long)((200)*(1000000/4000.0)));
 
-# 797
+if(mode == 0 && (clkAlarm.trigger || tempAlarm.trigger || lumAlarm.trigger)){
+clkAlarm.trigger = 0;
+tempAlarm.trigger = 0;
+lumAlarm.trigger = 0;
+} else{
+if(mode == 1){
+if(editingClockAlarm >= 1){
+editingClockAlarm++;
+}
+if(editingClockAlarm > 3){
+editingClockAlarm = 0;
+}
+}
+if(editingClockAlarm == 0){
+mode++;
+}
+}
 (PIR0bits.INTF = 0);
 PIE0bits.INTE = 1;
 }
 
-# 805
-void sendMessage(int num, char *buffer){
-int n = 0;
-while(n<num){
-putch(buffer[n]);
-n++;
-}
-}
+# 696
+void cmd_rc(int, char **){
 
-void sendOKMessage(uint8_t cmd){
-uint8_t bufw[4];
-bufw[0] = (uint8_t)0xFD;
-bufw[1] = (uint8_t)cmd;
-bufw[2] = (uint8_t)0;
-bufw[3] = (uint8_t)0xFE;
-
-sendMessage(4,bufw);
-}
-
-void sendERRORMessage(uint8_t cmd){
-uint8_t bufw[4];
-bufw[0] = (uint8_t)0xFD;
-bufw[1] = (uint8_t)cmd;
-bufw[2] = (uint8_t)0xFF;
-bufw[3] = (uint8_t)0xFE;
-
-sendMessage(4,bufw);
-}
-
-void cmd_rc(int num, char *buffer){
 uint8_t buff[6];
 buff[0] = (uint8_t)0xFD;
 buff[1] = (uint8_t)0xC0;
@@ -22548,239 +22482,12 @@ buff[2] = t.h;
 buff[3] = t.m;
 buff[4] = t.s;
 buff[5] = (uint8_t)0xFE;
-
-sendMessage(6,buff);
-}
-
-void cmd_sc(int num, char *buffer){
-uint8_t h = buffer[2];
-uint8_t m = buffer[3];
-uint8_t s = buffer[4];
-if((h >= 0 && h < 24) && (m >= 0 && m < 60) && (s >= 0 && s < 60) && num == 6){
-t.h = h;
-t.m = m;
-t.s = s;
-sendOKMessage((uint8_t)0XC1);
-} else {
-sendERRORMessage((uint8_t)0XC1);
-}
-
-}
-
-void cmd_rtl(int num, char *buffer){
-uint8_t buff[5];
-buff[0] = (uint8_t)0xFD;
-buff[1] = (uint8_t)0XC2;
-buff[2] = temp;
-buff[3] = lumLevel;
-buff[4] = (uint8_t)0xFE;
-
-sendMessage(5,buff);
-}
-
-void cmd_rp(int num, char *buffer){
-uint8_t buff[5];
-buff[0] = (uint8_t)0xFD;
-buff[1] = (uint8_t)0XC3;
-buff[2] = PMON;
-buff[3] = TALA;
-buff[4] = (uint8_t)0xFE;
-
-sendMessage(5,buff);
-}
-
-
-void cmd_mmp(int num, char *buffer){
-
-if(buffer[2] == 0x0){
-TMR5_StopTimer();
-} else if(buffer[2] >= 0x01 && buffer[2] <= 0x10){
-PMON = buffer[2];
-
-# 894
-uint16_t timerValue = (uint32_t)65536 - (uint32_t)((uint32_t)((uint32_t)PMON*(uint32_t)31000)/8);
-setTimer5ReloadVal(timerValue);
-TMR5_StartTimer();
-} else {
-sendERRORMessage((uint8_t)0XC4);
-}
-sendOKMessage((uint8_t)0XC4);
-}
-
-void cmd_mta(int num, char *buffer){
-if(buffer[2] >= 0x00 && buffer[2] < 0x3c){
-TALA = buffer[2];
-sendOKMessage((uint8_t)0XC5);
-} else {
-sendERRORMessage((uint8_t)0XC5);
+int n = 0;
+while(n<6){
+putch(buff[n]);
+n++;
 }
 }
-
-void cmd_ra(int num, char *buffer){
-uint8_t buff[9];
-buff[0] = (uint8_t)0xFD;
-buff[1] = (uint8_t)0XC6;
-buff[2] = clkAlarm.alarmVal.h;
-buff[3] = clkAlarm.alarmVal.m;
-buff[4] = clkAlarm.alarmVal.s;
-buff[5] = tempAlarm.alarmTemp;
-buff[6] = lumAlarm.alarmLum;
-buff[7] = ALAF == 'A' ? 1 : 0;
-buff[8] = (uint8_t)0xFE;
-
-sendMessage(9,buff);
-}
-
-void cmd_dac(int num, char *buffer){
-uint8_t h = buffer[2];
-uint8_t m = buffer[3];
-uint8_t s = buffer[4];
-if((h >= 0 && h < 24) && (m >= 0 && m < 60) && (s >= 0 && s < 60) && num == 6){
-clkAlarm.alarmVal.h = h;
-clkAlarm.alarmVal.m = m;
-clkAlarm.alarmVal.s = s;
-sendOKMessage((uint8_t)0XC7);
-} else {
-sendERRORMessage((uint8_t)0XC7);
-}
-}
-
-void cmd_dtl(int num, char *buffer){
-uint8_t tempAux = buffer[2];
-uint8_t lumAux = buffer[3];
-if((tempAux >= 0 && tempAux < 50) && (lumAux >= 0 && lumAux < 8) && num == 5){
-tempAlarm.alarmTemp = buffer[2];
-lumAlarm.alarmLum = buffer[3];
-sendOKMessage((uint8_t)0XC8);
-} else {
-sendERRORMessage((uint8_t)0XC8);
-}
-}
-
-void cmd_aa(int num, char *buffer){
-if(buffer[2] == 0 && num == 4){
-ALAF = 'a';
-sendOKMessage((uint8_t)0XC9);
-} else if(buffer[2] == 1 && num == 4){
-ALAF = 'A';
-sendOKMessage((uint8_t)0XC9);
-} else {
-sendERRORMessage((uint8_t)0XC9);
-}
-}
-
-void cmd_ir(int num, char *buffer){
-uint8_t buff[7];
-buff[0] = (uint8_t)0xFD;
-buff[1] = (uint8_t)0XCA;
-buff[2] = NREG;
-buff[3] = nr;
-buff[4] = iread;
-buff[5] = iwrite;
-buff[6] = (uint8_t)0xFE;
-
-sendMessage(7,buff);
-}
-
-
-void cmd_trc(int num, char *buffer){
-if(num == 4){
-int n = buffer[2];
-int aux = (iwrite-1-iread);
-if(aux < 0){
-aux = iwrite + 1 + (NREG - iread);
-}
-if((n > nr) || (n > aux)){
-sendERRORMessage((uint8_t)0XCB);
-return;
-}
-
-
-
-
-uint8_t buffInit[3];
-buffInit[0] = (uint8_t)0xFD;
-buffInit[1] = (uint8_t)0XCB;
-buffInit[2] = (uint8_t)n;
-sendMessage(3,buffInit);
-int i;
-uint8_t j;
-uint8_t buffData[5];
-uint16_t address = 0;
-for(i = 0; i < n; i++){
-for(j = 0; j < 5; j++){
-address = (iread * 0x5) + 0x7014 + j;
-buffData[j] = DATAEE_ReadByte(address);
-}
-sendMessage(5,buffData);
-iread++;
-if(iread>NREG-1){
-iread=0;
-}
-}
-uint8_t buffEOM[1];
-buffEOM[0] = (uint8_t)0xFE;
-sendMessage(1,buffEOM);
-} else{
-sendERRORMessage((uint8_t)0XCB);
-}
-}
-
-
-
-
-void cmd_tri(int num, char *buffer){
-if(num == 5){
-uint8_t n = buffer[2];
-uint8_t index = buffer[3];
-
-if((n > nr) || (index < 0) || (index > NREG-1)){
-sendERRORMessage((uint8_t)0XCC);
-return;
-}
-
-uint8_t startingIndex;
-if(((iwrite-1)-index) < 0){
-startingIndex = NREG - ((iwrite-1)-index);
-} else {
-startingIndex = ((iwrite-1)-index);
-}
-
-
-uint8_t buffInit[4];
-buffInit[0] = (uint8_t)0xFD;
-buffInit[1] = (uint8_t)0XCB;
-buffInit[2] = (uint8_t)n;
-buffInit[2] = (uint8_t)index;
-sendMessage(4,buffInit);
-
-
-int nMessagesSent = 0;
-int i = startingIndex;
-int indexAux = index;
-uint8_t j;
-uint8_t buffData[5];
-while(indexAux){
-for(j = 0; j < 5; j++){
-buffData[j] = DATAEE_ReadByte( (i * 0x5) + 0x7014 + j);
-}
-sendMessage(5,buffData);
-i++;
-indexAux--;
-if(i >= NREG){
-i=0;
-}
-}
-
-
-uint8_t buffEOM[1];
-buffEOM[0] = (uint8_t)0xFE;
-sendMessage(1,buffEOM);
-} else{
-sendERRORMessage((uint8_t)0XCC);
-}
-}
-
 
 void main(void)
 {
@@ -22792,6 +22499,8 @@ TMR2_StopTimer();
 PWM_Output_D4_Disable();
 
 TMR1_SetInterruptHandler(Clock_ISR);
+
+TMR3_SetInterruptHandler(menuLCD_ISR);
 
 TMR5_SetInterruptHandler(monitoring_ISR);
 
@@ -22838,7 +22547,7 @@ lumAlarm.alarmLum = DATAEE_ReadByte(0x7000 + (8*8));
 ALAF = DATAEE_ReadByte(0x7000 + (9*8));
 t.h = DATAEE_ReadByte(0x7000 + (10*8));
 t.m = DATAEE_ReadByte(0x7000 + (11*8));
-iwrite = DATAEE_ReadByte(0x7000 + (12*8));
+idx_RingBuffer = DATAEE_ReadByte(0x7000 + (12*8));
 
 
 
@@ -22867,82 +22576,46 @@ LCDinit();
 
 
 uint8_t c;
-char buff[20] = "";
+char buff[20];
 int n=0;
 int i=0;
 
 while (1)
 {
 
-# 1190
-while(EUSART_is_rx_ready()){
+
+if(EUSART_is_rx_ready()){
 c = getch();
-if((c == (uint8_t)0xFD || buff[0] == (uint8_t)0xFD)){
-if(c == (uint8_t)0xFD){
-memset(buff, 0, sizeof buff);
-n=0;
-}
+if(c == (uint8_t)0xFD || buff[0] == (uint8_t)0xFD){
 buff[n] = c;
 n++;
-if(n == 20){
-memset(buff, 0, sizeof buff);
-n=0;
-}
-}
 if(c == (uint8_t)0xFE){
-break;
-}
-}
-if(buff[n-1] == (uint8_t)0xFE){
-for (i = 0; i < (sizeof(commands) / sizeof(struct command_d)); i++){
-if (buff[1] == commands[i].cmd_name){
-commands[i].cmd_fnct(n, buff);
-break;
-}
-}
-memset(buff, 0, sizeof buff);
-c = 0x01;
+buff[0] = 0x01;
 n=0;
+for (i = 0; i < (sizeof(commands) / sizeof(struct command_d)); i++)
+if (buff[1] == commands[i].cmd_name)
+commands[i].cmd_fnct(0, (0));
+}
+}
 }
 
-if(flagS1pushed){
-S1button();
-flagS1pushed=0;
-
-# 1226
-}
-
+switch(mode){
+case 0:
 if(PWM_on){
-if(PWM6EN==0){
-TMR2_StartTimer();
-PWM_Output_D4_Enable();
-}
-if(dimingLed <= 1023){
-dimingLed += 1;
-} else{
-dimingLed = 0;
-}
-PWM6_LoadDutyValue(dimingLed);
-_delay((unsigned long)((1)*(1000000/4000.0)));
-}
+continue;
+} else {
+__nop();
 
-if(modeFlag == 0){
-if(updateLCD){
-update_menuLCD();
-updateLCD=0;
 }
-
-# 1252
-} else if(modeFlag == 1){
+case 1:
 editClock();
-} else if(modeFlag == 2){
+case 2:
 editTemp();
-} else if(modeFlag == 3){
+case 3:
 editLum();
-} else if(modeFlag == 4){
+case 4:
 toggleAlarms();
-} else if(modeFlag > 4){
-modeFlag = 0;
 }
 }
 }
+

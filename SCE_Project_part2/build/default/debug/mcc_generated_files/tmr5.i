@@ -21127,39 +21127,37 @@ typedef unsigned char bool;
 # 100 "mcc_generated_files/tmr5.h"
 void TMR5_Initialize(void);
 
-void setTimer5ReloadVal(uint16_t);
-
-# 131
+# 129
 void TMR5_StartTimer(void);
 
-# 163
+# 161
 void TMR5_StopTimer(void);
 
-# 198
+# 196
 uint16_t TMR5_ReadTimer(void);
 
-# 237
+# 235
 void TMR5_WriteTimer(uint16_t timerVal);
 
-# 273
+# 271
 void TMR5_Reload(void);
 
-# 312
+# 310
 void TMR5_StartSinglePulseAcquisition(void);
 
-# 351
+# 349
 uint8_t TMR5_CheckGateValueStatus(void);
 
-# 369
+# 367
 void TMR5_ISR(void);
 
-# 387
+# 385
 void TMR5_SetInterruptHandler(void (* InterruptHandler)(void));
 
-# 405
+# 403
 extern void (*TMR5_InterruptHandler)(void);
 
-# 423
+# 421
 void TMR5_DefaultInterruptHandler(void);
 
 # 57 "mcc_generated_files/tmr5.c"
@@ -21181,10 +21179,10 @@ T5GATE = 0x00;
 T5CLK = 0x04;
 
 
-TMR5H = 0xD2;
+TMR5H = 0x4A;
 
 
-TMR5L = 0x97;
+TMR5L = 0x5C;
 
 
 timer5ReloadVal=(uint16_t)((TMR5H << 8) | TMR5L);
@@ -21200,10 +21198,6 @@ TMR5_SetInterruptHandler(TMR5_DefaultInterruptHandler);
 
 
 T5CON = 0x15;
-}
-
-void setTimer5ReloadVal(uint16_t val){
-timer5ReloadVal = val;
 }
 
 void TMR5_StartTimer(void)

@@ -74,11 +74,11 @@ void TMR5_Initialize(void)
     //CS LFINTOSC; 
     T5CLK = 0x04;
 
-    //TMR5H 210; 
-    TMR5H = 0xD2;
+    //TMR5H 74; 
+    TMR5H = 0x4A;
 
-    //TMR5L 151; 
-    TMR5L = 0x97;
+    //TMR5L 92; 
+    TMR5L = 0x5C;
 
     // Load the TMR value to reload variable
     timer5ReloadVal=(uint16_t)((TMR5H << 8) | TMR5L);
@@ -94,10 +94,6 @@ void TMR5_Initialize(void)
 
     // CKPS 1:2; nT5SYNC do_not_synchronize; TMR5ON enabled; T5RD16 disabled; 
     T5CON = 0x15;
-}
-
-void setTimer5ReloadVal(uint16_t val){
-    timer5ReloadVal = val;
 }
 
 void TMR5_StartTimer(void)

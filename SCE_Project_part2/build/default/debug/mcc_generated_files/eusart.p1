@@ -13816,8 +13816,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 ]
 [; ;eusart.c: 63: volatile uint8_t eusartTxTail = 0;
 "64
-[v _eusartTxBuffer `Vuc ~T0 @X0 -> 64 `i e ]
-[; ;eusart.c: 64: volatile uint8_t eusartTxBuffer[64];
+[v _eusartTxBuffer `Vuc ~T0 @X0 -> 8 `i e ]
+[; ;eusart.c: 64: volatile uint8_t eusartTxBuffer[8];
 "65
 [v _eusartTxBufferRemaining `Vuc ~T0 @X0 1 e ]
 [; ;eusart.c: 65: volatile uint8_t eusartTxBufferRemaining;
@@ -13834,8 +13834,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 ]
 [; ;eusart.c: 68: volatile uint8_t eusartRxTail = 0;
 "69
-[v _eusartRxBuffer `Vuc ~T0 @X0 -> 64 `i e ]
-[; ;eusart.c: 69: volatile uint8_t eusartRxBuffer[64];
+[v _eusartRxBuffer `Vuc ~T0 @X0 -> 8 `i e ]
+[; ;eusart.c: 69: volatile uint8_t eusartRxBuffer[8];
 "70
 [v _eusartRxCount `Vuc ~T0 @X0 1 e ]
 [; ;eusart.c: 70: volatile uint8_t eusartRxCount;
