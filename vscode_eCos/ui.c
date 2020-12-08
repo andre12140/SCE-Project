@@ -38,6 +38,10 @@ cyg_bool_t r;
 #define CMD_OK 0       /* command successful */
 #define CMD_ERROR 0xFF /* error in command */
 
+#define NRBUF 100
+
+unsigned char eCosRingBuff[NRBUF];
+
 unsigned char bufw[20];
 unsigned int w = 0; //Number of bytes written
 
@@ -70,7 +74,7 @@ void cmd_ir(int argc, char **argv);
 void cmd_ir_display(void);
 void cmd_trc(int argc, char **argv);
 void cmd_tri(int argc, char **argv);
-void cmd_reg_display(void);
+void cmd_reg_display(void); //DEBUG
 
 /*-------------------------------------------------------------------------+
 | Variable and constants definition
@@ -473,11 +477,27 @@ void cmd_reg_display()
   }
   int i;
   int n = bufr[2];
-  for (i = 3; i < (n * 5) + 3; i += 5)
+
+  if (bufr[1] == TRGC)
   {
-    printf("Clock = %02d : %02d : %02d\n", bufr[i], bufr[i + 1], bufr[i + 2]);
-    printf("Temp = %d\n", bufr[i + 3]);
-    printf("Lum = %d\n\n", bufr[i + 4]);
+    printf("TRC\n");
+    for (i = 3; i < (n * 5) + 3; i += 5)
+    {
+      printf("Clock = %02d : %02d : %02d\n", bufr[i], bufr[i + 1], bufr[i + 2]);
+      printf("Temp = %d\n", bufr[i + 3]);
+      printf("Lum = %d\n\n", bufr[i + 4]);
+    }
+  }
+
+  if (bufr[1] == TRGI)
+  {
+    printf("TRI\n");
+    for (i = 4; i < (n * 5) + 4; i += 5)
+    {
+      printf("Clock = %02d : %02d : %02d\n", bufr[i], bufr[i + 1], bufr[i + 2]);
+      printf("Temp = %d\n", bufr[i + 3]);
+      printf("Lum = %d\n\n", bufr[i + 4]);
+    }
   }
 }
 
@@ -530,7 +550,7 @@ void monitor(void)
       if (i < NCOMMANDS)
       {
         //Falta sincronismo quando mais theards estiverem a escrever no buffer
-        commands[i].cmd_fnct(argc, argv);
+        commands[i].cmd_fnct(argc, argv); //check for bad inputs
         if ((strcmp(argv[0], "sos") != 0) && (strcmp(argv[0], "ini") != 0))
         {
           cyg_semaphore_post(&TX_sem);                                    //Write to Buffer is done so TX can begin
