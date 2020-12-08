@@ -39,8 +39,13 @@ cyg_bool_t r;
 #define CMD_ERROR 0xFF /* error in command */
 
 #define NRBUF 100
+#define REGDIM 5
 
-unsigned char eCosRingBuff[NRBUF];
+unsigned char eCosRingBuff[NRBUF][REGDIM];
+int iwrite = 0;
+int iread = 0;
+int nr = 0;
+bool flagNr = false;
 
 unsigned char bufw[20];
 unsigned int w = 0; //Number of bytes written
@@ -75,6 +80,9 @@ void cmd_ir_display(void);
 void cmd_trc(int argc, char **argv);
 void cmd_tri(int argc, char **argv);
 void cmd_reg_display(void); //DEBUG
+void cmd_reg_write(void);
+
+void cmd_irl(int argc, char **argv);
 
 /*-------------------------------------------------------------------------+
 | Variable and constants definition
@@ -104,10 +112,10 @@ const commands[] = {
     {cmd_dtl, cmd_status_display, "dtl", "<t> <l>          define alarm temperature and luminosity"},
     {cmd_aa, cmd_status_display, "aa", "<a>               activate/deactivate alarms (1/0)"},
     {cmd_ir, cmd_ir_display, "ir", "<p>              information about registers (NREG, nr, iread, iwrite)"},
-    {cmd_trc, cmd_reg_display, "trc", "<n>              transfer n registers from current iread position"},
-    {cmd_tri, cmd_reg_display, "tri", "<n> <i>          transfer n registers from index i (0 - oldest)"},
+    {cmd_trc, cmd_reg_write, "trc", "<n>              transfer n registers from current iread position"},
+    {cmd_tri, cmd_reg_write, "tri", "<n> <i>          transfer n registers from index i (0 - oldest)"},
 
-    // {cmd_irl, "irl", "                 information about local registers (NRBUF, nr, iread, iwrite)"},
+    {cmd_irl, NULL, "irl", "                 information about local registers (NRBUF, nr, iread, iwrite)"},
     // {cmd_lr, "lr", "<n> <i>          list n registers (local memory) from index i (0 - oldest)"},
     // {cmd_dr, "dr", "                 delete registers (local memory)"},
 
@@ -466,6 +474,59 @@ void cmd_tri(int argc, char **argv)
   bufw[0] = (unsigned char)SOM;
 }
 
+void cmd_reg_write()
+{
+  if (bufr[2] == CMD_ERROR)
+  {
+    printf("CMD_ERROR\n");
+    return;
+  }
+  int j;
+  int n = bufr[2];
+  int offset;
+
+  if (bufr[1] == TRGC)
+  {
+    offset = 3;
+  }
+  else //if (bufr[1] == TRGI)
+  {
+    offset = 4;
+  }
+  for (j = 0; j < n; j++)
+  {
+    memcpy(eCosRingBuff[iwrite], &bufr[offset], REGDIM);
+    /*for (i = 0; i < REGDIM; i++)
+    {
+      eCosRingBuff[j][i] = bufr[i + offset];
+    }*/
+    if ((nr == NRBUF) && (iread == iwrite))
+    {
+      iread++;
+    }
+
+    iwrite++;
+    if (iwrite > NRBUF - 1)
+    {
+      flagNr = true;
+      iwrite = 0;
+    }
+    if (flagNr)
+    {
+      nr = NRBUF;
+    }
+    else
+    {
+      nr++;
+    }
+
+    if (iread > NRBUF - 1)
+    {
+      iread = 0;
+    }
+  }
+}
+
 //Falta gravar localmente os registos
 //So para debug, Só da para o TRC
 void cmd_reg_display()
@@ -499,6 +560,18 @@ void cmd_reg_display()
       printf("Lum = %d\n\n", bufr[i + 4]);
     }
   }
+}
+
+/*-------------------------------------------------------------------------+
+| Function: cmd_irl - information about local registers (NRBUF, nr, iread, iwrite)
++--------------------------------------------------------------------------*/
+
+void cmd_irl(int argc, char **argv)
+{
+  printf("NRBUF = %d\n", NRBUF);
+  printf("NR = %d\n", nr);
+  printf("iRead = %d\n", iread);
+  printf("iWrite = %d\n", iwrite);
 }
 
 /*-------------------------------------------------------------------------+
@@ -551,7 +624,7 @@ void monitor(void)
       {
         //Falta sincronismo quando mais theards estiverem a escrever no buffer
         commands[i].cmd_fnct(argc, argv); //check for bad inputs
-        if ((strcmp(argv[0], "sos") != 0) && (strcmp(argv[0], "ini") != 0))
+        if ((strcmp(argv[0], "sos") != 0) && (strcmp(argv[0], "ini") != 0) && (strcmp(argv[0], "irl") != 0))
         {
           cyg_semaphore_post(&TX_sem);                                    //Write to Buffer is done so TX can begin
           r = cyg_semaphore_timed_wait(&RX_sem, cyg_current_time() + 50); //Wait for response max waiting time 50ms
