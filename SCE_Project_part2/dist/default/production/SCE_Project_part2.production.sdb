@@ -56,8 +56,8 @@ TMR2_CLC2_OUT 15
 TMR2_CLC3_OUT 16
 TMR2_CLC4_OUT 17
 ]
-"540 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
-[e E12395 . `uc
+"554 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
+[e E12366 . `uc
 channel_ANA0 0
 channel_VSS 60
 channel_Temp 61
@@ -80,9 +80,6 @@ channel_FVR_buf1 63
 [v ___fladd __fladd `(d  1 e 4 0 ]
 "15 E:\Microchip\xc8\v2.30\pic\sources\c90\common\Umul16.c
 [v ___wmul __wmul `(ui  1 e 2 0 ]
-[v i1___wmul __wmul `(ui  1 e 2 0 ]
-"15 E:\Microchip\xc8\v2.30\pic\sources\c90\common\Umul32.c
-[v ___lmul __lmul `(ul  1 e 4 0 ]
 "4 E:\Microchip\xc8\v2.30\pic\sources\c90\common\Umul8_16.c
 [v __Umul8_16 _Umul8_16 `(ui  1 e 2 0 ]
 "6 E:\Microchip\xc8\v2.30\pic\sources\c90\pic\__eeprom.c
@@ -93,80 +90,83 @@ channel_FVR_buf1 63
 [v _ReadI2C ReadI2C `(uc  1 e 1 0 ]
 "47
 [v _WriteI2C WriteI2C `(c  1 e 1 0 ]
-[v i1_WriteI2C WriteI2C `(c  1 e 1 0 ]
-"190 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
+"195 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
 [v _tsttc tsttc `(uc  1 e 1 0 ]
-"219
+"224
 [v _LCDsend LCDsend `(v  1 e 1 0 ]
-"227
+"232
 [v _LCDrecv LCDrecv `(uc  1 e 1 0 ]
-"258
+"263
 [v _LCDsend2x4 LCDsend2x4 `(v  1 e 1 0 ]
-"281
+"286
 [v _LCDinit LCDinit `(v  1 e 1 0 ]
-"304
-[v _LCDcmd LCDcmd `(v  1 e 1 0 ]
 "309
-[v _LCDchar LCDchar `(v  1 e 1 0 ]
+[v _LCDcmd LCDcmd `(v  1 e 1 0 ]
 "314
+[v _LCDchar LCDchar `(v  1 e 1 0 ]
+"319
 [v _LCDstr LCDstr `(v  1 e 1 0 ]
-"328
+"333
 [v _differenceBetweenTimePeriod differenceBetweenTimePeriod `(v  1 e 1 0 ]
-"344
+"349
 [v _PWM_Output_D4_Enable PWM_Output_D4_Enable `(v  1 e 1 0 ]
-"348
+"353
 [v _PWM_Output_D4_Disable PWM_Output_D4_Disable `(v  1 e 1 0 ]
-"356
+"361
 [v _Clock_ISR Clock_ISR `(v  1 e 1 0 ]
-"399
+"394
+[v _wirteEEPROMinit wirteEEPROMinit `(v  1 e 1 0 ]
+"414
 [v _update_menuLCD update_menuLCD `(v  1 e 1 0 ]
-"537
-[v _monitoring_ISR monitoring_ISR `(v  1 e 1 0 ]
-"612
+"551
+[v _monitoring_TEMP_LUM monitoring_TEMP_LUM `(v  1 e 1 0 ]
+"626
 [v _S1button S1button `(v  1 e 1 0 ]
-"635
+"649
+[v _checkFlags checkFlags `(v  1 e 1 0 ]
+"683
 [v _editClock editClock `(v  1 e 1 0 ]
-"682
+"721
 [v _editTemp editTemp `(v  1 e 1 0 ]
-"714
+"743
 [v _editLum editLum `(v  1 e 1 0 ]
-"746
+"765
 [v _toggleAlarms toggleAlarms `(v  1 e 1 0 ]
-"776
+"786
 [v _S1_ISR S1_ISR `(v  1 e 1 0 ]
-"805
+"815
 [v _sendMessage sendMessage `(v  1 e 1 0 ]
-"813
-[v _sendOKMessage sendOKMessage `(v  1 e 1 0 ]
 "823
-[v _sendERRORMessage sendERRORMessage `(v  1 e 1 0 ]
+[v _sendOKMessage sendOKMessage `(v  1 e 1 0 ]
 "833
+[v _sendERRORMessage sendERRORMessage `(v  1 e 1 0 ]
+"843
 [v _cmd_rc cmd_rc `(v  1 e 1 0 ]
-"845
+"855
 [v _cmd_sc cmd_sc `(v  1 e 1 0 ]
-"860
+"870
 [v _cmd_rtl cmd_rtl `(v  1 e 1 0 ]
-"871
+"881
 [v _cmd_rp cmd_rp `(v  1 e 1 0 ]
-"883
+"892
 [v _cmd_mmp cmd_mmp `(v  1 e 1 0 ]
-"903
+"901
 [v _cmd_mta cmd_mta `(v  1 e 1 0 ]
-"912
+"910
 [v _cmd_ra cmd_ra `(v  1 e 1 0 ]
-"927
+"925
 [v _cmd_dac cmd_dac `(v  1 e 1 0 ]
-"941
+"939
 [v _cmd_dtl cmd_dtl `(v  1 e 1 0 ]
-"953
+"951
 [v _cmd_aa cmd_aa `(v  1 e 1 0 ]
-"965
+"963
 [v _cmd_ir cmd_ir `(v  1 e 1 0 ]
-"979
+"977
 [v _cmd_trc cmd_trc `(v  1 e 1 0 ]
-"1025
+"1021
 [v _cmd_tri cmd_tri `(v  1 e 1 0 ]
-"1078
+"1079
 [v _main main `(v  1 e 1 0 ]
 "63 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/adcc.c
 [v _ADCC_Initialize ADCC_Initialize `(v  1 e 1 0 ]
@@ -208,9 +208,9 @@ channel_FVR_buf1 63
 [v _INTERRUPT_InterruptManager INTERRUPT_InterruptManager `II(v  1 e 1 0 ]
 "50 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/mcc.c
 [v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
-"64
+"63
 [v _OSCILLATOR_Initialize OSCILLATOR_Initialize `(v  1 e 1 0 ]
-"78
+"77
 [v _PMD_Initialize PMD_Initialize `(v  1 e 1 0 ]
 "58 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/memory.c
 [v _FLASH_ReadWord FLASH_ReadWord `(ui  1 e 2 0 ]
@@ -220,7 +220,6 @@ channel_FVR_buf1 63
 [v _FLASH_EraseBlock FLASH_EraseBlock `(v  1 e 1 0 ]
 "180
 [v _DATAEE_WriteByte DATAEE_WriteByte `(v  1 e 1 0 ]
-[v i1_DATAEE_WriteByte DATAEE_WriteByte `(v  1 e 1 0 ]
 "202
 [v _DATAEE_ReadByte DATAEE_ReadByte `(uc  1 e 1 0 ]
 "57 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/pin_manager.c
@@ -255,31 +254,15 @@ channel_FVR_buf1 63
 [v _TMR2_Counter8BitSet TMR2_Counter8BitSet `(v  1 e 1 0 ]
 "147
 [v _TMR2_Period8BitSet TMR2_Period8BitSet `(v  1 e 1 0 ]
-"64 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/tmr5.c
-[v _TMR5_Initialize TMR5_Initialize `(v  1 e 1 0 ]
-"99
-[v _setTimer5ReloadVal setTimer5ReloadVal `(v  1 e 1 0 ]
-"103
-[v _TMR5_StartTimer TMR5_StartTimer `(v  1 e 1 0 ]
-"109
-[v _TMR5_StopTimer TMR5_StopTimer `(v  1 e 1 0 ]
-"131
-[v _TMR5_WriteTimer TMR5_WriteTimer `(v  1 e 1 0 ]
-"168
-[v _TMR5_ISR TMR5_ISR `(v  1 e 1 0 ]
-"182
-[v _TMR5_SetInterruptHandler TMR5_SetInterruptHandler `(v  1 e 1 0 ]
-"186
-[v _TMR5_DefaultInterruptHandler TMR5_DefaultInterruptHandler `(v  1 e 1 0 ]
-[s S825 . 1 `uc 1 INTEDG 1 0 :1:0 
+[s S821 . 1 `uc 1 INTEDG 1 0 :1:0 
 `uc 1 . 1 0 :5:1 
 `uc 1 PEIE 1 0 :1:6 
 `uc 1 GIE 1 0 :1:7 
 ]
 "365 C:/Users/Andre/.mchp_packs/Microchip/PIC16F1xxxx_DFP/1.5.133/xc8\pic\include\proc\pic16f18875.h
-[u S830 . 1 `S825 1 . 1 0 ]
-[v _INTCONbits INTCONbits `VES830  1 e 1 @11 ]
-[s S2347 . 1 `uc 1 RC0 1 0 :1:0 
+[u S826 . 1 `S821 1 . 1 0 ]
+[v _INTCONbits INTCONbits `VES826  1 e 1 @11 ]
+[s S2176 . 1 `uc 1 RC0 1 0 :1:0 
 `uc 1 RC1 1 0 :1:1 
 `uc 1 RC2 1 0 :1:2 
 `uc 1 RC3 1 0 :1:3 
@@ -289,15 +272,15 @@ channel_FVR_buf1 63
 `uc 1 RC7 1 0 :1:7 
 ]
 "526
-[u S2356 . 1 `S2347 1 . 1 0 ]
-[v _PORTCbits PORTCbits `VES2356  1 e 1 @14 ]
+[u S2185 . 1 `S2176 1 . 1 0 ]
+[v _PORTCbits PORTCbits `VES2185  1 e 1 @14 ]
 "671
 [v _TRISA TRISA `VEuc  1 e 1 @17 ]
 "733
 [v _TRISB TRISB `VEuc  1 e 1 @18 ]
 "795
 [v _TRISC TRISC `VEuc  1 e 1 @19 ]
-[s S2397 . 1 `uc 1 TRISC0 1 0 :1:0 
+[s S2221 . 1 `uc 1 TRISC0 1 0 :1:0 
 `uc 1 TRISC1 1 0 :1:1 
 `uc 1 TRISC2 1 0 :1:2 
 `uc 1 TRISC3 1 0 :1:3 
@@ -307,15 +290,15 @@ channel_FVR_buf1 63
 `uc 1 TRISC7 1 0 :1:7 
 ]
 "812
-[u S2406 . 1 `S2397 1 . 1 0 ]
-[v _TRISCbits TRISCbits `VES2406  1 e 1 @19 ]
+[u S2230 . 1 `S2221 1 . 1 0 ]
+[v _TRISCbits TRISCbits `VES2230  1 e 1 @19 ]
 "857
 [v _TRISD TRISD `VEuc  1 e 1 @20 ]
 "919
 [v _TRISE TRISE `VEuc  1 e 1 @21 ]
 "951
 [v _LATA LATA `VEuc  1 e 1 @22 ]
-[s S2311 . 1 `uc 1 LATA0 1 0 :1:0 
+[s S2138 . 1 `uc 1 LATA0 1 0 :1:0 
 `uc 1 LATA1 1 0 :1:1 
 `uc 1 LATA2 1 0 :1:2 
 `uc 1 LATA3 1 0 :1:3 
@@ -325,8 +308,8 @@ channel_FVR_buf1 63
 `uc 1 LATA7 1 0 :1:7 
 ]
 "968
-[u S2320 . 1 `S2311 1 . 1 0 ]
-[v _LATAbits LATAbits `VES2320  1 e 1 @22 ]
+[u S2147 . 1 `S2138 1 . 1 0 ]
+[v _LATAbits LATAbits `VES2147  1 e 1 @22 ]
 "1013
 [v _LATB LATB `VEuc  1 e 1 @23 ]
 "1075
@@ -349,7 +332,7 @@ channel_FVR_buf1 63
 [v _ADACCH ADACCH `VEuc  1 e 1 @145 ]
 "2127
 [v _ADCON0 ADCON0 `VEuc  1 e 1 @147 ]
-[s S1131 . 1 `uc 1 ADGO 1 0 :1:0 
+[s S1123 . 1 `uc 1 ADGO 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 ADFM 1 0 :2:2 
 `uc 1 ADCS 1 0 :1:4 
@@ -358,44 +341,44 @@ channel_FVR_buf1 63
 `uc 1 ADON 1 0 :1:7 
 ]
 "2163
-[s S1139 . 1 `uc 1 DONE 1 0 :1:0 
+[s S1131 . 1 `uc 1 DONE 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 ADFRM 1 0 :2:2 
 ]
-[s S1143 . 1 `uc 1 nDONE 1 0 :1:0 
+[s S1135 . 1 `uc 1 nDONE 1 0 :1:0 
 ]
-[s S1145 . 1 `uc 1 GO 1 0 :1:0 
+[s S1137 . 1 `uc 1 GO 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 ADFM0 1 0 :1:2 
 `uc 1 ADFM1 1 0 :1:3 
 ]
-[s S1150 . 1 `uc 1 GO_nDONE 1 0 :1:0 
+[s S1142 . 1 `uc 1 GO_nDONE 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 ADFRM0 1 0 :1:2 
 `uc 1 ADFRM1 1 0 :1:3 
 ]
-[u S1155 . 1 `S1131 1 . 1 0 `S1139 1 . 1 0 `S1143 1 . 1 0 `S1145 1 . 1 0 `S1150 1 . 1 0 ]
-[v _ADCON0bits ADCON0bits `VES1155  1 e 1 @147 ]
+[u S1147 . 1 `S1123 1 . 1 0 `S1131 1 . 1 0 `S1135 1 . 1 0 `S1137 1 . 1 0 `S1142 1 . 1 0 ]
+[v _ADCON0bits ADCON0bits `VES1147  1 e 1 @147 ]
 "2238
 [v _ADCON1 ADCON1 `VEuc  1 e 1 @148 ]
-[s S1286 . 1 `uc 1 ADDSEN 1 0 :1:0 
+[s S1278 . 1 `uc 1 ADDSEN 1 0 :1:0 
 `uc 1 . 1 0 :4:1 
 `uc 1 ADGPOL 1 0 :1:5 
 `uc 1 ADIPEN 1 0 :1:6 
 `uc 1 ADPPOL 1 0 :1:7 
 ]
 "2252
-[u S1292 . 1 `S1286 1 . 1 0 ]
-[v _ADCON1bits ADCON1bits `VES1292  1 e 1 @148 ]
+[u S1284 . 1 `S1278 1 . 1 0 ]
+[v _ADCON1bits ADCON1bits `VES1284  1 e 1 @148 ]
 "2277
 [v _ADCON2 ADCON2 `VEuc  1 e 1 @149 ]
-[s S1222 . 1 `uc 1 ADMD 1 0 :3:0 
+[s S1214 . 1 `uc 1 ADMD 1 0 :3:0 
 `uc 1 ADACLR 1 0 :1:3 
 `uc 1 ADCRS 1 0 :3:4 
 `uc 1 ADPSIS 1 0 :1:7 
 ]
 "2299
-[s S1227 . 1 `uc 1 ADMD0 1 0 :1:0 
+[s S1219 . 1 `uc 1 ADMD0 1 0 :1:0 
 `uc 1 ADMD1 1 0 :1:1 
 `uc 1 ADMD2 1 0 :1:2 
 `uc 1 . 1 0 :1:3 
@@ -403,11 +386,11 @@ channel_FVR_buf1 63
 `uc 1 ADCRS1 1 0 :1:5 
 `uc 1 ADCRS2 1 0 :1:6 
 ]
-[u S1235 . 1 `S1222 1 . 1 0 `S1227 1 . 1 0 ]
-[v _ADCON2bits ADCON2bits `VES1235  1 e 1 @149 ]
+[u S1227 . 1 `S1214 1 . 1 0 `S1219 1 . 1 0 ]
+[v _ADCON2bits ADCON2bits `VES1227  1 e 1 @149 ]
 "2354
 [v _ADCON3 ADCON3 `VEuc  1 e 1 @150 ]
-[s S1192 . 1 `uc 1 ADTMD0 1 0 :1:0 
+[s S1184 . 1 `uc 1 ADTMD0 1 0 :1:0 
 `uc 1 ADTMD1 1 0 :1:1 
 `uc 1 ADTMD2 1 0 :1:2 
 `uc 1 . 1 0 :1:3 
@@ -416,15 +399,15 @@ channel_FVR_buf1 63
 `uc 1 ADCALC2 1 0 :1:6 
 ]
 "2375
-[s S1200 . 1 `uc 1 ADTMD 1 0 :3:0 
+[s S1192 . 1 `uc 1 ADTMD 1 0 :3:0 
 `uc 1 ADSOI 1 0 :1:3 
 `uc 1 ADCALC 1 0 :3:4 
 ]
-[u S1204 . 1 `S1192 1 . 1 0 `S1200 1 . 1 0 ]
-[v _ADCON3bits ADCON3bits `VES1204  1 e 1 @150 ]
+[u S1196 . 1 `S1184 1 . 1 0 `S1192 1 . 1 0 ]
+[v _ADCON3bits ADCON3bits `VES1196  1 e 1 @150 ]
 "2425
 [v _ADSTAT ADSTAT `VEuc  1 e 1 @151 ]
-[s S1254 . 1 `uc 1 ADSTAT 1 0 :3:0 
+[s S1246 . 1 `uc 1 ADSTAT 1 0 :3:0 
 `uc 1 ADMACT 1 0 :1:3 
 `uc 1 ADMATH 1 0 :1:4 
 `uc 1 ADLTHR 1 0 :1:5 
@@ -432,12 +415,12 @@ channel_FVR_buf1 63
 `uc 1 ADAOV 1 0 :1:7 
 ]
 "2445
-[s S1261 . 1 `uc 1 ADSTAT0 1 0 :1:0 
+[s S1253 . 1 `uc 1 ADSTAT0 1 0 :1:0 
 `uc 1 ADSTAT1 1 0 :1:1 
 `uc 1 ADSTAT2 1 0 :1:2 
 ]
-[u S1265 . 1 `S1254 1 . 1 0 `S1261 1 . 1 0 ]
-[v _ADSTATbits ADSTATbits `VES1265  1 e 1 @151 ]
+[u S1257 . 1 `S1246 1 . 1 0 `S1253 1 . 1 0 ]
+[v _ADSTATbits ADSTATbits `VES1257  1 e 1 @151 ]
 "2495
 [v _ADCLK ADCLK `VEuc  1 e 1 @152 ]
 "2553
@@ -486,7 +469,7 @@ channel_FVR_buf1 63
 [v _SP1BRGH SP1BRGH `VEuc  1 e 1 @284 ]
 "4010
 [v _RC1STA RC1STA `VEuc  1 e 1 @285 ]
-[s S1983 . 1 `uc 1 RX9D 1 0 :1:0 
+[s S1811 . 1 `uc 1 RX9D 1 0 :1:0 
 `uc 1 OERR 1 0 :1:1 
 `uc 1 FERR 1 0 :1:2 
 `uc 1 ADDEN 1 0 :1:3 
@@ -496,11 +479,11 @@ channel_FVR_buf1 63
 `uc 1 SPEN 1 0 :1:7 
 ]
 "4036
-[u S1992 . 1 `S1983 1 . 1 0 ]
-[v _RC1STAbits RC1STAbits `VES1992  1 e 1 @285 ]
+[u S1820 . 1 `S1811 1 . 1 0 ]
+[v _RC1STAbits RC1STAbits `VES1820  1 e 1 @285 ]
 "4190
 [v _TX1STA TX1STA `VEuc  1 e 1 @286 ]
-[s S1961 . 1 `uc 1 TX9D 1 0 :1:0 
+[s S1789 . 1 `uc 1 TX9D 1 0 :1:0 
 `uc 1 TRMT 1 0 :1:1 
 `uc 1 BRGH 1 0 :1:2 
 `uc 1 SENDB 1 0 :1:3 
@@ -510,8 +493,8 @@ channel_FVR_buf1 63
 `uc 1 CSRC 1 0 :1:7 
 ]
 "4216
-[u S1970 . 1 `S1961 1 . 1 0 ]
-[v _TX1STAbits TX1STAbits `VES1970  1 e 1 @286 ]
+[u S1798 . 1 `S1789 1 . 1 0 ]
+[v _TX1STAbits TX1STAbits `VES1798  1 e 1 @286 ]
 "4370
 [v _BAUD1CON BAUD1CON `VEuc  1 e 1 @287 ]
 "4616
@@ -683,32 +666,32 @@ channel_FVR_buf1 63
 [v _TMR1H TMR1H `VEuc  1 e 1 @525 ]
 "6799
 [v _T1CON T1CON `VEuc  1 e 1 @526 ]
-[s S974 . 1 `uc 1 ON 1 0 :1:0 
+[s S966 . 1 `uc 1 ON 1 0 :1:0 
 `uc 1 RD16 1 0 :1:1 
 `uc 1 nSYNC 1 0 :1:2 
 `uc 1 . 1 0 :1:3 
 `uc 1 CKPS 1 0 :2:4 
 ]
 "6830
-[s S980 . 1 `uc 1 TMR1ON 1 0 :1:0 
+[s S972 . 1 `uc 1 TMR1ON 1 0 :1:0 
 `uc 1 T1RD16 1 0 :1:1 
 `uc 1 nT1SYNC 1 0 :1:2 
 `uc 1 . 1 0 :1:3 
 `uc 1 T1CKPS0 1 0 :1:4 
 `uc 1 T1CKPS1 1 0 :1:5 
 ]
-[s S987 . 1 `uc 1 . 1 0 :4:0 
+[s S979 . 1 `uc 1 . 1 0 :4:0 
 `uc 1 CKPS0 1 0 :1:4 
 `uc 1 CKPS1 1 0 :1:5 
 ]
-[s S991 . 1 `uc 1 . 1 0 :1:0 
+[s S983 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 RD161 1 0 :1:1 
 ]
-[u S994 . 1 `S974 1 . 1 0 `S980 1 . 1 0 `S987 1 . 1 0 `S991 1 . 1 0 ]
-[v _T1CONbits T1CONbits `VES994  1 e 1 @526 ]
+[u S986 . 1 `S966 1 . 1 0 `S972 1 . 1 0 `S979 1 . 1 0 `S983 1 . 1 0 ]
+[v _T1CONbits T1CONbits `VES986  1 e 1 @526 ]
 "6895
 [v _T1GCON T1GCON `VEuc  1 e 1 @527 ]
-[s S1020 . 1 `uc 1 . 1 0 :2:0 
+[s S1012 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 GVAL 1 0 :1:2 
 `uc 1 GGO_nDONE 1 0 :1:3 
 `uc 1 GSPM 1 0 :1:4 
@@ -717,7 +700,7 @@ channel_FVR_buf1 63
 `uc 1 GE 1 0 :1:7 
 ]
 "6929
-[s S1028 . 1 `uc 1 . 1 0 :2:0 
+[s S1020 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 T1GVAL 1 0 :1:2 
 `uc 1 T1GGO_nDONE 1 0 :1:3 
 `uc 1 T1GSPM 1 0 :1:4 
@@ -725,68 +708,29 @@ channel_FVR_buf1 63
 `uc 1 T1GPOL 1 0 :1:6 
 `uc 1 T1GE 1 0 :1:7 
 ]
-[s S1036 . 1 `uc 1 . 1 0 :3:0 
+[s S1028 . 1 `uc 1 . 1 0 :3:0 
 `uc 1 T1GGO 1 0 :1:3 
 ]
-[u S1039 . 1 `S1020 1 . 1 0 `S1028 1 . 1 0 `S1036 1 . 1 0 ]
-[v _T1GCONbits T1GCONbits `VES1039  1 e 1 @527 ]
+[u S1031 . 1 `S1012 1 . 1 0 `S1020 1 . 1 0 `S1028 1 . 1 0 ]
+[v _T1GCONbits T1GCONbits `VES1031  1 e 1 @527 ]
 "7091
 [v _T1GATE T1GATE `VEuc  1 e 1 @528 ]
 "7257
 [v _T1CLK T1CLK `VEuc  1 e 1 @529 ]
-"8303
-[v _TMR5L TMR5L `VEuc  1 e 1 @536 ]
-"8473
-[v _TMR5H TMR5H `VEuc  1 e 1 @537 ]
-"8593
-[v _T5CON T5CON `VEuc  1 e 1 @538 ]
-"8624
-[s S1408 . 1 `uc 1 TMR5ON 1 0 :1:0 
-`uc 1 T5RD16 1 0 :1:1 
-`uc 1 nT5SYNC 1 0 :1:2 
-`uc 1 . 1 0 :1:3 
-`uc 1 T5CKPS0 1 0 :1:4 
-`uc 1 T5CKPS1 1 0 :1:5 
-]
-[s S1419 . 1 `uc 1 . 1 0 :1:0 
-`uc 1 RD165 1 0 :1:1 
-]
-[u S1422 . 1 `S974 1 . 1 0 `S1408 1 . 1 0 `S987 1 . 1 0 `S1419 1 . 1 0 ]
-[v _T5CONbits T5CONbits `VES1422  1 e 1 @538 ]
-"8689
-[v _T5GCON T5GCON `VEuc  1 e 1 @539 ]
-"8723
-[s S1456 . 1 `uc 1 . 1 0 :2:0 
-`uc 1 T5GVAL 1 0 :1:2 
-`uc 1 T5GGO_nDONE 1 0 :1:3 
-`uc 1 T5GSPM 1 0 :1:4 
-`uc 1 T5GTM 1 0 :1:5 
-`uc 1 T5GPOL 1 0 :1:6 
-`uc 1 T5GE 1 0 :1:7 
-]
-[s S1464 . 1 `uc 1 . 1 0 :3:0 
-`uc 1 T5GGO 1 0 :1:3 
-]
-[u S1467 . 1 `S1020 1 . 1 0 `S1456 1 . 1 0 `S1464 1 . 1 0 ]
-[v _T5GCONbits T5GCONbits `VES1467  1 e 1 @539 ]
-"8885
-[v _T5GATE T5GATE `VEuc  1 e 1 @540 ]
-"9051
-[v _T5CLK T5CLK `VEuc  1 e 1 @541 ]
-[s S1532 . 1 `uc 1 C5TSEL 1 0 :2:0 
+[s S1360 . 1 `uc 1 C5TSEL 1 0 :2:0 
 `uc 1 P6TSEL 1 0 :2:2 
 `uc 1 P7TSEL 1 0 :2:4 
 ]
 "9301
-[s S1536 . 1 `uc 1 C5TSEL0 1 0 :1:0 
+[s S1364 . 1 `uc 1 C5TSEL0 1 0 :1:0 
 `uc 1 C5TSEL1 1 0 :1:1 
 `uc 1 P6TSEL0 1 0 :1:2 
 `uc 1 P6TSEL1 1 0 :1:3 
 `uc 1 P7TSEL0 1 0 :1:4 
 `uc 1 P7TSEL1 1 0 :1:5 
 ]
-[u S1543 . 1 `S1532 1 . 1 0 `S1536 1 . 1 0 ]
-[v _CCPTMRS1bits CCPTMRS1bits `VES1543  1 e 1 @543 ]
+[u S1371 . 1 `S1360 1 . 1 0 `S1364 1 . 1 0 ]
+[v _CCPTMRS1bits CCPTMRS1bits `VES1371  1 e 1 @543 ]
 "9351
 [v _T2TMR T2TMR `VEuc  1 e 1 @652 ]
 "9356
@@ -797,16 +741,16 @@ channel_FVR_buf1 63
 [v _PR2 PR2 `VEuc  1 e 1 @653 ]
 "9427
 [v _T2CON T2CON `VEuc  1 e 1 @654 ]
-[s S1709 . 1 `uc 1 OUTPS 1 0 :4:0 
+[s S1537 . 1 `uc 1 OUTPS 1 0 :4:0 
 `uc 1 CKPS 1 0 :3:4 
 `uc 1 ON 1 0 :1:7 
 ]
 "9463
-[s S1713 . 1 `uc 1 T2OUTPS 1 0 :4:0 
+[s S1541 . 1 `uc 1 T2OUTPS 1 0 :4:0 
 `uc 1 T2CKPS 1 0 :3:4 
 `uc 1 T2ON 1 0 :1:7 
 ]
-[s S1717 . 1 `uc 1 T2OUTPS0 1 0 :1:0 
+[s S1545 . 1 `uc 1 T2OUTPS0 1 0 :1:0 
 `uc 1 T2OUTPS1 1 0 :1:1 
 `uc 1 T2OUTPS2 1 0 :1:2 
 `uc 1 T2OUTPS3 1 0 :1:3 
@@ -814,7 +758,7 @@ channel_FVR_buf1 63
 `uc 1 T2CKPS1 1 0 :1:5 
 `uc 1 T2CKPS2 1 0 :1:6 
 ]
-[s S1725 . 1 `uc 1 OUTPS0 1 0 :1:0 
+[s S1553 . 1 `uc 1 OUTPS0 1 0 :1:0 
 `uc 1 OUTPS1 1 0 :1:1 
 `uc 1 OUTPS2 1 0 :1:2 
 `uc 1 OUTPS3 1 0 :1:3 
@@ -823,72 +767,72 @@ channel_FVR_buf1 63
 `uc 1 CKPS2 1 0 :1:6 
 `uc 1 TMR2ON 1 0 :1:7 
 ]
-[u S1734 . 1 `S1709 1 . 1 0 `S1713 1 . 1 0 `S1717 1 . 1 0 `S1725 1 . 1 0 ]
-[v _T2CONbits T2CONbits `VES1734  1 e 1 @654 ]
+[u S1562 . 1 `S1537 1 . 1 0 `S1541 1 . 1 0 `S1545 1 . 1 0 `S1553 1 . 1 0 ]
+[v _T2CONbits T2CONbits `VES1562  1 e 1 @654 ]
 "9573
 [v _T2HLT T2HLT `VEuc  1 e 1 @655 ]
-[s S1602 . 1 `uc 1 MODE 1 0 :5:0 
+[s S1430 . 1 `uc 1 MODE 1 0 :5:0 
 `uc 1 CKSYNC 1 0 :1:5 
 `uc 1 CKPOL 1 0 :1:6 
 `uc 1 PSYNC 1 0 :1:7 
 ]
 "9606
-[s S1607 . 1 `uc 1 MODE0 1 0 :1:0 
+[s S1435 . 1 `uc 1 MODE0 1 0 :1:0 
 `uc 1 MODE1 1 0 :1:1 
 `uc 1 MODE2 1 0 :1:2 
 `uc 1 MODE3 1 0 :1:3 
 `uc 1 MODE4 1 0 :1:4 
 ]
-[s S1613 . 1 `uc 1 T2MODE 1 0 :5:0 
+[s S1441 . 1 `uc 1 T2MODE 1 0 :5:0 
 `uc 1 T2CKSYNC 1 0 :1:5 
 `uc 1 T2CKPOL 1 0 :1:6 
 `uc 1 T2PSYNC 1 0 :1:7 
 ]
-[s S1618 . 1 `uc 1 T2MODE0 1 0 :1:0 
+[s S1446 . 1 `uc 1 T2MODE0 1 0 :1:0 
 `uc 1 T2MODE1 1 0 :1:1 
 `uc 1 T2MODE2 1 0 :1:2 
 `uc 1 T2MODE3 1 0 :1:3 
 `uc 1 T2MODE4 1 0 :1:4 
 ]
-[u S1624 . 1 `S1602 1 . 1 0 `S1607 1 . 1 0 `S1613 1 . 1 0 `S1618 1 . 1 0 ]
-[v _T2HLTbits T2HLTbits `VES1624  1 e 1 @655 ]
+[u S1452 . 1 `S1430 1 . 1 0 `S1435 1 . 1 0 `S1441 1 . 1 0 `S1446 1 . 1 0 ]
+[v _T2HLTbits T2HLTbits `VES1452  1 e 1 @655 ]
 "9701
 [v _T2CLKCON T2CLKCON `VEuc  1 e 1 @656 ]
 "9859
 [v _T2RST T2RST `VEuc  1 e 1 @657 ]
-[s S1671 . 1 `uc 1 RSEL 1 0 :5:0 
+[s S1499 . 1 `uc 1 RSEL 1 0 :5:0 
 ]
 "9886
-[s S1673 . 1 `uc 1 RSEL0 1 0 :1:0 
+[s S1501 . 1 `uc 1 RSEL0 1 0 :1:0 
 `uc 1 RSEL1 1 0 :1:1 
 `uc 1 RSEL2 1 0 :1:2 
 `uc 1 RSEL3 1 0 :1:3 
 `uc 1 RSEL4 1 0 :1:4 
 ]
-[s S1679 . 1 `uc 1 T2RSEL 1 0 :5:0 
+[s S1507 . 1 `uc 1 T2RSEL 1 0 :5:0 
 ]
-[s S1681 . 1 `uc 1 T2RSEL0 1 0 :1:0 
+[s S1509 . 1 `uc 1 T2RSEL0 1 0 :1:0 
 `uc 1 T2RSEL1 1 0 :1:1 
 `uc 1 T2RSEL2 1 0 :1:2 
 `uc 1 T2RSEL3 1 0 :1:3 
 `uc 1 T2RSEL4 1 0 :1:4 
 ]
-[u S1687 . 1 `S1671 1 . 1 0 `S1673 1 . 1 0 `S1679 1 . 1 0 `S1681 1 . 1 0 ]
-[v _T2RSTbits T2RSTbits `VES1687  1 e 1 @657 ]
+[u S1515 . 1 `S1499 1 . 1 0 `S1501 1 . 1 0 `S1507 1 . 1 0 `S1509 1 . 1 0 ]
+[v _T2RSTbits T2RSTbits `VES1515  1 e 1 @657 ]
 "12368
 [v _PWM6DCL PWM6DCL `VEuc  1 e 1 @908 ]
 "12434
 [v _PWM6DCH PWM6DCH `VEuc  1 e 1 @909 ]
 "12604
 [v _PWM6CON PWM6CON `VEuc  1 e 1 @910 ]
-[s S808 . 1 `uc 1 INTF 1 0 :1:0 
+[s S804 . 1 `uc 1 INTF 1 0 :1:0 
 `uc 1 . 1 0 :3:1 
 `uc 1 IOCIF 1 0 :1:4 
 `uc 1 TMR0IF 1 0 :1:5 
 ]
 "21326
-[u S813 . 1 `S808 1 . 1 0 ]
-[v _PIR0bits PIR0bits `VES813  1 e 1 @1804 ]
+[u S809 . 1 `S804 1 . 1 0 ]
+[v _PIR0bits PIR0bits `VES809  1 e 1 @1804 ]
 [s S337 . 1 `uc 1 SSP1IF 1 0 :1:0 
 `uc 1 BCL1IF 1 0 :1:1 
 `uc 1 SSP2IF 1 0 :1:2 
@@ -899,7 +843,7 @@ channel_FVR_buf1 63
 "21433
 [u S344 . 1 `S337 1 . 1 0 ]
 [v _PIR3bits PIR3bits `VES344  1 e 1 @1807 ]
-[s S875 . 1 `uc 1 TMR1IF 1 0 :1:0 
+[s S871 . 1 `uc 1 TMR1IF 1 0 :1:0 
 `uc 1 TMR2IF 1 0 :1:1 
 `uc 1 TMR3IF 1 0 :1:2 
 `uc 1 TMR4IF 1 0 :1:3 
@@ -907,17 +851,17 @@ channel_FVR_buf1 63
 `uc 1 TMR6IF 1 0 :1:5 
 ]
 "21483
-[u S882 . 1 `S875 1 . 1 0 ]
-[v _PIR4bits PIR4bits `VES882  1 e 1 @1808 ]
-[s S795 . 1 `uc 1 INTE 1 0 :1:0 
+[u S878 . 1 `S871 1 . 1 0 ]
+[v _PIR4bits PIR4bits `VES878  1 e 1 @1808 ]
+[s S791 . 1 `uc 1 INTE 1 0 :1:0 
 `uc 1 . 1 0 :3:1 
 `uc 1 IOCIE 1 0 :1:4 
 `uc 1 TMR0IE 1 0 :1:5 
 ]
 "21748
-[u S800 . 1 `S795 1 . 1 0 ]
-[v _PIE0bits PIE0bits `VES800  1 e 1 @1814 ]
-[s S521 . 1 `uc 1 SSP1IE 1 0 :1:0 
+[u S796 . 1 `S791 1 . 1 0 ]
+[v _PIE0bits PIE0bits `VES796  1 e 1 @1814 ]
+[s S517 . 1 `uc 1 SSP1IE 1 0 :1:0 
 `uc 1 BCL1IE 1 0 :1:1 
 `uc 1 SSP2IE 1 0 :1:2 
 `uc 1 BCL2IE 1 0 :1:3 
@@ -925,9 +869,9 @@ channel_FVR_buf1 63
 `uc 1 RCIE 1 0 :1:5 
 ]
 "21855
-[u S528 . 1 `S521 1 . 1 0 ]
-[v _PIE3bits PIE3bits `VES528  1 e 1 @1817 ]
-[s S858 . 1 `uc 1 TMR1IE 1 0 :1:0 
+[u S524 . 1 `S517 1 . 1 0 ]
+[v _PIE3bits PIE3bits `VES524  1 e 1 @1817 ]
+[s S854 . 1 `uc 1 TMR1IE 1 0 :1:0 
 `uc 1 TMR2IE 1 0 :1:1 
 `uc 1 TMR3IE 1 0 :1:2 
 `uc 1 TMR4IE 1 0 :1:3 
@@ -935,8 +879,8 @@ channel_FVR_buf1 63
 `uc 1 TMR6IE 1 0 :1:5 
 ]
 "21905
-[u S865 . 1 `S858 1 . 1 0 ]
-[v _PIE4bits PIE4bits `VES865  1 e 1 @1818 ]
+[u S861 . 1 `S854 1 . 1 0 ]
+[v _PIE4bits PIE4bits `VES861  1 e 1 @1818 ]
 "22157
 [v _PMD0 PMD0 `VEuc  1 e 1 @1942 ]
 "22214
@@ -957,7 +901,7 @@ channel_FVR_buf1 63
 [v _NVMDATL NVMDATL `VEuc  1 e 1 @2076 ]
 "23338
 [v _NVMDATH NVMDATH `VEuc  1 e 1 @2077 ]
-[s S1817 . 1 `uc 1 RD 1 0 :1:0 
+[s S1645 . 1 `uc 1 RD 1 0 :1:0 
 `uc 1 WR 1 0 :1:1 
 `uc 1 WREN 1 0 :1:2 
 `uc 1 WRERR 1 0 :1:3 
@@ -966,8 +910,8 @@ channel_FVR_buf1 63
 `uc 1 NVMREGS 1 0 :1:6 
 ]
 "23404
-[u S1825 . 1 `S1817 1 . 1 0 ]
-[v _NVMCON1bits NVMCON1bits `VES1825  1 e 1 @2078 ]
+[u S1653 . 1 `S1645 1 . 1 0 ]
+[v _NVMCON1bits NVMCON1bits `VES1653  1 e 1 @2078 ]
 "23444
 [v _NVMCON2 NVMCON2 `VEuc  1 e 1 @2079 ]
 "23508
@@ -1044,62 +988,68 @@ channel_FVR_buf1 63
 [v _WPUC4 WPUC4 `VEb  1 e 0 @31356 ]
 "358 E:\Microchip\xc8\v2.30\pic\sources\c90\common\doprnt.c
 [v _dpowers dpowers `DC[5]ui  1 s 10 dpowers ]
-"86 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
+"87 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
 [v _NREG NREG `uc  1 e 1 0 ]
-"87
-[v _PMON PMON `uc  1 e 1 0 ]
 "88
+[v _PMON PMON `uc  1 e 1 0 ]
+"89
 [v _TALA TALA `uc  1 e 1 0 ]
-"94
+"95
 [v _ALAF ALAF `uc  1 e 1 0 ]
-[s S2057 command_d 3 `*.37(v 1 cmd_fnct 2 0 `uc 1 cmd_name 1 2 ]
-"117
-[v _commands commands `DC[13]S2057  1 e 39 0 ]
-[s S2143 Time 3 `uc 1 h 1 0 `uc 1 m 1 1 `uc 1 s 1 2 ]
-"160
-[v _t t `S2143  1 e 3 0 ]
-"162
-[v _temp temp `uc  1 e 1 0 ]
+[s S1885 command_d 3 `*.37(v 1 cmd_fnct 2 0 `uc 1 cmd_name 1 2 ]
+"118
+[v _commands commands `DC[13]S1885  1 e 39 0 ]
+[s S1971 Time 3 `uc 1 h 1 0 `uc 1 m 1 1 `uc 1 s 1 2 ]
+"161
+[v _t t `S1971  1 e 3 0 ]
 "163
+[v _temp temp `uc  1 e 1 0 ]
+"164
 [v _lumLevel lumLevel `uc  1 e 1 0 ]
-"165
-[s S2147 clockAlarm 4 `S2143 1 alarmVal 3 0 `uc 1 trigger 1 3 ]
-[v _clkAlarm clkAlarm `S2147  1 e 4 0 ]
-[s S2150 temperatureAlarm 3 `uc 1 alarmTemp 1 0 `uc 1 trigger 1 1 `uc 1 triggered 1 2 ]
 "166
-[v _tempAlarm tempAlarm `S2150  1 e 3 0 ]
-[s S2154 luminosityAlarm 3 `uc 1 alarmLum 1 0 `uc 1 trigger 1 1 `uc 1 triggered 1 2 ]
+[s S1975 clockAlarm 4 `S1971 1 alarmVal 3 0 `uc 1 trigger 1 3 ]
+[v _clkAlarm clkAlarm `S1975  1 e 4 0 ]
+[s S1978 temperatureAlarm 3 `uc 1 alarmTemp 1 0 `uc 1 trigger 1 1 `uc 1 triggered 1 2 ]
 "167
-[v _lumAlarm lumAlarm `S2154  1 e 3 0 ]
-"169
-[v _dimingLed dimingLed `i  1 e 2 0 ]
+[v _tempAlarm tempAlarm `S1978  1 e 3 0 ]
+[s S1982 luminosityAlarm 3 `uc 1 alarmLum 1 0 `uc 1 trigger 1 1 `uc 1 triggered 1 2 ]
+"168
+[v _lumAlarm lumAlarm `S1982  1 e 3 0 ]
 "170
-[v _alarmPWMStart alarmPWMStart `S2143  1 e 3 0 ]
-"172
-[v _editingClockAlarm editingClockAlarm `i  1 e 2 0 ]
+[v _dimingLed dimingLed `i  1 e 2 0 ]
+"171
+[v _alarmPWMStart alarmPWMStart `S1971  1 e 3 0 ]
 "173
-[v _editingTempAlarm editingTempAlarm `uc  1 e 1 0 ]
+[v _editingClockAlarm editingClockAlarm `i  1 e 2 0 ]
 "174
+[v _editingTempAlarm editingTempAlarm `uc  1 e 1 0 ]
+"175
 [v _editingLumAlarm editingLumAlarm `uc  1 e 1 0 ]
-"176
+"177
 [v _modeFlag modeFlag `i  1 e 2 0 ]
-"178
+"179
 [v _PWM_on PWM_on `uc  1 e 1 0 ]
-"180
-[v _prevTemp prevTemp `i  1 e 2 0 ]
 "181
+[v _prevTemp prevTemp `i  1 e 2 0 ]
+"182
 [v _prevLumLevel prevLumLevel `i  1 e 2 0 ]
-"183
-[v _updateLCD updateLCD `uc  1 e 1 0 ]
 "184
+[v _updateLCD updateLCD `uc  1 e 1 0 ]
+"185
 [v _flagS1pushed flagS1pushed `uc  1 e 1 0 ]
 "186
-[v _iread iread `uc  1 e 1 0 ]
+[v _monitor_TEMP_LUM monitor_TEMP_LUM `uc  1 e 1 0 ]
 "187
+[v _counterMonitorAux counterMonitorAux `uc  1 e 1 0 ]
+"189
+[v _writeEEPROM_flag writeEEPROM_flag `uc  1 e 1 0 ]
+"191
+[v _iread iread `uc  1 e 1 0 ]
+"192
 [v _iwrite iwrite `uc  1 e 1 0 ]
-"188
+"193
 [v _nr nr `uc  1 e 1 0 ]
-"534
+"549
 [v _flagNr flagNr `uc  1 e 1 0 ]
 "62 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/eusart.c
 [v _eusartTxHead eusartTxHead `VEuc  1 e 1 0 ]
@@ -1131,48 +1081,44 @@ channel_FVR_buf1 63
 [v _timer1ReloadVal timer1ReloadVal `VEui  1 e 2 0 ]
 "58
 [v _TMR1_InterruptHandler TMR1_InterruptHandler `*.37(v  1 e 2 0 ]
-"57 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/tmr5.c
-[v _timer5ReloadVal timer5ReloadVal `VEui  1 e 2 0 ]
-"58
-[v _TMR5_InterruptHandler TMR5_InterruptHandler `*.37(v  1 e 2 0 ]
-"1078 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
+"1079 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
 [v _main main `(v  1 e 1 0 ]
 {
-"1098
-[v main@i i `i  1 a 2 25 ]
-"1163
-[v main@buff buff `[20]uc  1 a 20 0 ]
-"1164
-[v main@n n `i  1 a 2 30 ]
-"1165
-[v main@i_2704 i `i  1 a 2 27 ]
+"1097
+[v main@i i `i  1 a 2 28 ]
 "1162
-[v main@c c `uc  1 a 1 29 ]
-"1095
-[v main@corrupted corrupted `uc  1 a 1 24 ]
+[v main@buff buff `[20]uc  1 a 20 3 ]
+"1163
+[v main@n n `i  1 a 2 33 ]
+"1164
+[v main@i_2532 i `i  1 a 2 31 ]
+"1161
+[v main@c c `uc  1 a 1 30 ]
 "1094
-[v main@notInit notInit `uc  1 a 1 23 ]
+[v main@corrupted corrupted `uc  1 a 1 27 ]
 "1093
-[v main@checkSumAux checkSumAux `uc  1 a 1 22 ]
-"1264
+[v main@notInit notInit `uc  1 a 1 26 ]
+"1092
+[v main@checkSumAux checkSumAux `uc  1 a 1 25 ]
+"1212
 } 0
-"746
+"765
 [v _toggleAlarms toggleAlarms `(v  1 e 1 0 ]
 {
-"774
+"783
 } 0
 "8 E:\Microchip\xc8\v2.30\pic\sources\c90\common\memset.c
 [v _memset memset `(*.4v  1 e 1 0 ]
 {
 [v memset@p1 p1 `*.4v  1 a 1 wreg ]
 "15
-[v memset@p p `*.4uc  1 a 1 5 ]
+[v memset@p p `*.4uc  1 a 1 7 ]
 "8
 [v memset@p1 p1 `*.4v  1 a 1 wreg ]
-[v memset@c c `i  1 p 2 0 ]
-[v memset@n n `ui  1 p 2 2 ]
+[v memset@c c `i  1 p 2 2 ]
+[v memset@n n `ui  1 p 2 4 ]
 "18
-[v memset@p1 p1 `*.4v  1 a 1 6 ]
+[v memset@p1 p1 `*.4v  1 a 1 8 ]
 "22
 } 0
 "83 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/i2c1_driver.c
@@ -1189,61 +1135,71 @@ channel_FVR_buf1 63
 [v _EUSART_Read EUSART_Read `(uc  1 e 1 0 ]
 {
 "130
-[v EUSART_Read@readValue readValue `uc  1 a 1 1 ]
+[v EUSART_Read@readValue readValue `uc  1 a 1 3 ]
 "146
 } 0
-"682 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
+"721 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
 [v _editTemp editTemp `(v  1 e 1 0 ]
 {
-"712
+"741
 } 0
-"714
+"743
 [v _editLum editLum `(v  1 e 1 0 ]
 {
-"744
+"763
 } 0
-"635
+"683
 [v _editClock editClock `(v  1 e 1 0 ]
 {
-"680
+"719
 } 0
-"399
+"649
+[v _checkFlags checkFlags `(v  1 e 1 0 ]
+{
+"681
+} 0
+"394
+[v _wirteEEPROMinit wirteEEPROMinit `(v  1 e 1 0 ]
+{
+"410
+} 0
+"414
 [v _update_menuLCD update_menuLCD `(v  1 e 1 0 ]
 {
-[s S2143 Time 3 `uc 1 h 1 0 `uc 1 m 1 1 `uc 1 s 1 2 ]
-"448
-[v update_menuLCD@diff diff `S2143  1 a 3 56 ]
-"401
-[v update_menuLCD@str str `[8]uc  1 a 8 41 ]
-"478
-[v update_menuLCD@tt tt `[4]uc  1 a 4 49 ]
-"487
-[v update_menuLCD@l l `[3]uc  1 a 3 53 ]
-"448
-[v update_menuLCD@F12927 F12927 `S2143  1 s 3 F12927 ]
-"532
+[s S1971 Time 3 `uc 1 h 1 0 `uc 1 m 1 1 `uc 1 s 1 2 ]
+"463
+[v update_menuLCD@diff diff `S1971  1 a 3 48 ]
+"416
+[v update_menuLCD@str str `[8]uc  1 a 8 33 ]
+"493
+[v update_menuLCD@tt tt `[4]uc  1 a 4 41 ]
+"502
+[v update_menuLCD@l l `[3]uc  1 a 3 45 ]
+"463
+[v update_menuLCD@F12902 F12902 `S1971  1 s 3 F12902 ]
+"547
 } 0
 "505 E:\Microchip\xc8\v2.30\pic\sources\c90\common\doprnt.c
 [v _sprintf sprintf `(i  1 e 2 0 ]
 {
 [v sprintf@sp sp `*.4uc  1 a 1 wreg ]
 "514
-[v sprintf@width width `i  1 a 2 31 ]
+[v sprintf@width width `i  1 a 2 23 ]
 "545
-[v sprintf@val val `ui  1 a 2 28 ]
+[v sprintf@val val `ui  1 a 2 20 ]
 "512
-[v sprintf@c c `uc  1 a 1 33 ]
+[v sprintf@c c `uc  1 a 1 25 ]
 "525
-[v sprintf@flag flag `uc  1 a 1 30 ]
+[v sprintf@flag flag `uc  1 a 1 22 ]
 "521
-[v sprintf@prec prec `c  1 a 1 27 ]
+[v sprintf@prec prec `c  1 a 1 19 ]
 "507
-[v sprintf@ap ap `[1]*.4v  1 a 1 26 ]
+[v sprintf@ap ap `[1]*.4v  1 a 1 18 ]
 "505
 [v sprintf@sp sp `*.4uc  1 a 1 wreg ]
-[v sprintf@f f `*.25DCuc  1 p 2 14 ]
+[v sprintf@f f `*.25DCuc  1 p 2 6 ]
 "550
-[v sprintf@sp sp `*.4uc  1 a 1 34 ]
+[v sprintf@sp sp `*.4uc  1 a 1 26 ]
 "1567
 } 0
 "8 E:\Microchip\xc8\v2.30\pic\sources\c90\common\isdigit.c
@@ -1252,41 +1208,41 @@ channel_FVR_buf1 63
 [v isdigit@c c `uc  1 a 1 wreg ]
 [v isdigit@c c `uc  1 a 1 wreg ]
 "14
-[v isdigit@c c `uc  1 a 1 1 ]
+[v isdigit@c c `uc  1 a 1 3 ]
 "15
 } 0
 "5 E:\Microchip\xc8\v2.30\pic\sources\c90\common\lwmod.c
 [v ___lwmod __lwmod `(ui  1 e 2 0 ]
 {
 "10
-[v ___lwmod@counter counter `uc  1 a 1 13 ]
+[v ___lwmod@counter counter `uc  1 a 1 5 ]
 "5
-[v ___lwmod@divisor divisor `ui  1 p 2 8 ]
-[v ___lwmod@dividend dividend `ui  1 p 2 10 ]
+[v ___lwmod@divisor divisor `ui  1 p 2 0 ]
+[v ___lwmod@dividend dividend `ui  1 p 2 2 ]
 "25
 } 0
 "5 E:\Microchip\xc8\v2.30\pic\sources\c90\common\lwdiv.c
 [v ___lwdiv __lwdiv `(ui  1 e 2 0 ]
 {
 "10
-[v ___lwdiv@quotient quotient `ui  1 a 2 5 ]
+[v ___lwdiv@quotient quotient `ui  1 a 2 7 ]
 "11
-[v ___lwdiv@counter counter `uc  1 a 1 7 ]
+[v ___lwdiv@counter counter `uc  1 a 1 9 ]
 "5
-[v ___lwdiv@divisor divisor `ui  1 p 2 0 ]
-[v ___lwdiv@dividend dividend `ui  1 p 2 2 ]
+[v ___lwdiv@divisor divisor `ui  1 p 2 2 ]
+[v ___lwdiv@dividend dividend `ui  1 p 2 4 ]
 "30
 } 0
-"328 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
+"333 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
 [v _differenceBetweenTimePeriod differenceBetweenTimePeriod `(v  1 e 1 0 ]
 {
-[s S2143 Time 3 `uc 1 h 1 0 `uc 1 m 1 1 `uc 1 s 1 2 ]
-[v differenceBetweenTimePeriod@start start `S2143  1 p 3 0 ]
-"329
-[v differenceBetweenTimePeriod@stop stop `S2143  1 p 3 3 ]
-"330
-[v differenceBetweenTimePeriod@diff diff `*.4S2143  1 p 1 6 ]
-"342
+[s S1971 Time 3 `uc 1 h 1 0 `uc 1 m 1 1 `uc 1 s 1 2 ]
+[v differenceBetweenTimePeriod@start start `S1971  1 p 3 2 ]
+"334
+[v differenceBetweenTimePeriod@stop stop `S1971  1 p 3 5 ]
+"335
+[v differenceBetweenTimePeriod@diff diff `*.4S1971  1 p 1 8 ]
+"347
 } 0
 "117 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/tmr2.c
 [v _TMR2_StopTimer TMR2_StopTimer `(v  1 e 1 0 ]
@@ -1298,288 +1254,79 @@ channel_FVR_buf1 63
 {
 "115
 } 0
-"348 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
+"353 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
 [v _PWM_Output_D4_Disable PWM_Output_D4_Disable `(v  1 e 1 0 ]
 {
-"350
+"355
 } 0
 "74 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/pwm6.c
 [v _PWM6_LoadDutyValue PWM6_LoadDutyValue `(v  1 e 1 0 ]
 {
-[v PWM6_LoadDutyValue@dutyValue dutyValue `ui  1 p 2 0 ]
+[v PWM6_LoadDutyValue@dutyValue dutyValue `ui  1 p 2 2 ]
 "81
 } 0
-"314 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
+"319 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
 [v _LCDstr LCDstr `(v  1 e 1 0 ]
 {
-"316
-[v LCDstr@c c `uc  1 a 1 14 ]
-"314
-[v LCDstr@p p `*.26uc  1 p 2 9 ]
+"321
+[v LCDstr@c c `uc  1 a 1 6 ]
 "319
+[v LCDstr@p p `*.26uc  1 p 2 1 ]
+"324
 } 0
-"309
+"314
 [v _LCDchar LCDchar `(v  1 e 1 0 ]
 {
 [v LCDchar@c c `uc  1 a 1 wreg ]
 [v LCDchar@c c `uc  1 a 1 wreg ]
-"311
-[v LCDchar@c c `uc  1 a 1 8 ]
-"312
+"316
+[v LCDchar@c c `uc  1 a 1 0 ]
+"317
 } 0
-"304
+"309
 [v _LCDcmd LCDcmd `(v  1 e 1 0 ]
 {
 [v LCDcmd@c c `uc  1 a 1 wreg ]
 [v LCDcmd@c c `uc  1 a 1 wreg ]
-"306
-[v LCDcmd@c c `uc  1 a 1 8 ]
-"307
+"311
+[v LCDcmd@c c `uc  1 a 1 0 ]
+"312
 } 0
-"612
-[v _S1button S1button `(v  1 e 1 0 ]
+"551
+[v _monitoring_TEMP_LUM monitoring_TEMP_LUM `(v  1 e 1 0 ]
 {
-"633
+"624
 } 0
-"979
-[v _cmd_trc cmd_trc `(v  1 e 1 0 ]
+"195
+[v _tsttc tsttc `(uc  1 e 1 0 ]
 {
-"1001
-[v cmd_trc@buffData buffData `[5]uc  1 a 5 24 ]
-"994
-[v cmd_trc@buffInit buffInit `[3]uc  1 a 3 29 ]
-"981
-[v cmd_trc@n n `i  1 a 2 39 ]
-"982
-[v cmd_trc@aux aux `i  1 a 2 37 ]
-"1002
-[v cmd_trc@address address `ui  1 a 2 34 ]
-"999
-[v cmd_trc@i i `i  1 a 2 32 ]
-"1000
-[v cmd_trc@j j `uc  1 a 1 41 ]
-"1014
-[v cmd_trc@buffEOM buffEOM `[1]uc  1 a 1 36 ]
-"979
-[v cmd_trc@num num `i  1 p 2 15 ]
-[v cmd_trc@buffer buffer `*.4uc  1 p 1 17 ]
-"1020
+"197
+[v tsttc@value value `uc  1 a 1 5 ]
+"222
 } 0
-"965
-[v _cmd_ir cmd_ir `(v  1 e 1 0 ]
+"32 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\I2C/i2c.c
+[v _ReadI2C ReadI2C `(uc  1 e 1 0 ]
 {
-"966
-[v cmd_ir@buff buff `[7]uc  1 a 7 19 ]
-"976
+"38
 } 0
-"953
-[v _cmd_aa cmd_aa `(v  1 e 1 0 ]
+"180 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/memory.c
+[v _DATAEE_WriteByte DATAEE_WriteByte `(v  1 e 1 0 ]
 {
-[v cmd_aa@num num `i  1 p 2 15 ]
-[v cmd_aa@buffer buffer `*.4uc  1 p 1 17 ]
-"963
+"182
+[v DATAEE_WriteByte@GIEBitValue GIEBitValue `uc  1 a 1 8 ]
+"180
+[v DATAEE_WriteByte@bAdd bAdd `ui  1 p 2 0 ]
+[v DATAEE_WriteByte@bData bData `uc  1 p 1 2 ]
+"200
 } 0
-"941
-[v _cmd_dtl cmd_dtl `(v  1 e 1 0 ]
+"130 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/adcc.c
+[v _ADCC_GetSingleConversion ADCC_GetSingleConversion `(ui  1 e 2 0 ]
 {
-"943
-[v cmd_dtl@lumAux lumAux `uc  1 a 1 19 ]
-"942
-[v cmd_dtl@tempAux tempAux `uc  1 a 1 18 ]
-"941
-[v cmd_dtl@num num `i  1 p 2 15 ]
-[v cmd_dtl@buffer buffer `*.4uc  1 p 1 17 ]
-"951
-} 0
-"927
-[v _cmd_dac cmd_dac `(v  1 e 1 0 ]
-{
-"930
-[v cmd_dac@s s `uc  1 a 1 21 ]
-"929
-[v cmd_dac@m m `uc  1 a 1 20 ]
-"928
-[v cmd_dac@h h `uc  1 a 1 19 ]
-"927
-[v cmd_dac@num num `i  1 p 2 15 ]
-[v cmd_dac@buffer buffer `*.4uc  1 p 1 17 ]
-"939
-} 0
-"912
-[v _cmd_ra cmd_ra `(v  1 e 1 0 ]
-{
-"913
-[v cmd_ra@buff buff `[9]uc  1 a 9 19 ]
-"925
-} 0
-"903
-[v _cmd_mta cmd_mta `(v  1 e 1 0 ]
-{
-[v cmd_mta@buffer buffer `*.4uc  1 p 1 17 ]
-"910
-} 0
-"883
-[v _cmd_mmp cmd_mmp `(v  1 e 1 0 ]
-{
-"894
-[v cmd_mmp@timerValue timerValue `ui  1 a 2 28 ]
-"883
-[v cmd_mmp@buffer buffer `*.4uc  1 p 1 17 ]
-"901
-} 0
-"871
-[v _cmd_rp cmd_rp `(v  1 e 1 0 ]
-{
-"872
-[v cmd_rp@buff buff `[5]uc  1 a 5 19 ]
-"880
-} 0
-"860
-[v _cmd_rtl cmd_rtl `(v  1 e 1 0 ]
-{
-"861
-[v cmd_rtl@buff buff `[5]uc  1 a 5 19 ]
-"869
-} 0
-"845
-[v _cmd_sc cmd_sc `(v  1 e 1 0 ]
-{
-"848
-[v cmd_sc@s s `uc  1 a 1 21 ]
-"847
-[v cmd_sc@m m `uc  1 a 1 20 ]
-"846
-[v cmd_sc@h h `uc  1 a 1 19 ]
-"845
-[v cmd_sc@num num `i  1 p 2 15 ]
-[v cmd_sc@buffer buffer `*.4uc  1 p 1 17 ]
-"858
-} 0
-"833
-[v _cmd_rc cmd_rc `(v  1 e 1 0 ]
-{
-"834
-[v cmd_rc@buff buff `[6]uc  1 a 6 19 ]
-"843
-} 0
-"1025
-[v _cmd_tri cmd_tri `(v  1 e 1 0 ]
-{
-"1055
-[v cmd_tri@buffData buffData `[5]uc  1 a 5 25 ]
-"1043
-[v cmd_tri@buffInit buffInit `[4]uc  1 a 4 30 ]
-"1052
-[v cmd_tri@i i `i  1 a 2 39 ]
-"1053
-[v cmd_tri@indexAux indexAux `i  1 a 2 34 ]
-"1028
-[v cmd_tri@index index `uc  1 a 1 42 ]
-"1054
-[v cmd_tri@j j `uc  1 a 1 41 ]
-"1027
-[v cmd_tri@n n `uc  1 a 1 38 ]
-"1069
-[v cmd_tri@buffEOM buffEOM `[1]uc  1 a 1 37 ]
-"1035
-[v cmd_tri@startingIndex startingIndex `uc  1 a 1 36 ]
-"1025
-[v cmd_tri@num num `i  1 p 2 15 ]
-[v cmd_tri@buffer buffer `*.4uc  1 p 1 17 ]
-"1075
-} 0
-"15 E:\Microchip\xc8\v2.30\pic\sources\c90\common\Umul16.c
-[v ___wmul __wmul `(ui  1 e 2 0 ]
-{
-"17
-[v ___wmul@product product `ui  1 a 2 4 ]
-"15
-[v ___wmul@multiplier multiplier `ui  1 p 2 0 ]
-[v ___wmul@multiplicand multiplicand `ui  1 p 2 2 ]
-"53
-} 0
-"202 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/memory.c
-[v _DATAEE_ReadByte DATAEE_ReadByte `(uc  1 e 1 0 ]
-{
-[v DATAEE_ReadByte@bAdd bAdd `ui  1 p 2 6 ]
-"212
-} 0
-"99 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/tmr5.c
-[v _setTimer5ReloadVal setTimer5ReloadVal `(v  1 e 1 0 ]
-{
-[v setTimer5ReloadVal@val val `ui  1 p 2 0 ]
-"101
-} 0
-"15 E:\Microchip\xc8\v2.30\pic\sources\c90\common\Umul32.c
-[v ___lmul __lmul `(ul  1 e 4 0 ]
-{
-"17
-[v ___lmul@product product `ul  1 a 4 8 ]
-"15
-[v ___lmul@multiplier multiplier `ul  1 p 4 0 ]
-[v ___lmul@multiplicand multiplicand `ul  1 p 4 4 ]
-"129
-} 0
-"109 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/tmr5.c
-[v _TMR5_StopTimer TMR5_StopTimer `(v  1 e 1 0 ]
-{
-"113
-} 0
-"103
-[v _TMR5_StartTimer TMR5_StartTimer `(v  1 e 1 0 ]
-{
-"107
-} 0
-"813 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
-[v _sendOKMessage sendOKMessage `(v  1 e 1 0 ]
-{
-[v sendOKMessage@cmd cmd `uc  1 a 1 wreg ]
-"814
-[v sendOKMessage@bufw bufw `[4]uc  1 a 4 11 ]
-"813
-[v sendOKMessage@cmd cmd `uc  1 a 1 wreg ]
-"815
-[v sendOKMessage@cmd cmd `uc  1 a 1 10 ]
-"821
-} 0
-"823
-[v _sendERRORMessage sendERRORMessage `(v  1 e 1 0 ]
-{
-[v sendERRORMessage@cmd cmd `uc  1 a 1 wreg ]
-"824
-[v sendERRORMessage@bufw bufw `[4]uc  1 a 4 11 ]
-"823
-[v sendERRORMessage@cmd cmd `uc  1 a 1 wreg ]
-"825
-[v sendERRORMessage@cmd cmd `uc  1 a 1 10 ]
-"831
-} 0
-"805
-[v _sendMessage sendMessage `(v  1 e 1 0 ]
-{
-"806
-[v sendMessage@n n `i  1 a 2 7 ]
-"805
-[v sendMessage@num num `i  1 p 2 3 ]
-[v sendMessage@buffer buffer `*.4uc  1 p 1 5 ]
-"811
-} 0
-"176 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/eusart.c
-[v _putch putch `(v  1 e 1 0 ]
-{
-[v putch@txData txData `uc  1 a 1 wreg ]
-[v putch@txData txData `uc  1 a 1 wreg ]
-"178
-[v putch@txData txData `uc  1 a 1 2 ]
-"179
-} 0
-"148
-[v _EUSART_Write EUSART_Write `(v  1 e 1 0 ]
-{
-[v EUSART_Write@txData txData `uc  1 a 1 wreg ]
-[v EUSART_Write@txData txData `uc  1 a 1 wreg ]
-[v EUSART_Write@txData txData `uc  1 a 1 1 ]
-"169
+[v ADCC_GetSingleConversion@channel channel `E12086  1 a 1 wreg ]
+[v ADCC_GetSingleConversion@channel channel `E12086  1 a 1 wreg ]
+"133
+[v ADCC_GetSingleConversion@channel channel `E12086  1 a 1 5 ]
+"155
 } 0
 "106 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/tmr2.c
 [v _TMR2_StartTimer TMR2_StartTimer `(v  1 e 1 0 ]
@@ -1591,21 +1338,232 @@ channel_FVR_buf1 63
 {
 "104
 } 0
+"626 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
+[v _S1button S1button `(v  1 e 1 0 ]
+{
+"647
+} 0
+"349
+[v _PWM_Output_D4_Enable PWM_Output_D4_Enable `(v  1 e 1 0 ]
+{
+"351
+} 0
+"977
+[v _cmd_trc cmd_trc `(v  1 e 1 0 ]
+{
+"999
+[v cmd_trc@buffData buffData `[5]uc  1 a 5 16 ]
+"992
+[v cmd_trc@buffInit buffInit `[3]uc  1 a 3 21 ]
+"979
+[v cmd_trc@n n `i  1 a 2 31 ]
+"980
+[v cmd_trc@maxReadings maxReadings `i  1 a 2 29 ]
+"1000
+[v cmd_trc@address address `ui  1 a 2 26 ]
+"997
+[v cmd_trc@i i `i  1 a 2 24 ]
+"998
+[v cmd_trc@j j `uc  1 a 1 33 ]
+"1012
+[v cmd_trc@buffEOM buffEOM `[1]uc  1 a 1 28 ]
+"977
+[v cmd_trc@num num `i  1 p 2 7 ]
+[v cmd_trc@buffer buffer `*.4uc  1 p 1 9 ]
+"1018
+} 0
+"963
+[v _cmd_ir cmd_ir `(v  1 e 1 0 ]
+{
+"964
+[v cmd_ir@buff buff `[7]uc  1 a 7 11 ]
+"974
+} 0
+"951
+[v _cmd_aa cmd_aa `(v  1 e 1 0 ]
+{
+[v cmd_aa@num num `i  1 p 2 7 ]
+[v cmd_aa@buffer buffer `*.4uc  1 p 1 9 ]
+"961
+} 0
+"939
+[v _cmd_dtl cmd_dtl `(v  1 e 1 0 ]
+{
+"941
+[v cmd_dtl@lumAux lumAux `uc  1 a 1 11 ]
+"940
+[v cmd_dtl@tempAux tempAux `uc  1 a 1 10 ]
+"939
+[v cmd_dtl@num num `i  1 p 2 7 ]
+[v cmd_dtl@buffer buffer `*.4uc  1 p 1 9 ]
+"949
+} 0
+"925
+[v _cmd_dac cmd_dac `(v  1 e 1 0 ]
+{
+"928
+[v cmd_dac@s s `uc  1 a 1 13 ]
+"927
+[v cmd_dac@m m `uc  1 a 1 12 ]
+"926
+[v cmd_dac@h h `uc  1 a 1 11 ]
+"925
+[v cmd_dac@num num `i  1 p 2 7 ]
+[v cmd_dac@buffer buffer `*.4uc  1 p 1 9 ]
+"937
+} 0
+"910
+[v _cmd_ra cmd_ra `(v  1 e 1 0 ]
+{
+"911
+[v cmd_ra@buff buff `[9]uc  1 a 9 11 ]
+"923
+} 0
+"901
+[v _cmd_mta cmd_mta `(v  1 e 1 0 ]
+{
+[v cmd_mta@buffer buffer `*.4uc  1 p 1 9 ]
+"908
+} 0
+"892
+[v _cmd_mmp cmd_mmp `(v  1 e 1 0 ]
+{
+[v cmd_mmp@num num `i  1 p 2 7 ]
+[v cmd_mmp@buffer buffer `*.4uc  1 p 1 9 ]
+"899
+} 0
+"881
+[v _cmd_rp cmd_rp `(v  1 e 1 0 ]
+{
+"882
+[v cmd_rp@buff buff `[5]uc  1 a 5 11 ]
+"890
+} 0
+"870
+[v _cmd_rtl cmd_rtl `(v  1 e 1 0 ]
+{
+"871
+[v cmd_rtl@buff buff `[5]uc  1 a 5 11 ]
+"879
+} 0
+"855
+[v _cmd_sc cmd_sc `(v  1 e 1 0 ]
+{
+"858
+[v cmd_sc@s s `uc  1 a 1 13 ]
+"857
+[v cmd_sc@m m `uc  1 a 1 12 ]
+"856
+[v cmd_sc@h h `uc  1 a 1 11 ]
+"855
+[v cmd_sc@num num `i  1 p 2 7 ]
+[v cmd_sc@buffer buffer `*.4uc  1 p 1 9 ]
+"868
+} 0
+"843
+[v _cmd_rc cmd_rc `(v  1 e 1 0 ]
+{
+"844
+[v cmd_rc@buff buff `[6]uc  1 a 6 11 ]
+"853
+} 0
+"1021
+[v _cmd_tri cmd_tri `(v  1 e 1 0 ]
+{
+"1054
+[v cmd_tri@buffData buffData `[5]uc  1 a 5 15 ]
+"1044
+[v cmd_tri@buffInit buffInit `[4]uc  1 a 4 20 ]
+"1051
+[v cmd_tri@i i `i  1 a 2 26 ]
+"1026
+[v cmd_tri@startingIndex startingIndex `uc  1 a 1 31 ]
+"1053
+[v cmd_tri@j j `uc  1 a 1 30 ]
+"1023
+[v cmd_tri@n n `uc  1 a 1 29 ]
+"1024
+[v cmd_tri@index index `uc  1 a 1 28 ]
+"1033
+[v cmd_tri@maxReadings maxReadings `uc  1 a 1 25 ]
+"1071
+[v cmd_tri@buffEOM buffEOM `[1]uc  1 a 1 24 ]
+"1021
+[v cmd_tri@num num `i  1 p 2 7 ]
+[v cmd_tri@buffer buffer `*.4uc  1 p 1 9 ]
+"1077
+} 0
+"15 E:\Microchip\xc8\v2.30\pic\sources\c90\common\Umul16.c
+[v ___wmul __wmul `(ui  1 e 2 0 ]
+{
+"17
+[v ___wmul@product product `ui  1 a 2 6 ]
+"15
+[v ___wmul@multiplier multiplier `ui  1 p 2 2 ]
+[v ___wmul@multiplicand multiplicand `ui  1 p 2 4 ]
+"53
+} 0
+"202 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/memory.c
+[v _DATAEE_ReadByte DATAEE_ReadByte `(uc  1 e 1 0 ]
+{
+[v DATAEE_ReadByte@bAdd bAdd `ui  1 p 2 8 ]
+"212
+} 0
+"823 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
+[v _sendOKMessage sendOKMessage `(v  1 e 1 0 ]
+{
+[v sendOKMessage@cmd cmd `uc  1 a 1 wreg ]
+"824
+[v sendOKMessage@bufw bufw `[4]uc  1 a 4 3 ]
+"823
+[v sendOKMessage@cmd cmd `uc  1 a 1 wreg ]
+"825
+[v sendOKMessage@cmd cmd `uc  1 a 1 2 ]
+"831
+} 0
+"833
+[v _sendERRORMessage sendERRORMessage `(v  1 e 1 0 ]
+{
+[v sendERRORMessage@cmd cmd `uc  1 a 1 wreg ]
+"834
+[v sendERRORMessage@bufw bufw `[4]uc  1 a 4 3 ]
+"833
+[v sendERRORMessage@cmd cmd `uc  1 a 1 wreg ]
+"835
+[v sendERRORMessage@cmd cmd `uc  1 a 1 2 ]
+"841
+} 0
+"815
+[v _sendMessage sendMessage `(v  1 e 1 0 ]
+{
+"816
+[v sendMessage@n n `i  1 a 2 0 ]
+"815
+[v sendMessage@num num `i  1 p 2 5 ]
+[v sendMessage@buffer buffer `*.4uc  1 p 1 7 ]
+"821
+} 0
+"176 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/eusart.c
+[v _putch putch `(v  1 e 1 0 ]
+{
+[v putch@txData txData `uc  1 a 1 wreg ]
+[v putch@txData txData `uc  1 a 1 wreg ]
+"178
+[v putch@txData txData `uc  1 a 1 4 ]
+"179
+} 0
+"148
+[v _EUSART_Write EUSART_Write `(v  1 e 1 0 ]
+{
+[v EUSART_Write@txData txData `uc  1 a 1 wreg ]
+[v EUSART_Write@txData txData `uc  1 a 1 wreg ]
+[v EUSART_Write@txData txData `uc  1 a 1 3 ]
+"169
+} 0
 "50 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/mcc.c
 [v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
 {
-"62
-} 0
-"64 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/tmr5.c
-[v _TMR5_Initialize TMR5_Initialize `(v  1 e 1 0 ]
-{
-"97
-} 0
-"182
-[v _TMR5_SetInterruptHandler TMR5_SetInterruptHandler `(v  1 e 1 0 ]
-{
-[v TMR5_SetInterruptHandler@InterruptHandler InterruptHandler `*.37(v  1 p 2 0 ]
-"184
+"61
 } 0
 "62 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/tmr2.c
 [v _TMR2_Initialize TMR2_Initialize `(v  1 e 1 0 ]
@@ -1620,7 +1578,7 @@ channel_FVR_buf1 63
 "178
 [v _TMR1_SetInterruptHandler TMR1_SetInterruptHandler `(v  1 e 1 0 ]
 {
-[v TMR1_SetInterruptHandler@InterruptHandler InterruptHandler `*.37(v  1 p 2 0 ]
+[v TMR1_SetInterruptHandler@InterruptHandler InterruptHandler `*.37(v  1 p 2 2 ]
 "180
 } 0
 "58 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/pwm6.c
@@ -1628,20 +1586,20 @@ channel_FVR_buf1 63
 {
 "72
 } 0
-"78 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/mcc.c
+"77 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/mcc.c
 [v _PMD_Initialize PMD_Initialize `(v  1 e 1 0 ]
 {
-"92
+"91
 } 0
 "57 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/pin_manager.c
 [v _PIN_MANAGER_Initialize PIN_MANAGER_Initialize `(v  1 e 1 0 ]
 {
 "128
 } 0
-"64 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/mcc.c
+"63 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/mcc.c
 [v _OSCILLATOR_Initialize OSCILLATOR_Initialize `(v  1 e 1 0 ]
 {
-"76
+"75
 } 0
 "59 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/ext_int.c
 [v _EXT_INT_Initialize EXT_INT_Initialize `(v  1 e 1 0 ]
@@ -1651,7 +1609,7 @@ channel_FVR_buf1 63
 "50
 [v _INT_SetInterruptHandler INT_SetInterruptHandler `(v  1 e 1 0 ]
 {
-[v INT_SetInterruptHandler@InterruptHandler InterruptHandler `*.37(v  1 p 2 0 ]
+[v INT_SetInterruptHandler@InterruptHandler InterruptHandler `*.37(v  1 p 2 2 ]
 "52
 } 0
 "75 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/eusart.c
@@ -1662,13 +1620,13 @@ channel_FVR_buf1 63
 "220
 [v _EUSART_SetTxInterruptHandler EUSART_SetTxInterruptHandler `(v  1 e 1 0 ]
 {
-[v EUSART_SetTxInterruptHandler@interruptHandler interruptHandler `*.37(v  1 p 2 0 ]
+[v EUSART_SetTxInterruptHandler@interruptHandler interruptHandler `*.37(v  1 p 2 2 ]
 "222
 } 0
 "224
 [v _EUSART_SetRxInterruptHandler EUSART_SetRxInterruptHandler `(v  1 e 1 0 ]
 {
-[v EUSART_SetRxInterruptHandler@interruptHandler interruptHandler `*.37(v  1 p 2 0 ]
+[v EUSART_SetRxInterruptHandler@interruptHandler interruptHandler `*.37(v  1 p 2 2 ]
 "226
 } 0
 "63 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/adcc.c
@@ -1676,38 +1634,33 @@ channel_FVR_buf1 63
 {
 "104
 } 0
-"344 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
-[v _PWM_Output_D4_Enable PWM_Output_D4_Enable `(v  1 e 1 0 ]
-{
-"346
-} 0
-"281
+"286 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
 [v _LCDinit LCDinit `(v  1 e 1 0 ]
 {
-"302
+"307
 } 0
-"258
+"263
 [v _LCDsend2x4 LCDsend2x4 `(v  1 e 1 0 ]
 {
 [v LCDsend2x4@c c `uc  1 a 1 wreg ]
-"261
-[v LCDsend2x4@lc lc `uc  1 a 1 7 ]
-"260
-[v LCDsend2x4@hc hc `uc  1 a 1 6 ]
-"258
-[v LCDsend2x4@c c `uc  1 a 1 wreg ]
-[v LCDsend2x4@mode mode `uc  1 p 1 2 ]
+"266
+[v LCDsend2x4@lc lc `uc  1 a 1 9 ]
+"265
+[v LCDsend2x4@hc hc `uc  1 a 1 8 ]
 "263
-[v LCDsend2x4@c c `uc  1 a 1 5 ]
-"279
+[v LCDsend2x4@c c `uc  1 a 1 wreg ]
+[v LCDsend2x4@mode mode `uc  1 p 1 4 ]
+"268
+[v LCDsend2x4@c c `uc  1 a 1 7 ]
+"284
 } 0
-"219
+"224
 [v _LCDsend LCDsend `(v  1 e 1 0 ]
 {
 [v LCDsend@c c `uc  1 a 1 wreg ]
 [v LCDsend@c c `uc  1 a 1 wreg ]
-[v LCDsend@c c `uc  1 a 1 3 ]
-"226
+[v LCDsend@c c `uc  1 a 1 5 ]
+"231
 } 0
 "47 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\I2C/i2c.c
 [v _WriteI2C WriteI2C `(c  1 e 1 0 ]
@@ -1715,7 +1668,7 @@ channel_FVR_buf1 63
 [v WriteI2C@data_out data_out `uc  1 a 1 wreg ]
 [v WriteI2C@data_out data_out `uc  1 a 1 wreg ]
 "49
-[v WriteI2C@data_out data_out `uc  1 a 1 1 ]
+[v WriteI2C@data_out data_out `uc  1 a 1 3 ]
 "78
 } 0
 "118 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/eusart.c
@@ -1723,81 +1676,10 @@ channel_FVR_buf1 63
 {
 "121
 } 0
-"180 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/memory.c
-[v _DATAEE_WriteByte DATAEE_WriteByte `(v  1 e 1 0 ]
-{
-"182
-[v DATAEE_WriteByte@GIEBitValue GIEBitValue `uc  1 a 1 3 ]
-"180
-[v DATAEE_WriteByte@bAdd bAdd `ui  1 p 2 0 ]
-[v DATAEE_WriteByte@bData bData `uc  1 p 1 2 ]
-"200
-} 0
 "52 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/interrupt_manager.c
 [v _INTERRUPT_InterruptManager INTERRUPT_InterruptManager `II(v  1 e 1 0 ]
 {
-"94
-} 0
-"168 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/tmr5.c
-[v _TMR5_ISR TMR5_ISR `(v  1 e 1 0 ]
-{
-"179
-} 0
-"186
-[v _TMR5_DefaultInterruptHandler TMR5_DefaultInterruptHandler `(v  1 e 1 0 ]
-{
-"189
-} 0
-"537 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
-[v _monitoring_ISR monitoring_ISR `(v  1 e 1 0 ]
-{
-"610
-} 0
-"15 E:\Microchip\xc8\v2.30\pic\sources\c90\common\Umul16.c
-[v i1___wmul __wmul `(ui  1 e 2 0 ]
-{
-"17
-[v i1___wmul@product product `ui  1 a 2 4 ]
-"15
-[v i1___wmul@multiplier multiplier `ui  1 p 2 0 ]
-[v i1___wmul@multiplicand multiplicand `ui  1 p 2 2 ]
-"53
-} 0
-"190 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
-[v _tsttc tsttc `(uc  1 e 1 0 ]
-{
-"192
-[v tsttc@value value `uc  1 a 1 3 ]
-"217
-} 0
-"47 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\I2C/i2c.c
-[v i1_WriteI2C WriteI2C `(c  1 e 1 0 ]
-{
-[v i1WriteI2C@data_out data_out `uc  1 a 1 wreg ]
-[v i1WriteI2C@data_out data_out `uc  1 a 1 wreg ]
-"49
-[v i1WriteI2C@data_out data_out `uc  1 a 1 1 ]
-"78
-} 0
-"32
-[v _ReadI2C ReadI2C `(uc  1 e 1 0 ]
-{
-"38
-} 0
-"130 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/adcc.c
-[v _ADCC_GetSingleConversion ADCC_GetSingleConversion `(ui  1 e 2 0 ]
-{
-[v ADCC_GetSingleConversion@channel channel `E12086  1 a 1 wreg ]
-[v ADCC_GetSingleConversion@channel channel `E12086  1 a 1 wreg ]
-"133
-[v ADCC_GetSingleConversion@channel channel `E12086  1 a 1 3 ]
-"155
-} 0
-"131 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/tmr5.c
-[v _TMR5_WriteTimer TMR5_WriteTimer `(v  1 e 1 0 ]
-{
-[v TMR5_WriteTimer@timerVal timerVal `ui  1 p 2 0 ]
-"151
+"90
 } 0
 "164 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/tmr1.c
 [v _TMR1_ISR TMR1_ISR `(v  1 e 1 0 ]
@@ -1810,25 +1692,15 @@ channel_FVR_buf1 63
 [v TMR1_WriteTimer@timerVal timerVal `ui  1 p 2 0 ]
 "147
 } 0
-"356 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
+"361 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
 [v _Clock_ISR Clock_ISR `(v  1 e 1 0 ]
 {
-"396
+"392
 } 0
 "182 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/tmr1.c
 [v _TMR1_DefaultInterruptHandler TMR1_DefaultInterruptHandler `(v  1 e 1 0 ]
 {
 "185
-} 0
-"180 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/memory.c
-[v i1_DATAEE_WriteByte DATAEE_WriteByte `(v  1 e 1 0 ]
-{
-"182
-[v i1DATAEE_WriteByte@GIEBitValue GIEBitValue `uc  1 a 1 9 ]
-"180
-[v i1DATAEE_WriteByte@bAdd bAdd `ui  1 p 2 6 ]
-[v i1DATAEE_WriteByte@bData bData `uc  1 p 1 8 ]
-"200
 } 0
 "32 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/ext_int.c
 [v _INT_ISR INT_ISR `(v  1 e 1 0 ]
@@ -1845,10 +1717,10 @@ channel_FVR_buf1 63
 {
 "57
 } 0
-"776 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
+"786 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
 [v _S1_ISR S1_ISR `(v  1 e 1 0 ]
 {
-"799
+"809
 } 0
 "181 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/eusart.c
 [v _EUSART_Transmit_ISR EUSART_Transmit_ISR `(v  1 e 1 0 ]

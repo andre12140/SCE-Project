@@ -21247,53 +21247,6 @@ void (*i2c1_driver_i2cISR)(void);
 # 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
 typedef unsigned char bool;
 
-# 100 "mcc_generated_files/tmr5.h"
-void TMR5_Initialize(void);
-
-void setTimer5ReloadVal(uint16_t);
-
-# 131
-void TMR5_StartTimer(void);
-
-# 163
-void TMR5_StopTimer(void);
-
-# 198
-uint16_t TMR5_ReadTimer(void);
-
-# 237
-void TMR5_WriteTimer(uint16_t timerVal);
-
-# 273
-void TMR5_Reload(void);
-
-# 312
-void TMR5_StartSinglePulseAcquisition(void);
-
-# 351
-uint8_t TMR5_CheckGateValueStatus(void);
-
-# 369
-void TMR5_ISR(void);
-
-# 387
-void TMR5_SetInterruptHandler(void (* InterruptHandler)(void));
-
-# 405
-extern void (*TMR5_InterruptHandler)(void);
-
-# 423
-void TMR5_DefaultInterruptHandler(void);
-
-# 102 "mcc_generated_files/pwm6.h"
-void PWM6_Initialize(void);
-
-# 129
-void PWM6_LoadDutyValue(uint16_t dutyValue);
-
-# 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
-typedef unsigned char bool;
-
 # 100 "mcc_generated_files/tmr1.h"
 void TMR1_Initialize(void);
 
@@ -21329,6 +21282,12 @@ extern void (*TMR1_InterruptHandler)(void);
 
 # 421
 void TMR1_DefaultInterruptHandler(void);
+
+# 102 "mcc_generated_files/pwm6.h"
+void PWM6_Initialize(void);
+
+# 129
+void PWM6_LoadDutyValue(uint16_t dutyValue);
 
 # 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
 typedef unsigned char bool;
@@ -21601,24 +21560,6 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 827
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 250 "mcc_generated_files/ext_int.h"
-void EXT_INT_Initialize(void);
-
-# 272
-void INT_ISR(void);
-
-# 296
-void INT_CallBack(void);
-
-# 319
-void INT_SetInterruptHandler(void (* InterruptHandler)(void));
-
-# 343
-extern void (*INT_InterruptHandler)(void);
-
-# 367
-void INT_DefaultInterruptHandler(void);
-
 # 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
 typedef unsigned char bool;
 
@@ -21639,6 +21580,24 @@ void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
 
 # 248
 uint8_t DATAEE_ReadByte(uint16_t bAdd);
+
+# 250 "mcc_generated_files/ext_int.h"
+void EXT_INT_Initialize(void);
+
+# 272
+void INT_ISR(void);
+
+# 296
+void INT_CallBack(void);
+
+# 319
+void INT_SetInterruptHandler(void (* InterruptHandler)(void));
+
+# 343
+extern void (*INT_InterruptHandler)(void);
+
+# 367
+void INT_DefaultInterruptHandler(void);
 
 # 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
 typedef unsigned char bool;
@@ -21681,13 +21640,13 @@ void EUSART_SetTxInterruptHandler(void (* interruptHandler)(void));
 # 383
 void EUSART_SetRxInterruptHandler(void (* interruptHandler)(void));
 
-# 78 "mcc_generated_files/mcc.h"
+# 77 "mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
 
-# 91
+# 90
 void OSCILLATOR_Initialize(void);
 
-# 104
+# 103
 void PMD_Initialize(void);
 
 # 154 "I2C/i2c.h"
@@ -21832,15 +21791,15 @@ extern __bit iscntrl(char);
 extern char toupper(char);
 extern char tolower(char);
 
-# 86 "main.c"
+# 87 "main.c"
 uint8_t NREG = 25;
 uint8_t PMON = 3;
 uint8_t TALA = 5;
 
-# 94
+# 95
 uint8_t ALAF = 0;
 
-# 99
+# 100
 void cmd_rc(int, char *);
 void cmd_sc(int, char *);
 void cmd_rtl(int, char *);
@@ -21927,6 +21886,10 @@ int prevLumLevel = -1;
 
 bool updateLCD = 1;
 bool flagS1pushed = 0;
+bool monitor_TEMP_LUM = 0;
+uint8_t counterMonitorAux = 0;
+
+bool writeEEPROM_flag = 0;
 
 uint8_t iread = 0;
 uint8_t iwrite = 0;
@@ -22105,21 +22068,7 @@ t.s++;
 if(t.s==60){
 t.m++;
 t.s=0;
-
-
-DATAEE_WriteByte( 0x7000 + (1 * 8), NREG);
-DATAEE_WriteByte( 0x7000 + (2 * 8), PMON);
-DATAEE_WriteByte( 0x7000 + (3 * 8), TALA);
-DATAEE_WriteByte( 0x7000 + (4 * 8), clkAlarm.alarmVal.h);
-DATAEE_WriteByte( 0x7000 + (5 * 8), clkAlarm.alarmVal.m);
-DATAEE_WriteByte( 0x7000 + (6 * 8), clkAlarm.alarmVal.s);
-DATAEE_WriteByte( 0x7000 + (7 * 8), tempAlarm.alarmTemp);
-DATAEE_WriteByte( 0x7000 + (8 * 8), lumAlarm.alarmLum);
-DATAEE_WriteByte( 0x7000 + (9 * 8), ALAF);
-DATAEE_WriteByte( 0x7000 + (10 * 8), t.h);
-DATAEE_WriteByte( 0x7000 + (11 * 8), t.m);
-DATAEE_WriteByte( 0x7000 + (12 * 8), iwrite);
-DATAEE_WriteByte( 0x7000 + (13 * 8), NREG + PMON + TALA + clkAlarm.alarmVal.h + clkAlarm.alarmVal.m + clkAlarm.alarmVal.s + tempAlarm.alarmTemp + lumAlarm.alarmLum + ALAF + t.h + t.m + iwrite);
+writeEEPROM_flag = 1;
 }
 if(t.m==60){
 t.h++;
@@ -22138,7 +22087,31 @@ clkAlarm.alarmVal.h = 25;
 
 do { LATAbits.LATA7 = ~LATAbits.LATA7; } while(0);
 updateLCD = 1;
+counterMonitorAux++;
+if(counterMonitorAux >= PMON){
+counterMonitorAux = 0;
+monitor_TEMP_LUM = 1;
 }
+}
+
+void wirteEEPROMinit(){
+
+DATAEE_WriteByte( 0x7000 + (1), NREG);
+DATAEE_WriteByte( 0x7000 + (2), PMON);
+DATAEE_WriteByte( 0x7000 + (3), TALA);
+DATAEE_WriteByte( 0x7000 + (4), clkAlarm.alarmVal.h);
+DATAEE_WriteByte( 0x7000 + (5), clkAlarm.alarmVal.m);
+DATAEE_WriteByte( 0x7000 + (6), clkAlarm.alarmVal.s);
+DATAEE_WriteByte( 0x7000 + (7), tempAlarm.alarmTemp);
+DATAEE_WriteByte( 0x7000 + (8), lumAlarm.alarmLum);
+DATAEE_WriteByte( 0x7000 + (9), ALAF);
+DATAEE_WriteByte( 0x7000 + (10), t.h);
+DATAEE_WriteByte( 0x7000 + (11), t.m);
+DATAEE_WriteByte( 0x7000 + (12), iwrite);
+DATAEE_WriteByte( 0x7000 + (13), NREG + PMON + TALA + clkAlarm.alarmVal.h + clkAlarm.alarmVal.m + clkAlarm.alarmVal.s + tempAlarm.alarmTemp + lumAlarm.alarmLum + ALAF + t.h + t.m + iwrite);
+
+}
+
 
 
 void update_menuLCD(){
@@ -22196,7 +22169,7 @@ differenceBetweenTimePeriod( t, alarmPWMStart, &diff);
 if(diff.s <= TALA){
 PWM_on = 1;
 
-# 463
+# 478
 } else if(PWM6EN==1){
 PWM_on = 0;
 PWM6_LoadDutyValue(0);
@@ -22232,7 +22205,7 @@ LCDstr(l);
 
 if(modeFlag != 0){
 LCDcmd(0x8B);
-LCDstr("CTL");
+LCDstr((unsigned char *)"CTL");
 }
 
 if(modeFlag == 1){
@@ -22270,20 +22243,19 @@ LCDcmd(0x8f);
 
 bool flagNr = 0;
 
-
-void monitoring_ISR(){
+void monitoring_TEMP_LUM(){
 temp = (uint8_t)tsttc();
 
 lumLevel = ADCC_GetSingleConversion(channel_ANA0) >> 13;
 
 if(prevTemp != temp || prevLumLevel != lumLevel){
 
-# 549
-DATAEE_WriteByte( (iwrite * 0x5) + 0x7014 + 0x0 , t.h);
-DATAEE_WriteByte( (iwrite * 0x5) + 0x7014 + 0x1 , t.m);
-DATAEE_WriteByte( (iwrite * 0x5) + 0x7014 + 0x2 , t.s);
-DATAEE_WriteByte( (iwrite * 0x5) + 0x7014 + 0x3 , temp);
-DATAEE_WriteByte( (iwrite * 0x5) + 0x7014 + 0x4 , lumLevel);
+# 563
+DATAEE_WriteByte( (iwrite * 0x5) + 0x7012 + 0x0 , t.h);
+DATAEE_WriteByte( (iwrite * 0x5) + 0x7012 + 0x1 , t.m);
+DATAEE_WriteByte( (iwrite * 0x5) + 0x7012 + 0x2 , t.s);
+DATAEE_WriteByte( (iwrite * 0x5) + 0x7012 + 0x3 , temp);
+DATAEE_WriteByte( (iwrite * 0x5) + 0x7012 + 0x4 , lumLevel);
 
 if((nr == NREG) && (iread == iwrite)){
 iread++;
@@ -22365,15 +22337,43 @@ modeFlag++;
 _delay((unsigned long)((50)*(1000000/4000.0)));
 }
 
-void editClock(){
-
-while(1){
+void checkFlags(){
+if(writeEEPROM_flag){
+wirteEEPROMinit();
+writeEEPROM_flag = 0;
+}
 if(flagS1pushed){
 S1button();
 flagS1pushed=0;
-
-# 644
+update_menuLCD();
+updateLCD=0;
 }
+if(monitor_TEMP_LUM){
+monitoring_TEMP_LUM();
+monitor_TEMP_LUM = 0;
+}
+if(updateLCD){
+update_menuLCD();
+updateLCD=0;
+}
+if(PWM_on){
+if(PWM6EN==0){
+TMR2_StartTimer();
+PWM_Output_D4_Enable();
+}
+if(dimingLed <= 1023){
+dimingLed += 1;
+} else{
+dimingLed = 0;
+}
+PWM6_LoadDutyValue(dimingLed);
+_delay((unsigned long)((1)*(1000000/4000.0)));
+}
+}
+
+void editClock(){
+
+while(1){
 if(PORTCbits.RC5 == 0){
 if(editingClockAlarm == 0){
 editingClockAlarm = 1;
@@ -22397,28 +22397,20 @@ clkAlarm.alarmVal.s = 0;
 clkAlarm.alarmVal.s++;
 }
 }
-_delay((unsigned long)((400)*(1000000/4000.0)));
+_delay((unsigned long)((100)*(1000000/4000.0)));
 update_menuLCD();
 }
+checkFlags();
 if(modeFlag != 1){
 editingClockAlarm = 0;
 break;
 }
-if(updateLCD){
-update_menuLCD();
-updateLCD=0;
-}
+
 }
 }
 
 void editTemp(){
 while(1){
-if(flagS1pushed){
-S1button();
-flagS1pushed=0;
-
-# 690
-}
 if(PORTCbits.RC5 == 0){
 if(editingTempAlarm == 0){
 editingTempAlarm = 1;
@@ -22428,28 +22420,19 @@ if(tempAlarm.alarmTemp > 50){
 tempAlarm.alarmTemp = 0;
 }
 }
-_delay((unsigned long)((400)*(1000000/4000.0)));
+_delay((unsigned long)((100)*(1000000/4000.0)));
 update_menuLCD();
 }
+checkFlags();
 if(modeFlag != 2){
 editingTempAlarm = 0;
 break;
-}
-if(updateLCD){
-update_menuLCD();
-updateLCD=0;
 }
 }
 }
 
 void editLum(){
 while(1){
-if(flagS1pushed){
-S1button();
-flagS1pushed=0;
-
-# 722
-}
 if(PORTCbits.RC5 == 0){
 if(editingLumAlarm == 0){
 editingLumAlarm = 1;
@@ -22459,16 +22442,13 @@ if(lumAlarm.alarmLum > 7){
 lumAlarm.alarmLum = 0;
 }
 }
-_delay((unsigned long)((400)*(1000000/4000.0)));
+_delay((unsigned long)((100)*(1000000/4000.0)));
 update_menuLCD();
 }
+checkFlags();
 if(modeFlag != 3){
 editingLumAlarm = 0;
 break;
-}
-if(updateLCD){
-update_menuLCD();
-updateLCD=0;
 }
 }
 }
@@ -22476,42 +22456,34 @@ updateLCD=0;
 void toggleAlarms(){
 
 while(1){
-if(flagS1pushed){
-S1button();
-flagS1pushed=0;
-
-# 755
-}
 if(PORTCbits.RC5 == 0){
 if(ALAF == 'A'){
 ALAF = 'a';
 } else {
 ALAF = 'A';
 }
-_delay((unsigned long)((400)*(1000000/4000.0)));
+_delay((unsigned long)((100)*(1000000/4000.0)));
 update_menuLCD();
 }
+checkFlags();
 if(modeFlag != 4){
 modeFlag = 0;
 break;
 }
-if(updateLCD){
-update_menuLCD();
-updateLCD=0;
 }
 }
-}
+
 
 void S1_ISR(){
 PIE0bits.INTE = 0;
 flagS1pushed = 1;
 
-# 797
+# 807
 (PIR0bits.INTF = 0);
 PIE0bits.INTE = 1;
 }
 
-# 805
+# 815
 void sendMessage(int num, char *buffer){
 int n = 0;
 while(n<num){
@@ -22589,22 +22561,13 @@ buff[4] = (uint8_t)0xFE;
 sendMessage(5,buff);
 }
 
-
 void cmd_mmp(int num, char *buffer){
-
-if(buffer[2] == 0x0){
-TMR5_StopTimer();
-} else if(buffer[2] >= 0x01 && buffer[2] <= 0x10){
+if(num == 4){
 PMON = buffer[2];
-
-# 894
-uint16_t timerValue = (uint32_t)65536 - (uint32_t)((uint32_t)((uint32_t)PMON*(uint32_t)31000)/8);
-setTimer5ReloadVal(timerValue);
-TMR5_StartTimer();
-} else {
+sendOKMessage((uint8_t)0XC4);
+} else{
 sendERRORMessage((uint8_t)0XC4);
 }
-sendOKMessage((uint8_t)0XC4);
 }
 
 void cmd_mta(int num, char *buffer){
@@ -22686,11 +22649,11 @@ sendMessage(7,buff);
 void cmd_trc(int num, char *buffer){
 if(num == 4){
 int n = buffer[2];
-int aux = (iwrite-1-iread);
-if(aux < 0){
-aux = iwrite + 1 + (NREG - iread);
+int maxReadings = (iwrite-iread);
+if(maxReadings <= 0){
+maxReadings = iwrite + (NREG - iread);
 }
-if((n > nr) || (n > aux)){
+if((n > nr) || (n > maxReadings)){
 sendERRORMessage((uint8_t)0XCB);
 return;
 }
@@ -22709,7 +22672,7 @@ uint8_t buffData[5];
 uint16_t address = 0;
 for(i = 0; i < n; i++){
 for(j = 0; j < 5; j++){
-address = (iread * 0x5) + 0x7014 + j;
+address = (iread * 0x5) + 0x7012 + j;
 buffData[j] = DATAEE_ReadByte(address);
 }
 sendMessage(5,buffData);
@@ -22727,46 +22690,50 @@ sendERRORMessage((uint8_t)0XCB);
 }
 
 
-
-
 void cmd_tri(int num, char *buffer){
 if(num == 5){
 uint8_t n = buffer[2];
 uint8_t index = buffer[3];
 
-if((n > nr) || (index < 0) || (index > NREG-1)){
-sendERRORMessage((uint8_t)0XCC);
-return;
+uint8_t startingIndex = iwrite + index;
+if(startingIndex >= NREG){
+startingIndex = index - (NREG - iwrite);
+}
+if(nr != NREG){
+startingIndex = index;
+}
+uint8_t maxReadings = iwrite - startingIndex;
+if(maxReadings <= 0){
+maxReadings = iwrite + (NREG - startingIndex);
 }
 
-uint8_t startingIndex;
-if(((iwrite-1)-index) < 0){
-startingIndex = NREG - ((iwrite-1)-index);
-} else {
-startingIndex = ((iwrite-1)-index);
+if((n > nr) || (maxReadings < n)){
+sendERRORMessage((uint8_t)0XCC);
+return;
 }
 
 
 uint8_t buffInit[4];
 buffInit[0] = (uint8_t)0xFD;
-buffInit[1] = (uint8_t)0XCB;
+buffInit[1] = (uint8_t)0XCC;
 buffInit[2] = (uint8_t)n;
-buffInit[2] = (uint8_t)index;
+buffInit[3] = (uint8_t)index;
 sendMessage(4,buffInit);
 
-
-int nMessagesSent = 0;
 int i = startingIndex;
-int indexAux = index;
+
 uint8_t j;
 uint8_t buffData[5];
-while(indexAux){
+while(n){
 for(j = 0; j < 5; j++){
-buffData[j] = DATAEE_ReadByte( (i * 0x5) + 0x7014 + j);
+buffData[j] = DATAEE_ReadByte( (i * 0x5) + 0x7012 + j);
 }
 sendMessage(5,buffData);
+if(iread == i){
+iread++;
+}
 i++;
-indexAux--;
+n--;
 if(i >= NREG){
 i=0;
 }
@@ -22781,7 +22748,6 @@ sendERRORMessage((uint8_t)0XCC);
 }
 }
 
-
 void main(void)
 {
 
@@ -22792,8 +22758,6 @@ TMR2_StopTimer();
 PWM_Output_D4_Disable();
 
 TMR1_SetInterruptHandler(Clock_ISR);
-
-TMR5_SetInterruptHandler(monitoring_ISR);
 
 INT_SetInterruptHandler(S1_ISR);
 
@@ -22811,34 +22775,34 @@ corrupted = 1;
 }
 
 if(notInit || corrupted){
-DATAEE_WriteByte( 0x7000 + (0 * 8), 'S');
-DATAEE_WriteByte( 0x7000 + (1 * 8), 25);
-DATAEE_WriteByte( 0x7000 + (2 * 8), 3);
-DATAEE_WriteByte( 0x7000 + (3 * 8), 5);
-DATAEE_WriteByte( 0x7000 + (4 * 8), 12);
-DATAEE_WriteByte( 0x7000 + (5 * 8), 0);
-DATAEE_WriteByte( 0x7000 + (6 * 8), 0);
-DATAEE_WriteByte( 0x7000 + (7 * 8), 28);
-DATAEE_WriteByte( 0x7000 + (8 * 8), 4);
-DATAEE_WriteByte( 0x7000 + (9 * 8), 'a');
-DATAEE_WriteByte( 0x7000 + (10 * 8), 0);
-DATAEE_WriteByte( 0x7000 + (11 * 8), 0);
-DATAEE_WriteByte( 0x7000 + (12 * 8), 0);
-DATAEE_WriteByte( 0x7000 + (13 * 8), 174);
+DATAEE_WriteByte( 0x7000 + (0), 'S');
+DATAEE_WriteByte( 0x7000 + (1), 25);
+DATAEE_WriteByte( 0x7000 + (2), 3);
+DATAEE_WriteByte( 0x7000 + (3), 5);
+DATAEE_WriteByte( 0x7000 + (4), 12);
+DATAEE_WriteByte( 0x7000 + (5), 0);
+DATAEE_WriteByte( 0x7000 + (6), 0);
+DATAEE_WriteByte( 0x7000 + (7), 28);
+DATAEE_WriteByte( 0x7000 + (8), 4);
+DATAEE_WriteByte( 0x7000 + (9), 'a');
+DATAEE_WriteByte( 0x7000 + (10), 0);
+DATAEE_WriteByte( 0x7000 + (11), 0);
+DATAEE_WriteByte( 0x7000 + (12), 0);
+DATAEE_WriteByte( 0x7000 + (13), 174);
 }
 
-NREG = DATAEE_ReadByte(0x7000 + (1*8));
-PMON = DATAEE_ReadByte(0x7000 + (2*8));
-TALA = DATAEE_ReadByte(0x7000 + (3*8));
-clkAlarm.alarmVal.h = DATAEE_ReadByte(0x7000 + (4*8));
-clkAlarm.alarmVal.m = DATAEE_ReadByte(0x7000 + (5*8));
-clkAlarm.alarmVal.s = DATAEE_ReadByte(0x7000 + (6*8));
-tempAlarm.alarmTemp = DATAEE_ReadByte(0x7000 + (7*8));
-lumAlarm.alarmLum = DATAEE_ReadByte(0x7000 + (8*8));
-ALAF = DATAEE_ReadByte(0x7000 + (9*8));
-t.h = DATAEE_ReadByte(0x7000 + (10*8));
-t.m = DATAEE_ReadByte(0x7000 + (11*8));
-iwrite = DATAEE_ReadByte(0x7000 + (12*8));
+NREG = DATAEE_ReadByte(0x7000 + (1));
+PMON = DATAEE_ReadByte(0x7000 + (2));
+TALA = DATAEE_ReadByte(0x7000 + (3));
+clkAlarm.alarmVal.h = DATAEE_ReadByte(0x7000 + (4));
+clkAlarm.alarmVal.m = DATAEE_ReadByte(0x7000 + (5));
+clkAlarm.alarmVal.s = DATAEE_ReadByte(0x7000 + (6));
+tempAlarm.alarmTemp = DATAEE_ReadByte(0x7000 + (7));
+lumAlarm.alarmLum = DATAEE_ReadByte(0x7000 + (8));
+ALAF = DATAEE_ReadByte(0x7000 + (9));
+t.h = DATAEE_ReadByte(0x7000 + (10));
+t.m = DATAEE_ReadByte(0x7000 + (11));
+iwrite = DATAEE_ReadByte(0x7000 + (12));
 
 
 
@@ -22873,8 +22837,6 @@ int i=0;
 
 while (1)
 {
-
-# 1190
 while(EUSART_is_rx_ready()){
 c = getch();
 if((c == (uint8_t)0xFD || buff[0] == (uint8_t)0xFD)){
@@ -22905,34 +22867,8 @@ c = 0x01;
 n=0;
 }
 
-if(flagS1pushed){
-S1button();
-flagS1pushed=0;
-
-# 1226
-}
-
-if(PWM_on){
-if(PWM6EN==0){
-TMR2_StartTimer();
-PWM_Output_D4_Enable();
-}
-if(dimingLed <= 1023){
-dimingLed += 1;
-} else{
-dimingLed = 0;
-}
-PWM6_LoadDutyValue(dimingLed);
-_delay((unsigned long)((1)*(1000000/4000.0)));
-}
-
 if(modeFlag == 0){
-if(updateLCD){
-update_menuLCD();
-updateLCD=0;
-}
-
-# 1252
+checkFlags();
 } else if(modeFlag == 1){
 editClock();
 } else if(modeFlag == 2){

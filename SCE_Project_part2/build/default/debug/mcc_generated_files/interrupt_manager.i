@@ -21247,53 +21247,6 @@ void (*i2c1_driver_i2cISR)(void);
 # 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
 typedef unsigned char bool;
 
-# 100 "mcc_generated_files/tmr5.h"
-void TMR5_Initialize(void);
-
-void setTimer5ReloadVal(uint16_t);
-
-# 131
-void TMR5_StartTimer(void);
-
-# 163
-void TMR5_StopTimer(void);
-
-# 198
-uint16_t TMR5_ReadTimer(void);
-
-# 237
-void TMR5_WriteTimer(uint16_t timerVal);
-
-# 273
-void TMR5_Reload(void);
-
-# 312
-void TMR5_StartSinglePulseAcquisition(void);
-
-# 351
-uint8_t TMR5_CheckGateValueStatus(void);
-
-# 369
-void TMR5_ISR(void);
-
-# 387
-void TMR5_SetInterruptHandler(void (* InterruptHandler)(void));
-
-# 405
-extern void (*TMR5_InterruptHandler)(void);
-
-# 423
-void TMR5_DefaultInterruptHandler(void);
-
-# 102 "mcc_generated_files/pwm6.h"
-void PWM6_Initialize(void);
-
-# 129
-void PWM6_LoadDutyValue(uint16_t dutyValue);
-
-# 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
-typedef unsigned char bool;
-
 # 100 "mcc_generated_files/tmr1.h"
 void TMR1_Initialize(void);
 
@@ -21329,6 +21282,12 @@ extern void (*TMR1_InterruptHandler)(void);
 
 # 421
 void TMR1_DefaultInterruptHandler(void);
+
+# 102 "mcc_generated_files/pwm6.h"
+void PWM6_Initialize(void);
+
+# 129
+void PWM6_LoadDutyValue(uint16_t dutyValue);
 
 # 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
 typedef unsigned char bool;
@@ -21601,24 +21560,6 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 827
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 250 "mcc_generated_files/ext_int.h"
-void EXT_INT_Initialize(void);
-
-# 272
-void INT_ISR(void);
-
-# 296
-void INT_CallBack(void);
-
-# 319
-void INT_SetInterruptHandler(void (* InterruptHandler)(void));
-
-# 343
-extern void (*INT_InterruptHandler)(void);
-
-# 367
-void INT_DefaultInterruptHandler(void);
-
 # 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
 typedef unsigned char bool;
 
@@ -21639,6 +21580,24 @@ void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
 
 # 248
 uint8_t DATAEE_ReadByte(uint16_t bAdd);
+
+# 250 "mcc_generated_files/ext_int.h"
+void EXT_INT_Initialize(void);
+
+# 272
+void INT_ISR(void);
+
+# 296
+void INT_CallBack(void);
+
+# 319
+void INT_SetInterruptHandler(void (* InterruptHandler)(void));
+
+# 343
+extern void (*INT_InterruptHandler)(void);
+
+# 367
+void INT_DefaultInterruptHandler(void);
 
 # 15 "E:\Microchip\xc8\v2.30\pic\include\c90\stdbool.h"
 typedef unsigned char bool;
@@ -21681,13 +21640,13 @@ void EUSART_SetTxInterruptHandler(void (* interruptHandler)(void));
 # 383
 void EUSART_SetRxInterruptHandler(void (* interruptHandler)(void));
 
-# 78 "mcc_generated_files/mcc.h"
+# 77 "mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
 
-# 91
+# 90
 void OSCILLATOR_Initialize(void);
 
-# 104
+# 103
 void PMD_Initialize(void);
 
 # 52 "mcc_generated_files/interrupt_manager.c"
@@ -21707,10 +21666,6 @@ EUSART_TxDefaultInterruptHandler();
 else if(PIE3bits.RCIE == 1 && PIR3bits.RCIF == 1)
 {
 EUSART_RxDefaultInterruptHandler();
-}
-else if(PIE4bits.TMR5IE == 1 && PIR4bits.TMR5IF == 1)
-{
-TMR5_ISR();
 }
 else if(PIE4bits.TMR1IE == 1 && PIR4bits.TMR1IF == 1)
 {

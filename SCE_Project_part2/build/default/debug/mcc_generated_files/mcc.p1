@@ -1,20 +1,18 @@
 Version 3.2 HI-TECH Software Intermediate Code
 [v F12258 `(v ~T0 @X0 0 tf ]
 [v F12261 `(v ~T0 @X0 0 tf ]
-[v F12489 `(v ~T0 @X0 0 tf ]
-[v F12492 `(v ~T0 @X0 0 tf ]
-"104 mcc_generated_files/mcc.h
+[v F12460 `(v ~T0 @X0 0 tf ]
+[v F12463 `(v ~T0 @X0 0 tf ]
+"103 mcc_generated_files/mcc.h
 [v _PMD_Initialize `(v ~T0 @X0 0 ef ]
 "260 mcc_generated_files/pin_manager.h
 [v _PIN_MANAGER_Initialize `(v ~T0 @X0 0 ef ]
-"91 mcc_generated_files/mcc.h
+"90 mcc_generated_files/mcc.h
 [v _OSCILLATOR_Initialize `(v ~T0 @X0 0 ef ]
 "102 mcc_generated_files/pwm6.h
 [v _PWM6_Initialize `(v ~T0 @X0 0 ef ]
 "130 mcc_generated_files/adcc.h
 [v _ADCC_Initialize `(v ~T0 @X0 0 ef ]
-"100 mcc_generated_files/tmr5.h
-[v _TMR5_Initialize `(v ~T0 @X0 0 ef ]
 "335 mcc_generated_files/tmr2.h
 [v _TMR2_Initialize `(v ~T0 @X0 0 ef ]
 "100 mcc_generated_files/tmr1.h
@@ -13827,22 +13825,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _i2c1_driver_i2cISR `*F12261 ~T0 @X0 1 e ]
 [; ;i2c1_driver.h: 78: void (*i2c1_driver_i2cISR)(void);
 [; ;stdbool.h: 15: typedef unsigned char bool;
-[; ;tmr5.h: 100: void TMR5_Initialize(void);
-[; ;tmr5.h: 102: void setTimer5ReloadVal(uint16_t);
-[; ;tmr5.h: 131: void TMR5_StartTimer(void);
-[; ;tmr5.h: 163: void TMR5_StopTimer(void);
-[; ;tmr5.h: 198: uint16_t TMR5_ReadTimer(void);
-[; ;tmr5.h: 237: void TMR5_WriteTimer(uint16_t timerVal);
-[; ;tmr5.h: 273: void TMR5_Reload(void);
-[; ;tmr5.h: 312: void TMR5_StartSinglePulseAcquisition(void);
-[; ;tmr5.h: 351: uint8_t TMR5_CheckGateValueStatus(void);
-[; ;tmr5.h: 369: void TMR5_ISR(void);
-[; ;tmr5.h: 387: void TMR5_SetInterruptHandler(void (* InterruptHandler)(void));
-[; ;tmr5.h: 405: extern void (*TMR5_InterruptHandler)(void);
-[; ;tmr5.h: 423: void TMR5_DefaultInterruptHandler(void);
-[; ;pwm6.h: 102: void PWM6_Initialize(void);
-[; ;pwm6.h: 129: void PWM6_LoadDutyValue(uint16_t dutyValue);
-[; ;stdbool.h: 15: typedef unsigned char bool;
 [; ;tmr1.h: 100: void TMR1_Initialize(void);
 [; ;tmr1.h: 129: void TMR1_StartTimer(void);
 [; ;tmr1.h: 161: void TMR1_StopTimer(void);
@@ -13855,6 +13837,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;tmr1.h: 385: void TMR1_SetInterruptHandler(void (* InterruptHandler)(void));
 [; ;tmr1.h: 403: extern void (*TMR1_InterruptHandler)(void);
 [; ;tmr1.h: 421: void TMR1_DefaultInterruptHandler(void);
+[; ;pwm6.h: 102: void PWM6_Initialize(void);
+[; ;pwm6.h: 129: void PWM6_LoadDutyValue(uint16_t dutyValue);
 [; ;stdbool.h: 15: typedef unsigned char bool;
 [; ;tmr2.h: 79: typedef enum
 [; ;tmr2.h: 80: {
@@ -13952,12 +13936,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adcc.h: 772: bool ADCC_HasErrorCrossedUpperThreshold(void);
 [; ;adcc.h: 800: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adcc.h: 827: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;ext_int.h: 250: void EXT_INT_Initialize(void);
-[; ;ext_int.h: 272: void INT_ISR(void);
-[; ;ext_int.h: 296: void INT_CallBack(void);
-[; ;ext_int.h: 319: void INT_SetInterruptHandler(void (* InterruptHandler)(void));
-[; ;ext_int.h: 343: extern void (*INT_InterruptHandler)(void);
-[; ;ext_int.h: 367: void INT_DefaultInterruptHandler(void);
 [; ;stdbool.h: 15: typedef unsigned char bool;
 [; ;memory.h: 99: uint16_t FLASH_ReadWord(uint16_t flashAddr);
 [; ;memory.h: 128: void FLASH_WriteWord(uint16_t flashAddr, uint16_t *ramBuf, uint16_t word);
@@ -13965,14 +13943,20 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;memory.h: 189: void FLASH_EraseBlock(uint16_t startAddr);
 [; ;memory.h: 222: void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
 [; ;memory.h: 248: uint8_t DATAEE_ReadByte(uint16_t bAdd);
+[; ;ext_int.h: 250: void EXT_INT_Initialize(void);
+[; ;ext_int.h: 272: void INT_ISR(void);
+[; ;ext_int.h: 296: void INT_CallBack(void);
+[; ;ext_int.h: 319: void INT_SetInterruptHandler(void (* InterruptHandler)(void));
+[; ;ext_int.h: 343: extern void (*INT_InterruptHandler)(void);
+[; ;ext_int.h: 367: void INT_DefaultInterruptHandler(void);
 [; ;stdbool.h: 15: typedef unsigned char bool;
 [; ;eusart.h: 79: extern volatile uint8_t eusartTxBufferRemaining;
 [; ;eusart.h: 80: extern volatile uint8_t eusartRxCount;
 "86 mcc_generated_files/eusart.h
-[v _EUSART_TxDefaultInterruptHandler `*F12489 ~T0 @X0 1 e ]
+[v _EUSART_TxDefaultInterruptHandler `*F12460 ~T0 @X0 1 e ]
 [; ;eusart.h: 86: void (*EUSART_TxDefaultInterruptHandler)(void);
 "87
-[v _EUSART_RxDefaultInterruptHandler `*F12492 ~T0 @X0 1 e ]
+[v _EUSART_RxDefaultInterruptHandler `*F12463 ~T0 @X0 1 e ]
 [; ;eusart.h: 87: void (*EUSART_RxDefaultInterruptHandler)(void);
 [; ;eusart.h: 109: void EUSART_Initialize(void);
 [; ;eusart.h: 162: uint8_t EUSART_is_tx_ready(void);
@@ -13984,9 +13968,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;eusart.h: 343: void EUSART_Receive_ISR(void);
 [; ;eusart.h: 363: void EUSART_SetTxInterruptHandler(void (* interruptHandler)(void));
 [; ;eusart.h: 383: void EUSART_SetRxInterruptHandler(void (* interruptHandler)(void));
-[; ;mcc.h: 78: void SYSTEM_Initialize(void);
-[; ;mcc.h: 91: void OSCILLATOR_Initialize(void);
-[; ;mcc.h: 104: void PMD_Initialize(void);
+[; ;mcc.h: 77: void SYSTEM_Initialize(void);
+[; ;mcc.h: 90: void OSCILLATOR_Initialize(void);
+[; ;mcc.h: 103: void PMD_Initialize(void);
 "50 mcc_generated_files/mcc.c
 [v _SYSTEM_Initialize `(v ~T0 @X0 1 ef ]
 "51
@@ -14010,79 +13994,76 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;mcc.c: 56: ADCC_Initialize();
 "56
 [e ( _ADCC_Initialize ..  ]
-[; ;mcc.c: 57: TMR5_Initialize();
+[; ;mcc.c: 57: TMR2_Initialize();
 "57
-[e ( _TMR5_Initialize ..  ]
-[; ;mcc.c: 58: TMR2_Initialize();
-"58
 [e ( _TMR2_Initialize ..  ]
-[; ;mcc.c: 59: TMR1_Initialize();
-"59
+[; ;mcc.c: 58: TMR1_Initialize();
+"58
 [e ( _TMR1_Initialize ..  ]
-[; ;mcc.c: 60: EXT_INT_Initialize();
-"60
+[; ;mcc.c: 59: EXT_INT_Initialize();
+"59
 [e ( _EXT_INT_Initialize ..  ]
-[; ;mcc.c: 61: EUSART_Initialize();
-"61
+[; ;mcc.c: 60: EUSART_Initialize();
+"60
 [e ( _EUSART_Initialize ..  ]
-[; ;mcc.c: 62: }
-"62
+[; ;mcc.c: 61: }
+"61
 [e :UE 1621 ]
 }
-"64
+"63
 [v _OSCILLATOR_Initialize `(v ~T0 @X0 1 ef ]
-"65
+"64
 {
-[; ;mcc.c: 64: void OSCILLATOR_Initialize(void)
-[; ;mcc.c: 65: {
+[; ;mcc.c: 63: void OSCILLATOR_Initialize(void)
+[; ;mcc.c: 64: {
 [e :U _OSCILLATOR_Initialize ]
 [f ]
-[; ;mcc.c: 67: OSCCON1 = 0x62;
-"67
+[; ;mcc.c: 66: OSCCON1 = 0x62;
+"66
 [e = _OSCCON1 -> -> 98 `i `uc ]
-[; ;mcc.c: 69: OSCCON3 = 0x00;
-"69
+[; ;mcc.c: 68: OSCCON3 = 0x00;
+"68
 [e = _OSCCON3 -> -> 0 `i `uc ]
-[; ;mcc.c: 71: OSCEN = 0x00;
-"71
+[; ;mcc.c: 70: OSCEN = 0x00;
+"70
 [e = _OSCEN -> -> 0 `i `uc ]
-[; ;mcc.c: 73: OSCFRQ = 0x02;
-"73
+[; ;mcc.c: 72: OSCFRQ = 0x02;
+"72
 [e = _OSCFRQ -> -> 2 `i `uc ]
-[; ;mcc.c: 75: OSCTUNE = 0x00;
-"75
+[; ;mcc.c: 74: OSCTUNE = 0x00;
+"74
 [e = _OSCTUNE -> -> 0 `i `uc ]
-[; ;mcc.c: 76: }
-"76
+[; ;mcc.c: 75: }
+"75
 [e :UE 1622 ]
 }
-"78
+"77
 [v _PMD_Initialize `(v ~T0 @X0 1 ef ]
-"79
+"78
 {
-[; ;mcc.c: 78: void PMD_Initialize(void)
-[; ;mcc.c: 79: {
+[; ;mcc.c: 77: void PMD_Initialize(void)
+[; ;mcc.c: 78: {
 [e :U _PMD_Initialize ]
 [f ]
-[; ;mcc.c: 81: PMD0 = 0x00;
-"81
+[; ;mcc.c: 80: PMD0 = 0x00;
+"80
 [e = _PMD0 -> -> 0 `i `uc ]
-[; ;mcc.c: 83: PMD1 = 0x00;
-"83
+[; ;mcc.c: 82: PMD1 = 0x00;
+"82
 [e = _PMD1 -> -> 0 `i `uc ]
-[; ;mcc.c: 85: PMD2 = 0x00;
-"85
+[; ;mcc.c: 84: PMD2 = 0x00;
+"84
 [e = _PMD2 -> -> 0 `i `uc ]
-[; ;mcc.c: 87: PMD3 = 0x00;
-"87
+[; ;mcc.c: 86: PMD3 = 0x00;
+"86
 [e = _PMD3 -> -> 0 `i `uc ]
-[; ;mcc.c: 89: PMD4 = 0x00;
-"89
+[; ;mcc.c: 88: PMD4 = 0x00;
+"88
 [e = _PMD4 -> -> 0 `i `uc ]
-[; ;mcc.c: 91: PMD5 = 0x00;
-"91
+[; ;mcc.c: 90: PMD5 = 0x00;
+"90
 [e = _PMD5 -> -> 0 `i `uc ]
-[; ;mcc.c: 92: }
-"92
+[; ;mcc.c: 91: }
+"91
 [e :UE 1623 ]
 }

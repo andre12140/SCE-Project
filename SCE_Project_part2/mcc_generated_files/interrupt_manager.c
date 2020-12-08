@@ -66,10 +66,6 @@ void __interrupt() INTERRUPT_InterruptManager (void)
         {
             EUSART_RxDefaultInterruptHandler();
         } 
-        else if(PIE4bits.TMR5IE == 1 && PIR4bits.TMR5IF == 1)
-        {
-            TMR5_ISR();
-        } 
         else if(PIE4bits.TMR1IE == 1 && PIR4bits.TMR1IF == 1)
         {
             TMR1_ISR();
