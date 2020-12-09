@@ -83,6 +83,8 @@ void cmd_reg_display(void); //DEBUG
 void cmd_reg_write(void);
 
 void cmd_irl(int argc, char **argv);
+void cmd_lr(int argc, char **argv);
+void cmd_dr(int argc, char **argv);
 
 /*-------------------------------------------------------------------------+
 | Variable and constants definition
@@ -116,8 +118,8 @@ const commands[] = {
     {cmd_tri, cmd_reg_write, "tri", "<n> <i>          transfer n registers from index i (0 - oldest)"},
 
     {cmd_irl, NULL, "irl", "                 information about local registers (NRBUF, nr, iread, iwrite)"},
-    // {cmd_lr, "lr", "<n> <i>          list n registers (local memory) from index i (0 - oldest)"},
-    // {cmd_dr, "dr", "                 delete registers (local memory)"},
+    {cmd_lr, NULL, "lr", "<n> <i>          list n registers (local memory) from index i (0 - oldest)"},
+    {cmd_dr, NULL, "dr", "                 delete registers (local memory)"},
 
     // {cmd_cpt, "cpt", "                 check period of transference"},
     // {cmd_mpt, "mpt", "<p>              modify period of transference (minutes - 0 deactivate)"},
@@ -495,11 +497,7 @@ void cmd_reg_write()
   }
   for (j = 0; j < n; j++)
   {
-    memcpy(eCosRingBuff[iwrite], &bufr[offset], REGDIM);
-    /*for (i = 0; i < REGDIM; i++)
-    {
-      eCosRingBuff[j][i] = bufr[i + offset];
-    }*/
+    memcpy(eCosRingBuff[iwrite], &bufr[offset + (j * REGDIM)], REGDIM);
     if ((nr == NRBUF) && (iread == iwrite))
     {
       iread++;
@@ -527,8 +525,7 @@ void cmd_reg_write()
   }
 }
 
-//Falta gravar localmente os registos
-//So para debug, Só da para o TRC
+//So para debug
 void cmd_reg_display()
 {
   if (bufr[2] == CMD_ERROR)
@@ -572,6 +569,95 @@ void cmd_irl(int argc, char **argv)
   printf("NR = %d\n", nr);
   printf("iRead = %d\n", iread);
   printf("iWrite = %d\n", iwrite);
+}
+
+/*-------------------------------------------------------------------------+
+| Function: cmd_lr - list n registers (local memory) from index i (0 - oldest)
++--------------------------------------------------------------------------*/
+
+void cmd_lr(int argc, char **argv)
+{
+  int n = atoi(argv[1]);
+  int i;
+  if (argc == 3)
+  {
+    int index = atoi(argv[2]);
+    int startingIndex = iwrite + index;
+    if (startingIndex >= NRBUF)
+    {
+      startingIndex = index - (NRBUF - iwrite);
+    }
+    if (nr != NRBUF)
+    {
+      startingIndex = index;
+    }
+    int maxReadings = iwrite - startingIndex;
+    if (maxReadings <= 0)
+    {
+      maxReadings = iwrite + (NRBUF - startingIndex);
+    }
+
+    if ((n > nr) || (maxReadings < n))
+    {
+      printf("ERROR");
+      return;
+    }
+    i = startingIndex;
+    while (n)
+    {
+      printf("Clock = %02d : %02d : %02d\n", eCosRingBuff[i][0], eCosRingBuff[i][1], eCosRingBuff[i][2]);
+      printf("Temp = %d\n", eCosRingBuff[i][3]);
+      printf("Lum = %d\n\n", eCosRingBuff[i][4]);
+      if (iread == i)
+      {
+        iread++;
+      }
+      i++;
+      n--;
+      if (i >= NRBUF)
+      {
+        i = 0;
+      }
+    }
+  }
+  else //index is omitted
+  {
+    int maxReadings = (iwrite - iread);
+    if (maxReadings <= 0)
+    {
+      maxReadings = iwrite + (NRBUF - iread);
+    }
+    if ((n > nr) || (n > maxReadings))
+    {
+      printf("ERROR");
+      return;
+    }
+    for (i = 0; i < n; i++)
+    { //Read n registers
+      printf("Clock = %02d : %02d : %02d\n", eCosRingBuff[iread][0], eCosRingBuff[iread][1], eCosRingBuff[iread][2]);
+      printf("Temp = %d\n", eCosRingBuff[iread][3]);
+      printf("Lum = %d\n\n", eCosRingBuff[iread][4]);
+      iread++;
+      if (iread > NRBUF - 1)
+      {
+        iread = 0;
+      }
+    }
+  }
+}
+
+/*-------------------------------------------------------------------------+
+| Function: cmd_dr - delete registers (local memory)
++--------------------------------------------------------------------------*/
+
+void cmd_dr(int argc, char **argv)
+{
+  memset(eCosRingBuff, 0, NRBUF * REGDIM); //Limpar buffer
+  iwrite = 0;
+  iread = 0;
+  nr = 0;
+  flagNr = false;
+  printf("CMD_OK");
 }
 
 /*-------------------------------------------------------------------------+
@@ -624,10 +710,11 @@ void monitor(void)
       {
         //Falta sincronismo quando mais theards estiverem a escrever no buffer
         commands[i].cmd_fnct(argc, argv); //check for bad inputs
-        if ((strcmp(argv[0], "sos") != 0) && (strcmp(argv[0], "ini") != 0) && (strcmp(argv[0], "irl") != 0))
+        // if ((strcmp(argv[0], "sos") != 0) && (strcmp(argv[0], "ini") != 0) && (strcmp(argv[0], "irl") != 0))
+        if ((i > 0) && (i < 14))
         {
-          cyg_semaphore_post(&TX_sem);                                    //Write to Buffer is done so TX can begin
-          r = cyg_semaphore_timed_wait(&RX_sem, cyg_current_time() + 50); //Wait for response max waiting time 50ms
+          cyg_semaphore_post(&TX_sem);                                    //Write to Buffer is done, so TX can begin
+          r = cyg_semaphore_timed_wait(&RX_sem, cyg_current_time() + 50); //Wait for response, max waiting time 50ms
           if (r)
           {
             commands[i].cmd_display();
