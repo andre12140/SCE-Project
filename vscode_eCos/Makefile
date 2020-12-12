@@ -17,7 +17,7 @@ CXXFLAGS      = $(CFLAGS)
 LDFLAGS       = -nostartfiles -L$(INSTALL_DIR)/lib -Ttarget.ld
 
 #####
-OBJS= cmd.o communication.o ui.o
+OBJS= cmd.o communication.o ui.o processing.o
 
 # RULES
 

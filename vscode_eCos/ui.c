@@ -1,10 +1,3 @@
-/***************************************************************************
-| File: monitor.c
-|
-| Autor: Carlos Almeida (IST), from work by Jose Rufino (IST/INESC), 
-|        from an original by Leendert Van Doorn
-| Data:  Nov 2002
-***************************************************************************/
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -15,9 +8,16 @@
 
 Cyg_ErrNo err;
 cyg_io_handle_t serH;
-cyg_sem_t TX_sem;
-cyg_sem_t RX_sem;
 cyg_bool_t r;
+
+cyg_mutex_t sharedBuffMutex;
+
+cyg_sem_t newCmdSem;
+
+cyg_mbox uiMbox, TXMbox;
+
+cyg_handle_t uiMboxH;
+cyg_handle_t TXMboxH;
 
 #define SOM 0xFD       /* start of message */
 #define EOM 0xFE       /* end of message */
@@ -38,6 +38,9 @@ cyg_bool_t r;
 #define CMD_OK 0       /* command successful */
 #define CMD_ERROR 0xFF /* error in command */
 
+#define uiID 0xCE
+#define procID 0xCF
+
 #define NRBUF 100
 #define REGDIM 5
 
@@ -47,44 +50,41 @@ int iread = 0;
 int nr = 0;
 bool flagNr = false;
 
-unsigned char bufw[20];
-unsigned int w = 0; //Number of bytes written
-
 unsigned char bufr[100];
 
 /*-------------------------------------------------------------------------+
 | Header definition
 +--------------------------------------------------------------------------*/
-void cmd_sos(int argc, char **argv);
-void cmd_sair(int argc, char **argv);
-void cmd_ini(int argc, char **argv);
+bool cmd_sos(int argc, char **argv);
+bool cmd_sair(int argc, char **argv);
+bool cmd_ini(int argc, char **argv);
 
 void cmd_status_display(void);
 
-void cmd_rc(int argc, char **argv);
+bool cmd_rc(int argc, char **argv);
 void cmd_rc_display(void);
-void cmd_sc(int argc, char **argv);
-void cmd_rtl(int argc, char **argv);
+bool cmd_sc(int argc, char **argv);
+bool cmd_rtl(int argc, char **argv);
 void cmd_rtl_display(void);
-void cmd_rp(int argc, char **argv);
+bool cmd_rp(int argc, char **argv);
 void cmd_rp_display(void);
-void cmd_mmp(int argc, char **argv);
-void cmd_mta(int argc, char **argv);
-void cmd_ra(int argc, char **argv);
+bool cmd_mmp(int argc, char **argv);
+bool cmd_mta(int argc, char **argv);
+bool cmd_ra(int argc, char **argv);
 void cmd_ra_display(void);
-void cmd_dac(int argc, char **argv);
-void cmd_dtl(int argc, char **argv);
-void cmd_aa(int argc, char **argv);
-void cmd_ir(int argc, char **argv);
+bool cmd_dac(int argc, char **argv);
+bool cmd_dtl(int argc, char **argv);
+bool cmd_aa(int argc, char **argv);
+bool cmd_ir(int argc, char **argv);
 void cmd_ir_display(void);
-void cmd_trc(int argc, char **argv);
-void cmd_tri(int argc, char **argv);
+bool cmd_trc(int argc, char **argv);
+bool cmd_tri(int argc, char **argv);
 void cmd_reg_display(void); //DEBUG
-void cmd_reg_write(void);
+//void cmd_reg_write(void);
 
-void cmd_irl(int argc, char **argv);
-void cmd_lr(int argc, char **argv);
-void cmd_dr(int argc, char **argv);
+bool cmd_irl(int argc, char **argv);
+bool cmd_lr(int argc, char **argv);
+bool cmd_dr(int argc, char **argv);
 
 /*-------------------------------------------------------------------------+
 | Variable and constants definition
@@ -94,7 +94,7 @@ const char InvalMsg[] = "\nInvalid command!";
 
 struct command_d
 {
-  void (*cmd_fnct)(int, char **);
+  bool (*cmd_fnct)(int, char **);
   void (*cmd_display)(void);
   char *cmd_name;
   char *cmd_help;
@@ -114,8 +114,8 @@ const commands[] = {
     {cmd_dtl, cmd_status_display, "dtl", "<t> <l>          define alarm temperature and luminosity"},
     {cmd_aa, cmd_status_display, "aa", "<a>               activate/deactivate alarms (1/0)"},
     {cmd_ir, cmd_ir_display, "ir", "<p>              information about registers (NREG, nr, iread, iwrite)"},
-    {cmd_trc, cmd_reg_write, "trc", "<n>              transfer n registers from current iread position"},
-    {cmd_tri, cmd_reg_write, "tri", "<n> <i>          transfer n registers from index i (0 - oldest)"},
+    {cmd_trc, NULL, "trc", "<n>              transfer n registers from current iread position"},
+    {cmd_tri, NULL, "tri", "<n> <i>          transfer n registers from index i (0 - oldest)"},
 
     {cmd_irl, NULL, "irl", "                 information about local registers (NRBUF, nr, iread, iwrite)"},
     {cmd_lr, NULL, "lr", "<n> <i>          list n registers (local memory) from index i (0 - oldest)"},
@@ -134,34 +134,42 @@ const commands[] = {
 #define ARGVECSIZE 10
 #define MAX_LINE 50
 
+typedef struct mBoxMessages
+{
+  unsigned char data[20]; //Data to be transmited
+  unsigned int cmd_dim;   //Number of bytes to be transmited
+} mBoxMessage;
+
 ///////////////////////////////////////////
 // SOS TA MARADO
 
 /*-------------------------------------------------------------------------+
 | Function: cmd_sos - provides a rudimentary help
 +--------------------------------------------------------------------------*/
-void cmd_sos(int argc, char **argv)
+bool cmd_sos(int argc, char **argv)
 {
   int i;
 
   printf("%s\n", TitleMsg);
   for (i = 0; i < NCOMMANDS; i++)
     printf("%s %s\n", commands[i].cmd_name, commands[i].cmd_help);
+  return true;
 }
 
 /*-------------------------------------------------------------------------+
 | Function: cmd_sair - termina a aplicacao
 +--------------------------------------------------------------------------*/
-void cmd_sair(int argc, char **argv)
+bool cmd_sair(int argc, char **argv)
 {
   //Falta terminar outras threads
   exit(0);
+  return true;
 }
 
 /*-------------------------------------------------------------------------+
 | Function: cmd_ini - inicializar dispositivo
 +--------------------------------------------------------------------------*/
-void cmd_ini(int argc, char **argv)
+bool cmd_ini(int argc, char **argv)
 {
   printf("io_lookup\n");
   if ((argc > 1) && (argv[1][0] = '1'))
@@ -169,6 +177,7 @@ void cmd_ini(int argc, char **argv)
   else
     err = cyg_io_lookup("/dev/ser0", &serH);
   printf("lookup err=%x\n", err);
+  return true;
 }
 
 /*-------------------------------------------------------------------------+
@@ -189,12 +198,23 @@ void cmd_status_display()
 /*-------------------------------------------------------------------------+
 | Function: cmd_rc - read clock
 +--------------------------------------------------------------------------*/
-void cmd_rc(int argc, char **argv)
+bool cmd_rc(int argc, char **argv)
 {
-  w = 3;
+  if (argc != 1)
+  {
+    return false;
+  }
+  mBoxMessage m;
+  unsigned char bufw[4];
+  m.cmd_dim = 3;
+  bufw[3] = (unsigned char)uiID;
   bufw[2] = (unsigned char)EOM;
   bufw[1] = (unsigned char)RCLK;
   bufw[0] = (unsigned char)SOM;
+  memcpy(m.data, bufw, m.cmd_dim + 1);
+
+  cyg_mbox_tryput(TXMboxH, &m);
+  return true;
 }
 
 void cmd_rc_display()
@@ -212,40 +232,57 @@ void cmd_rc_display()
 /*-------------------------------------------------------------------------+
 | Function: cmd_sc - set clock
 +--------------------------------------------------------------------------*/
-void cmd_sc(int argc, char **argv)
+bool cmd_sc(int argc, char **argv)
 {
   if (argc != 4)
   {
     printf("Bad inputs\n");
-    return;
+    return false;
   }
-  unsigned int h, m, s;
+  unsigned int h, min, s;
   sscanf(argv[1], "%d", &h);
-  sscanf(argv[2], "%d", &m);
+  sscanf(argv[2], "%d", &min);
   sscanf(argv[3], "%d", &s);
 
   //printf("Horas = %d\n", h);
   //printf("Minutos = %d\n", m);
   //printf("Segundos = %d\n", s);
 
-  w = 6;
+  mBoxMessage m;
+  m.cmd_dim = 6;
+  unsigned char bufw[m.cmd_dim + 1];
+  bufw[6] = (unsigned char)uiID;
   bufw[5] = (unsigned char)EOM;
   bufw[4] = s;
-  bufw[3] = m;
+  bufw[3] = min;
   bufw[2] = h;
   bufw[1] = (unsigned char)SCLK;
   bufw[0] = (unsigned char)SOM;
+  memcpy(m.data, bufw, m.cmd_dim + 1);
+  cyg_mbox_tryput(TXMboxH, &m);
+  return true;
 }
 
 /*-------------------------------------------------------------------------+
 | Function: cmd_rtl - read Temperature and Luminosity
 +--------------------------------------------------------------------------*/
-void cmd_rtl(int argc, char **argv)
+bool cmd_rtl(int argc, char **argv)
 {
-  w = 3;
+  if (argc != 1)
+  {
+    printf("Bad inputs\n");
+    return false;
+  }
+  mBoxMessage m;
+  m.cmd_dim = 3;
+  unsigned char bufw[m.cmd_dim + 1];
+  bufw[3] = (unsigned char)uiID;
   bufw[2] = (unsigned char)EOM;
   bufw[1] = (unsigned char)RTL;
   bufw[0] = (unsigned char)SOM;
+  memcpy(m.data, bufw, m.cmd_dim + 1);
+  cyg_mbox_tryput(TXMboxH, &m);
+  return true;
 }
 
 void cmd_rtl_display()
@@ -262,12 +299,23 @@ void cmd_rtl_display()
 /*-------------------------------------------------------------------------+
 | Function: cmd_rp - read parameters (PMON, TALA)
 +--------------------------------------------------------------------------*/
-void cmd_rp(int argc, char **argv)
+bool cmd_rp(int argc, char **argv)
 {
-  w = 3;
+  if (argc != 1)
+  {
+    printf("Bad inputs\n");
+    return false;
+  }
+  mBoxMessage m;
+  m.cmd_dim = 3;
+  unsigned char bufw[m.cmd_dim + 1];
+  bufw[3] = (unsigned char)uiID;
   bufw[2] = (unsigned char)EOM;
   bufw[1] = (unsigned char)RPAR;
   bufw[0] = (unsigned char)SOM;
+  memcpy(m.data, bufw, m.cmd_dim + 1);
+  cyg_mbox_tryput(TXMboxH, &m);
+  return true;
 }
 
 void cmd_rp_display()
@@ -279,50 +327,76 @@ void cmd_rp_display()
 /*-------------------------------------------------------------------------+
 | Function: cmd_mmp - modify monitoring period
 +--------------------------------------------------------------------------*/
-void cmd_mmp(int argc, char **argv)
+bool cmd_mmp(int argc, char **argv)
 {
   if (argc != 2)
   {
     printf("Bad inputs\n");
-    return;
+    return false;
   }
   unsigned int p;
   sscanf(argv[1], "%d", &p);
-  w = 4;
+
+  mBoxMessage m;
+  m.cmd_dim = 4;
+  unsigned char bufw[m.cmd_dim + 1];
+  bufw[4] = (unsigned char)uiID;
   bufw[3] = (unsigned char)EOM;
   bufw[2] = p;
   bufw[1] = (unsigned char)MMP;
   bufw[0] = (unsigned char)SOM;
+  memcpy(m.data, bufw, m.cmd_dim + 1);
+  cyg_mbox_tryput(TXMboxH, &m);
+  return true;
 }
 
 /*-------------------------------------------------------------------------+
 | Function: cmd_mta - modify time alarm (seconds)
 +--------------------------------------------------------------------------*/
-void cmd_mta(int argc, char **argv)
+bool cmd_mta(int argc, char **argv)
 {
   if (argc != 2)
   {
     printf("Bad inputs\n");
-    return;
+    return false;
   }
   unsigned int s;
   sscanf(argv[1], "%d", &s);
-  w = 4;
+
+  mBoxMessage m;
+  m.cmd_dim = 4;
+  unsigned char bufw[m.cmd_dim + 1];
+  bufw[4] = (unsigned char)uiID;
   bufw[3] = (unsigned char)EOM;
   bufw[2] = s;
   bufw[1] = (unsigned char)MTA;
   bufw[0] = (unsigned char)SOM;
+  memcpy(m.data, bufw, m.cmd_dim + 1);
+  cyg_mbox_tryput(TXMboxH, &m);
+  return true;
 }
 
 /*-------------------------------------------------------------------------+
 | Function: cmd_ra - read Alarm values
 +--------------------------------------------------------------------------*/
-void cmd_ra(int argc, char **argv)
+bool cmd_ra(int argc, char **argv)
 {
-  w = 3;
+  if (argc != 1)
+  {
+    printf("Bad inputs\n");
+    return false;
+  }
+  mBoxMessage m;
+  m.cmd_dim = 3;
+  unsigned char bufw[m.cmd_dim + 1];
+  bufw[3] = (unsigned char)uiID;
   bufw[2] = (unsigned char)EOM;
   bufw[1] = (unsigned char)RALA;
   bufw[0] = (unsigned char)SOM;
+  memcpy(m.data, bufw, m.cmd_dim + 1);
+  cyg_mbox_tryput(TXMboxH, &m);
+
+  return true;
 }
 
 void cmd_ra_display()
@@ -341,86 +415,114 @@ void cmd_ra_display()
 /*-------------------------------------------------------------------------+
 | Function: cmd_dac - define alarm clock
 +--------------------------------------------------------------------------*/
-void cmd_dac(int argc, char **argv)
+bool cmd_dac(int argc, char **argv)
 {
   if (argc != 4)
   {
     printf("Bad inputs\n");
-    return;
+    return false;
   }
-  unsigned int h, m, s;
+  unsigned int h, min, s;
   sscanf(argv[1], "%d", &h);
-  sscanf(argv[2], "%d", &m);
+  sscanf(argv[2], "%d", &min);
   sscanf(argv[3], "%d", &s);
 
   //printf("Horas = %d\n", h);
   //printf("Minutos = %d\n", m);
   //printf("Segundos = %d\n", s);
 
-  w = 6;
+  mBoxMessage m;
+  m.cmd_dim = 6;
+  unsigned char bufw[m.cmd_dim + 1];
+  bufw[6] = (unsigned char)uiID;
   bufw[5] = (unsigned char)EOM;
   bufw[4] = s;
-  bufw[3] = m;
+  bufw[3] = min;
   bufw[2] = h;
   bufw[1] = (unsigned char)DAC;
   bufw[0] = (unsigned char)SOM;
+  memcpy(m.data, bufw, m.cmd_dim + 1);
+  cyg_mbox_tryput(TXMboxH, &m);
+
+  return true;
 }
 
 /*-------------------------------------------------------------------------+
 | Function: cmd_dtl - define Temperature and Luminosity Alarm
 +--------------------------------------------------------------------------*/
-void cmd_dtl(int argc, char **argv)
+bool cmd_dtl(int argc, char **argv)
 {
   if (argc != 3)
   {
     printf("Bad inputs\n");
-    return;
+    return false;
   }
   unsigned int T, L;
   sscanf(argv[1], "%d", &T);
   sscanf(argv[2], "%d", &L);
 
-  w = 5;
+  mBoxMessage m;
+  m.cmd_dim = 5;
+  unsigned char bufw[m.cmd_dim + 1];
+  bufw[5] = (unsigned char)uiID;
   bufw[4] = (unsigned char)EOM;
   bufw[3] = L;
   bufw[2] = T;
   bufw[1] = (unsigned char)DATL;
   bufw[0] = (unsigned char)SOM;
+  memcpy(m.data, bufw, m.cmd_dim + 1);
+  cyg_mbox_tryput(TXMboxH, &m);
+  return true;
 }
 
 /*-------------------------------------------------------------------------+
 | Function: cmd_aa - activate/deactivate alarms (1/0)
 +--------------------------------------------------------------------------*/
-void cmd_aa(int argc, char **argv)
+bool cmd_aa(int argc, char **argv)
 {
   if (argc != 2)
   {
     printf("Bad inputs\n");
-    return;
+    return false;
   }
   unsigned int a;
   sscanf(argv[1], "%d", &a);
-  w = 4;
+
+  mBoxMessage m;
+  m.cmd_dim = 4;
+  unsigned char bufw[m.cmd_dim + 1];
+  bufw[4] = (unsigned char)uiID;
   bufw[3] = (unsigned char)EOM;
   bufw[2] = a;
   bufw[1] = (unsigned char)AALA;
   bufw[0] = (unsigned char)SOM;
+  memcpy(m.data, bufw, m.cmd_dim + 1);
+  cyg_mbox_tryput(TXMboxH, &m);
+  return true;
 }
 
 /*-------------------------------------------------------------------------+
 | Function: cmd_ir - information about registers (NREG, nr, iread, iwrite)
 +--------------------------------------------------------------------------*/
-void cmd_ir(int argc, char **argv)
+bool cmd_ir(int argc, char **argv)
 {
   if (argc != 1)
   {
     printf("Bad inputs\n");
-    return;
+    return false;
   }
-  w = 3;
+
+  mBoxMessage m;
+  m.cmd_dim = 3;
+  unsigned char bufw[m.cmd_dim + 1];
+  bufw[3] = (unsigned char)uiID;
   bufw[2] = (unsigned char)EOM;
   bufw[1] = (unsigned char)IREG;
   bufw[0] = (unsigned char)SOM;
+  memcpy(m.data, bufw, m.cmd_dim + 1);
+  cyg_mbox_tryput(TXMboxH, &m);
+
+  return true;
 }
 
 void cmd_ir_display()
@@ -439,90 +541,55 @@ void cmd_ir_display()
 /*-------------------------------------------------------------------------+
 | Function: cmd_trc - transfer n registers from current iread position
 +--------------------------------------------------------------------------*/
-void cmd_trc(int argc, char **argv)
+bool cmd_trc(int argc, char **argv)
 {
   if (argc != 2)
   {
     printf("Bad inputs\n");
-    return;
+    return false;
   }
   unsigned int n;
   sscanf(argv[1], "%d", &n);
-  w = 4;
+
+  mBoxMessage m;
+  m.cmd_dim = 4;
+  unsigned char bufw[m.cmd_dim + 1];
+  bufw[4] = (unsigned char)uiID;
   bufw[3] = (unsigned char)EOM;
   bufw[2] = n;
   bufw[1] = (unsigned char)TRGC;
   bufw[0] = (unsigned char)SOM;
+  memcpy(m.data, bufw, m.cmd_dim + 1);
+  cyg_mbox_tryput(TXMboxH, &m);
+  return true;
 }
 
 /*-------------------------------------------------------------------------+
 | Function: cmd_tri - transfer n registers from index i (0 - oldest)
 +--------------------------------------------------------------------------*/
-void cmd_tri(int argc, char **argv)
+bool cmd_tri(int argc, char **argv)
 {
   if (argc != 3)
   {
     printf("Bad inputs\n");
-    return;
+    return false;
   }
   unsigned int n, i;
   sscanf(argv[1], "%d", &n);
   sscanf(argv[2], "%d", &i);
-  w = 5;
+
+  mBoxMessage m;
+  m.cmd_dim = 5;
+  unsigned char bufw[m.cmd_dim + 1];
+  bufw[5] = (unsigned char)uiID;
   bufw[4] = (unsigned char)EOM;
   bufw[3] = i;
   bufw[2] = n;
   bufw[1] = (unsigned char)TRGI;
   bufw[0] = (unsigned char)SOM;
-}
-
-void cmd_reg_write()
-{
-  if (bufr[2] == CMD_ERROR)
-  {
-    printf("CMD_ERROR\n");
-    return;
-  }
-  int j;
-  int n = bufr[2];
-  int offset;
-
-  if (bufr[1] == TRGC)
-  {
-    offset = 3;
-  }
-  else //if (bufr[1] == TRGI)
-  {
-    offset = 4;
-  }
-  for (j = 0; j < n; j++)
-  {
-    memcpy(eCosRingBuff[iwrite], &bufr[offset + (j * REGDIM)], REGDIM);
-    if ((nr == NRBUF) && (iread == iwrite))
-    {
-      iread++;
-    }
-
-    iwrite++;
-    if (iwrite > NRBUF - 1)
-    {
-      flagNr = true;
-      iwrite = 0;
-    }
-    if (flagNr)
-    {
-      nr = NRBUF;
-    }
-    else
-    {
-      nr++;
-    }
-
-    if (iread > NRBUF - 1)
-    {
-      iread = 0;
-    }
-  }
+  memcpy(m.data, bufw, m.cmd_dim + 1);
+  cyg_mbox_tryput(TXMboxH, &m);
+  return true;
 }
 
 //So para debug
@@ -563,22 +630,29 @@ void cmd_reg_display()
 | Function: cmd_irl - information about local registers (NRBUF, nr, iread, iwrite)
 +--------------------------------------------------------------------------*/
 
-void cmd_irl(int argc, char **argv)
+bool cmd_irl(int argc, char **argv)
 {
   printf("NRBUF = %d\n", NRBUF);
   printf("NR = %d\n", nr);
   printf("iRead = %d\n", iread);
   printf("iWrite = %d\n", iwrite);
+  return true;
 }
 
 /*-------------------------------------------------------------------------+
 | Function: cmd_lr - list n registers (local memory) from index i (0 - oldest)
 +--------------------------------------------------------------------------*/
 
-void cmd_lr(int argc, char **argv)
+bool cmd_lr(int argc, char **argv)
 {
+  if (argc < 3 && argc > 4)
+  {
+    printf("Bad Inputs\n");
+    return false;
+  }
   int n = atoi(argv[1]);
   int i;
+  cyg_mutex_lock(&sharedBuffMutex);
   if (argc == 3)
   {
     int index = atoi(argv[2]);
@@ -600,7 +674,7 @@ void cmd_lr(int argc, char **argv)
     if ((n > nr) || (maxReadings < n))
     {
       printf("ERROR");
-      return;
+      return false;
     }
     i = startingIndex;
     while (n)
@@ -630,7 +704,7 @@ void cmd_lr(int argc, char **argv)
     if ((n > nr) || (n > maxReadings))
     {
       printf("ERROR");
-      return;
+      return false;
     }
     for (i = 0; i < n; i++)
     { //Read n registers
@@ -644,20 +718,25 @@ void cmd_lr(int argc, char **argv)
       }
     }
   }
+  cyg_mutex_unlock(&sharedBuffMutex);
+  return true;
 }
 
 /*-------------------------------------------------------------------------+
 | Function: cmd_dr - delete registers (local memory)
 +--------------------------------------------------------------------------*/
 
-void cmd_dr(int argc, char **argv)
+bool cmd_dr(int argc, char **argv)
 {
+  cyg_mutex_lock(&sharedBuffMutex);
   memset(eCosRingBuff, 0, NRBUF * REGDIM); //Limpar buffer
   iwrite = 0;
   iread = 0;
   nr = 0;
   flagNr = false;
+  cyg_mutex_unlock(&sharedBuffMutex);
   printf("CMD_OK");
+  return true;
 }
 
 /*-------------------------------------------------------------------------+
@@ -688,13 +767,14 @@ int my_getline(char **argv, int argvsize)
 /*-------------------------------------------------------------------------+
 | Function: monitor        (called from ui_th_prog) 
 +--------------------------------------------------------------------------*/
+mBoxMessage *m;
 void monitor(void)
 {
   static char *argv[ARGVECSIZE + 1], *p;
   int argc, i;
 
   printf("%s Type sos for help\n", TitleMsg);
-  for (;;) //Espera activa WARNING
+  for (;;)
   {
     printf("\nCmd> ");
     /* Reading and parsing command line  ----------------------------------*/
@@ -708,15 +788,25 @@ void monitor(void)
       /* Executing commands -----------------------------------------------*/
       if (i < NCOMMANDS)
       {
-        //Falta sincronismo quando mais theards estiverem a escrever no buffer
-        commands[i].cmd_fnct(argc, argv); //check for bad inputs
-        // if ((strcmp(argv[0], "sos") != 0) && (strcmp(argv[0], "ini") != 0) && (strcmp(argv[0], "irl") != 0))
-        if ((i > 0) && (i < 14))
+        if (!cyg_semaphore_timed_wait(&newCmdSem, cyg_current_time() + 50)) //Acontece quando o comando anteria ainda nao foi totalmete processado (RX ainda nao deu post)
         {
-          cyg_semaphore_post(&TX_sem);                                    //Write to Buffer is done, so TX can begin
-          r = cyg_semaphore_timed_wait(&RX_sem, cyg_current_time() + 50); //Wait for response, max waiting time 50ms
-          if (r)
+          continue;
+        }
+        bool cmd_exec_ret = commands[i].cmd_fnct(argc, argv); //check for bad inputs
+
+        if (!cmd_exec_ret) //If arguments were invalid
+        {
+          continue;
+        }
+
+        if ((i > 0) && (i < 12))
+        {
+          //Esperar pela mailBox do RX (TIMED_GET)
+          m = (mBoxMessage *)cyg_mbox_timed_get(uiMboxH, cyg_current_time() + 50);
+
+          if (m != NULL)
           {
+            memcpy(bufr, (*m).data, (*m).cmd_dim);
             commands[i].cmd_display();
           }
           else
@@ -734,7 +824,12 @@ void monitor(void)
 void ui_th_prog(cyg_addrword_t data)
 {
   printf("Working UI thread\n");
-  cyg_semaphore_init(&TX_sem, 0);
-  cyg_semaphore_init(&RX_sem, 0);
+
+  cyg_mbox_create(&uiMboxH, &uiMbox);
+  cyg_mbox_create(&TXMboxH, &TXMbox);
+
+  cyg_semaphore_init(&newCmdSem, 1);
+
+  cyg_mutex_init(&sharedBuffMutex);
   monitor();
 }
