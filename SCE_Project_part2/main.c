@@ -566,7 +566,7 @@ void monitoring_TEMP_LUM(){
         DATAEE_WriteByte( (iwrite * 0x5) + EEAddr_RING + 0x3 , temp);
         DATAEE_WriteByte( (iwrite * 0x5) + EEAddr_RING + 0x4 , lumLevel);
         
-        if((nr == NREG) && (iread == iwrite)){
+        if((nr == NREG) && (iread == (iwrite-1))){
             iread++;
         }
         
@@ -973,12 +973,11 @@ void cmd_ir(int num, char *buffer){
     sendMessage(7,buff);
 }
 
-//"Registo de vez enquanto vêm errados", parece já estar a funcionar
 void cmd_trc(int num, char *buffer){
     if(num == 4){
         int n = buffer[2];
         int maxReadings = (iwrite-iread);
-        if(maxReadings <= 0){
+        if(maxReadings < 0){
             maxReadings = iwrite + (NREG - iread);
         }
         if((n > nr) || (n > maxReadings)){
@@ -1017,7 +1016,6 @@ void cmd_trc(int num, char *buffer){
     }
 }
 
-//Falta Confirmar
 void cmd_tri(int num, char *buffer){
     if(num == 5){
         uint8_t n = buffer[2];
@@ -1031,7 +1029,7 @@ void cmd_tri(int num, char *buffer){
             startingIndex = index;
         }
         uint8_t maxReadings = iwrite - startingIndex;
-        if(maxReadings <= 0){
+        if(maxReadings < 0){
             maxReadings = iwrite + (NREG - startingIndex);
         }
         

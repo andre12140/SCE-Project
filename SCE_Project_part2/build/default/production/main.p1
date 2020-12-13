@@ -16012,9 +16012,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 567: DATAEE_WriteByte( (iwrite * 0x5) + 0x7012 + 0x4 , lumLevel);
 "567
 [e ( _DATAEE_WriteByte (2 , -> + + * -> _iwrite `i -> 5 `i -> 28690 `i -> 4 `i `ui _lumLevel ]
-[; ;main.c: 569: if((nr == NREG) && (iread == iwrite)){
+[; ;main.c: 569: if((nr == NREG) && (iread == (iwrite-1))){
 "569
-[e $ ! && == -> _nr `i -> _NREG `i == -> _iread `i -> _iwrite `i 1912  ]
+[e $ ! && == -> _nr `i -> _NREG `i == -> _iread `i - -> _iwrite `i -> 1 `i 1912  ]
 {
 [; ;main.c: 570: iread++;
 "570
@@ -17345,402 +17345,402 @@ Version 3.2 HI-TECH Software Intermediate Code
 "974
 [e :UE 2028 ]
 }
-"977
+"976
 [v _cmd_trc `(v ~T0 @X0 1 ef2`i`*uc ]
 {
-[; ;main.c: 977: void cmd_trc(int num, char *buffer){
+[; ;main.c: 976: void cmd_trc(int num, char *buffer){
 [e :U _cmd_trc ]
 [v _num `i ~T0 @X0 1 r1 ]
 [v _buffer `*uc ~T0 @X0 1 r2 ]
 [f ]
-[; ;main.c: 978: if(num == 4){
-"978
+[; ;main.c: 977: if(num == 4){
+"977
 [e $ ! == _num -> 4 `i 2030  ]
 {
-"979
+"978
 [v _n `i ~T0 @X0 1 a ]
-[; ;main.c: 979: int n = buffer[2];
+[; ;main.c: 978: int n = buffer[2];
 [e = _n -> *U + _buffer * -> -> 2 `i `x -> -> # *U _buffer `i `x `i ]
-"980
+"979
 [v _maxReadings `i ~T0 @X0 1 a ]
-[; ;main.c: 980: int maxReadings = (iwrite-iread);
+[; ;main.c: 979: int maxReadings = (iwrite-iread);
 [e = _maxReadings - -> _iwrite `i -> _iread `i ]
-[; ;main.c: 981: if(maxReadings <= 0){
-"981
-[e $ ! <= _maxReadings -> 0 `i 2031  ]
+[; ;main.c: 980: if(maxReadings < 0){
+"980
+[e $ ! < _maxReadings -> 0 `i 2031  ]
 {
-[; ;main.c: 982: maxReadings = iwrite + (NREG - iread);
-"982
+[; ;main.c: 981: maxReadings = iwrite + (NREG - iread);
+"981
 [e = _maxReadings + -> _iwrite `i - -> _NREG `i -> _iread `i ]
-"983
+"982
 }
 [e :U 2031 ]
-[; ;main.c: 983: }
-[; ;main.c: 984: if((n > nr) || (n > maxReadings)){
-"984
+[; ;main.c: 982: }
+[; ;main.c: 983: if((n > nr) || (n > maxReadings)){
+"983
 [e $ ! || > _n -> _nr `i > _n _maxReadings 2032  ]
 {
-[; ;main.c: 985: sendERRORMessage((uint8_t)0XCB);
-"985
+[; ;main.c: 984: sendERRORMessage((uint8_t)0XCB);
+"984
 [e ( _sendERRORMessage (1 -> -> 203 `i `uc ]
-[; ;main.c: 986: return;
-"986
+[; ;main.c: 985: return;
+"985
 [e $UE 2029  ]
-"987
+"986
 }
 [e :U 2032 ]
-"992
+"991
 [v _buffInit `uc ~T0 @X0 -> 3 `i a ]
-[; ;main.c: 987: }
-[; ;main.c: 992: uint8_t buffInit[3];
-[; ;main.c: 993: buffInit[0] = (uint8_t)0xFD;
-"993
+[; ;main.c: 986: }
+[; ;main.c: 991: uint8_t buffInit[3];
+[; ;main.c: 992: buffInit[0] = (uint8_t)0xFD;
+"992
 [e = *U + &U _buffInit * -> -> -> 0 `i `ui `ux -> -> # *U &U _buffInit `ui `ux -> -> 253 `i `uc ]
-[; ;main.c: 994: buffInit[1] = (uint8_t)0XCB;
-"994
+[; ;main.c: 993: buffInit[1] = (uint8_t)0XCB;
+"993
 [e = *U + &U _buffInit * -> -> -> 1 `i `ui `ux -> -> # *U &U _buffInit `ui `ux -> -> 203 `i `uc ]
-[; ;main.c: 995: buffInit[2] = (uint8_t)n;
-"995
+[; ;main.c: 994: buffInit[2] = (uint8_t)n;
+"994
 [e = *U + &U _buffInit * -> -> -> 2 `i `ui `ux -> -> # *U &U _buffInit `ui `ux -> _n `uc ]
-[; ;main.c: 996: sendMessage(3,buffInit);
-"996
+[; ;main.c: 995: sendMessage(3,buffInit);
+"995
 [e ( _sendMessage (2 , -> 3 `i &U _buffInit ]
-"997
+"996
 [v _i `i ~T0 @X0 1 a ]
-"998
+"997
 [v _j `uc ~T0 @X0 1 a ]
-"999
+"998
 [v _buffData `uc ~T0 @X0 -> 5 `i a ]
-"1000
+"999
 [v _address `ui ~T0 @X0 1 a ]
-[; ;main.c: 997: int i;
-[; ;main.c: 998: uint8_t j;
-[; ;main.c: 999: uint8_t buffData[5];
-[; ;main.c: 1000: uint16_t address = 0;
+[; ;main.c: 996: int i;
+[; ;main.c: 997: uint8_t j;
+[; ;main.c: 998: uint8_t buffData[5];
+[; ;main.c: 999: uint16_t address = 0;
 [e = _address -> -> 0 `i `ui ]
-[; ;main.c: 1001: for(i = 0; i < n; i++){
-"1001
+[; ;main.c: 1000: for(i = 0; i < n; i++){
+"1000
 {
 [e = _i -> 0 `i ]
 [e $U 2036  ]
 [e :U 2033 ]
 {
-[; ;main.c: 1002: for(j = 0; j < 5; j++){
-"1002
+[; ;main.c: 1001: for(j = 0; j < 5; j++){
+"1001
 {
 [e = _j -> -> 0 `i `uc ]
 [e $ < -> _j `i -> 5 `i 2037  ]
 [e $U 2038  ]
 [e :U 2037 ]
 {
-[; ;main.c: 1003: address = (iread * 0x5) + 0x7012 + j;
-"1003
-[e = _address -> + + * -> _iread `i -> 5 `i -> 28690 `i -> _j `i `ui ]
-[; ;main.c: 1004: buffData[j] = DATAEE_ReadByte(address);
-"1004
-[e = *U + &U _buffData * -> _j `ux -> -> # *U &U _buffData `ui `ux ( _DATAEE_ReadByte (1 _address ]
-"1005
-}
+[; ;main.c: 1002: address = (iread * 0x5) + 0x7012 + j;
 "1002
+[e = _address -> + + * -> _iread `i -> 5 `i -> 28690 `i -> _j `i `ui ]
+[; ;main.c: 1003: buffData[j] = DATAEE_ReadByte(address);
+"1003
+[e = *U + &U _buffData * -> _j `ux -> -> # *U &U _buffData `ui `ux ( _DATAEE_ReadByte (1 _address ]
+"1004
+}
+"1001
 [e ++ _j -> -> 1 `i `uc ]
 [e $ < -> _j `i -> 5 `i 2037  ]
 [e :U 2038 ]
-"1005
+"1004
 }
-[; ;main.c: 1005: }
-[; ;main.c: 1006: sendMessage(5,buffData);
-"1006
+[; ;main.c: 1004: }
+[; ;main.c: 1005: sendMessage(5,buffData);
+"1005
 [e ( _sendMessage (2 , -> 5 `i &U _buffData ]
-[; ;main.c: 1007: iread++;
-"1007
+[; ;main.c: 1006: iread++;
+"1006
 [e ++ _iread -> -> 1 `i `uc ]
-[; ;main.c: 1008: if(iread>NREG-1){
-"1008
+[; ;main.c: 1007: if(iread>NREG-1){
+"1007
 [e $ ! > -> _iread `i - -> _NREG `i -> 1 `i 2040  ]
 {
-[; ;main.c: 1009: iread=0;
-"1009
+[; ;main.c: 1008: iread=0;
+"1008
 [e = _iread -> -> 0 `i `uc ]
-"1010
+"1009
 }
 [e :U 2040 ]
-"1011
+"1010
 }
-"1001
+"1000
 [e ++ _i -> 1 `i ]
 [e :U 2036 ]
 [e $ < _i _n 2033  ]
 [e :U 2034 ]
+"1010
+}
 "1011
-}
-"1012
 [v _buffEOM `uc ~T0 @X0 -> -> 1 `i `ux a ]
+[; ;main.c: 1009: }
 [; ;main.c: 1010: }
-[; ;main.c: 1011: }
-[; ;main.c: 1012: uint8_t buffEOM[1];
-[; ;main.c: 1013: buffEOM[0] = (uint8_t)0xFE;
-"1013
+[; ;main.c: 1011: uint8_t buffEOM[1];
+[; ;main.c: 1012: buffEOM[0] = (uint8_t)0xFE;
+"1012
 [e = *U + &U _buffEOM * -> -> -> 0 `i `ui `ux -> -> # *U &U _buffEOM `ui `ux -> -> 254 `i `uc ]
-[; ;main.c: 1014: sendMessage(1,buffEOM);
-"1014
+[; ;main.c: 1013: sendMessage(1,buffEOM);
+"1013
 [e ( _sendMessage (2 , -> 1 `i &U _buffEOM ]
-"1015
+"1014
 }
-[; ;main.c: 1015: } else{
+[; ;main.c: 1014: } else{
 [e $U 2041  ]
 [e :U 2030 ]
 {
-[; ;main.c: 1016: sendERRORMessage((uint8_t)0XCB);
-"1016
+[; ;main.c: 1015: sendERRORMessage((uint8_t)0XCB);
+"1015
 [e ( _sendERRORMessage (1 -> -> 203 `i `uc ]
-"1017
+"1016
 }
 [e :U 2041 ]
+[; ;main.c: 1016: }
 [; ;main.c: 1017: }
-[; ;main.c: 1018: }
-"1018
+"1017
 [e :UE 2029 ]
 }
-"1021
+"1019
 [v _cmd_tri `(v ~T0 @X0 1 ef2`i`*uc ]
 {
-[; ;main.c: 1021: void cmd_tri(int num, char *buffer){
+[; ;main.c: 1019: void cmd_tri(int num, char *buffer){
 [e :U _cmd_tri ]
 [v _num `i ~T0 @X0 1 r1 ]
 [v _buffer `*uc ~T0 @X0 1 r2 ]
 [f ]
-[; ;main.c: 1022: if(num == 5){
-"1022
+[; ;main.c: 1020: if(num == 5){
+"1020
 [e $ ! == _num -> 5 `i 2043  ]
 {
-"1023
+"1021
 [v _n `uc ~T0 @X0 1 a ]
-[; ;main.c: 1023: uint8_t n = buffer[2];
+[; ;main.c: 1021: uint8_t n = buffer[2];
 [e = _n *U + _buffer * -> -> 2 `i `x -> -> # *U _buffer `i `x ]
-"1024
+"1022
 [v _index `uc ~T0 @X0 1 a ]
-[; ;main.c: 1024: uint8_t index = buffer[3];
+[; ;main.c: 1022: uint8_t index = buffer[3];
 [e = _index *U + _buffer * -> -> 3 `i `x -> -> # *U _buffer `i `x ]
-"1026
+"1024
 [v _startingIndex `uc ~T0 @X0 1 a ]
-[; ;main.c: 1026: uint8_t startingIndex = iwrite + index;
+[; ;main.c: 1024: uint8_t startingIndex = iwrite + index;
 [e = _startingIndex -> + -> _iwrite `i -> _index `i `uc ]
-[; ;main.c: 1027: if(startingIndex >= NREG){
-"1027
+[; ;main.c: 1025: if(startingIndex >= NREG){
+"1025
 [e $ ! >= -> _startingIndex `i -> _NREG `i 2044  ]
 {
-[; ;main.c: 1028: startingIndex = index - (NREG - iwrite);
-"1028
+[; ;main.c: 1026: startingIndex = index - (NREG - iwrite);
+"1026
 [e = _startingIndex -> - -> _index `i - -> _NREG `i -> _iwrite `i `uc ]
-"1029
+"1027
 }
 [e :U 2044 ]
-[; ;main.c: 1029: }
-[; ;main.c: 1030: if(nr != NREG){
-"1030
+[; ;main.c: 1027: }
+[; ;main.c: 1028: if(nr != NREG){
+"1028
 [e $ ! != -> _nr `i -> _NREG `i 2045  ]
 {
-[; ;main.c: 1031: startingIndex = index;
-"1031
+[; ;main.c: 1029: startingIndex = index;
+"1029
 [e = _startingIndex _index ]
-"1032
+"1030
 }
 [e :U 2045 ]
-"1033
+"1031
 [v _maxReadings `uc ~T0 @X0 1 a ]
-[; ;main.c: 1032: }
-[; ;main.c: 1033: uint8_t maxReadings = iwrite - startingIndex;
+[; ;main.c: 1030: }
+[; ;main.c: 1031: uint8_t maxReadings = iwrite - startingIndex;
 [e = _maxReadings -> - -> _iwrite `i -> _startingIndex `i `uc ]
-[; ;main.c: 1034: if(maxReadings <= 0){
-"1034
-[e $ ! <= -> _maxReadings `i -> 0 `i 2046  ]
+[; ;main.c: 1032: if(maxReadings < 0){
+"1032
+[e $ ! < -> _maxReadings `i -> 0 `i 2046  ]
 {
-[; ;main.c: 1035: maxReadings = iwrite + (NREG - startingIndex);
-"1035
+[; ;main.c: 1033: maxReadings = iwrite + (NREG - startingIndex);
+"1033
 [e = _maxReadings -> + -> _iwrite `i - -> _NREG `i -> _startingIndex `i `uc ]
-"1036
+"1034
 }
 [e :U 2046 ]
-[; ;main.c: 1036: }
-[; ;main.c: 1038: if((n > nr) || (maxReadings < n)){
-"1038
+[; ;main.c: 1034: }
+[; ;main.c: 1036: if((n > nr) || (maxReadings < n)){
+"1036
 [e $ ! || > -> _n `i -> _nr `i < -> _maxReadings `i -> _n `i 2047  ]
 {
-[; ;main.c: 1039: sendERRORMessage((uint8_t)0XCC);
-"1039
+[; ;main.c: 1037: sendERRORMessage((uint8_t)0XCC);
+"1037
 [e ( _sendERRORMessage (1 -> -> 204 `i `uc ]
-[; ;main.c: 1040: return;
-"1040
+[; ;main.c: 1038: return;
+"1038
 [e $UE 2042  ]
-"1041
+"1039
 }
 [e :U 2047 ]
-"1044
+"1042
 [v _buffInit `uc ~T0 @X0 -> 4 `i a ]
-[; ;main.c: 1041: }
-[; ;main.c: 1044: uint8_t buffInit[4];
-[; ;main.c: 1045: buffInit[0] = (uint8_t)0xFD;
-"1045
+[; ;main.c: 1039: }
+[; ;main.c: 1042: uint8_t buffInit[4];
+[; ;main.c: 1043: buffInit[0] = (uint8_t)0xFD;
+"1043
 [e = *U + &U _buffInit * -> -> -> 0 `i `ui `ux -> -> # *U &U _buffInit `ui `ux -> -> 253 `i `uc ]
-[; ;main.c: 1046: buffInit[1] = (uint8_t)0XCC;
-"1046
+[; ;main.c: 1044: buffInit[1] = (uint8_t)0XCC;
+"1044
 [e = *U + &U _buffInit * -> -> -> 1 `i `ui `ux -> -> # *U &U _buffInit `ui `ux -> -> 204 `i `uc ]
-[; ;main.c: 1047: buffInit[2] = (uint8_t)n;
-"1047
+[; ;main.c: 1045: buffInit[2] = (uint8_t)n;
+"1045
 [e = *U + &U _buffInit * -> -> -> 2 `i `ui `ux -> -> # *U &U _buffInit `ui `ux _n ]
-[; ;main.c: 1048: buffInit[3] = (uint8_t)index;
-"1048
+[; ;main.c: 1046: buffInit[3] = (uint8_t)index;
+"1046
 [e = *U + &U _buffInit * -> -> -> 3 `i `ui `ux -> -> # *U &U _buffInit `ui `ux _index ]
-[; ;main.c: 1049: sendMessage(4,buffInit);
-"1049
+[; ;main.c: 1047: sendMessage(4,buffInit);
+"1047
 [e ( _sendMessage (2 , -> 4 `i &U _buffInit ]
-"1051
+"1049
 [v _i `i ~T0 @X0 1 a ]
-[; ;main.c: 1051: int i = startingIndex;
+[; ;main.c: 1049: int i = startingIndex;
 [e = _i -> _startingIndex `i ]
-"1053
+"1051
 [v _j `uc ~T0 @X0 1 a ]
-"1054
+"1052
 [v _buffData `uc ~T0 @X0 -> 5 `i a ]
-[; ;main.c: 1053: uint8_t j;
-[; ;main.c: 1054: uint8_t buffData[5];
-[; ;main.c: 1055: while(n){
-"1055
+[; ;main.c: 1051: uint8_t j;
+[; ;main.c: 1052: uint8_t buffData[5];
+[; ;main.c: 1053: while(n){
+"1053
 [e $U 2048  ]
 [e :U 2049 ]
 {
-[; ;main.c: 1056: for(j = 0; j < 5; j++){
-"1056
+[; ;main.c: 1054: for(j = 0; j < 5; j++){
+"1054
 {
 [e = _j -> -> 0 `i `uc ]
 [e $ < -> _j `i -> 5 `i 2051  ]
 [e $U 2052  ]
 [e :U 2051 ]
 {
-[; ;main.c: 1057: buffData[j] = DATAEE_ReadByte( (i * 0x5) + 0x7012 + j);
-"1057
+[; ;main.c: 1055: buffData[j] = DATAEE_ReadByte( (i * 0x5) + 0x7012 + j);
+"1055
 [e = *U + &U _buffData * -> _j `ux -> -> # *U &U _buffData `ui `ux ( _DATAEE_ReadByte (1 -> + + * _i -> 5 `i -> 28690 `i -> _j `i `ui ]
-"1058
-}
 "1056
+}
+"1054
 [e ++ _j -> -> 1 `i `uc ]
 [e $ < -> _j `i -> 5 `i 2051  ]
 [e :U 2052 ]
-"1058
+"1056
 }
-[; ;main.c: 1058: }
-[; ;main.c: 1059: sendMessage(5,buffData);
-"1059
+[; ;main.c: 1056: }
+[; ;main.c: 1057: sendMessage(5,buffData);
+"1057
 [e ( _sendMessage (2 , -> 5 `i &U _buffData ]
-[; ;main.c: 1060: if(iread == i){
-"1060
+[; ;main.c: 1058: if(iread == i){
+"1058
 [e $ ! == -> _iread `i _i 2054  ]
 {
-[; ;main.c: 1061: iread++;
-"1061
+[; ;main.c: 1059: iread++;
+"1059
 [e ++ _iread -> -> 1 `i `uc ]
-"1062
+"1060
 }
 [e :U 2054 ]
-[; ;main.c: 1062: }
-[; ;main.c: 1063: i++;
-"1063
+[; ;main.c: 1060: }
+[; ;main.c: 1061: i++;
+"1061
 [e ++ _i -> 1 `i ]
-[; ;main.c: 1064: n--;
-"1064
+[; ;main.c: 1062: n--;
+"1062
 [e -- _n -> -> 1 `i `uc ]
-[; ;main.c: 1065: if(i >= NREG){
-"1065
+[; ;main.c: 1063: if(i >= NREG){
+"1063
 [e $ ! >= _i -> _NREG `i 2055  ]
 {
-[; ;main.c: 1066: i=0;
-"1066
+[; ;main.c: 1064: i=0;
+"1064
 [e = _i -> 0 `i ]
-"1067
+"1065
 }
 [e :U 2055 ]
-"1068
+"1066
 }
 [e :U 2048 ]
-"1055
+"1053
 [e $ != -> _n `i -> -> -> 0 `i `uc `i 2049  ]
 [e :U 2050 ]
-"1071
+"1069
 [v _buffEOM `uc ~T0 @X0 -> -> 1 `i `ux a ]
-[; ;main.c: 1067: }
-[; ;main.c: 1068: }
-[; ;main.c: 1071: uint8_t buffEOM[1];
-[; ;main.c: 1072: buffEOM[0] = (uint8_t)0xFE;
-"1072
+[; ;main.c: 1065: }
+[; ;main.c: 1066: }
+[; ;main.c: 1069: uint8_t buffEOM[1];
+[; ;main.c: 1070: buffEOM[0] = (uint8_t)0xFE;
+"1070
 [e = *U + &U _buffEOM * -> -> -> 0 `i `ui `ux -> -> # *U &U _buffEOM `ui `ux -> -> 254 `i `uc ]
-[; ;main.c: 1073: sendMessage(1,buffEOM);
-"1073
+[; ;main.c: 1071: sendMessage(1,buffEOM);
+"1071
 [e ( _sendMessage (2 , -> 1 `i &U _buffEOM ]
-"1074
+"1072
 }
-[; ;main.c: 1074: } else{
+[; ;main.c: 1072: } else{
 [e $U 2056  ]
 [e :U 2043 ]
 {
-[; ;main.c: 1075: sendERRORMessage((uint8_t)0XCC);
-"1075
+[; ;main.c: 1073: sendERRORMessage((uint8_t)0XCC);
+"1073
 [e ( _sendERRORMessage (1 -> -> 204 `i `uc ]
-"1076
+"1074
 }
 [e :U 2056 ]
-[; ;main.c: 1076: }
-[; ;main.c: 1077: }
-"1077
+[; ;main.c: 1074: }
+[; ;main.c: 1075: }
+"1075
 [e :UE 2042 ]
 }
 [v $root$_main `(v ~T0 @X0 0 e ]
-"1079
+"1077
 [v _main `(v ~T0 @X0 1 ef ]
-"1080
+"1078
 {
-[; ;main.c: 1079: void main(void)
-[; ;main.c: 1080: {
+[; ;main.c: 1077: void main(void)
+[; ;main.c: 1078: {
 [e :U _main ]
 [f ]
-[; ;main.c: 1082: SYSTEM_Initialize();
-"1082
+[; ;main.c: 1080: SYSTEM_Initialize();
+"1080
 [e ( _SYSTEM_Initialize ..  ]
-[; ;main.c: 1084: PWM6_LoadDutyValue(0);
-"1084
+[; ;main.c: 1082: PWM6_LoadDutyValue(0);
+"1082
 [e ( _PWM6_LoadDutyValue (1 -> -> 0 `i `ui ]
-[; ;main.c: 1085: TMR2_StopTimer();
-"1085
+[; ;main.c: 1083: TMR2_StopTimer();
+"1083
 [e ( _TMR2_StopTimer ..  ]
-[; ;main.c: 1086: PWM_Output_D4_Disable();
-"1086
+[; ;main.c: 1084: PWM_Output_D4_Disable();
+"1084
 [e ( _PWM_Output_D4_Disable ..  ]
-[; ;main.c: 1088: TMR1_SetInterruptHandler(Clock_ISR);
-"1088
+[; ;main.c: 1086: TMR1_SetInterruptHandler(Clock_ISR);
+"1086
 [e ( _TMR1_SetInterruptHandler (1 &U _Clock_ISR ]
-[; ;main.c: 1090: INT_SetInterruptHandler(S1_ISR);
-"1090
+[; ;main.c: 1088: INT_SetInterruptHandler(S1_ISR);
+"1088
 [e ( _INT_SetInterruptHandler (1 &U _S1_ISR ]
-"1092
+"1090
 [v _checkSumAux `uc ~T0 @X0 1 a ]
-[; ;main.c: 1092: uint8_t checkSumAux = 0;
+[; ;main.c: 1090: uint8_t checkSumAux = 0;
 [e = _checkSumAux -> -> 0 `i `uc ]
-"1093
+"1091
 [v _notInit `uc ~T0 @X0 1 a ]
-[; ;main.c: 1093: bool notInit = 1;
+[; ;main.c: 1091: bool notInit = 1;
 [e = _notInit -> -> 1 `i `uc ]
-"1094
+"1092
 [v _corrupted `uc ~T0 @X0 1 a ]
-[; ;main.c: 1094: bool corrupted = 0;
+[; ;main.c: 1092: bool corrupted = 0;
 [e = _corrupted -> -> 0 `i `uc ]
-[; ;main.c: 1095: if(DATAEE_ReadByte(0x7000) == 'S'){
-"1095
+[; ;main.c: 1093: if(DATAEE_ReadByte(0x7000) == 'S'){
+"1093
 [e $ ! == -> ( _DATAEE_ReadByte (1 -> -> 28672 `i `ui `ui -> 83 `ui 2058  ]
 {
-[; ;main.c: 1096: notInit = 0;
-"1096
+[; ;main.c: 1094: notInit = 0;
+"1094
 [e = _notInit -> -> 0 `i `uc ]
-[; ;main.c: 1097: for(int i = 1; i < 13; i++){
-"1097
+[; ;main.c: 1095: for(int i = 1; i < 13; i++){
+"1095
 {
 [v _i `i ~T0 @X0 1 a ]
 [e = _i -> 1 `i ]
@@ -17748,159 +17748,159 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 2060  ]
 [e :U 2059 ]
 {
-[; ;main.c: 1098: checkSumAux += DATAEE_ReadByte(0x7000 + (i*8));
-"1098
+[; ;main.c: 1096: checkSumAux += DATAEE_ReadByte(0x7000 + (i*8));
+"1096
 [e =+ _checkSumAux ( _DATAEE_ReadByte (1 -> + -> 28672 `i * _i -> 8 `i `ui ]
-"1099
-}
 "1097
+}
+"1095
 [e ++ _i -> 1 `i ]
 [e $ < _i -> 13 `i 2059  ]
 [e :U 2060 ]
-"1099
+"1097
 }
-[; ;main.c: 1099: }
-[; ;main.c: 1100: if(checkSumAux != DATAEE_ReadByte(0x7000 + (13*8))){
-"1100
+[; ;main.c: 1097: }
+[; ;main.c: 1098: if(checkSumAux != DATAEE_ReadByte(0x7000 + (13*8))){
+"1098
 [e $ ! != -> _checkSumAux `i -> ( _DATAEE_ReadByte (1 -> + -> 28672 `i * -> 13 `i -> 8 `i `ui `i 2062  ]
 {
-[; ;main.c: 1101: corrupted = 1;
-"1101
+[; ;main.c: 1099: corrupted = 1;
+"1099
 [e = _corrupted -> -> 1 `i `uc ]
-"1102
+"1100
 }
 [e :U 2062 ]
-"1103
+"1101
 }
 [e :U 2058 ]
-[; ;main.c: 1102: }
-[; ;main.c: 1103: }
-[; ;main.c: 1105: if(notInit || corrupted){
-"1105
+[; ;main.c: 1100: }
+[; ;main.c: 1101: }
+[; ;main.c: 1103: if(notInit || corrupted){
+"1103
 [e $ ! || != -> _notInit `i -> -> -> 0 `i `uc `i != -> _corrupted `i -> -> -> 0 `i `uc `i 2063  ]
 {
-[; ;main.c: 1106: DATAEE_WriteByte( 0x7000 + (0), 'S');
-"1106
+[; ;main.c: 1104: DATAEE_WriteByte( 0x7000 + (0), 'S');
+"1104
 [e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i -> 0 `i `ui -> -> 83 `ui `uc ]
-[; ;main.c: 1107: DATAEE_WriteByte( 0x7000 + (1), 25);
-"1107
+[; ;main.c: 1105: DATAEE_WriteByte( 0x7000 + (1), 25);
+"1105
 [e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i -> 1 `i `ui -> -> 25 `i `uc ]
-[; ;main.c: 1108: DATAEE_WriteByte( 0x7000 + (2), 3);
-"1108
+[; ;main.c: 1106: DATAEE_WriteByte( 0x7000 + (2), 3);
+"1106
 [e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i -> 2 `i `ui -> -> 3 `i `uc ]
-[; ;main.c: 1109: DATAEE_WriteByte( 0x7000 + (3), 5);
-"1109
+[; ;main.c: 1107: DATAEE_WriteByte( 0x7000 + (3), 5);
+"1107
 [e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i -> 3 `i `ui -> -> 5 `i `uc ]
-[; ;main.c: 1110: DATAEE_WriteByte( 0x7000 + (4), 12);
-"1110
+[; ;main.c: 1108: DATAEE_WriteByte( 0x7000 + (4), 12);
+"1108
 [e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i -> 4 `i `ui -> -> 12 `i `uc ]
-[; ;main.c: 1111: DATAEE_WriteByte( 0x7000 + (5), 0);
-"1111
+[; ;main.c: 1109: DATAEE_WriteByte( 0x7000 + (5), 0);
+"1109
 [e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i -> 5 `i `ui -> -> 0 `i `uc ]
-[; ;main.c: 1112: DATAEE_WriteByte( 0x7000 + (6), 0);
-"1112
+[; ;main.c: 1110: DATAEE_WriteByte( 0x7000 + (6), 0);
+"1110
 [e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i -> 6 `i `ui -> -> 0 `i `uc ]
-[; ;main.c: 1113: DATAEE_WriteByte( 0x7000 + (7), 28);
-"1113
+[; ;main.c: 1111: DATAEE_WriteByte( 0x7000 + (7), 28);
+"1111
 [e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i -> 7 `i `ui -> -> 28 `i `uc ]
-[; ;main.c: 1114: DATAEE_WriteByte( 0x7000 + (8), 4);
-"1114
+[; ;main.c: 1112: DATAEE_WriteByte( 0x7000 + (8), 4);
+"1112
 [e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i -> 8 `i `ui -> -> 4 `i `uc ]
-[; ;main.c: 1115: DATAEE_WriteByte( 0x7000 + (9), 'a');
-"1115
+[; ;main.c: 1113: DATAEE_WriteByte( 0x7000 + (9), 'a');
+"1113
 [e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i -> 9 `i `ui -> -> 97 `ui `uc ]
-[; ;main.c: 1116: DATAEE_WriteByte( 0x7000 + (10), 0);
-"1116
+[; ;main.c: 1114: DATAEE_WriteByte( 0x7000 + (10), 0);
+"1114
 [e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i -> 10 `i `ui -> -> 0 `i `uc ]
-[; ;main.c: 1117: DATAEE_WriteByte( 0x7000 + (11), 0);
-"1117
+[; ;main.c: 1115: DATAEE_WriteByte( 0x7000 + (11), 0);
+"1115
 [e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i -> 11 `i `ui -> -> 0 `i `uc ]
-[; ;main.c: 1118: DATAEE_WriteByte( 0x7000 + (12), 0);
-"1118
+[; ;main.c: 1116: DATAEE_WriteByte( 0x7000 + (12), 0);
+"1116
 [e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i -> 12 `i `ui -> -> 0 `i `uc ]
-[; ;main.c: 1119: DATAEE_WriteByte( 0x7000 + (13), 174);
-"1119
+[; ;main.c: 1117: DATAEE_WriteByte( 0x7000 + (13), 174);
+"1117
 [e ( _DATAEE_WriteByte (2 , -> + -> 28672 `i -> 13 `i `ui -> -> 174 `i `uc ]
-"1120
+"1118
 }
 [e :U 2063 ]
-[; ;main.c: 1120: }
-[; ;main.c: 1122: NREG = DATAEE_ReadByte(0x7000 + (1));
-"1122
+[; ;main.c: 1118: }
+[; ;main.c: 1120: NREG = DATAEE_ReadByte(0x7000 + (1));
+"1120
 [e = _NREG ( _DATAEE_ReadByte (1 -> + -> 28672 `i -> 1 `i `ui ]
-[; ;main.c: 1123: PMON = DATAEE_ReadByte(0x7000 + (2));
-"1123
+[; ;main.c: 1121: PMON = DATAEE_ReadByte(0x7000 + (2));
+"1121
 [e = _PMON ( _DATAEE_ReadByte (1 -> + -> 28672 `i -> 2 `i `ui ]
-[; ;main.c: 1124: TALA = DATAEE_ReadByte(0x7000 + (3));
-"1124
+[; ;main.c: 1122: TALA = DATAEE_ReadByte(0x7000 + (3));
+"1122
 [e = _TALA ( _DATAEE_ReadByte (1 -> + -> 28672 `i -> 3 `i `ui ]
-[; ;main.c: 1125: clkAlarm.alarmVal.h = DATAEE_ReadByte(0x7000 + (4));
-"1125
+[; ;main.c: 1123: clkAlarm.alarmVal.h = DATAEE_ReadByte(0x7000 + (4));
+"1123
 [e = . . _clkAlarm 0 0 ( _DATAEE_ReadByte (1 -> + -> 28672 `i -> 4 `i `ui ]
-[; ;main.c: 1126: clkAlarm.alarmVal.m = DATAEE_ReadByte(0x7000 + (5));
-"1126
+[; ;main.c: 1124: clkAlarm.alarmVal.m = DATAEE_ReadByte(0x7000 + (5));
+"1124
 [e = . . _clkAlarm 0 1 ( _DATAEE_ReadByte (1 -> + -> 28672 `i -> 5 `i `ui ]
-[; ;main.c: 1127: clkAlarm.alarmVal.s = DATAEE_ReadByte(0x7000 + (6));
-"1127
+[; ;main.c: 1125: clkAlarm.alarmVal.s = DATAEE_ReadByte(0x7000 + (6));
+"1125
 [e = . . _clkAlarm 0 2 ( _DATAEE_ReadByte (1 -> + -> 28672 `i -> 6 `i `ui ]
-[; ;main.c: 1128: tempAlarm.alarmTemp = DATAEE_ReadByte(0x7000 + (7));
-"1128
+[; ;main.c: 1126: tempAlarm.alarmTemp = DATAEE_ReadByte(0x7000 + (7));
+"1126
 [e = . _tempAlarm 0 ( _DATAEE_ReadByte (1 -> + -> 28672 `i -> 7 `i `ui ]
-[; ;main.c: 1129: lumAlarm.alarmLum = DATAEE_ReadByte(0x7000 + (8));
-"1129
+[; ;main.c: 1127: lumAlarm.alarmLum = DATAEE_ReadByte(0x7000 + (8));
+"1127
 [e = . _lumAlarm 0 ( _DATAEE_ReadByte (1 -> + -> 28672 `i -> 8 `i `ui ]
-[; ;main.c: 1130: ALAF = DATAEE_ReadByte(0x7000 + (9));
-"1130
+[; ;main.c: 1128: ALAF = DATAEE_ReadByte(0x7000 + (9));
+"1128
 [e = _ALAF ( _DATAEE_ReadByte (1 -> + -> 28672 `i -> 9 `i `ui ]
-[; ;main.c: 1131: t.h = DATAEE_ReadByte(0x7000 + (10));
-"1131
+[; ;main.c: 1129: t.h = DATAEE_ReadByte(0x7000 + (10));
+"1129
 [e = . _t 0 ( _DATAEE_ReadByte (1 -> + -> 28672 `i -> 10 `i `ui ]
-[; ;main.c: 1132: t.m = DATAEE_ReadByte(0x7000 + (11));
-"1132
+[; ;main.c: 1130: t.m = DATAEE_ReadByte(0x7000 + (11));
+"1130
 [e = . _t 1 ( _DATAEE_ReadByte (1 -> + -> 28672 `i -> 11 `i `ui ]
-[; ;main.c: 1133: iwrite = DATAEE_ReadByte(0x7000 + (12));
-"1133
+[; ;main.c: 1131: iwrite = DATAEE_ReadByte(0x7000 + (12));
+"1131
 [e = _iwrite ( _DATAEE_ReadByte (1 -> + -> 28672 `i -> 12 `i `ui ]
-[; ;main.c: 1137: tempAlarm.trigger = 0;
-"1137
+[; ;main.c: 1135: tempAlarm.trigger = 0;
+"1135
 [e = . _tempAlarm 1 -> -> 0 `i `uc ]
-[; ;main.c: 1138: tempAlarm.triggered = 0;
-"1138
+[; ;main.c: 1136: tempAlarm.triggered = 0;
+"1136
 [e = . _tempAlarm 2 -> -> 0 `i `uc ]
-[; ;main.c: 1140: lumAlarm.trigger = 0;
-"1140
+[; ;main.c: 1138: lumAlarm.trigger = 0;
+"1138
 [e = . _lumAlarm 1 -> -> 0 `i `uc ]
-[; ;main.c: 1141: lumAlarm.triggered = 0;
-"1141
+[; ;main.c: 1139: lumAlarm.triggered = 0;
+"1139
 [e = . _lumAlarm 2 -> -> 0 `i `uc ]
-[; ;main.c: 1143: clkAlarm.trigger = 0;
-"1143
+[; ;main.c: 1141: clkAlarm.trigger = 0;
+"1141
 [e = . _clkAlarm 1 -> -> 0 `i `uc ]
-[; ;main.c: 1146: i2c1_driver_open();
-"1146
+[; ;main.c: 1144: i2c1_driver_open();
+"1144
 [e ( _i2c1_driver_open ..  ]
-[; ;main.c: 1147: TRISCbits.TRISC3 = 1;
-"1147
+[; ;main.c: 1145: TRISCbits.TRISC3 = 1;
+"1145
 [e = . . _TRISCbits 0 3 -> -> 1 `i `uc ]
-[; ;main.c: 1148: TRISCbits.TRISC4 = 1;
-"1148
+[; ;main.c: 1146: TRISCbits.TRISC4 = 1;
+"1146
 [e = . . _TRISCbits 0 4 -> -> 1 `i `uc ]
-[; ;main.c: 1149: WPUC3 = 1;
-"1149
+[; ;main.c: 1147: WPUC3 = 1;
+"1147
 [e = _WPUC3 -> -> 1 `i `b ]
-[; ;main.c: 1150: WPUC4 = 1;
-"1150
+[; ;main.c: 1148: WPUC4 = 1;
+"1148
 [e = _WPUC4 -> -> 1 `i `b ]
-[; ;main.c: 1151: LCDinit();
-"1151
+[; ;main.c: 1149: LCDinit();
+"1149
 [e ( _LCDinit ..  ]
-[; ;main.c: 1154: (INTCONbits.GIE = 1);
-"1154
+[; ;main.c: 1152: (INTCONbits.GIE = 1);
+"1152
 [e = . . _INTCONbits 0 3 -> -> 1 `i `uc ]
-[; ;main.c: 1157: (INTCONbits.PEIE = 1);
-"1157
+[; ;main.c: 1155: (INTCONbits.PEIE = 1);
+"1155
 [e = . . _INTCONbits 0 2 -> -> 1 `i `uc ]
-"1161
+"1159
 [v _c `uc ~T0 @X0 1 a ]
 [v F13047 `uc ~T0 @X0 -> 20 `i s ]
 [i F13047
@@ -17908,202 +17908,202 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"1162
+"1160
 [v _buff `uc ~T0 @X0 -> 20 `i a ]
-[; ;main.c: 1161: uint8_t c;
-[; ;main.c: 1162: char buff[20] = "";
+[; ;main.c: 1159: uint8_t c;
+[; ;main.c: 1160: char buff[20] = "";
 [e = _buff F13047 ]
-"1163
+"1161
 [v _n `i ~T0 @X0 1 a ]
-[; ;main.c: 1163: int n=0;
+[; ;main.c: 1161: int n=0;
 [e = _n -> 0 `i ]
-"1164
+"1162
 [v _i `i ~T0 @X0 1 a ]
-[; ;main.c: 1164: int i=0;
+[; ;main.c: 1162: int i=0;
 [e = _i -> 0 `i ]
-[; ;main.c: 1166: while (1)
-"1166
+[; ;main.c: 1164: while (1)
+"1164
 [e :U 2065 ]
-[; ;main.c: 1167: {
-"1167
+[; ;main.c: 1165: {
+"1165
 {
-[; ;main.c: 1168: while(EUSART_is_rx_ready()){
-"1168
+[; ;main.c: 1166: while(EUSART_is_rx_ready()){
+"1166
 [e $U 2067  ]
 [e :U 2068 ]
 {
-[; ;main.c: 1169: c = getch();
-"1169
+[; ;main.c: 1167: c = getch();
+"1167
 [e = _c ( _getch ..  ]
-[; ;main.c: 1170: if((c == (uint8_t)0xFD || buff[0] == (uint8_t)0xFD)){
-"1170
+[; ;main.c: 1168: if((c == (uint8_t)0xFD || buff[0] == (uint8_t)0xFD)){
+"1168
 [e $ ! || == -> _c `i -> -> -> 253 `i `uc `i == -> *U + &U _buff * -> -> -> 0 `i `ui `ux -> -> # *U &U _buff `ui `ux `i -> -> -> 253 `i `uc `i 2070  ]
 {
-[; ;main.c: 1171: if(c == (uint8_t)0xFD){
-"1171
+[; ;main.c: 1169: if(c == (uint8_t)0xFD){
+"1169
 [e $ ! == -> _c `i -> -> -> 253 `i `uc `i 2071  ]
 {
-[; ;main.c: 1172: memset(buff, 0, sizeof buff);
-"1172
+[; ;main.c: 1170: memset(buff, 0, sizeof buff);
+"1170
 [e ( _memset (3 , , -> &U _buff `*v -> 0 `i -> # _buff `ui ]
-[; ;main.c: 1173: n=0;
-"1173
+[; ;main.c: 1171: n=0;
+"1171
 [e = _n -> 0 `i ]
-"1174
+"1172
 }
 [e :U 2071 ]
-[; ;main.c: 1174: }
-[; ;main.c: 1175: buff[n] = c;
-"1175
+[; ;main.c: 1172: }
+[; ;main.c: 1173: buff[n] = c;
+"1173
 [e = *U + &U _buff * -> -> _n `ui `ux -> -> # *U &U _buff `ui `ux _c ]
-[; ;main.c: 1176: n++;
-"1176
+[; ;main.c: 1174: n++;
+"1174
 [e ++ _n -> 1 `i ]
-[; ;main.c: 1177: if(n == 20){
-"1177
+[; ;main.c: 1175: if(n == 20){
+"1175
 [e $ ! == _n -> 20 `i 2072  ]
 {
-[; ;main.c: 1178: memset(buff, 0, sizeof buff);
-"1178
+[; ;main.c: 1176: memset(buff, 0, sizeof buff);
+"1176
 [e ( _memset (3 , , -> &U _buff `*v -> 0 `i -> # _buff `ui ]
-[; ;main.c: 1179: n=0;
-"1179
+[; ;main.c: 1177: n=0;
+"1177
 [e = _n -> 0 `i ]
-"1180
+"1178
 }
 [e :U 2072 ]
-"1181
+"1179
 }
 [e :U 2070 ]
-[; ;main.c: 1180: }
-[; ;main.c: 1181: }
-[; ;main.c: 1182: if(c == (uint8_t)0xFE){
-"1182
+[; ;main.c: 1178: }
+[; ;main.c: 1179: }
+[; ;main.c: 1180: if(c == (uint8_t)0xFE){
+"1180
 [e $ ! == -> _c `i -> -> -> 254 `i `uc `i 2073  ]
 {
-[; ;main.c: 1183: break;
-"1183
+[; ;main.c: 1181: break;
+"1181
 [e $U 2069  ]
-"1184
+"1182
 }
 [e :U 2073 ]
-"1185
+"1183
 }
 [e :U 2067 ]
-"1168
+"1166
 [e $ != -> ( _EUSART_is_rx_ready ..  `i -> -> -> 0 `i `uc `i 2068  ]
 [e :U 2069 ]
-[; ;main.c: 1184: }
-[; ;main.c: 1185: }
-[; ;main.c: 1186: if(buff[n-1] == (uint8_t)0xFE){
-"1186
+[; ;main.c: 1182: }
+[; ;main.c: 1183: }
+[; ;main.c: 1184: if(buff[n-1] == (uint8_t)0xFE){
+"1184
 [e $ ! == -> *U + &U _buff * -> -> - _n -> 1 `i `ui `ux -> -> # *U &U _buff `ui `ux `i -> -> -> 254 `i `uc `i 2074  ]
 {
-[; ;main.c: 1187: for (i = 0; i < (sizeof(commands) / sizeof(struct command_d)); i++){
-"1187
+[; ;main.c: 1185: for (i = 0; i < (sizeof(commands) / sizeof(struct command_d)); i++){
+"1185
 {
 [e = _i -> 0 `i ]
 [e $ < -> _i `ui / -> # _commands `ui -> # `S1625 `ui 2075  ]
 [e $U 2076  ]
 [e :U 2075 ]
 {
-[; ;main.c: 1188: if (buff[1] == commands[i].cmd_name){
-"1188
+[; ;main.c: 1186: if (buff[1] == commands[i].cmd_name){
+"1186
 [e $ ! == -> *U + &U _buff * -> -> -> 1 `i `ui `ux -> -> # *U &U _buff `ui `ux `i -> . *U + &U _commands * -> -> _i `ui `ux -> -> # *U &U _commands `ui `ux 1 `i 2078  ]
 {
-[; ;main.c: 1189: commands[i].cmd_fnct(n, buff);
-"1189
+[; ;main.c: 1187: commands[i].cmd_fnct(n, buff);
+"1187
 [e ( *U . *U + &U _commands * -> -> _i `ui `ux -> -> # *U &U _commands `ui `ux 0 (2 , _n &U _buff ]
-[; ;main.c: 1190: break;
-"1190
+[; ;main.c: 1188: break;
+"1188
 [e $U 2076  ]
-"1191
+"1189
 }
 [e :U 2078 ]
-"1192
+"1190
 }
-"1187
+"1185
 [e ++ _i -> 1 `i ]
 [e $ < -> _i `ui / -> # _commands `ui -> # `S1625 `ui 2075  ]
 [e :U 2076 ]
-"1192
+"1190
 }
-[; ;main.c: 1191: }
-[; ;main.c: 1192: }
-[; ;main.c: 1193: memset(buff, 0, sizeof buff);
-"1193
+[; ;main.c: 1189: }
+[; ;main.c: 1190: }
+[; ;main.c: 1191: memset(buff, 0, sizeof buff);
+"1191
 [e ( _memset (3 , , -> &U _buff `*v -> 0 `i -> # _buff `ui ]
-[; ;main.c: 1194: c = 0x01;
-"1194
+[; ;main.c: 1192: c = 0x01;
+"1192
 [e = _c -> -> 1 `i `uc ]
-[; ;main.c: 1195: n=0;
-"1195
+[; ;main.c: 1193: n=0;
+"1193
 [e = _n -> 0 `i ]
-"1196
+"1194
 }
 [e :U 2074 ]
-[; ;main.c: 1196: }
-[; ;main.c: 1198: if(modeFlag == 0){
-"1198
+[; ;main.c: 1194: }
+[; ;main.c: 1196: if(modeFlag == 0){
+"1196
 [e $ ! == _modeFlag -> 0 `i 2079  ]
 {
-[; ;main.c: 1199: checkFlags();
-"1199
+[; ;main.c: 1197: checkFlags();
+"1197
 [e ( _checkFlags ..  ]
-"1200
+"1198
 }
-[; ;main.c: 1200: } else if(modeFlag == 1){
+[; ;main.c: 1198: } else if(modeFlag == 1){
 [e $U 2080  ]
 [e :U 2079 ]
 [e $ ! == _modeFlag -> 1 `i 2081  ]
 {
-[; ;main.c: 1201: editClock();
-"1201
+[; ;main.c: 1199: editClock();
+"1199
 [e ( _editClock ..  ]
-"1202
+"1200
 }
-[; ;main.c: 1202: } else if(modeFlag == 2){
+[; ;main.c: 1200: } else if(modeFlag == 2){
 [e $U 2082  ]
 [e :U 2081 ]
 [e $ ! == _modeFlag -> 2 `i 2083  ]
 {
-[; ;main.c: 1203: editTemp();
-"1203
+[; ;main.c: 1201: editTemp();
+"1201
 [e ( _editTemp ..  ]
-"1204
+"1202
 }
-[; ;main.c: 1204: } else if(modeFlag == 3){
+[; ;main.c: 1202: } else if(modeFlag == 3){
 [e $U 2084  ]
 [e :U 2083 ]
 [e $ ! == _modeFlag -> 3 `i 2085  ]
 {
-[; ;main.c: 1205: editLum();
-"1205
+[; ;main.c: 1203: editLum();
+"1203
 [e ( _editLum ..  ]
-"1206
+"1204
 }
-[; ;main.c: 1206: } else if(modeFlag == 4){
+[; ;main.c: 1204: } else if(modeFlag == 4){
 [e $U 2086  ]
 [e :U 2085 ]
 [e $ ! == _modeFlag -> 4 `i 2087  ]
 {
-[; ;main.c: 1207: toggleAlarms();
-"1207
+[; ;main.c: 1205: toggleAlarms();
+"1205
 [e ( _toggleAlarms ..  ]
-"1208
+"1206
 }
-[; ;main.c: 1208: } else if(modeFlag > 4){
+[; ;main.c: 1206: } else if(modeFlag > 4){
 [e $U 2088  ]
 [e :U 2087 ]
 [e $ ! > _modeFlag -> 4 `i 2089  ]
 {
-[; ;main.c: 1209: modeFlag = 0;
-"1209
+[; ;main.c: 1207: modeFlag = 0;
+"1207
 [e = _modeFlag -> 0 `i ]
-"1210
+"1208
 }
 [e :U 2089 ]
-"1211
+"1209
 [e :U 2088 ]
 [e :U 2086 ]
 [e :U 2084 ]
@@ -18111,13 +18111,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 2080 ]
 }
 [e :U 2064 ]
-"1166
+"1164
 [e $U 2065  ]
 [e :U 2066 ]
+[; ;main.c: 1208: }
+[; ;main.c: 1209: }
 [; ;main.c: 1210: }
-[; ;main.c: 1211: }
-[; ;main.c: 1212: }
-"1212
+"1210
 [e :UE 2057 ]
 }
 [p f _sprintf 8421508 ]
