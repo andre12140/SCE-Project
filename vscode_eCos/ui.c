@@ -18,6 +18,7 @@ cyg_mbox uiMbox, TXMbox;
 
 cyg_handle_t uiMboxH;
 cyg_handle_t TXMboxH;
+extern cyg_handle_t procMboxH;
 
 #define SOM 0xFD       /* start of message */
 #define EOM 0xFE       /* end of message */
@@ -40,6 +41,12 @@ cyg_handle_t TXMboxH;
 
 #define uiID 0xCE
 #define procID 0xCF
+
+#define CPT 0xD0
+#define MPT 0xD1
+#define CTTL 0xD2
+#define DTTL 0xD3
+#define PR 0xD4
 
 #define NRBUF 100
 #define REGDIM 5
@@ -86,6 +93,13 @@ bool cmd_irl(int argc, char **argv);
 bool cmd_lr(int argc, char **argv);
 bool cmd_dr(int argc, char **argv);
 
+bool cmd_cpt(int argc, char **argv);
+bool cmd_mpt(int argc, char **argv);
+bool cmd_cttl(int argc, char **argv);
+bool cmd_dttl(int argc, char **argv);
+bool cmd_pr(int argc, char **argv);
+void cmd_pr_display(void);
+
 /*-------------------------------------------------------------------------+
 | Variable and constants definition
 +--------------------------------------------------------------------------*/
@@ -114,18 +128,18 @@ const commands[] = {
     {cmd_dtl, cmd_status_display, "dtl", "<t> <l>          define alarm temperature and luminosity"},
     {cmd_aa, cmd_status_display, "aa", "<a>               activate/deactivate alarms (1/0)"},
     {cmd_ir, cmd_ir_display, "ir", "<p>              information about registers (NREG, nr, iread, iwrite)"},
-    {cmd_trc, NULL, "trc", "<n>              transfer n registers from current iread position"},
-    {cmd_tri, NULL, "tri", "<n> <i>          transfer n registers from index i (0 - oldest)"},
+    {cmd_trc, cmd_status_display, "trc", "<n>              transfer n registers from current iread position"},
+    {cmd_tri, cmd_status_display, "tri", "<n> <i>          transfer n registers from index i (0 - oldest)"},
 
     {cmd_irl, NULL, "irl", "                 information about local registers (NRBUF, nr, iread, iwrite)"},
     {cmd_lr, NULL, "lr", "<n> <i>          list n registers (local memory) from index i (0 - oldest)"},
     {cmd_dr, NULL, "dr", "                 delete registers (local memory)"},
 
-    // {cmd_cpt, "cpt", "                 check period of transference"},
-    // {cmd_mpt, "mpt", "<p>              modify period of transference (minutes - 0 deactivate)"},
-    // {cmd_cttl, "cttl", "                 check threshold temperature and luminosity for processing"},
-    // {cmd_dttl, "dttl", "<t> <l>          dene threshold temperature and luminosity for processing"},
-    // {cmd_pr, "pr", "[h1 m1 s1 [h2 m2 s2]]  process registers (max, min, mean) between instants t1 and t2 (h,m,s)"},
+    {cmd_cpt, NULL, "cpt", "                 check period of transference"},
+    {cmd_mpt, NULL, "mpt", "<p>              modify period of transference (minutes - 0 deactivate)"},
+    {cmd_cttl, NULL, "cttl", "                 check threshold temperature and luminosity for processing"},
+    {cmd_dttl, NULL, "dttl", "<t> <l>          dene threshold temperature and luminosity for processing"},
+    {cmd_pr, cmd_pr_display, "pr", "[h1 m1 s1 [h2 m2 s2]]  process registers (max, min, mean) between instants t1 and t2 (h,m,s)"},
 
     {cmd_sair, NULL, "sair", "                sair"},
     {cmd_ini, NULL, "ini", "<d>              inicializar dispositivo (0/1) ser0/ser1"}};
@@ -666,7 +680,7 @@ bool cmd_lr(int argc, char **argv)
       startingIndex = index;
     }
     int maxReadings = iwrite - startingIndex;
-    if (maxReadings <= 0)
+    if (maxReadings < 0)
     {
       maxReadings = iwrite + (NRBUF - startingIndex);
     }
@@ -697,7 +711,7 @@ bool cmd_lr(int argc, char **argv)
   else //index is omitted
   {
     int maxReadings = (iwrite - iread);
-    if (maxReadings <= 0)
+    if (maxReadings < 0)
     {
       maxReadings = iwrite + (NRBUF - iread);
     }
@@ -737,6 +751,163 @@ bool cmd_dr(int argc, char **argv)
   cyg_mutex_unlock(&sharedBuffMutex);
   printf("CMD_OK");
   return true;
+}
+
+/*-------------------------------------------------------------------------+
+| Function: cmd_cpt - check period of transference
++--------------------------------------------------------------------------*/
+
+bool cmd_cpt(int argc, char **argv)
+{
+  if (argc != 1)
+  {
+    printf("Bad inputs\n");
+    return false;
+  }
+  mBoxMessage m;
+  m.cmd_dim = 3;
+  m.data[3] = (unsigned char)uiID;
+  m.data[2] = (unsigned char)EOM;
+  m.data[1] = (unsigned char)CPT;
+  m.data[0] = (unsigned char)SOM;
+
+  cyg_mbox_tryput(procMboxH, &m);
+  return true;
+}
+
+/*-------------------------------------------------------------------------+
+| Function: cmd_mpt - modify period of transference (minutes - 0 deactivate)
++--------------------------------------------------------------------------*/
+
+bool cmd_mpt(int argc, char **argv)
+{
+  if (argc != 2)
+  {
+    printf("Bad inputs\n");
+    return false;
+  }
+
+  unsigned int p;
+  sscanf(argv[1], "%d", &p);
+
+  mBoxMessage m;
+  m.cmd_dim = 4;
+  m.data[4] = (unsigned char)uiID;
+  m.data[3] = (unsigned char)EOM;
+  m.data[1] = (unsigned char)p;
+  m.data[1] = (unsigned char)MPT;
+  m.data[0] = (unsigned char)SOM;
+
+  cyg_mbox_tryput(procMboxH, &m);
+  return true;
+}
+
+/*-------------------------------------------------------------------------+
+| Function: cmd_cttl - check threshold temperature and luminosity for processing
++--------------------------------------------------------------------------*/
+
+bool cmd_cttl(int argc, char **argv)
+{
+  if (argc != 1)
+  {
+    printf("Bad inputs\n");
+    return false;
+  }
+  mBoxMessage m;
+  m.cmd_dim = 3;
+  m.data[3] = (unsigned char)uiID;
+  m.data[2] = (unsigned char)EOM;
+  m.data[1] = (unsigned char)CTTL;
+  m.data[0] = (unsigned char)SOM;
+
+  cyg_mbox_tryput(procMboxH, &m);
+  return true;
+}
+
+/*-------------------------------------------------------------------------+
+| Function: cmd_dttl - define threshold temperature and luminosity for processing
++--------------------------------------------------------------------------*/
+
+bool cmd_dttl(int argc, char **argv)
+{
+  if (argc != 3)
+  {
+    printf("Bad inputs\n");
+    return false;
+  }
+
+  unsigned int t, l;
+  sscanf(argv[1], "%d", &t);
+  sscanf(argv[2], "%d", &l);
+
+  mBoxMessage m;
+  m.cmd_dim = 5;
+  m.data[5] = (unsigned char)uiID;
+  m.data[4] = (unsigned char)EOM;
+  m.data[3] = (unsigned char)l;
+  m.data[2] = (unsigned char)t;
+  m.data[1] = (unsigned char)DTTL;
+  m.data[0] = (unsigned char)SOM;
+
+  cyg_mbox_tryput(procMboxH, &m);
+  return true;
+}
+
+/*-------------------------------------------------------------------------+
+| Function: cmd_dttl - define threshold temperature and luminosity for processing
++--------------------------------------------------------------------------*/
+
+bool cmd_pr(int argc, char **argv)
+{
+  if (!(argc == 4 || argc == 7))
+  {
+    printf("Bad inputs\n");
+    return false;
+  }
+
+  mBoxMessage m;
+
+  unsigned int h1, m1, s1;
+  sscanf(argv[1], "%d", &h1);
+  sscanf(argv[2], "%d", &m1);
+  sscanf(argv[3], "%d", &s1);
+  m.data[6] = (unsigned char)uiID;
+  m.data[5] = (unsigned char)EOM;
+  m.data[4] = (unsigned char)s1;
+  m.data[3] = (unsigned char)m1;
+  m.data[2] = (unsigned char)h1;
+  m.cmd_dim = 6;
+
+  if (argc == 7)
+  {
+    unsigned int h2, m2, s2;
+    sscanf(argv[4], "%d", &h2);
+    sscanf(argv[5], "%d", &m2);
+    sscanf(argv[6], "%d", &s2);
+    m.data[9] = (unsigned char)uiID;
+    m.data[8] = (unsigned char)EOM;
+    m.data[7] = (unsigned char)s2;
+    m.data[6] = (unsigned char)m2;
+    m.data[5] = (unsigned char)h2;
+    m.cmd_dim = 9;
+  }
+
+  m.data[1] = (unsigned char)PR;
+  m.data[0] = (unsigned char)SOM;
+
+  cyg_mbox_tryput(procMboxH, &m);
+  return true;
+}
+
+void cmd_pr_display()
+{
+  if (bufr[2] == CMD_ERROR)
+  {
+    printf("CMD_ERROR\n");
+    return;
+  }
+  printf("Temperature: Max = %d, Min = %d, Mean = %d\n", bufr[2], bufr[3], bufr[4]);
+  printf("Luminosity: Max = %d, Min = %d, Mean = %d\n", bufr[5], bufr[6], bufr[7]);
 }
 
 /*-------------------------------------------------------------------------+
@@ -788,9 +959,12 @@ void monitor(void)
       /* Executing commands -----------------------------------------------*/
       if (i < NCOMMANDS)
       {
-        if (!cyg_semaphore_timed_wait(&newCmdSem, cyg_current_time() + 50)) //Acontece quando o comando anteria ainda nao foi totalmete processado (RX ainda nao deu post)
+        if ((i > 0) && (i < 14))
         {
-          continue;
+          if (!cyg_semaphore_timed_wait(&newCmdSem, cyg_current_time() + 50)) //Acontece quando o comando anteria ainda nao foi totalmete processado (RX ainda nao deu post)
+          {
+            continue;
+          }
         }
         bool cmd_exec_ret = commands[i].cmd_fnct(argc, argv); //check for bad inputs
 
@@ -798,10 +972,8 @@ void monitor(void)
         {
           continue;
         }
-
-        if ((i > 0) && (i < 12))
+        if (((i > 0) && (i < 14)) || i == 21)
         {
-          //Esperar pela mailBox do RX (TIMED_GET)
           m = (mBoxMessage *)cyg_mbox_timed_get(uiMboxH, cyg_current_time() + 50);
 
           if (m != NULL)
@@ -811,7 +983,7 @@ void monitor(void)
           }
           else
           {
-            printf("Time to recieve message exceeded");
+            printf("Time to recieve message exceeded (UI)");
           }
         }
       }

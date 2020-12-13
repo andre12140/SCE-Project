@@ -13,6 +13,8 @@ extern cyg_handle_t TXMboxH;
 
 extern cyg_sem_t newCmdSem;
 
+extern cyg_handle_t procMboxH;
+
 #define SOM 0xFD       /* start of message */
 #define EOM 0xFE       /* end of message */
 #define RCLK 0xC0      /* read clock */
@@ -38,7 +40,7 @@ extern cyg_sem_t newCmdSem;
 #define NRBUF 100
 #define REGDIM 5
 
-unsigned char bufr[20];
+unsigned char bufr[60];
 
 extern unsigned char eCosRingBuff[NRBUF][REGDIM];
 extern int iwrite;
@@ -52,12 +54,12 @@ typedef struct mBoxMessages
   unsigned int cmd_dim;   //Number of bytes to be transmited
 } mBoxMessage;
 
-void cmd_reg_write(void)
+bool cmd_reg_write(void)
 {
   if (bufr[2] == CMD_ERROR)
   {
-    printf("CMD_ERROR\n");
-    return;
+    //printf("CMD_ERROR\n");
+    return false;
   }
   int j;
   int n = bufr[2];
@@ -75,7 +77,7 @@ void cmd_reg_write(void)
   for (j = 0; j < n; j++)
   {
     memcpy(eCosRingBuff[iwrite], &bufr[offset + (j * REGDIM)], REGDIM);
-    if ((nr == NRBUF) && (iread == iwrite))
+    if ((nr == NRBUF) && (iread == (iwrite - 1)))
     {
       iread++;
     }
@@ -101,6 +103,7 @@ void cmd_reg_write(void)
     }
   }
   cyg_mutex_unlock(&sharedBuffMutex);
+  return true;
 }
 
 mBoxMessage txMessage;
@@ -112,7 +115,7 @@ void tx_th_prog(cyg_addrword_t data)
   {
     txMessage = (*(mBoxMessage *)cyg_mbox_get(TXMboxH));
     err = cyg_io_write(serH, txMessage.data, &(txMessage.cmd_dim));
-    printf("io_write err=%x, w=%d\n", err, txMessage.cmd_dim); //DEBUG
+    //printf("io_write err=%x, w=%d\n", err, txMessage.cmd_dim); //DEBUG
   }
 }
 
@@ -140,24 +143,46 @@ void rx_th_prog(cyg_addrword_t data)
       n++;
       if (buf_byte[0] == (unsigned char)EOM)
       {
-        //printf("io_read err=%x, r=%d\n", err, n);
-        if (bufr[1] == TRGC || bufr[1] == TRGI)
-        {
-          cmd_reg_write();
-        }
-        else if (cyg_current_time() < t) //Skip messages that took more than 50ms
+        //printf("io_read err=%x, r=%d\n", err, n); //DEBUG
+
+        if (cyg_current_time() < t) //Skip messages that took more than 50ms
         {
           mBoxMessage rxMessage;
+          if (bufr[1] == TRGC || bufr[1] == TRGI)
+          {
+            if (cmd_reg_write())
+            {
+              rxMessage.data[2] = CMD_OK;
+            }
+            else
+            {
+              rxMessage.data[2] = CMD_ERROR;
+            }
+            rxMessage.cmd_dim = 4;
+            rxMessage.data[0] = SOM;
+            rxMessage.data[1] = bufr[1];
+            rxMessage.data[3] = EOM;
+            rxMessage.data[4] = txMessage.data[txMessage.cmd_dim];
+          }
+          else
+          {
+            rxMessage.cmd_dim = n;
+            memcpy(rxMessage.data, bufr, rxMessage.cmd_dim + 1);
+          }
 
-          rxMessage.cmd_dim = n;
-          memcpy(rxMessage.data, bufr, rxMessage.cmd_dim + 1);
           if (txMessage.data[txMessage.cmd_dim] == uiID)
           {
-            cyg_mbox_tryput(uiMboxH, &rxMessage);
+            if (!cyg_mbox_tryput(uiMboxH, &rxMessage))
+            {
+              printf("RX write ERROR\n");
+            }
           }
           else //Enviar para o processing task
           {
-            //cyg_mbox_tryput(procMboxH, &rxMessage);
+            if (!cyg_mbox_tryput(procMboxH, &rxMessage))
+            {
+              printf("RX write ERROR\n");
+            }
           }
         }
         cyg_semaphore_post(&newCmdSem);
