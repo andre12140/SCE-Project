@@ -40,6 +40,13 @@ typedef struct mBoxMessages
     unsigned int cmd_dim;   //Number of bytes to be transmited
 } mBoxMessage;
 
+struct Time
+{
+    int h;
+    int m;
+    int s;
+};
+
 extern cyg_sem_t newCmdSem;
 
 extern cyg_mutex_t sharedBuffMutex;
@@ -47,11 +54,12 @@ extern cyg_mutex_t sharedBuffMutex;
 cyg_mbox procMbox;
 cyg_handle_t procMboxH;
 extern cyg_handle_t TXMboxH;
+extern cyg_handle_t uiMboxH;
 
 cyg_alarm_t alarm_func;
 cyg_handle_t alarmH;
 
-int periodOfTransference = 1;
+unsigned int periodOfTransference = 1;
 
 unsigned int tempThreshold = 28;
 unsigned int lumThreshold = 4;
@@ -61,8 +69,12 @@ extern int iwrite;
 extern int iread;
 extern int nr;
 
-mBoxMessage alarmCmd; //Comand that is requested periodicaly
-mBoxMessage m;
+bool sentMessageFlag = false;
+
+mBoxMessage alarmCmd; //Comando que é solicitado periodicamente
+mBoxMessage *m;       //Mensagem lida
+mBoxMessage m_r;      //Mensagem de leitura (copia de m)
+mBoxMessage m_w;      //Mensagem de escrita para o UI
 
 void analyseRegisters(void)
 {
@@ -92,115 +104,301 @@ void analyseRegisters(void)
 
 void proc_cpt(void)
 {
-    printf("Period of transference = %d\n", periodOfTransference);
+    m_w.cmd_dim = (unsigned int)4;
+    unsigned char bufw[m_w.cmd_dim + 1];
+    bufw[4] = (unsigned char)procID;
+    bufw[3] = (unsigned char)EOM;
+    bufw[2] = (unsigned char)periodOfTransference;
+    bufw[1] = (unsigned char)CPT;
+    bufw[0] = (unsigned char)SOM;
+    memcpy(m_w.data, bufw, m_w.cmd_dim + 1);
+    cyg_mbox_tryput(uiMboxH, &m_w);
 }
 
 void proc_mpt(void)
 {
-    periodOfTransference = m.data[2];
+    periodOfTransference = m_r.data[2];
     if (periodOfTransference == 0)
     {
         cyg_alarm_disable(alarmH);
     }
     else
     {
-        cyg_alarm_initialize(alarmH, cyg_current_time() + (periodOfTransference * 1000), (periodOfTransference * 1000));
+        cyg_alarm_initialize(alarmH, cyg_current_time() + (periodOfTransference * 100), (periodOfTransference * 100));
     }
-    printf("CMD_OK\n");
+
+    m_w.cmd_dim = 4;
+    unsigned char bufw[m_w.cmd_dim + 1];
+    bufw[4] = (unsigned char)procID;
+    bufw[3] = (unsigned char)EOM;
+    bufw[2] = (unsigned char)CMD_OK;
+    bufw[1] = (unsigned char)MPT;
+    bufw[0] = (unsigned char)SOM;
+    memcpy(m_w.data, bufw, m_w.cmd_dim + 1);
+    cyg_mbox_tryput(uiMboxH, &m_w);
 }
 
 void proc_cttl(void)
 {
-    printf("eCos Temp threshold = %d\n", tempThreshold);
-    printf("eCos Lum threshold = %d\n", lumThreshold);
+    m_w.cmd_dim = 5;
+    unsigned char bufw[m_w.cmd_dim + 1];
+    bufw[5] = (unsigned char)procID;
+    bufw[4] = (unsigned char)EOM;
+    bufw[3] = lumThreshold;
+    bufw[2] = tempThreshold;
+    bufw[1] = (unsigned char)CTTL;
+    bufw[0] = (unsigned char)SOM;
+    memcpy(m_w.data, bufw, m_w.cmd_dim + 1);
+    cyg_mbox_tryput(uiMboxH, &m_w);
 }
 
 void proc_dttl(void)
 {
-    if ((m.data[2] >= 0 && m.data[2] < 50) && (m.data[3] >= 0 && m.data[3] < 8))
+    m_w.cmd_dim = 4;
+    unsigned char bufw[m_w.cmd_dim + 1];
+    bufw[4] = (unsigned char)procID;
+    bufw[3] = (unsigned char)EOM;
+
+    bufw[1] = (unsigned char)DTTL;
+    bufw[0] = (unsigned char)SOM;
+
+    if ((m_r.data[2] >= 0 && m_r.data[2] < 50) && (m_r.data[3] >= 0 && m_r.data[3] < 8))
     {
-        tempThreshold = m.data[2];
-        lumThreshold = m.data[3];
-        printf("CMD_OK\n");
+        tempThreshold = m_r.data[2];
+        lumThreshold = m_r.data[3];
+        bufw[2] = (unsigned char)CMD_OK;
     }
     else
     {
-        printf("Values for temperature or luminosity out of range\n");
-        printf("CMD_ERROR\n");
+        bufw[2] = (unsigned char)CMD_ERROR;
     }
+    memcpy(m_w.data, bufw, m_w.cmd_dim + 1);
+    cyg_mbox_tryput(uiMboxH, &m_w);
 }
 
-int t1Index, t2Index;
-void searchTimes(void)
+unsigned int maxTemp;
+unsigned int minTemp;
+unsigned int meanTemp;
+
+unsigned int maxLum;
+unsigned int minLum;
+unsigned int meanLum;
+
+void calcAux(int i)
 {
-    bool foundOneFlag = true;
-    if (m.cmd_dim == 9) //Tem t1 e t2
+    meanTemp += eCosRingBuff[i][3];
+    meanLum += eCosRingBuff[i][4];
+
+    if (maxTemp == -1 && minTemp == -1 && maxLum == -1 && minLum == -1)
     {
-        foundOneFlag = false;
+        maxTemp = eCosRingBuff[i][3];
+        minTemp = eCosRingBuff[i][3];
+
+        maxLum = eCosRingBuff[i][4];
+        minLum = eCosRingBuff[i][4];
+    }
+    printf("Register Temp = %d\n", eCosRingBuff[i][3]);
+    printf("Register Lum = %d\n", eCosRingBuff[i][4]);
+
+    if (eCosRingBuff[i][3] > maxTemp)
+    {
+        maxTemp = eCosRingBuff[i][3];
+    }
+    if (eCosRingBuff[i][3] < minTemp)
+    {
+        minTemp = eCosRingBuff[i][3];
     }
 
-    int i;
-    for (i = 0; i < nr; i++)
+    if (eCosRingBuff[i][4] > maxLum)
     {
-        if (eCosRingBuff[i][0] == m.data[2] && eCosRingBuff[i][0] == m.data[3] && eCosRingBuff[i][0] == m.data[4])
-        {
-            t1Index = i;
-            if (foundOneFlag)
-            {
-                break;
-            }
-            else
-            {
-                foundOneFlag = true;
-            }
-        }
-        if ((m.cmd_dim == 9) && (eCosRingBuff[i][0] == m.data[2] && eCosRingBuff[i][0] == m.data[3] && eCosRingBuff[i][0] == m.data[4])) //Tem t1 e t2
-        {
-            t2Index = i;
-            if (foundOneFlag)
-            {
-                break;
-            }
-            else
-            {
-                foundOneFlag = true;
-            }
-        }
+        maxLum = eCosRingBuff[i][4];
+    }
+    if (eCosRingBuff[i][4] < minLum)
+    {
+        minLum = eCosRingBuff[i][4];
     }
 }
 
 void calcMaxMinMean(int firstIndex, int secondIndex)
 {
+    maxTemp = -1;
+    minTemp = -1;
+    meanTemp = 0;
+
+    maxLum = -1;
+    minLum = -1;
+    meanLum = 0;
+
+    int i;
+    if (firstIndex > secondIndex) //Ring buffer turned arround
+    {
+        for (i = firstIndex; i < NRBUF; i++)
+        {
+            calcAux(i);
+        }
+        for (i = 0; i <= secondIndex; i++)
+        {
+            calcAux(i);
+        }
+
+        meanTemp = meanTemp / (secondIndex + 1 + (NRBUF - firstIndex));
+        meanLum = meanLum / (secondIndex + 1 + (NRBUF - firstIndex));
+        return;
+    }
+
+    for (i = firstIndex; i <= secondIndex; i++)
+    {
+        calcAux(i);
+    }
+    meanTemp = meanTemp / (secondIndex + 1 - firstIndex);
+    meanLum = meanLum / (secondIndex + 1 - firstIndex);
+}
+
+// Computes difference between time periods
+void differenceBetweenTimePeriod(struct Time start,
+                                 struct Time stop,
+                                 struct Time *diff)
+{
+    while (stop.s > start.s)
+    {
+        --start.m;
+        start.s += 60;
+    }
+    diff->s = start.s - stop.s;
+    while (stop.m > start.m)
+    {
+        --start.h;
+        start.m += 60;
+    }
+    diff->m = start.m - stop.m;
+    diff->h = start.h - stop.h;
+}
+
+//////////////////////////Dimensao de unsigned int nao chega para guardar um tempo todo em segundos//////////////////////////////////
+unsigned int getTimeindex(struct Time t)
+{
+    struct Time arrayTime, diff;
+    unsigned int arrayDiffseconds, aux = 0;
+    int index = -1;
+    int i;
+    for (i = 0; i < nr; i++)
+    {
+        arrayTime.h = eCosRingBuff[i][0];
+        arrayTime.m = eCosRingBuff[i][1];
+        arrayTime.s = eCosRingBuff[i][2];
+        differenceBetweenTimePeriod(t, arrayTime, &diff);
+        arrayDiffseconds = abs(diff.s) + (abs(diff.m) * 60) + (abs(diff.h) * 3600);
+        if (index == -1)
+        {
+            aux = arrayDiffseconds;
+            index = i;
+        }
+        if (arrayDiffseconds < aux)
+        {
+            aux = arrayDiffseconds;
+            index = i;
+        }
+    }
+    return index;
 }
 
 void proc_pr(void)
 {
-    t1Index = -1;
-    t2Index = -1;
-    //Ordenar um buffer por tempo????????????????
-    searchTimes();
-    if (t1Index == -1) //Nao encontrou o tempo t1 logo sao os registos todos
+    unsigned int t1Index;
+    unsigned int t2Index;
+    if (m_r.cmd_dim == 3)
     {
-        calcMaxMinMean(0, nr);
+        t1Index = 0;
+        t2Index = nr - 1;
     }
-    else if (t2Index == -1) //Encontrou o tempo t1 mas não o t2 logo sao os resgisto a partir de t1 ate ao final
+    else if (m_r.cmd_dim == 6)
     {
-        calcMaxMinMean(t1Index, nr);
+        struct Time t1 = {m_r.data[2], m_r.data[3], m_r.data[4]};
+        t1Index = getTimeindex(t1);
+        t2Index = nr - 1;
     }
-    else //Encontrou t1 e t2 logo sao os registos entre t1 e t2
+    else if (m_r.cmd_dim == 9)
     {
-        calcMaxMinMean(t1Index, t2Index); //Se os indices nao estiverem por ordem isto nao funciona
+        struct Time t1 = {m_r.data[2], m_r.data[3], m_r.data[4]};
+        struct Time t2 = {m_r.data[5], m_r.data[6], m_r.data[7]};
+        struct Time diff;
+        differenceBetweenTimePeriod(t2, t1, &diff);
+        if (diff.h < 0 || diff.m < 0 || diff.s < 0) //t1 maior que t2
+        {
+            m_w.cmd_dim = 4;
+            unsigned char bufw[m_w.cmd_dim + 1];
+            bufw[4] = (unsigned char)procID;
+            bufw[3] = (unsigned char)EOM;
+            bufw[2] = (unsigned char)CMD_ERROR;
+            bufw[1] = (unsigned char)PR;
+            bufw[0] = (unsigned char)SOM;
+            memcpy(m_w.data, bufw, m_w.cmd_dim + 1);
+            cyg_mbox_tryput(uiMboxH, &m_w);
+            return;
+        }
+
+        t1Index = getTimeindex(t1);
+        t2Index = getTimeindex(t2);
     }
+    else //ERRO
+    {
+        m_w.cmd_dim = 4;
+        unsigned char bufw[m_w.cmd_dim + 1];
+        bufw[4] = (unsigned char)procID;
+        bufw[3] = (unsigned char)EOM;
+        bufw[2] = (unsigned char)CMD_ERROR;
+        bufw[1] = (unsigned char)PR;
+        bufw[0] = (unsigned char)SOM;
+        memcpy(m_w.data, bufw, m_w.cmd_dim + 1);
+        cyg_mbox_tryput(uiMboxH, &m_w);
+        return;
+    }
+
+    calcMaxMinMean(t1Index, t2Index);
+
+    // printf("Temperature: Max = %d, Min = %d, Mean = %d\n", maxTemp, minTemp, meanTemp);
+    // printf("Luminosity: Max = %d, Min = %d, Mean = %d\n", maxLum, minLum, meanLum);
+
+    m_w.cmd_dim = 9;
+    unsigned char bufw[m_w.cmd_dim + 1];
+    bufw[9] = (unsigned char)procID;
+    bufw[8] = (unsigned char)EOM;
+    bufw[7] = (unsigned char)meanLum;
+    bufw[6] = (unsigned char)minLum;
+    bufw[5] = (unsigned char)maxLum;
+    bufw[4] = (unsigned char)meanTemp;
+    bufw[3] = (unsigned char)minTemp;
+    bufw[2] = (unsigned char)maxTemp;
+    bufw[1] = (unsigned char)MPT;
+    bufw[0] = (unsigned char)SOM;
+    memcpy(m_w.data, bufw, m_w.cmd_dim + 1);
+    cyg_mbox_tryput(uiMboxH, &m_w);
 }
 
 void proc_th_main(void)
 {
     while (1)
     {
-        m = *(mBoxMessage *)cyg_mbox_get(procMboxH); //Recebe mails do Rx e do UI
-        if (m.data[m.cmd_dim] == procID)             //Mensagem vinda de RX em que foi criada pela processing task
+        m = (mBoxMessage *)cyg_mbox_timed_get(procMboxH, cyg_current_time() + 10); //100ms
+
+        if (m == NULL)
         {
-            if (m.data[1] == TRGC && m.data[2] == CMD_OK)
+            if (sentMessageFlag)
+            {
+                sentMessageFlag = false;
+                cyg_semaphore_post(&newCmdSem); //post sem
+            }
+            continue;
+        }
+
+        memcpy(&m_r, m, sizeof(mBoxMessage));
+
+        cyg_semaphore_post(&newCmdSem); //post sem
+
+        if (m_r.data[m_r.cmd_dim] == procID) //Mensagem vinda de RX em que foi criada pela processing task
+        {
+            sentMessageFlag = false;
+            if (m_r.data[1] == TRGC && m_r.data[2] == CMD_OK)
             {
                 analyseRegisters();
             }
@@ -208,25 +406,25 @@ void proc_th_main(void)
             {
             }
         }
-        else if (m.data[m.cmd_dim] == uiID) //Mensagem vinda do UI
+        else if (m_r.data[m_r.cmd_dim] == uiID) //Mensagem vinda do UI
         {
-            if (m.data[1] == CPT)
+            if (m_r.data[1] == CPT)
             {
                 proc_cpt();
             }
-            else if (m.data[1] == MPT)
+            else if (m_r.data[1] == MPT)
             {
                 proc_mpt();
             }
-            else if (m.data[1] == CTTL)
+            else if (m_r.data[1] == CTTL)
             {
                 proc_cttl();
             }
-            else if (m.data[1] == DTTL)
+            else if (m_r.data[1] == DTTL)
             {
                 proc_dttl();
             }
-            else if (m.data[1] == PR)
+            else if (m_r.data[1] == PR)
             {
                 proc_pr();
             }
@@ -257,20 +455,29 @@ void proc_th_prog(cyg_addrword_t data)
                      (cyg_addrword_t)0,
                      &alarmH, &alarm);
 
-    /////////////////////////////////////////////// Penso que nao esta com o periodo correto /////////////////////////////////////////////////
-    cyg_alarm_initialize(alarmH, cyg_current_time() + (periodOfTransference * 1000), (periodOfTransference * 1000));
+    //Cada tick demora 10ms
+    cyg_alarm_initialize(alarmH, cyg_current_time() + (periodOfTransference * 300), (periodOfTransference * 100));
 
     proc_th_main();
 }
 
+//VERIFICAR SE O SEMAFORO NAO ENTRA EM PARAFUSO
 void alarm_func(cyg_handle_t alarmH, cyg_addrword_t data)
 {
-    if (!cyg_semaphore_timed_wait(&newCmdSem, cyg_current_time() + 50)) //Acontece quando o comando anterior ainda nao foi totalmete processado (RX ainda nao deu post)
+    //printf("IN ALARM\n");
+    if (cyg_semaphore_trywait(&newCmdSem))
     {
-        return;
+        if (!cyg_mbox_tryput(TXMboxH, &alarmCmd))
+        {
+            printf("Something went wrong with sending mail box to TX from alarm_func (Processing thread)\n");
+        }
+        else
+        {
+            sentMessageFlag = true;
+        }
     }
-    if (!cyg_mbox_tryput(TXMboxH, &alarmCmd))
+    else
     {
-        printf("Something went wrong with sending mail box to TX from alarm_func (Processing thread)");
+        printf("Can't aquire register because RX is waiting to get last message (In Alarm)\n");
     }
 }

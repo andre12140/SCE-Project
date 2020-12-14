@@ -77,7 +77,7 @@ bool cmd_reg_write(void)
   for (j = 0; j < n; j++)
   {
     memcpy(eCosRingBuff[iwrite], &bufr[offset + (j * REGDIM)], REGDIM);
-    if ((nr == NRBUF) && (iread == (iwrite - 1)))
+    if ((nr == NRBUF) && (iread == iwrite))
     {
       iread++;
     }
@@ -185,8 +185,6 @@ void rx_th_prog(cyg_addrword_t data)
             }
           }
         }
-        cyg_semaphore_post(&newCmdSem);
-        //post sem
       }
     }
   }
