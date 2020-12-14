@@ -162,11 +162,11 @@ channel_FVR_buf1 63
 [v _cmd_aa cmd_aa `(v  1 e 1 0 ]
 "963
 [v _cmd_ir cmd_ir `(v  1 e 1 0 ]
-"977
+"976
 [v _cmd_trc cmd_trc `(v  1 e 1 0 ]
-"1021
+"1019
 [v _cmd_tri cmd_tri `(v  1 e 1 0 ]
-"1079
+"1077
 [v _main main `(v  1 e 1 0 ]
 "63 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/adcc.c
 [v _ADCC_Initialize ADCC_Initialize `(v  1 e 1 0 ]
@@ -1081,26 +1081,26 @@ channel_FVR_buf1 63
 [v _timer1ReloadVal timer1ReloadVal `VEui  1 e 2 0 ]
 "58
 [v _TMR1_InterruptHandler TMR1_InterruptHandler `*.37(v  1 e 2 0 ]
-"1079 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
+"1077 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
 [v _main main `(v  1 e 1 0 ]
 {
-"1097
+"1095
 [v main@i i `i  1 a 2 28 ]
-"1162
+"1160
 [v main@buff buff `[20]uc  1 a 20 3 ]
-"1163
-[v main@n n `i  1 a 2 33 ]
-"1164
-[v main@i_2532 i `i  1 a 2 31 ]
 "1161
+[v main@n n `i  1 a 2 33 ]
+"1162
+[v main@i_2532 i `i  1 a 2 31 ]
+"1159
 [v main@c c `uc  1 a 1 30 ]
-"1094
-[v main@corrupted corrupted `uc  1 a 1 27 ]
-"1093
-[v main@notInit notInit `uc  1 a 1 26 ]
 "1092
+[v main@corrupted corrupted `uc  1 a 1 27 ]
+"1091
+[v main@notInit notInit `uc  1 a 1 26 ]
+"1090
 [v main@checkSumAux checkSumAux `uc  1 a 1 25 ]
-"1212
+"1210
 } 0
 "765
 [v _toggleAlarms toggleAlarms `(v  1 e 1 0 ]
@@ -1348,29 +1348,29 @@ channel_FVR_buf1 63
 {
 "351
 } 0
-"977
+"976
 [v _cmd_trc cmd_trc `(v  1 e 1 0 ]
 {
-"999
-[v cmd_trc@buffData buffData `[5]uc  1 a 5 16 ]
-"992
-[v cmd_trc@buffInit buffInit `[3]uc  1 a 3 21 ]
-"979
-[v cmd_trc@n n `i  1 a 2 31 ]
-"980
-[v cmd_trc@maxReadings maxReadings `i  1 a 2 29 ]
-"1000
-[v cmd_trc@address address `ui  1 a 2 26 ]
-"997
-[v cmd_trc@i i `i  1 a 2 24 ]
 "998
+[v cmd_trc@buffData buffData `[5]uc  1 a 5 16 ]
+"991
+[v cmd_trc@buffInit buffInit `[3]uc  1 a 3 21 ]
+"978
+[v cmd_trc@n n `i  1 a 2 31 ]
+"979
+[v cmd_trc@maxReadings maxReadings `i  1 a 2 29 ]
+"999
+[v cmd_trc@address address `ui  1 a 2 26 ]
+"996
+[v cmd_trc@i i `i  1 a 2 24 ]
+"997
 [v cmd_trc@j j `uc  1 a 1 33 ]
-"1012
+"1011
 [v cmd_trc@buffEOM buffEOM `[1]uc  1 a 1 28 ]
-"977
+"976
 [v cmd_trc@num num `i  1 p 2 7 ]
 [v cmd_trc@buffer buffer `*.4uc  1 p 1 9 ]
-"1018
+"1017
 } 0
 "963
 [v _cmd_ir cmd_ir `(v  1 e 1 0 ]
@@ -1467,31 +1467,31 @@ channel_FVR_buf1 63
 [v cmd_rc@buff buff `[6]uc  1 a 6 11 ]
 "853
 } 0
-"1021
+"1019
 [v _cmd_tri cmd_tri `(v  1 e 1 0 ]
 {
-"1054
+"1052
 [v cmd_tri@buffData buffData `[5]uc  1 a 5 15 ]
-"1044
+"1042
 [v cmd_tri@buffInit buffInit `[4]uc  1 a 4 20 ]
-"1051
+"1049
 [v cmd_tri@i i `i  1 a 2 26 ]
-"1026
-[v cmd_tri@startingIndex startingIndex `uc  1 a 1 31 ]
-"1053
-[v cmd_tri@j j `uc  1 a 1 30 ]
-"1023
-[v cmd_tri@n n `uc  1 a 1 29 ]
 "1024
-[v cmd_tri@index index `uc  1 a 1 28 ]
-"1033
-[v cmd_tri@maxReadings maxReadings `uc  1 a 1 25 ]
-"1071
-[v cmd_tri@buffEOM buffEOM `[1]uc  1 a 1 24 ]
+[v cmd_tri@startingIndex startingIndex `uc  1 a 1 31 ]
+"1051
+[v cmd_tri@j j `uc  1 a 1 30 ]
 "1021
+[v cmd_tri@n n `uc  1 a 1 29 ]
+"1022
+[v cmd_tri@index index `uc  1 a 1 28 ]
+"1069
+[v cmd_tri@buffEOM buffEOM `[1]uc  1 a 1 25 ]
+"1031
+[v cmd_tri@maxReadings maxReadings `uc  1 a 1 24 ]
+"1019
 [v cmd_tri@num num `i  1 p 2 7 ]
 [v cmd_tri@buffer buffer `*.4uc  1 p 1 9 ]
-"1077
+"1075
 } 0
 "15 E:\Microchip\xc8\v2.30\pic\sources\c90\common\Umul16.c
 [v ___wmul __wmul `(ui  1 e 2 0 ]

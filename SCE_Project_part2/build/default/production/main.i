@@ -22257,7 +22257,7 @@ DATAEE_WriteByte( (iwrite * 0x5) + 0x7012 + 0x2 , t.s);
 DATAEE_WriteByte( (iwrite * 0x5) + 0x7012 + 0x3 , temp);
 DATAEE_WriteByte( (iwrite * 0x5) + 0x7012 + 0x4 , lumLevel);
 
-if((nr == NREG) && (iread == iwrite)){
+if((nr == NREG) && (iread == (iwrite-1))){
 iread++;
 }
 
@@ -22645,12 +22645,11 @@ buff[6] = (uint8_t)0xFE;
 sendMessage(7,buff);
 }
 
-
 void cmd_trc(int num, char *buffer){
 if(num == 4){
 int n = buffer[2];
 int maxReadings = (iwrite-iread);
-if(maxReadings <= 0){
+if(maxReadings < 0){
 maxReadings = iwrite + (NREG - iread);
 }
 if((n > nr) || (n > maxReadings)){
@@ -22689,7 +22688,6 @@ sendERRORMessage((uint8_t)0XCB);
 }
 }
 
-
 void cmd_tri(int num, char *buffer){
 if(num == 5){
 uint8_t n = buffer[2];
@@ -22703,7 +22701,7 @@ if(nr != NREG){
 startingIndex = index;
 }
 uint8_t maxReadings = iwrite - startingIndex;
-if(maxReadings <= 0){
+if(maxReadings < 0){
 maxReadings = iwrite + (NREG - startingIndex);
 }
 
