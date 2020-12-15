@@ -50,6 +50,7 @@ struct Time
 extern cyg_sem_t newCmdSem;
 
 extern cyg_mutex_t sharedBuffMutex;
+extern cyg_mutex_t printfMutex;
 
 cyg_mbox procMbox;
 cyg_handle_t procMboxH;
@@ -59,7 +60,7 @@ extern cyg_handle_t uiMboxH;
 cyg_alarm_t alarm_func;
 cyg_handle_t alarmH;
 
-unsigned int periodOfTransference = 1;
+unsigned int periodOfTransference = 0;
 
 unsigned int tempThreshold = 28;
 unsigned int lumThreshold = 4;
@@ -89,9 +90,12 @@ void analyseRegisters(void)
     {
         if (eCosRingBuff[iread][3] > tempThreshold || eCosRingBuff[iread][4] < lumThreshold)
         {
+            cyg_mutex_lock(&printfMutex);
             printf("Clock = %02d : %02d : %02d\n", eCosRingBuff[iread][0], eCosRingBuff[iread][1], eCosRingBuff[iread][2]);
             printf("Temp = %d\n", eCosRingBuff[iread][3]);
             printf("Lum = %d\n\n", eCosRingBuff[iread][4]);
+            printf("Cmd> ");
+            cyg_mutex_unlock(&printfMutex);
         }
         iread++;
         if (iread > NRBUF - 1)
@@ -197,8 +201,8 @@ void calcAux(int i)
         maxLum = eCosRingBuff[i][4];
         minLum = eCosRingBuff[i][4];
     }
-    printf("Register Temp = %d\n", eCosRingBuff[i][3]);
-    printf("Register Lum = %d\n", eCosRingBuff[i][4]);
+    // printf("Register Temp = %d\n", eCosRingBuff[i][3]);
+    // printf("Register Lum = %d\n", eCosRingBuff[i][4]);
 
     if (eCosRingBuff[i][3] > maxTemp)
     {
@@ -375,6 +379,19 @@ void proc_pr(void)
     cyg_mbox_tryput(uiMboxH, &m_w);
 }
 
+void asyncMessage(void)
+{
+    cyg_mutex_lock(&printfMutex);
+    printf("Buffer in PIC is half full, starting periodic transference if not yet started\n");
+    cyg_mutex_unlock(&printfMutex);
+
+    if (periodOfTransference == 0)
+    {
+        periodOfTransference = 1;
+        cyg_alarm_initialize(alarmH, cyg_current_time() + (periodOfTransference * 100), (periodOfTransference * 100));
+    }
+}
+
 void proc_th_main(void)
 {
     while (1)
@@ -393,7 +410,10 @@ void proc_th_main(void)
 
         memcpy(&m_r, m, sizeof(mBoxMessage));
 
-        cyg_semaphore_post(&newCmdSem); //post sem
+        if (!(m_r.data[2] == NMFL))
+        {
+            cyg_semaphore_post(&newCmdSem); //post sem
+        }
 
         if (m_r.data[m_r.cmd_dim] == procID) //Mensagem vinda de RX em que foi criada pela processing task
         {
@@ -402,8 +422,9 @@ void proc_th_main(void)
             {
                 analyseRegisters();
             }
-            else //Mensagem asyncrona do PIC
+            else //Mensagem assincrona do PIC
             {
+                asyncMessage();
             }
         }
         else if (m_r.data[m_r.cmd_dim] == uiID) //Mensagem vinda do UI
@@ -434,7 +455,6 @@ void proc_th_main(void)
 
 void proc_th_prog(cyg_addrword_t data)
 {
-    printf("Working Processing thread\n");
 
     alarmCmd.data[0] = SOM;
     alarmCmd.data[1] = TRGC;
@@ -456,7 +476,11 @@ void proc_th_prog(cyg_addrword_t data)
                      &alarmH, &alarm);
 
     //Cada tick demora 10ms
-    cyg_alarm_initialize(alarmH, cyg_current_time() + (periodOfTransference * 300), (periodOfTransference * 100));
+    //cyg_alarm_initialize(alarmH, cyg_current_time() + (periodOfTransference * 300), (periodOfTransference * 100));
+
+    cyg_mutex_lock(&printfMutex);
+    printf("Working Processing thread\n");
+    cyg_mutex_unlock(&printfMutex);
 
     proc_th_main();
 }

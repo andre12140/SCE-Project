@@ -12,6 +12,8 @@ cyg_bool_t r;
 
 cyg_mutex_t sharedBuffMutex;
 
+cyg_mutex_t printfMutex;
+
 cyg_sem_t newCmdSem;
 
 cyg_mbox uiMbox, TXMbox;
@@ -86,8 +88,6 @@ bool cmd_ir(int argc, char **argv);
 void cmd_ir_display(void);
 bool cmd_trc(int argc, char **argv);
 bool cmd_tri(int argc, char **argv);
-void cmd_reg_display(void); //DEBUG
-//void cmd_reg_write(void);
 
 bool cmd_irl(int argc, char **argv);
 bool cmd_lr(int argc, char **argv);
@@ -166,11 +166,12 @@ mBoxMessage m_w; //Mensagem de escrita para o Proc
 +--------------------------------------------------------------------------*/
 bool cmd_sos(int argc, char **argv)
 {
+  cyg_mutex_lock(&printfMutex);
   int i;
-
   printf("%s\n", TitleMsg);
   for (i = 0; i < NCOMMANDS; i++)
     printf("%s %s\n", commands[i].cmd_name, commands[i].cmd_help);
+  cyg_mutex_unlock(&printfMutex);
   return true;
 }
 
@@ -189,12 +190,14 @@ bool cmd_sair(int argc, char **argv)
 +--------------------------------------------------------------------------*/
 bool cmd_ini(int argc, char **argv)
 {
+  cyg_mutex_lock(&printfMutex);
   printf("io_lookup\n");
   if ((argc > 1) && (argv[1][0] = '1'))
     err = cyg_io_lookup("/dev/ser1", &serH);
   else
     err = cyg_io_lookup("/dev/ser0", &serH);
   printf("lookup err=%x\n", err);
+  cyg_mutex_unlock(&printfMutex);
   return true;
 }
 
@@ -220,6 +223,9 @@ bool cmd_rc(int argc, char **argv)
 {
   if (argc != 1)
   {
+    cyg_mutex_lock(&printfMutex);
+    printf("Bad Inputs\n");
+    cyg_mutex_unlock(&printfMutex);
     return false;
   }
   mBoxMessage m;
@@ -254,7 +260,9 @@ bool cmd_sc(int argc, char **argv)
 {
   if (argc != 4)
   {
+    cyg_mutex_lock(&printfMutex);
     printf("Bad inputs\n");
+    cyg_mutex_unlock(&printfMutex);
     return false;
   }
   unsigned int h, min, s;
@@ -288,7 +296,9 @@ bool cmd_rtl(int argc, char **argv)
 {
   if (argc != 1)
   {
+    cyg_mutex_lock(&printfMutex);
     printf("Bad inputs\n");
+    cyg_mutex_unlock(&printfMutex);
     return false;
   }
   mBoxMessage m;
@@ -321,7 +331,9 @@ bool cmd_rp(int argc, char **argv)
 {
   if (argc != 1)
   {
+    cyg_mutex_lock(&printfMutex);
     printf("Bad inputs\n");
+    cyg_mutex_unlock(&printfMutex);
     return false;
   }
   mBoxMessage m;
@@ -349,7 +361,9 @@ bool cmd_mmp(int argc, char **argv)
 {
   if (argc != 2)
   {
+    cyg_mutex_lock(&printfMutex);
     printf("Bad inputs\n");
+    cyg_mutex_unlock(&printfMutex);
     return false;
   }
   unsigned int p;
@@ -375,7 +389,9 @@ bool cmd_mta(int argc, char **argv)
 {
   if (argc != 2)
   {
+    cyg_mutex_lock(&printfMutex);
     printf("Bad inputs\n");
+    cyg_mutex_unlock(&printfMutex);
     return false;
   }
   unsigned int s;
@@ -401,7 +417,9 @@ bool cmd_ra(int argc, char **argv)
 {
   if (argc != 1)
   {
+    cyg_mutex_lock(&printfMutex);
     printf("Bad inputs\n");
+    cyg_mutex_unlock(&printfMutex);
     return false;
   }
   mBoxMessage m;
@@ -437,7 +455,9 @@ bool cmd_dac(int argc, char **argv)
 {
   if (argc != 4)
   {
+    cyg_mutex_lock(&printfMutex);
     printf("Bad inputs\n");
+    cyg_mutex_unlock(&printfMutex);
     return false;
   }
   unsigned int h, min, s;
@@ -472,7 +492,9 @@ bool cmd_dtl(int argc, char **argv)
 {
   if (argc != 3)
   {
+    cyg_mutex_lock(&printfMutex);
     printf("Bad inputs\n");
+    cyg_mutex_unlock(&printfMutex);
     return false;
   }
   unsigned int T, L;
@@ -500,7 +522,9 @@ bool cmd_aa(int argc, char **argv)
 {
   if (argc != 2)
   {
+    cyg_mutex_lock(&printfMutex);
     printf("Bad inputs\n");
+    cyg_mutex_unlock(&printfMutex);
     return false;
   }
   unsigned int a;
@@ -526,7 +550,9 @@ bool cmd_ir(int argc, char **argv)
 {
   if (argc != 1)
   {
+    cyg_mutex_lock(&printfMutex);
     printf("Bad inputs\n");
+    cyg_mutex_unlock(&printfMutex);
     return false;
   }
 
@@ -563,7 +589,9 @@ bool cmd_trc(int argc, char **argv)
 {
   if (argc != 2)
   {
+    cyg_mutex_lock(&printfMutex);
     printf("Bad inputs\n");
+    cyg_mutex_unlock(&printfMutex);
     return false;
   }
   unsigned int n;
@@ -589,7 +617,9 @@ bool cmd_tri(int argc, char **argv)
 {
   if (argc != 3)
   {
+    cyg_mutex_lock(&printfMutex);
     printf("Bad inputs\n");
+    cyg_mutex_unlock(&printfMutex);
     return false;
   }
   unsigned int n, i;
@@ -610,50 +640,18 @@ bool cmd_tri(int argc, char **argv)
   return true;
 }
 
-//So para debug
-void cmd_reg_display()
-{
-  if (bufr[2] == CMD_ERROR)
-  {
-    printf("CMD_ERROR\n");
-    return;
-  }
-  int i;
-  int n = bufr[2];
-
-  if (bufr[1] == TRGC)
-  {
-    printf("TRC\n");
-    for (i = 3; i < (n * 5) + 3; i += 5)
-    {
-      printf("Clock = %02d : %02d : %02d\n", bufr[i], bufr[i + 1], bufr[i + 2]);
-      printf("Temp = %d\n", bufr[i + 3]);
-      printf("Lum = %d\n\n", bufr[i + 4]);
-    }
-  }
-
-  if (bufr[1] == TRGI)
-  {
-    printf("TRI\n");
-    for (i = 4; i < (n * 5) + 4; i += 5)
-    {
-      printf("Clock = %02d : %02d : %02d\n", bufr[i], bufr[i + 1], bufr[i + 2]);
-      printf("Temp = %d\n", bufr[i + 3]);
-      printf("Lum = %d\n\n", bufr[i + 4]);
-    }
-  }
-}
-
 /*-------------------------------------------------------------------------+
 | Function: cmd_irl - information about local registers (NRBUF, nr, iread, iwrite)
 +--------------------------------------------------------------------------*/
 
 bool cmd_irl(int argc, char **argv)
 {
+  cyg_mutex_lock(&printfMutex);
   printf("NRBUF = %d\n", NRBUF);
   printf("NR = %d\n", nr);
   printf("iRead = %d\n", iread);
   printf("iWrite = %d\n", iwrite);
+  cyg_mutex_unlock(&printfMutex);
   return true;
 }
 
@@ -665,7 +663,9 @@ bool cmd_lr(int argc, char **argv)
 {
   if (argc < 3 && argc > 4)
   {
+    cyg_mutex_lock(&printfMutex);
     printf("Bad Inputs\n");
+    cyg_mutex_unlock(&printfMutex);
     return false;
   }
   int n = atoi(argv[1]);
@@ -692,15 +692,19 @@ bool cmd_lr(int argc, char **argv)
 
     if ((n > nr) || (maxReadings < n))
     {
+      cyg_mutex_lock(&printfMutex);
       printf("ERROR");
+      cyg_mutex_unlock(&printfMutex);
       return false;
     }
     i = startingIndex;
     while (n)
     {
+      cyg_mutex_lock(&printfMutex);
       printf("Clock = %02d : %02d : %02d\n", eCosRingBuff[i][0], eCosRingBuff[i][1], eCosRingBuff[i][2]);
       printf("Temp = %d\n", eCosRingBuff[i][3]);
       printf("Lum = %d\n\n", eCosRingBuff[i][4]);
+      cyg_mutex_unlock(&printfMutex);
       if (iread == i)
       {
         iread++;
@@ -722,14 +726,18 @@ bool cmd_lr(int argc, char **argv)
     }
     if ((n > nr) || (n > maxReadings))
     {
+      cyg_mutex_lock(&printfMutex);
       printf("ERROR");
+      cyg_mutex_unlock(&printfMutex);
       return false;
     }
     for (i = 0; i < n; i++)
     { //Read n registers
+      cyg_mutex_lock(&printfMutex);
       printf("Clock = %02d : %02d : %02d\n", eCosRingBuff[iread][0], eCosRingBuff[iread][1], eCosRingBuff[iread][2]);
       printf("Temp = %d\n", eCosRingBuff[iread][3]);
       printf("Lum = %d\n\n", eCosRingBuff[iread][4]);
+      cyg_mutex_unlock(&printfMutex);
       iread++;
       if (iread > NRBUF - 1)
       {
@@ -754,7 +762,9 @@ bool cmd_dr(int argc, char **argv)
   nr = 0;
   flagNr = false;
   cyg_mutex_unlock(&sharedBuffMutex);
+  cyg_mutex_lock(&printfMutex);
   printf("CMD_OK");
+  cyg_mutex_unlock(&printfMutex);
   return true;
 }
 
@@ -766,7 +776,9 @@ bool cmd_cpt(int argc, char **argv)
 {
   if (argc != 1)
   {
+    cyg_mutex_lock(&printfMutex);
     printf("Bad inputs\n");
+    cyg_mutex_unlock(&printfMutex);
     return false;
   }
 
@@ -778,7 +790,9 @@ bool cmd_cpt(int argc, char **argv)
 
   if (!cyg_mbox_tryput(procMboxH, &m_w))
   {
+    cyg_mutex_lock(&printfMutex);
     printf("Proc Mail Box full (UI_cpt)");
+    cyg_mutex_unlock(&printfMutex);
     return false;
   }
   return true;
@@ -797,7 +811,9 @@ bool cmd_mpt(int argc, char **argv)
 {
   if (argc != 2)
   {
+    cyg_mutex_lock(&printfMutex);
     printf("Bad inputs\n");
+    cyg_mutex_unlock(&printfMutex);
     return false;
   }
 
@@ -823,7 +839,9 @@ bool cmd_cttl(int argc, char **argv)
 {
   if (argc != 1)
   {
+    cyg_mutex_lock(&printfMutex);
     printf("Bad inputs\n");
+    cyg_mutex_unlock(&printfMutex);
     return false;
   }
   m_w.cmd_dim = 3;
@@ -850,7 +868,9 @@ bool cmd_dttl(int argc, char **argv)
 {
   if (argc != 3)
   {
+    cyg_mutex_lock(&printfMutex);
     printf("Bad inputs\n");
+    cyg_mutex_unlock(&printfMutex);
     return false;
   }
 
@@ -878,7 +898,9 @@ bool cmd_pr(int argc, char **argv)
 {
   if (!(argc == 1 || argc == 4 || argc == 7))
   {
+    cyg_mutex_lock(&printfMutex);
     printf("Bad inputs\n");
+    cyg_mutex_unlock(&printfMutex);
     return false;
   }
 
@@ -967,11 +989,14 @@ void monitor(void)
 {
   static char *argv[ARGVECSIZE + 1], *p;
   int argc, i;
-
+  cyg_mutex_lock(&printfMutex);
   printf("%s Type sos for help\n", TitleMsg);
+  cyg_mutex_unlock(&printfMutex);
   for (;;)
   {
+    cyg_mutex_lock(&printfMutex);
     printf("\nCmd> ");
+    cyg_mutex_unlock(&printfMutex);
     /* Reading and parsing command line  ----------------------------------*/
     if ((argc = my_getline(argv, ARGVECSIZE)) > 0)
     {
@@ -1007,37 +1032,43 @@ void monitor(void)
 
           if (m != NULL)
           {
-            // int i;
-            // printf("DIM = %d\n", (*m).cmd_dim);
-            // for (i = 0; i <= 5; i++)
-            // {
-            //   printf("TESTE: %hhx\n", (*m).data[i]);
-            // }
             memcpy(bufr, (*m).data, (*m).cmd_dim);
+            cyg_mutex_lock(&printfMutex);
             commands[i].cmd_display();
+            cyg_mutex_unlock(&printfMutex);
             //printf("Fazer prints (UI)\n");
           }
           else
           {
+            cyg_mutex_lock(&printfMutex);
             printf("Time to recieve message exceeded (UI)");
+            cyg_mutex_unlock(&printfMutex);
           }
         }
       }
       else
+      {
+        cyg_mutex_lock(&printfMutex);
         printf("%s", InvalMsg);
+        cyg_mutex_unlock(&printfMutex);
+      }
     } /* if my_getline */
   }   /* forever */
 }
 
 void ui_th_prog(cyg_addrword_t data)
 {
-  printf("Working UI thread\n");
-
   cyg_mbox_create(&uiMboxH, &uiMbox);
   cyg_mbox_create(&TXMboxH, &TXMbox);
 
   cyg_semaphore_init(&newCmdSem, 1);
 
   cyg_mutex_init(&sharedBuffMutex);
+  cyg_mutex_init(&printfMutex);
+
+  cyg_mutex_lock(&printfMutex);
+  printf("Working UI thread\n");
+  cyg_mutex_unlock(&printfMutex);
+
   monitor();
 }

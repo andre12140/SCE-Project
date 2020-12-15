@@ -7,6 +7,7 @@ extern Cyg_ErrNo err;
 extern cyg_io_handle_t serH;
 
 extern cyg_mutex_t sharedBuffMutex;
+extern cyg_mutex_t printfMutex;
 
 extern cyg_handle_t uiMboxH;
 extern cyg_handle_t TXMboxH;
@@ -58,7 +59,6 @@ bool cmd_reg_write(void)
 {
   if (bufr[2] == CMD_ERROR)
   {
-    //printf("CMD_ERROR\n");
     return false;
   }
   int j;
@@ -109,8 +109,11 @@ bool cmd_reg_write(void)
 mBoxMessage txMessage;
 void tx_th_prog(cyg_addrword_t data)
 {
+  cyg_mutex_lock(&printfMutex);
   printf("Working TX thread\n");
-  cyg_thread_delay(200);
+  cyg_mutex_unlock(&printfMutex);
+
+  cyg_thread_delay(5);
   while (1)
   {
     txMessage = (*(mBoxMessage *)cyg_mbox_get(TXMboxH));
@@ -125,8 +128,11 @@ void rx_th_prog(cyg_addrword_t data)
   unsigned char buf_byte[1];
   unsigned int byte = 1;
 
+  cyg_mutex_lock(&printfMutex);
   printf("Working RX thread\n");
-  cyg_thread_delay(200);
+  cyg_mutex_unlock(&printfMutex);
+
+  cyg_thread_delay(5);
   cyg_tick_count_t t = 0;
 
   while (1)
@@ -145,9 +151,23 @@ void rx_th_prog(cyg_addrword_t data)
       {
         //printf("io_read err=%x, r=%d\n", err, n); //DEBUG
 
-        if (cyg_current_time() < t) //Skip messages that took more than 50ms
+        if (cyg_current_time() < t) //Skip messages that took more than 500ms
         {
           mBoxMessage rxMessage;
+          if (bufr[1] == NMFL) //Async message, to processing task
+          {
+            rxMessage.cmd_dim = n;
+            memcpy(rxMessage.data, bufr, rxMessage.cmd_dim);
+            rxMessage.data[n] = procID;
+
+            if (!cyg_mbox_tryput(procMboxH, &rxMessage))
+            {
+              cyg_mutex_lock(&printfMutex);
+              printf("RX write ERROR\n");
+              cyg_mutex_unlock(&printfMutex);
+            }
+            continue;
+          }
           if (bufr[1] == TRGC || bufr[1] == TRGI)
           {
             if (cmd_reg_write())
@@ -174,14 +194,18 @@ void rx_th_prog(cyg_addrword_t data)
           {
             if (!cyg_mbox_tryput(uiMboxH, &rxMessage))
             {
+              cyg_mutex_lock(&printfMutex);
               printf("RX write ERROR\n");
+              cyg_mutex_unlock(&printfMutex);
             }
           }
           else //Enviar para o processing task
           {
             if (!cyg_mbox_tryput(procMboxH, &rxMessage))
             {
+              cyg_mutex_lock(&printfMutex);
               printf("RX write ERROR\n");
+              cyg_mutex_unlock(&printfMutex);
             }
           }
         }
