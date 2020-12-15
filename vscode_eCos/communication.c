@@ -48,6 +48,7 @@ extern int iwrite;
 extern int iread;
 extern int nr;
 extern bool flagNr;
+extern int maxReadings;
 
 typedef struct mBoxMessages
 {
@@ -77,9 +78,17 @@ bool cmd_reg_write(void)
   for (j = 0; j < n; j++)
   {
     memcpy(eCosRingBuff[iwrite], &bufr[offset + (j * REGDIM)], REGDIM);
-    if ((nr == NRBUF) && (iread == iwrite))
-    {
+    // if ((nr == NRBUF) && (iread == iwrite))
+    // {
+    //   iread++;
+    // }
+    if (maxReadings == NRBUF)
+    { //Buffer esta cheio
       iread++;
+    }
+    else
+    {
+      maxReadings++;
     }
 
     iwrite++;

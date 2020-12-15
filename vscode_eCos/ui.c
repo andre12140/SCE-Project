@@ -58,6 +58,7 @@ int iwrite = 0;
 int iread = 0;
 int nr = 0;
 bool flagNr = false;
+int maxReadings = 0;
 
 unsigned char bufr[100];
 
@@ -684,13 +685,13 @@ bool cmd_lr(int argc, char **argv)
     {
       startingIndex = index;
     }
-    int maxReadings = iwrite - startingIndex;
-    if (maxReadings < 0)
+    int maxReadingsAux = iwrite - startingIndex;
+    if (maxReadingsAux < 0)
     {
-      maxReadings = iwrite + (NRBUF - startingIndex);
+      maxReadingsAux = iwrite + (NRBUF - startingIndex);
     }
 
-    if ((n > nr) || (maxReadings < n))
+    if ((n > nr) || (maxReadingsAux < n))
     {
       cyg_mutex_lock(&printfMutex);
       printf("ERROR");
@@ -707,6 +708,7 @@ bool cmd_lr(int argc, char **argv)
       cyg_mutex_unlock(&printfMutex);
       if (iread == i)
       {
+        maxReadings--;
         iread++;
       }
       i++;
@@ -719,19 +721,12 @@ bool cmd_lr(int argc, char **argv)
   }
   else //index is omitted
   {
-    int maxReadings = (iwrite - iread);
-    if (maxReadings < 0)
+    int nRegs = n;
+    if (n > maxReadings)
     {
-      maxReadings = iwrite + (NRBUF - iread);
+      nRegs = maxReadings;
     }
-    if ((n > nr) || (n > maxReadings))
-    {
-      cyg_mutex_lock(&printfMutex);
-      printf("ERROR");
-      cyg_mutex_unlock(&printfMutex);
-      return false;
-    }
-    for (i = 0; i < n; i++)
+    for (i = 0; i < nRegs; i++)
     { //Read n registers
       cyg_mutex_lock(&printfMutex);
       printf("Clock = %02d : %02d : %02d\n", eCosRingBuff[iread][0], eCosRingBuff[iread][1], eCosRingBuff[iread][2]);
@@ -744,6 +739,7 @@ bool cmd_lr(int argc, char **argv)
         iread = 0;
       }
     }
+    maxReadings = maxReadings - nRegs;
   }
   cyg_mutex_unlock(&sharedBuffMutex);
   return true;

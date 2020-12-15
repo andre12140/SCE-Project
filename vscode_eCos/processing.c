@@ -69,6 +69,7 @@ extern unsigned char eCosRingBuff[NRBUF][REGDIM];
 extern int iwrite;
 extern int iread;
 extern int nr;
+extern int maxReadings;
 
 bool sentMessageFlag = false;
 
@@ -79,11 +80,11 @@ mBoxMessage m_w;      //Mensagem de escrita para o UI
 
 void analyseRegisters(void)
 {
-    int maxReadings = (iwrite - iread);
-    if (maxReadings <= 0)
-    {
-        maxReadings = iwrite + (NRBUF - iread);
-    }
+    // int maxReadings = (iwrite - iread);
+    // if (maxReadings <= 0)
+    // {
+    //     maxReadings = iwrite + (NRBUF - iread);
+    // }
     int i;
     cyg_mutex_lock(&sharedBuffMutex);
     for (i = 0; i < maxReadings; i++)
@@ -94,7 +95,8 @@ void analyseRegisters(void)
             printf("Clock = %02d : %02d : %02d\n", eCosRingBuff[iread][0], eCosRingBuff[iread][1], eCosRingBuff[iread][2]);
             printf("Temp = %d\n", eCosRingBuff[iread][3]);
             printf("Lum = %d\n\n", eCosRingBuff[iread][4]);
-            printf("Cmd> ");
+            printf("\nCmd> ");
+            fflush(stdin);
             cyg_mutex_unlock(&printfMutex);
         }
         iread++;
@@ -103,6 +105,7 @@ void analyseRegisters(void)
             iread = 0;
         }
     }
+    maxReadings = 0;
     cyg_mutex_unlock(&sharedBuffMutex);
 }
 
@@ -383,6 +386,8 @@ void asyncMessage(void)
 {
     cyg_mutex_lock(&printfMutex);
     printf("Buffer in PIC is half full, starting periodic transference if not yet started\n");
+    printf("\nCmd> ");
+    fflush(stdin);
     cyg_mutex_unlock(&printfMutex);
 
     if (periodOfTransference == 0)
