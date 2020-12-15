@@ -192,6 +192,8 @@ uint8_t iread = 0;
 uint8_t iwrite = 0;
 uint8_t nr = 0;
 
+bool bufHalfFull = false;
+
 unsigned char tsttc (void)
 {
 	unsigned char value;
@@ -382,6 +384,13 @@ void Clock_ISR(void) {
         clkAlarm.alarmVal.h = 25; //Only triggered once until new val is given by user
     }
     
+    //Pode se verificar apenas quando altera valores da temperatura ou luminosidade, mas o else tem de se verificar quando existe leituras de registos (TRC,TRI))
+    if(((iwrite >= iread) && (((iwrite-iread) >= NREG/2) || ((iwrite-iread) == 0 && nr == NREG))) || ((iwrite < iread) && ((iwrite+(NREG - iread)) >= NREG/2))){
+        bufHalfFull = true;
+    } else {
+        bufHalfFull = false; //Nao volta a meter a false
+    }
+    
     LED_D5_Toggle();
     updateLCD = true;
     counterMonitorAux++;
@@ -412,6 +421,14 @@ void wirteEEPROMinit(){
 //Criar uma stirng e so depois escrever no LCD, Perguntar ao professor, se isto é necessário
 //Ou meter flags do que é preciso alterar no LCD e só mudar essas partes?
 void update_menuLCD(){
+    
+    if(bufHalfFull){
+        LCDcmd(0xc8);
+        LCDchar('M');
+    } else{
+        LCDcmd(0xc8);
+        LCDchar(' ');
+    }
     
     char str[8];
     if(editingClockAlarm){
@@ -555,18 +572,13 @@ void monitoring_TEMP_LUM(){
     
     if(prevTemp != temp || prevLumLevel != lumLevel){ //If Different values saving in eeprom
         
-        /*DATAEE_WriteByte( (iwrite * 0x5) + EEAddr_RING + (8*0) , t.h);
-        DATAEE_WriteByte( (iwrite * 0x5) + EEAddr_RING + (8*1) , t.m);
-        DATAEE_WriteByte( (iwrite * 0x5) + EEAddr_RING + (8*2) , t.s);
-        DATAEE_WriteByte( (iwrite * 0x5) + EEAddr_RING + (8*3) , temp);
-        DATAEE_WriteByte( (iwrite * 0x5) + EEAddr_RING + (8*4) , lumLevel);*/
         DATAEE_WriteByte( (iwrite * 0x5) + EEAddr_RING + 0x0 , t.h);
         DATAEE_WriteByte( (iwrite * 0x5) + EEAddr_RING + 0x1 , t.m);
         DATAEE_WriteByte( (iwrite * 0x5) + EEAddr_RING + 0x2 , t.s);
         DATAEE_WriteByte( (iwrite * 0x5) + EEAddr_RING + 0x3 , temp);
         DATAEE_WriteByte( (iwrite * 0x5) + EEAddr_RING + 0x4 , lumLevel);
         
-        if((nr == NREG) && (iread == (iwrite-1))){
+        if((nr == NREG) && (iread == iwrite)){
             iread++;
         }
         
@@ -646,6 +658,15 @@ void S1button(){
     __delay_ms(S1DELAY);
 }
 
+void sendMessage(int num, char *buffer){
+    int n = 0;
+    while(n<num){
+        putch(buffer[n]);
+        n++;
+    }
+}
+
+bool sentMessageBufHalfFull = false;
 void checkFlags(){
     if(writeEEPROM_flag){
         wirteEEPROMinit();
@@ -664,6 +685,23 @@ void checkFlags(){
     if(updateLCD){
         update_menuLCD();
         updateLCD=false;
+    }
+    if(bufHalfFull && !sentMessageBufHalfFull){
+        //Enviar msg para o eCos a dizer que tem o buffer meio cheio
+        uint8_t buff[7];
+        buff[0] = (uint8_t)SOM;
+        buff[1] = (uint8_t)NMFL;
+        buff[2] = NREG;
+        buff[3] = nr;
+        buff[4] = iread;
+        buff[5] = iwrite;
+        buff[6] = (uint8_t)EOM;
+        sendMessage(7,buff);
+        
+        sentMessageBufHalfFull = true;
+    }
+    if(!bufHalfFull){
+        sentMessageBufHalfFull = false;
     }
     if(PWM_on){
         if(PWM6EN==0){ //Verifica se o Timer2 e PWM esta desligado
@@ -812,14 +850,6 @@ void S1_ISR(){
  |                      eCos Commands                         |
  -------------------------------------------------------------*/
 
-void sendMessage(int num, char *buffer){
-    int n = 0;
-    while(n<num){
-        putch(buffer[n]);
-        n++;
-    }
-}
-
 void sendOKMessage(uint8_t cmd){
     uint8_t bufw[4];
     bufw[0] = (uint8_t)SOM;
@@ -853,9 +883,9 @@ void cmd_rc(int num, char *buffer){
 }
 
 void cmd_sc(int num, char *buffer){
-    uint8_t h = buffer[2];
-    uint8_t m = buffer[3];
-    uint8_t s = buffer[4];
+    int h = buffer[2];
+    int m = buffer[3];
+    int s = buffer[4];
     if((h >= 0 && h < 24) && (m >= 0 && m < 60) && (s >= 0 && s < 60) && num == 6){
         t.h = h;
         t.m = m;
@@ -899,7 +929,7 @@ void cmd_mmp(int num, char *buffer){
 }
 
 void cmd_mta(int num, char *buffer){
-    if(buffer[2] >= 0x00 && buffer[2] < 0x3c){
+    if(buffer[2] < 0x3c){
         TALA = buffer[2];
         sendOKMessage((uint8_t)MTA);
     } else {
@@ -923,9 +953,9 @@ void cmd_ra(int num, char *buffer){
 }
 
 void cmd_dac(int num, char *buffer){
-    uint8_t h = buffer[2];
-    uint8_t m = buffer[3];
-    uint8_t s = buffer[4];
+    int h = buffer[2];
+    int m = buffer[3];
+    int s = buffer[4];
     if((h >= 0 && h < 24) && (m >= 0 && m < 60) && (s >= 0 && s < 60) && num == 6){
         clkAlarm.alarmVal.h = h;
         clkAlarm.alarmVal.m = m;
@@ -937,8 +967,8 @@ void cmd_dac(int num, char *buffer){
 }
 
 void cmd_dtl(int num, char *buffer){
-    uint8_t tempAux = buffer[2];
-    uint8_t lumAux = buffer[3];
+    int tempAux = buffer[2];
+    int lumAux = buffer[3];
     if((tempAux >= 0 && tempAux < 50) && (lumAux >= 0 && lumAux < 8) && num == 5){
         tempAlarm.alarmTemp = buffer[2];
         lumAlarm.alarmLum = buffer[3];
@@ -980,14 +1010,13 @@ void cmd_trc(int num, char *buffer){
         if(maxReadings < 0){
             maxReadings = iwrite + (NREG - iread);
         }
+        if(maxReadings == 0 && nr == NREG){
+            maxReadings = nr;
+        }
         if((n > nr) || (n > maxReadings)){
             sendERRORMessage((uint8_t)TRGC);
             return;
         }
-        //uint8_t sizeofMessage = 5*n + 3;
-        //uint8_t buff[5*(10-1) + 3]; //Numero máximo de registos
-        //uint8_t *buff; //Numero máximo de registos
-        //buff = malloc(sizeofMessage);
         uint8_t buffInit[3];
         buffInit[0] = (uint8_t)SOM;
         buffInit[1] = (uint8_t)TRGC;
@@ -1021,16 +1050,19 @@ void cmd_tri(int num, char *buffer){
         uint8_t n = buffer[2];
         uint8_t index = buffer[3];
         
-        uint8_t startingIndex = iwrite + index;
+        int startingIndex = iwrite + index;
         if(startingIndex >= NREG){
             startingIndex = index - (NREG - iwrite);
         }
         if(nr != NREG){
             startingIndex = index;
         }
-        uint8_t maxReadings = iwrite - startingIndex;
+        int maxReadings = iwrite - startingIndex;
         if(maxReadings < 0){
             maxReadings = iwrite + (NREG - startingIndex);
+        }
+        if(maxReadings == 0 && nr == NREG){
+            maxReadings = nr;
         }
         
         if((n > nr) || (maxReadings < n)){
@@ -1074,6 +1106,7 @@ void cmd_tri(int num, char *buffer){
     }
 }
 
+////////////////////////////////////// BUG escrita para a eeprom do init nao esta a funcionar /////////////////////////////////////////
 void main(void)
 {
     // initialize the device
@@ -1093,9 +1126,9 @@ void main(void)
     if(DATAEE_ReadByte(EEAddr_INIT) == 'S'){
         notInit = false;
         for(int i = 1; i < 13; i++){
-            checkSumAux += DATAEE_ReadByte(EEAddr_INIT + (i*8));
+            checkSumAux += DATAEE_ReadByte(EEAddr_INIT + (i));
         }
-        if(checkSumAux != DATAEE_ReadByte(EEAddr_INIT + (13*8))){
+        if(checkSumAux != DATAEE_ReadByte(EEAddr_INIT + (13))){
             corrupted = true;
         }
     }

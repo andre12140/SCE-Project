@@ -21895,6 +21895,8 @@ uint8_t iread = 0;
 uint8_t iwrite = 0;
 uint8_t nr = 0;
 
+bool bufHalfFull = 0;
+
 unsigned char tsttc (void)
 {
 unsigned char value;
@@ -22085,6 +22087,13 @@ clkAlarm.trigger = 1;
 clkAlarm.alarmVal.h = 25;
 }
 
+
+if(((iwrite >= iread) && (((iwrite-iread) >= NREG/2) || ((iwrite-iread) == 0 && nr == NREG))) || ((iwrite < iread) && ((iwrite+(NREG - iread)) >= NREG/2))){
+bufHalfFull = 1;
+} else {
+bufHalfFull = 0;
+}
+
 do { LATAbits.LATA7 = ~LATAbits.LATA7; } while(0);
 updateLCD = 1;
 counterMonitorAux++;
@@ -22115,6 +22124,14 @@ DATAEE_WriteByte( 0x7000 + (13), NREG + PMON + TALA + clkAlarm.alarmVal.h + clkA
 
 
 void update_menuLCD(){
+
+if(bufHalfFull){
+LCDcmd(0xc8);
+LCDchar('M');
+} else{
+LCDcmd(0xc8);
+LCDchar(' ');
+}
 
 char str[8];
 if(editingClockAlarm){
@@ -22169,7 +22186,7 @@ differenceBetweenTimePeriod( t, alarmPWMStart, &diff);
 if(diff.s <= TALA){
 PWM_on = 1;
 
-# 478
+# 495
 } else if(PWM6EN==1){
 PWM_on = 0;
 PWM6_LoadDutyValue(0);
@@ -22250,14 +22267,13 @@ lumLevel = ADCC_GetSingleConversion(channel_ANA0) >> 13;
 
 if(prevTemp != temp || prevLumLevel != lumLevel){
 
-# 563
 DATAEE_WriteByte( (iwrite * 0x5) + 0x7012 + 0x0 , t.h);
 DATAEE_WriteByte( (iwrite * 0x5) + 0x7012 + 0x1 , t.m);
 DATAEE_WriteByte( (iwrite * 0x5) + 0x7012 + 0x2 , t.s);
 DATAEE_WriteByte( (iwrite * 0x5) + 0x7012 + 0x3 , temp);
 DATAEE_WriteByte( (iwrite * 0x5) + 0x7012 + 0x4 , lumLevel);
 
-if((nr == NREG) && (iread == (iwrite-1))){
+if((nr == NREG) && (iread == iwrite)){
 iread++;
 }
 
@@ -22337,6 +22353,15 @@ modeFlag++;
 _delay((unsigned long)((50)*(1000000/4000.0)));
 }
 
+void sendMessage(int num, char *buffer){
+int n = 0;
+while(n<num){
+putch(buffer[n]);
+n++;
+}
+}
+
+bool sentMessageBufHalfFull = 0;
 void checkFlags(){
 if(writeEEPROM_flag){
 wirteEEPROMinit();
@@ -22355,6 +22380,23 @@ monitor_TEMP_LUM = 0;
 if(updateLCD){
 update_menuLCD();
 updateLCD=0;
+}
+if(bufHalfFull && !sentMessageBufHalfFull){
+
+uint8_t buff[7];
+buff[0] = (uint8_t)0xFD;
+buff[1] = (uint8_t)0XCD;
+buff[2] = NREG;
+buff[3] = nr;
+buff[4] = iread;
+buff[5] = iwrite;
+buff[6] = (uint8_t)0xFE;
+sendMessage(7,buff);
+
+sentMessageBufHalfFull = 1;
+}
+if(!bufHalfFull){
+sentMessageBufHalfFull = 0;
 }
 if(PWM_on){
 if(PWM6EN==0){
@@ -22478,20 +22520,12 @@ void S1_ISR(){
 PIE0bits.INTE = 0;
 flagS1pushed = 1;
 
-# 807
+# 845
 (PIR0bits.INTF = 0);
 PIE0bits.INTE = 1;
 }
 
-# 815
-void sendMessage(int num, char *buffer){
-int n = 0;
-while(n<num){
-putch(buffer[n]);
-n++;
-}
-}
-
+# 853
 void sendOKMessage(uint8_t cmd){
 uint8_t bufw[4];
 bufw[0] = (uint8_t)0xFD;
@@ -22525,9 +22559,9 @@ sendMessage(6,buff);
 }
 
 void cmd_sc(int num, char *buffer){
-uint8_t h = buffer[2];
-uint8_t m = buffer[3];
-uint8_t s = buffer[4];
+int h = buffer[2];
+int m = buffer[3];
+int s = buffer[4];
 if((h >= 0 && h < 24) && (m >= 0 && m < 60) && (s >= 0 && s < 60) && num == 6){
 t.h = h;
 t.m = m;
@@ -22571,7 +22605,7 @@ sendERRORMessage((uint8_t)0XC4);
 }
 
 void cmd_mta(int num, char *buffer){
-if(buffer[2] >= 0x00 && buffer[2] < 0x3c){
+if(buffer[2] < 0x3c){
 TALA = buffer[2];
 sendOKMessage((uint8_t)0XC5);
 } else {
@@ -22595,9 +22629,9 @@ sendMessage(9,buff);
 }
 
 void cmd_dac(int num, char *buffer){
-uint8_t h = buffer[2];
-uint8_t m = buffer[3];
-uint8_t s = buffer[4];
+int h = buffer[2];
+int m = buffer[3];
+int s = buffer[4];
 if((h >= 0 && h < 24) && (m >= 0 && m < 60) && (s >= 0 && s < 60) && num == 6){
 clkAlarm.alarmVal.h = h;
 clkAlarm.alarmVal.m = m;
@@ -22609,8 +22643,8 @@ sendERRORMessage((uint8_t)0XC7);
 }
 
 void cmd_dtl(int num, char *buffer){
-uint8_t tempAux = buffer[2];
-uint8_t lumAux = buffer[3];
+int tempAux = buffer[2];
+int lumAux = buffer[3];
 if((tempAux >= 0 && tempAux < 50) && (lumAux >= 0 && lumAux < 8) && num == 5){
 tempAlarm.alarmTemp = buffer[2];
 lumAlarm.alarmLum = buffer[3];
@@ -22652,14 +22686,13 @@ int maxReadings = (iwrite-iread);
 if(maxReadings < 0){
 maxReadings = iwrite + (NREG - iread);
 }
+if(maxReadings == 0 && nr == NREG){
+maxReadings = nr;
+}
 if((n > nr) || (n > maxReadings)){
 sendERRORMessage((uint8_t)0XCB);
 return;
 }
-
-
-
-
 uint8_t buffInit[3];
 buffInit[0] = (uint8_t)0xFD;
 buffInit[1] = (uint8_t)0XCB;
@@ -22693,16 +22726,19 @@ if(num == 5){
 uint8_t n = buffer[2];
 uint8_t index = buffer[3];
 
-uint8_t startingIndex = iwrite + index;
+int startingIndex = iwrite + index;
 if(startingIndex >= NREG){
 startingIndex = index - (NREG - iwrite);
 }
 if(nr != NREG){
 startingIndex = index;
 }
-uint8_t maxReadings = iwrite - startingIndex;
+int maxReadings = iwrite - startingIndex;
 if(maxReadings < 0){
 maxReadings = iwrite + (NREG - startingIndex);
+}
+if(maxReadings == 0 && nr == NREG){
+maxReadings = nr;
 }
 
 if((n > nr) || (maxReadings < n)){
@@ -22746,6 +22782,7 @@ sendERRORMessage((uint8_t)0XCC);
 }
 }
 
+
 void main(void)
 {
 
@@ -22765,9 +22802,9 @@ bool corrupted = 0;
 if(DATAEE_ReadByte(0x7000) == 'S'){
 notInit = 0;
 for(int i = 1; i < 13; i++){
-checkSumAux += DATAEE_ReadByte(0x7000 + (i*8));
+checkSumAux += DATAEE_ReadByte(0x7000 + (i));
 }
-if(checkSumAux != DATAEE_ReadByte(0x7000 + (13*8))){
+if(checkSumAux != DATAEE_ReadByte(0x7000 + (13))){
 corrupted = 1;
 }
 }
