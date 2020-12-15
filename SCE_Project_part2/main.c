@@ -49,8 +49,6 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-
-
 #define S2DELAY 100 //Use to define time to wait for debounce
 #define S1DELAY 50  //Use to define time to wait for debounce
 
@@ -191,6 +189,7 @@ bool writeEEPROM_flag = false;
 uint8_t iread = 0;
 uint8_t iwrite = 0;
 uint8_t nr = 0;
+uint8_t maxReadings = 0;
 
 bool bufHalfFull = false;
 
@@ -385,7 +384,8 @@ void Clock_ISR(void) {
     }
     
     //Pode se verificar apenas quando altera valores da temperatura ou luminosidade, mas o else tem de se verificar quando existe leituras de registos (TRC,TRI))
-    if(((iwrite >= iread) && (((iwrite-iread) >= NREG/2) || ((iwrite-iread) == 0 && nr == NREG))) || ((iwrite < iread) && ((iwrite+(NREG - iread)) >= NREG/2))){
+    //if(((iwrite >= iread) && (((iwrite-iread) >= NREG/2) || ((iwrite-iread) == 0 && nr == NREG))) || ((iwrite < iread) && ((iwrite+(NREG - iread)) >= NREG/2))){
+    if(maxReadings >= NREG/2){
         bufHalfFull = true;
     } else {
         bufHalfFull = false; //Nao volta a meter a false
@@ -578,8 +578,11 @@ void monitoring_TEMP_LUM(){
         DATAEE_WriteByte( (iwrite * 0x5) + EEAddr_RING + 0x3 , temp);
         DATAEE_WriteByte( (iwrite * 0x5) + EEAddr_RING + 0x4 , lumLevel);
         
-        if((nr == NREG) && (iread == iwrite)){
+        //if((nr == NREG) && (iread == iwrite)){
+        if(maxReadings == NREG){ //Buffer esta cheio
             iread++;
+        } else {
+            maxReadings++;
         }
         
         iwrite++;
@@ -820,7 +823,7 @@ void toggleAlarms(){
     }
 }
 
-//Como dar debounce ao botao, perguntar ao professor
+/////////////////////////////////////////////////////////////////////////////Como dar debounce ao botao, perguntar ao professor
 void S1_ISR(){
     PIE0bits.INTE = 0; //Disables external ISR
     flagS1pushed = true;
@@ -1006,7 +1009,8 @@ void cmd_ir(int num, char *buffer){
 void cmd_trc(int num, char *buffer){
     if(num == 4){
         int n = buffer[2];
-        int maxReadings = (iwrite-iread);
+        int nRegs = n;
+        /*int maxReadings = (iwrite-iread);
         if(maxReadings < 0){
             maxReadings = iwrite + (NREG - iread);
         }
@@ -1016,17 +1020,20 @@ void cmd_trc(int num, char *buffer){
         if((n > nr) || (n > maxReadings)){
             sendERRORMessage((uint8_t)TRGC);
             return;
+        }*/
+        if(n > maxReadings){
+            nRegs = maxReadings;
         }
         uint8_t buffInit[3];
         buffInit[0] = (uint8_t)SOM;
         buffInit[1] = (uint8_t)TRGC;
-        buffInit[2] = (uint8_t)n;
+        buffInit[2] = (uint8_t)nRegs;
         sendMessage(3,buffInit);
         int i;
         uint8_t j;
         uint8_t buffData[5];
         uint16_t address = 0;
-        for(i = 0; i < n; i++){ //Read n registers
+        for(i = 0; i < nRegs; i++){ //Read n registers
             for(j = 0; j < 5; j++){ //Read one register parameters (5 bytes)
                 address =  (iread * 0x5) + EEAddr_RING + j;
                 buffData[j] = DATAEE_ReadByte(address);
@@ -1037,6 +1044,7 @@ void cmd_trc(int num, char *buffer){
                 iread=0;
             }
         }
+        maxReadings = maxReadings - nRegs;
         uint8_t buffEOM[1];
         buffEOM[0] = (uint8_t)EOM;
         sendMessage(1,buffEOM);
@@ -1057,15 +1065,15 @@ void cmd_tri(int num, char *buffer){
         if(nr != NREG){
             startingIndex = index;
         }
-        int maxReadings = iwrite - startingIndex;
-        if(maxReadings < 0){
-            maxReadings = iwrite + (NREG - startingIndex);
+        int maxReadingsAux = iwrite - startingIndex;
+        if(maxReadingsAux < 0){
+            maxReadingsAux = iwrite + (NREG - startingIndex);
         }
-        if(maxReadings == 0 && nr == NREG){
-            maxReadings = nr;
+        if(maxReadingsAux == 0 && nr == NREG){
+            maxReadingsAux = nr;
         }
         
-        if((n > nr) || (maxReadings < n)){
+        if((n > nr) || (maxReadingsAux < n)){
             sendERRORMessage((uint8_t)TRGI);
             return;
         }
@@ -1088,6 +1096,7 @@ void cmd_tri(int num, char *buffer){
             }
             sendMessage(5,buffData);
             if(iread == i){
+                maxReadings--;
                 iread++;
             }
             i++;
@@ -1106,7 +1115,6 @@ void cmd_tri(int num, char *buffer){
     }
 }
 
-////////////////////////////////////// BUG escrita para a eeprom do init nao esta a funcionar /////////////////////////////////////////
 void main(void)
 {
     // initialize the device
@@ -1161,7 +1169,7 @@ void main(void)
     ALAF = DATAEE_ReadByte(EEAddr_INIT + (9));
     t.h = DATAEE_ReadByte(EEAddr_INIT + (10));
     t.m = DATAEE_ReadByte(EEAddr_INIT + (11));
-    iwrite = DATAEE_ReadByte(EEAddr_INIT + (12));
+    iwrite = 0;//DATAEE_ReadByte(EEAddr_INIT + (12));
     
     
     //Init struct

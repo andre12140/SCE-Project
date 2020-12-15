@@ -21791,15 +21791,15 @@ extern __bit iscntrl(char);
 extern char toupper(char);
 extern char tolower(char);
 
-# 87 "main.c"
+# 85 "main.c"
 uint8_t NREG = 25;
 uint8_t PMON = 3;
 uint8_t TALA = 5;
 
-# 95
+# 93
 uint8_t ALAF = 0;
 
-# 100
+# 98
 void cmd_rc(int, char *);
 void cmd_sc(int, char *);
 void cmd_rtl(int, char *);
@@ -21894,6 +21894,7 @@ bool writeEEPROM_flag = 0;
 uint8_t iread = 0;
 uint8_t iwrite = 0;
 uint8_t nr = 0;
+uint8_t maxReadings = 0;
 
 bool bufHalfFull = 0;
 
@@ -22088,7 +22089,8 @@ clkAlarm.alarmVal.h = 25;
 }
 
 
-if(((iwrite >= iread) && (((iwrite-iread) >= NREG/2) || ((iwrite-iread) == 0 && nr == NREG))) || ((iwrite < iread) && ((iwrite+(NREG - iread)) >= NREG/2))){
+
+if(maxReadings >= NREG/2){
 bufHalfFull = 1;
 } else {
 bufHalfFull = 0;
@@ -22273,8 +22275,11 @@ DATAEE_WriteByte( (iwrite * 0x5) + 0x7012 + 0x2 , t.s);
 DATAEE_WriteByte( (iwrite * 0x5) + 0x7012 + 0x3 , temp);
 DATAEE_WriteByte( (iwrite * 0x5) + 0x7012 + 0x4 , lumLevel);
 
-if((nr == NREG) && (iread == iwrite)){
+
+if(maxReadings == NREG){
 iread++;
+} else {
+maxReadings++;
 }
 
 iwrite++;
@@ -22520,12 +22525,12 @@ void S1_ISR(){
 PIE0bits.INTE = 0;
 flagS1pushed = 1;
 
-# 845
+# 848
 (PIR0bits.INTF = 0);
 PIE0bits.INTE = 1;
 }
 
-# 853
+# 856
 void sendOKMessage(uint8_t cmd){
 uint8_t bufw[4];
 bufw[0] = (uint8_t)0xFD;
@@ -22682,27 +22687,22 @@ sendMessage(7,buff);
 void cmd_trc(int num, char *buffer){
 if(num == 4){
 int n = buffer[2];
-int maxReadings = (iwrite-iread);
-if(maxReadings < 0){
-maxReadings = iwrite + (NREG - iread);
-}
-if(maxReadings == 0 && nr == NREG){
-maxReadings = nr;
-}
-if((n > nr) || (n > maxReadings)){
-sendERRORMessage((uint8_t)0XCB);
-return;
+int nRegs = n;
+
+# 1024
+if(n > maxReadings){
+nRegs = maxReadings;
 }
 uint8_t buffInit[3];
 buffInit[0] = (uint8_t)0xFD;
 buffInit[1] = (uint8_t)0XCB;
-buffInit[2] = (uint8_t)n;
+buffInit[2] = (uint8_t)nRegs;
 sendMessage(3,buffInit);
 int i;
 uint8_t j;
 uint8_t buffData[5];
 uint16_t address = 0;
-for(i = 0; i < n; i++){
+for(i = 0; i < nRegs; i++){
 for(j = 0; j < 5; j++){
 address = (iread * 0x5) + 0x7012 + j;
 buffData[j] = DATAEE_ReadByte(address);
@@ -22713,6 +22713,7 @@ if(iread>NREG-1){
 iread=0;
 }
 }
+maxReadings = maxReadings - nRegs;
 uint8_t buffEOM[1];
 buffEOM[0] = (uint8_t)0xFE;
 sendMessage(1,buffEOM);
@@ -22733,15 +22734,15 @@ startingIndex = index - (NREG - iwrite);
 if(nr != NREG){
 startingIndex = index;
 }
-int maxReadings = iwrite - startingIndex;
-if(maxReadings < 0){
-maxReadings = iwrite + (NREG - startingIndex);
+int maxReadingsAux = iwrite - startingIndex;
+if(maxReadingsAux < 0){
+maxReadingsAux = iwrite + (NREG - startingIndex);
 }
-if(maxReadings == 0 && nr == NREG){
-maxReadings = nr;
+if(maxReadingsAux == 0 && nr == NREG){
+maxReadingsAux = nr;
 }
 
-if((n > nr) || (maxReadings < n)){
+if((n > nr) || (maxReadingsAux < n)){
 sendERRORMessage((uint8_t)0XCC);
 return;
 }
@@ -22764,6 +22765,7 @@ buffData[j] = DATAEE_ReadByte( (i * 0x5) + 0x7012 + j);
 }
 sendMessage(5,buffData);
 if(iread == i){
+maxReadings--;
 iread++;
 }
 i++;
@@ -22781,7 +22783,6 @@ sendMessage(1,buffEOM);
 sendERRORMessage((uint8_t)0XCC);
 }
 }
-
 
 void main(void)
 {
@@ -22837,7 +22838,7 @@ lumAlarm.alarmLum = DATAEE_ReadByte(0x7000 + (8));
 ALAF = DATAEE_ReadByte(0x7000 + (9));
 t.h = DATAEE_ReadByte(0x7000 + (10));
 t.m = DATAEE_ReadByte(0x7000 + (11));
-iwrite = DATAEE_ReadByte(0x7000 + (12));
+iwrite = 0;
 
 
 
