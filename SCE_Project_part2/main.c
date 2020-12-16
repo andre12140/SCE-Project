@@ -85,15 +85,7 @@
 uint8_t NREG = 25;   //Number of registers, Max value is 46 to still be in the eeprom
 uint8_t PMON = 3;   //Monitoring period
 uint8_t TALA = 5;   //Duration of alarm signal (PWM)
-/*uint8_t ALAH = 0;   //Hours of alarm clock
-uint8_t ALAM = 0;   //Minutes of alarm clock
-uint8_t ALAS = 0;   //Seconds of alarm clock
-uint8_t ALAT = 0;   //Alarm threshold for Temperature
-uint8_t ALAL = 0;*/   //Alarm threshold for Luminosity
 uint8_t ALAF = 0;   //Alarm Flag (Initially disabled)
-/*uint8_t CLKH = 0;   //Initial value for clock hours
-uint8_t CLKM = 0;*/   //Initial value for clock minutes
-//uint8_t idx_RingBuffer = 0; //Index of Ring Buffer to EEPROM
 
 void cmd_rc(int, char *);
 void cmd_sc(int, char *);
@@ -137,19 +129,19 @@ struct Time {
 
 struct clockAlarm{
     struct Time alarmVal;
-    bool trigger;
+    bool trigger;//If the alarm was already activated (For LCD Display)
 };
 
 struct temperatureAlarm{
     unsigned char alarmTemp;
-    bool trigger;
-    bool triggered;
+    bool trigger; //If the alarm was already activated (For LCD Display)
+    bool triggered; //Alarm state at a give moment (For LED Display)
 };
 
 struct luminosityAlarm{
     unsigned char alarmLum;
-    bool trigger;
-    bool triggered;
+    bool trigger;//If the alarm was already activated (For LCD Display)
+    bool triggered;//Alarm state at a give moment (For LED Display)
 };
 
 #define NCOMMANDS (sizeof(commands) / sizeof(struct command_d))
@@ -160,6 +152,8 @@ struct Time t = {0,0,0}; // Time struct for current time
 
 uint8_t temp;
 uint8_t lumLevel;
+int prevTemp = -1;
+int prevLumLevel = -1;
 
 struct clockAlarm clkAlarm;// Time struct for editing clock alarm
 struct temperatureAlarm tempAlarm;
@@ -167,28 +161,25 @@ struct luminosityAlarm lumAlarm;
 
 int dimingLed = 0;
 struct Time alarmPWMStart = {0xff,0xff,0xff};
+bool PWM_on=false;
 
-int editingClockAlarm = 0;
+int editingClockAlarm = 0; //Int because it codes 3 parameters (hours, minutes and seconds)
 bool editingTempAlarm = false;
 bool editingLumAlarm = false;
 
 int modeFlag = 0; //Mode of operation (0 no edit, 1 edit CLK, 2 edit Temp, 3 edit Lum, 4 toggle Alarm Enable/Disable)
 
-bool PWM_on=false;
+bool updateLCD = true; //Flag to update LCD because something changed
+bool flagS1pushed = false; //S1 button pushed
+bool monitor_TEMP_LUM = false; //Flag to get Temperature and Luminosity values
+uint8_t counterMonitorAux = 0; //Counter until it gets to PMON value, activating monitor_TEMP_LUM flag, then is set back to zero
 
-int prevTemp = -1;
-int prevLumLevel = -1;
-
-bool updateLCD = true;
-bool flagS1pushed = false;
-bool monitor_TEMP_LUM = false;
-uint8_t counterMonitorAux = 0;
-
-bool writeEEPROM_flag = false;
+bool writeEEPROM_flag = false; //Flag to write the init data in the eeprom
 
 uint8_t iread = 0;
 uint8_t iwrite = 0;
 uint8_t nr = 0;
+bool flagNr = false; //It means that number of saved readings is lower than NREG
 uint8_t maxReadings = 0;
 
 bool bufHalfFull = false;
@@ -355,10 +346,6 @@ void PWM_Output_D4_Disable (void){
     PWM6EN = 0;
 }
 
-int map(int x, int in_min, int in_max, int out_min, int out_max) {
-  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-}
-
 void Clock_ISR(void) {    
     // Clock handler increment timer
     t.s++;
@@ -366,7 +353,7 @@ void Clock_ISR(void) {
     if(t.s==60){
         t.m++;
         t.s=0;
-        writeEEPROM_flag = true;
+        writeEEPROM_flag = true; // Every minute write to eeprom is activated
     }
     if(t.m==60){
         t.h++;
@@ -383,16 +370,15 @@ void Clock_ISR(void) {
         clkAlarm.alarmVal.h = 25; //Only triggered once until new val is given by user
     }
     
-    //Pode se verificar apenas quando altera valores da temperatura ou luminosidade, mas o else tem de se verificar quando existe leituras de registos (TRC,TRI))
-    //if(((iwrite >= iread) && (((iwrite-iread) >= NREG/2) || ((iwrite-iread) == 0 && nr == NREG))) || ((iwrite < iread) && ((iwrite+(NREG - iread)) >= NREG/2))){
     if(maxReadings >= NREG/2){
         bufHalfFull = true;
     } else {
-        bufHalfFull = false; //Nao volta a meter a false
+        bufHalfFull = false;
     }
     
     LED_D5_Toggle();
     updateLCD = true;
+    //Monitoring temperature and luminosity period
     counterMonitorAux++;
     if(counterMonitorAux >= PMON){
         counterMonitorAux = 0;
@@ -418,8 +404,6 @@ void wirteEEPROMinit(){
 
 }
 
-//Criar uma stirng e so depois escrever no LCD, Perguntar ao professor, se isto é necessário
-//Ou meter flags do que é preciso alterar no LCD e só mudar essas partes?
 void update_menuLCD(){
     
     if(bufHalfFull){
@@ -482,16 +466,6 @@ void update_menuLCD(){
             
             if(diff.s <= TALA){
                 PWM_on = true;
-                /*if(PWM6EN==0){ //Verifica se o Timer2 e PWM esta desligado
-                    TMR2_StartTimer();
-                    PWM_Output_D4_Enable();
-                }
-                if(dimingLed <= 330){ //max 1023 mas como nao se nota muita diferenca para valores altos meteu se mais baixo
-                    dimingLed += 30;
-                } else{
-                    dimingLed = 0;
-                }
-                PWM6_LoadDutyValue(dimingLed);*/
             } else if(PWM6EN==1){ //Verifica se o Timer2 e PWM esta ligado
                 PWM_on = false;
                 PWM6_LoadDutyValue(0);
@@ -563,8 +537,6 @@ void update_menuLCD(){
     }
 }
 
-bool flagNr = false; //It means that number of saved readings is lower than NREG
-
 void monitoring_TEMP_LUM(){
     temp = (uint8_t)tsttc(); //Get temp
     
@@ -578,8 +550,7 @@ void monitoring_TEMP_LUM(){
         DATAEE_WriteByte( (iwrite * 0x5) + EEAddr_RING + 0x3 , temp);
         DATAEE_WriteByte( (iwrite * 0x5) + EEAddr_RING + 0x4 , lumLevel);
         
-        //if((nr == NREG) && (iread == iwrite)){
-        if(maxReadings == NREG){ //Buffer esta cheio
+        if(maxReadings == NREG){ //Buffer is full
             iread++;
         } else {
             maxReadings++;
@@ -639,7 +610,7 @@ void monitoring_TEMP_LUM(){
 }
 
 void S1button(){
-    // First clears LCD and only switches mode when S1 is pressed again and theirs no alarms
+    // First clears LCD and only switches mode when S1 is pressed again and there's no alarms
     if(modeFlag == 0 && (clkAlarm.trigger || tempAlarm.trigger || lumAlarm.trigger)){
         clkAlarm.trigger = false;
         tempAlarm.trigger = false;
@@ -658,7 +629,7 @@ void S1button(){
             modeFlag++;
         }
     }
-    __delay_ms(S1DELAY);
+    __delay_ms(S1DELAY); //Debounce
 }
 
 void sendMessage(int num, char *buffer){
@@ -788,7 +759,7 @@ void editLum(){
                 editingLumAlarm = true;
             } else {
                 lumAlarm.alarmLum++;
-                if(lumAlarm.alarmLum > 7){ //Se o user meter 0 nunca vai passar abaixo desse valor o que significa que o alarme nao dispara
+                if(lumAlarm.alarmLum > 7){
                     lumAlarm.alarmLum = 0;
                 }
             }
@@ -823,28 +794,9 @@ void toggleAlarms(){
     }
 }
 
-/////////////////////////////////////////////////////////////////////////////Como dar debounce ao botao, perguntar ao professor
 void S1_ISR(){
     PIE0bits.INTE = 0; //Disables external ISR
     flagS1pushed = true;
-    /*if(modeFlag == 0 && (clkAlarm.trigger || tempAlarm.trigger || lumAlarm.trigger)){
-        clkAlarm.trigger = false;
-        tempAlarm.trigger = false;
-        lumAlarm.trigger = false;
-        updateLCD = true;
-    } else{
-        if(modeFlag == 1){
-            if(editingClockAlarm >= 1){
-                editingClockAlarm++;
-            }
-            if(editingClockAlarm > 3){
-                editingClockAlarm = 0;
-            }
-        }
-        if(editingClockAlarm == 0){ //Verify if not editing clock otherwise always increment mode
-            modeFlag++;
-        }
-    }*/
     EXT_INT_InterruptFlagClear();
     PIE0bits.INTE = 1; //Enables external ISR
 }
@@ -1010,19 +962,11 @@ void cmd_trc(int num, char *buffer){
     if(num == 4){
         int n = buffer[2];
         int nRegs = n;
-        /*int maxReadings = (iwrite-iread);
-        if(maxReadings < 0){
-            maxReadings = iwrite + (NREG - iread);
-        }
-        if(maxReadings == 0 && nr == NREG){
-            maxReadings = nr;
-        }
-        if((n > nr) || (n > maxReadings)){
-            sendERRORMessage((uint8_t)TRGC);
-            return;
-        }*/
         if(n > maxReadings){
             nRegs = maxReadings;
+        }
+        if(nRegs > 10){//10 is the maximum number of registers that can be transfered at one time
+            nRegs = 10;
         }
         uint8_t buffInit[3];
         buffInit[0] = (uint8_t)SOM;
@@ -1077,7 +1021,9 @@ void cmd_tri(int num, char *buffer){
             sendERRORMessage((uint8_t)TRGI);
             return;
         }
-        
+        if(n > 10){ //10 is the maximum number of registers that can be transfered at one time
+            n = 10;
+        }
         //Send starting message
         uint8_t buffInit[4];
         buffInit[0] = (uint8_t)SOM;
@@ -1129,8 +1075,8 @@ void main(void)
     INT_SetInterruptHandler(S1_ISR);
 
     uint8_t checkSumAux = 0;
-    bool notInit = true;
-    bool corrupted = false;
+    bool notInit = true; //First time initializing
+    bool corrupted = false; //Eeprom got corrupted
     if(DATAEE_ReadByte(EEAddr_INIT) == 'S'){
         notInit = false;
         for(int i = 1; i < 13; i++){
@@ -1204,8 +1150,10 @@ void main(void)
     
     while (1)
     {
-        while(EUSART_is_rx_ready()){
+        //Get message from eCos
+        while(EUSART_is_rx_ready()){ 
             c = getch();
+            //Reads all message
             if((c == (uint8_t)SOM || buff[0] == (uint8_t)SOM)){
                 if(c == (uint8_t)SOM){
                     memset(buff, 0, sizeof buff); //Clean Array
@@ -1222,6 +1170,7 @@ void main(void)
                 break;
             }
         }
+        //Process message received 
         if(buff[n-1] == (uint8_t)EOM){
             for (i = 0; i < NCOMMANDS; i++){
                 if (buff[1] == commands[i].cmd_name){
@@ -1233,7 +1182,7 @@ void main(void)
             c = 0x01;
             n=0;
         }
-        
+        //Mode of operation
         if(modeFlag == 0){
             checkFlags();
         } else if(modeFlag == 1){ //All modes are active blocking

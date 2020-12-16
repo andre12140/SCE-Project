@@ -21795,11 +21795,8 @@ extern char tolower(char);
 uint8_t NREG = 25;
 uint8_t PMON = 3;
 uint8_t TALA = 5;
-
-# 93
 uint8_t ALAF = 0;
 
-# 98
 void cmd_rc(int, char *);
 void cmd_sc(int, char *);
 void cmd_rtl(int, char *);
@@ -21865,6 +21862,8 @@ struct Time t = {0,0,0};
 
 uint8_t temp;
 uint8_t lumLevel;
+int prevTemp = -1;
+int prevLumLevel = -1;
 
 struct clockAlarm clkAlarm;
 struct temperatureAlarm tempAlarm;
@@ -21872,17 +21871,13 @@ struct luminosityAlarm lumAlarm;
 
 int dimingLed = 0;
 struct Time alarmPWMStart = {0xff,0xff,0xff};
+bool PWM_on=0;
 
 int editingClockAlarm = 0;
 bool editingTempAlarm = 0;
 bool editingLumAlarm = 0;
 
 int modeFlag = 0;
-
-bool PWM_on=0;
-
-int prevTemp = -1;
-int prevLumLevel = -1;
 
 bool updateLCD = 1;
 bool flagS1pushed = 0;
@@ -21894,6 +21889,7 @@ bool writeEEPROM_flag = 0;
 uint8_t iread = 0;
 uint8_t iwrite = 0;
 uint8_t nr = 0;
+bool flagNr = 0;
 uint8_t maxReadings = 0;
 
 bool bufHalfFull = 0;
@@ -22060,10 +22056,6 @@ void PWM_Output_D4_Disable (void){
 PWM6EN = 0;
 }
 
-int map(int x, int in_min, int in_max, int out_min, int out_max) {
-return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-}
-
 void Clock_ISR(void) {
 
 t.s++;
@@ -22088,8 +22080,6 @@ clkAlarm.trigger = 1;
 clkAlarm.alarmVal.h = 25;
 }
 
-
-
 if(maxReadings >= NREG/2){
 bufHalfFull = 1;
 } else {
@@ -22098,6 +22088,7 @@ bufHalfFull = 0;
 
 do { LATAbits.LATA7 = ~LATAbits.LATA7; } while(0);
 updateLCD = 1;
+
 counterMonitorAux++;
 if(counterMonitorAux >= PMON){
 counterMonitorAux = 0;
@@ -22122,8 +22113,6 @@ DATAEE_WriteByte( 0x7000 + (12), iwrite);
 DATAEE_WriteByte( 0x7000 + (13), NREG + PMON + TALA + clkAlarm.alarmVal.h + clkAlarm.alarmVal.m + clkAlarm.alarmVal.s + tempAlarm.alarmTemp + lumAlarm.alarmLum + ALAF + t.h + t.m + iwrite);
 
 }
-
-
 
 void update_menuLCD(){
 
@@ -22187,8 +22176,6 @@ differenceBetweenTimePeriod( t, alarmPWMStart, &diff);
 
 if(diff.s <= TALA){
 PWM_on = 1;
-
-# 495
 } else if(PWM6EN==1){
 PWM_on = 0;
 PWM6_LoadDutyValue(0);
@@ -22260,8 +22247,6 @@ LCDcmd(0x8f);
 }
 }
 
-bool flagNr = 0;
-
 void monitoring_TEMP_LUM(){
 temp = (uint8_t)tsttc();
 
@@ -22274,7 +22259,6 @@ DATAEE_WriteByte( (iwrite * 0x5) + 0x7012 + 0x1 , t.m);
 DATAEE_WriteByte( (iwrite * 0x5) + 0x7012 + 0x2 , t.s);
 DATAEE_WriteByte( (iwrite * 0x5) + 0x7012 + 0x3 , temp);
 DATAEE_WriteByte( (iwrite * 0x5) + 0x7012 + 0x4 , lumLevel);
-
 
 if(maxReadings == NREG){
 iread++;
@@ -22520,17 +22504,14 @@ break;
 }
 }
 
-
 void S1_ISR(){
 PIE0bits.INTE = 0;
 flagS1pushed = 1;
-
-# 848
 (PIR0bits.INTF = 0);
 PIE0bits.INTE = 1;
 }
 
-# 856
+# 808
 void sendOKMessage(uint8_t cmd){
 uint8_t bufw[4];
 bufw[0] = (uint8_t)0xFD;
@@ -22688,10 +22669,11 @@ void cmd_trc(int num, char *buffer){
 if(num == 4){
 int n = buffer[2];
 int nRegs = n;
-
-# 1024
 if(n > maxReadings){
 nRegs = maxReadings;
+}
+if(nRegs > 10){
+nRegs = 10;
 }
 uint8_t buffInit[3];
 buffInit[0] = (uint8_t)0xFD;
@@ -22746,7 +22728,9 @@ if((n > nr) || (maxReadingsAux < n)){
 sendERRORMessage((uint8_t)0XCC);
 return;
 }
-
+if(n > 10){
+n = 10;
+}
 
 uint8_t buffInit[4];
 buffInit[0] = (uint8_t)0xFD;
@@ -22873,8 +22857,10 @@ int i=0;
 
 while (1)
 {
+
 while(EUSART_is_rx_ready()){
 c = getch();
+
 if((c == (uint8_t)0xFD || buff[0] == (uint8_t)0xFD)){
 if(c == (uint8_t)0xFD){
 memset(buff, 0, sizeof buff);
@@ -22891,6 +22877,7 @@ if(c == (uint8_t)0xFE){
 break;
 }
 }
+
 if(buff[n-1] == (uint8_t)0xFE){
 for (i = 0; i < (sizeof(commands) / sizeof(struct command_d)); i++){
 if (buff[1] == commands[i].cmd_name){
