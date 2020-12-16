@@ -22,17 +22,18 @@
 #define CMD_OK 0       /* command successful */
 #define CMD_ERROR 0xFF /* error in command */
 
-#define uiID 0xCE
-#define procID 0xCF
+//Comunicação entre thread UI e thread processing
+#define CPT 0xD0  //Check period of transference
+#define MPT 0xD1  //Modify period of transference
+#define CTTL 0xD2 //Check threshold temperature and luminosity
+#define DTTL 0xD3 //Define threshold temperature and luminosity
+#define PR 0xD4   //Process registers (max, min, mean) between instants t1 and t2 (h,m,s)
 
-#define CPT 0xD0
-#define MPT 0xD1
-#define CTTL 0xD2
-#define DTTL 0xD3
-#define PR 0xD4
+#define uiID 0xCE   //ID da thread UI
+#define procID 0xCF //ID da thread processing
 
-#define NRBUF 100
-#define REGDIM 5
+#define NRBUF 100 //Dimensão do buffer circular do eCos
+#define REGDIM 5  //Dimensão dos registos (bytes)
 
 typedef struct mBoxMessages
 {
@@ -47,29 +48,34 @@ struct Time
     int s;
 };
 
-extern cyg_sem_t newCmdSem;
+/*-------------------------------------------------------------------------+
+| Variables
++--------------------------------------------------------------------------*/
 
-extern cyg_mutex_t sharedBuffMutex;
-extern cyg_mutex_t printfMutex;
+extern cyg_sem_t newCmdSem; //Semaforo para esperar pela respostas da thread RX (Antes de enviar uma mensagem para a thread TX fazer wait)
+
+extern cyg_mutex_t sharedBuffMutex; //Mutex para proteger acessos ao eCosRingBuff e os respetivos indices (iread, iwrite,...)
+extern cyg_mutex_t printfMutex;     //Mutex para proteger escritas na consola, uma vez que mais que uma thread pode escrever na consola
 
 cyg_mbox procMbox;
-cyg_handle_t procMboxH;
-extern cyg_handle_t TXMboxH;
-extern cyg_handle_t uiMboxH;
+cyg_handle_t procMboxH;      //Mail box da processing task, em que esta irá receber comandos da thread UI e da RX.
+extern cyg_handle_t TXMboxH; //TXMbos, mail box de receção de comandos na thread TX, vindos da thread UI e da thread processing.
+extern cyg_handle_t uiMboxH; //uiMbox, mail box de receção de comandos na thread UI, vindos do processing thread e do RX thread.
 
-cyg_alarm_t alarm_func;
+cyg_alarm_t alarm_func; //Função executada periodicamente pelo alarme
 cyg_handle_t alarmH;
 
-unsigned int periodOfTransference = 0;
+unsigned int periodOfTransference = 0; //Periodo da chamada do alarme
 
-unsigned int tempThreshold = 28;
-unsigned int lumThreshold = 4;
+unsigned int tempThreshold = 28; //Threshold de temperatura
+unsigned int lumThreshold = 4;   //Threshold de luminosidade
 
+//Variaveis do buffer circular eCos
 extern unsigned char eCosRingBuff[NRBUF][REGDIM];
-extern int iwrite;
-extern int iread;
-extern int nr;
-extern int maxReadings;
+extern int iwrite;      //Indice da proxima escrita no buffer circular
+extern int iread;       //Indice da proxima leitura no buffer circular
+extern int nr;          //Numero de registos válidos
+extern int maxReadings; //Número de registos que ainda não foram lidos
 
 bool sentMessageFlag = false;
 
@@ -80,11 +86,6 @@ mBoxMessage m_w;      //Mensagem de escrita para o UI
 
 void analyseRegisters(void)
 {
-    // int maxReadings = (iwrite - iread);
-    // if (maxReadings <= 0)
-    // {
-    //     maxReadings = iwrite + (NRBUF - iread);
-    // }
     int i;
     cyg_mutex_lock(&sharedBuffMutex);
     for (i = 0; i < maxReadings; i++)
@@ -92,11 +93,11 @@ void analyseRegisters(void)
         if (eCosRingBuff[iread][3] > tempThreshold || eCosRingBuff[iread][4] < lumThreshold)
         {
             cyg_mutex_lock(&printfMutex);
+
             printf("Clock = %02d : %02d : %02d\n", eCosRingBuff[iread][0], eCosRingBuff[iread][1], eCosRingBuff[iread][2]);
             printf("Temp = %d\n", eCosRingBuff[iread][3]);
             printf("Lum = %d\n\n", eCosRingBuff[iread][4]);
             printf("\nCmd> ");
-            fflush(stdin);
             cyg_mutex_unlock(&printfMutex);
         }
         iread++;
@@ -131,7 +132,7 @@ void proc_mpt(void)
     }
     else
     {
-        cyg_alarm_initialize(alarmH, cyg_current_time() + (periodOfTransference * 100), (periodOfTransference * 100));
+        cyg_alarm_initialize(alarmH, cyg_current_time() + (periodOfTransference * 100), (periodOfTransference * 100 * 60));
     }
 
     m_w.cmd_dim = 4;
@@ -204,8 +205,6 @@ void calcAux(int i)
         maxLum = eCosRingBuff[i][4];
         minLum = eCosRingBuff[i][4];
     }
-    // printf("Register Temp = %d\n", eCosRingBuff[i][3]);
-    // printf("Register Lum = %d\n", eCosRingBuff[i][4]);
 
     if (eCosRingBuff[i][3] > maxTemp)
     {
@@ -237,7 +236,7 @@ void calcMaxMinMean(int firstIndex, int secondIndex)
     meanLum = 0;
 
     int i;
-    if (firstIndex > secondIndex) //Ring buffer turned arround
+    if (firstIndex > secondIndex) //buffer circular ficou cheio por isso comecou a escrever no inicio do buffer
     {
         for (i = firstIndex; i < NRBUF; i++)
         {
@@ -261,7 +260,7 @@ void calcMaxMinMean(int firstIndex, int secondIndex)
     meanLum = meanLum / (secondIndex + 1 - firstIndex);
 }
 
-// Computes difference between time periods
+// Executa a diferença entre dois instantes temporais
 void differenceBetweenTimePeriod(struct Time start,
                                  struct Time stop,
                                  struct Time *diff)
@@ -281,7 +280,6 @@ void differenceBetweenTimePeriod(struct Time start,
     diff->h = start.h - stop.h;
 }
 
-//////////////////////////Dimensao de unsigned int nao chega para guardar um tempo todo em segundos//////////////////////////////////
 unsigned int getTimeindex(struct Time t)
 {
     struct Time arrayTime, diff;
@@ -363,9 +361,6 @@ void proc_pr(void)
 
     calcMaxMinMean(t1Index, t2Index);
 
-    // printf("Temperature: Max = %d, Min = %d, Mean = %d\n", maxTemp, minTemp, meanTemp);
-    // printf("Luminosity: Max = %d, Min = %d, Mean = %d\n", maxLum, minLum, meanLum);
-
     m_w.cmd_dim = 9;
     unsigned char bufw[m_w.cmd_dim + 1];
     bufw[9] = (unsigned char)procID;
@@ -385,15 +380,14 @@ void proc_pr(void)
 void asyncMessage(void)
 {
     cyg_mutex_lock(&printfMutex);
-    printf("Buffer in PIC is half full, starting periodic transference if not yet started\n");
+    printf("\nBuffer in PIC is half full, starting periodic transference if not yet started\n");
     printf("\nCmd> ");
-    fflush(stdin);
     cyg_mutex_unlock(&printfMutex);
 
     if (periodOfTransference == 0)
     {
         periodOfTransference = 1;
-        cyg_alarm_initialize(alarmH, cyg_current_time() + (periodOfTransference * 100), (periodOfTransference * 100));
+        cyg_alarm_initialize(alarmH, cyg_current_time() + (periodOfTransference * 100), (periodOfTransference * 100 * 60));
     }
 }
 
@@ -405,25 +399,25 @@ void proc_th_main(void)
 
         if (m == NULL)
         {
-            if (sentMessageFlag)
+            if (sentMessageFlag) //Se uma mensagem foi enviada a partir do alarme e a thread processing nao recebeu passado 100ms dar post no semaforo
             {
                 sentMessageFlag = false;
-                cyg_semaphore_post(&newCmdSem); //post sem
+                cyg_semaphore_post(&newCmdSem);
             }
             continue;
         }
 
-        memcpy(&m_r, m, sizeof(mBoxMessage));
+        memcpy(&m_r, m, sizeof(mBoxMessage)); //Copia a informação recebida para um buffer local
 
-        if (!(m_r.data[2] == NMFL))
+        if (!(m_r.data[2] == NMFL) && m_r.data[m_r.cmd_dim] == procID) //Se nao for a mensagem assincrona vinda do PIC e a mensagem foi enviada pela thread processign dar post ao semaforo
         {
-            cyg_semaphore_post(&newCmdSem); //post sem
+            cyg_semaphore_post(&newCmdSem);
         }
 
         if (m_r.data[m_r.cmd_dim] == procID) //Mensagem vinda de RX em que foi criada pela processing task
         {
             sentMessageFlag = false;
-            if (m_r.data[1] == TRGC && m_r.data[2] == CMD_OK)
+            if (m_r.data[1] == TRGC && m_r.data[2] != CMD_ERROR)
             {
                 analyseRegisters();
             }
@@ -460,7 +454,7 @@ void proc_th_main(void)
 
 void proc_th_prog(cyg_addrword_t data)
 {
-
+    //Inicialização da thread
     alarmCmd.data[0] = SOM;
     alarmCmd.data[1] = TRGC;
     alarmCmd.data[2] = 1;
@@ -480,9 +474,6 @@ void proc_th_prog(cyg_addrword_t data)
                      (cyg_addrword_t)0,
                      &alarmH, &alarm);
 
-    //Cada tick demora 10ms
-    //cyg_alarm_initialize(alarmH, cyg_current_time() + (periodOfTransference * 300), (periodOfTransference * 100));
-
     cyg_mutex_lock(&printfMutex);
     printf("Working Processing thread\n");
     cyg_mutex_unlock(&printfMutex);
@@ -490,10 +481,8 @@ void proc_th_prog(cyg_addrword_t data)
     proc_th_main();
 }
 
-//VERIFICAR SE O SEMAFORO NAO ENTRA EM PARAFUSO
 void alarm_func(cyg_handle_t alarmH, cyg_addrword_t data)
 {
-    //printf("IN ALARM\n");
     if (cyg_semaphore_trywait(&newCmdSem))
     {
         if (!cyg_mbox_tryput(TXMboxH, &alarmCmd))

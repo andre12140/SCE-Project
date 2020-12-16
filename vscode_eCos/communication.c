@@ -3,19 +3,6 @@
 #include <cyg/io/io.h>
 #include <cyg/kernel/kapi.h>
 
-extern Cyg_ErrNo err;
-extern cyg_io_handle_t serH;
-
-extern cyg_mutex_t sharedBuffMutex;
-extern cyg_mutex_t printfMutex;
-
-extern cyg_handle_t uiMboxH;
-extern cyg_handle_t TXMboxH;
-
-extern cyg_sem_t newCmdSem;
-
-extern cyg_handle_t procMboxH;
-
 #define SOM 0xFD       /* start of message */
 #define EOM 0xFE       /* end of message */
 #define RCLK 0xC0      /* read clock */
@@ -35,26 +22,53 @@ extern cyg_handle_t procMboxH;
 #define CMD_OK 0       /* command successful */
 #define CMD_ERROR 0xFF /* error in command */
 
-#define uiID 0xCE
-#define procID 0xCF
+//Comunicação entre thread UI e thread processing
+#define CPT 0xD0  //Check period of transference
+#define MPT 0xD1  //Modify period of transference
+#define CTTL 0xD2 //Check threshold temperature and luminosity
+#define DTTL 0xD3 //Define threshold temperature and luminosity
+#define PR 0xD4   //Process registers (max, min, mean) between instants t1 and t2 (h,m,s)
 
-#define NRBUF 100
-#define REGDIM 5
+#define uiID 0xCE   //ID da thread UI
+#define procID 0xCF //ID da thread processing
 
-unsigned char bufr[60];
-
-extern unsigned char eCosRingBuff[NRBUF][REGDIM];
-extern int iwrite;
-extern int iread;
-extern int nr;
-extern bool flagNr;
-extern int maxReadings;
+#define NRBUF 100 //Dimensão do buffer circular do eCos
+#define REGDIM 5  //Dimensão dos registos (bytes)
 
 typedef struct mBoxMessages
 {
   unsigned char data[20]; //Data to be transmited
   unsigned int cmd_dim;   //Number of bytes to be transmited
 } mBoxMessage;
+
+/*-------------------------------------------------------------------------+
+| Variables
++--------------------------------------------------------------------------*/
+
+extern Cyg_ErrNo err;
+extern cyg_io_handle_t serH; //Serial Handler
+
+extern cyg_mutex_t sharedBuffMutex; //Mutex para proteger acessos ao eCosRingBuff e os respetivos indices (iread, iwrite,...)
+extern cyg_mutex_t printfMutex;     //Mutex para proteger escritas na consola, uma vez que mais que uma thread pode escrever na consola
+
+extern cyg_handle_t TXMboxH; //TXMbos, mail box de receção de comandos na thread TX, vindos da thread UI e da thread processing.
+extern cyg_handle_t uiMboxH; //uiMbox, mail box de receção de comandos na thread UI, vindos do processing thread e do RX thread.
+
+extern cyg_sem_t newCmdSem; //Semaforo para esperar pela respostas da thread RX (Antes de enviar uma mensagem para a thread TX fazer wait)
+
+extern cyg_handle_t procMboxH; //Mail box da processing task, em que esta irá receber comandos da thread UI e da RX.
+
+unsigned char bufr[60]; //Buffer que contem uma copia da informação que foi enviada para a thread UI
+
+//Variaveis do buffer circular eCos
+extern unsigned char eCosRingBuff[NRBUF][REGDIM];
+extern int iwrite; //Indice da proxima escrita no buffer circular
+extern int iread;  //Indice da proxima leitura no buffer circular
+extern int nr;     //Numero de registos válidos
+extern bool flagNr;
+extern int maxReadings; //Número de registos que ainda não foram lidos
+
+mBoxMessage txMessage; //Mensagem recebida pela TX thread
 
 bool cmd_reg_write(void)
 {
@@ -78,10 +92,7 @@ bool cmd_reg_write(void)
   for (j = 0; j < n; j++)
   {
     memcpy(eCosRingBuff[iwrite], &bufr[offset + (j * REGDIM)], REGDIM);
-    // if ((nr == NRBUF) && (iread == iwrite))
-    // {
-    //   iread++;
-    // }
+
     if (maxReadings == NRBUF)
     { //Buffer esta cheio
       iread++;
@@ -115,7 +126,6 @@ bool cmd_reg_write(void)
   return true;
 }
 
-mBoxMessage txMessage;
 void tx_th_prog(cyg_addrword_t data)
 {
   cyg_mutex_lock(&printfMutex);
@@ -127,7 +137,6 @@ void tx_th_prog(cyg_addrword_t data)
   {
     txMessage = (*(mBoxMessage *)cyg_mbox_get(TXMboxH));
     err = cyg_io_write(serH, txMessage.data, &(txMessage.cmd_dim));
-    //printf("io_write err=%x, w=%d\n", err, txMessage.cmd_dim); //DEBUG
   }
 }
 
@@ -158,12 +167,11 @@ void rx_th_prog(cyg_addrword_t data)
       n++;
       if (buf_byte[0] == (unsigned char)EOM)
       {
-        //printf("io_read err=%x, r=%d\n", err, n); //DEBUG
 
-        if (cyg_current_time() < t) //Skip messages that took more than 500ms
+        if (cyg_current_time() < t) //Ignora mensagens que demoram mais de 500ms
         {
           mBoxMessage rxMessage;
-          if (bufr[1] == NMFL) //Async message, to processing task
+          if (bufr[1] == NMFL) //Message assincrona, para ser enviada para a processing thread
           {
             rxMessage.cmd_dim = n;
             memcpy(rxMessage.data, bufr, rxMessage.cmd_dim);
@@ -177,29 +185,22 @@ void rx_th_prog(cyg_addrword_t data)
             }
             continue;
           }
+
           if (bufr[1] == TRGC || bufr[1] == TRGI)
           {
-            if (cmd_reg_write())
-            {
-              rxMessage.data[2] = CMD_OK;
-            }
-            else
-            {
-              rxMessage.data[2] = CMD_ERROR;
-            }
-            rxMessage.cmd_dim = 4;
-            rxMessage.data[0] = SOM;
-            rxMessage.data[1] = bufr[1];
-            rxMessage.data[3] = EOM;
+            cmd_reg_write();
+            memcpy(rxMessage.data, bufr, 3);
             rxMessage.data[4] = txMessage.data[txMessage.cmd_dim];
+            rxMessage.cmd_dim = 4;
           }
           else
           {
             rxMessage.cmd_dim = n;
-            memcpy(rxMessage.data, bufr, rxMessage.cmd_dim + 1);
+            memcpy(rxMessage.data, bufr, rxMessage.cmd_dim);
+            rxMessage.data[n] = txMessage.data[txMessage.cmd_dim];
           }
 
-          if (txMessage.data[txMessage.cmd_dim] == uiID)
+          if (txMessage.data[txMessage.cmd_dim] == uiID) //Enviar para o UI thread
           {
             if (!cyg_mbox_tryput(uiMboxH, &rxMessage))
             {
@@ -208,7 +209,7 @@ void rx_th_prog(cyg_addrword_t data)
               cyg_mutex_unlock(&printfMutex);
             }
           }
-          else //Enviar para o processing task
+          else //Enviar para o processing thread
           {
             if (!cyg_mbox_tryput(procMboxH, &rxMessage))
             {

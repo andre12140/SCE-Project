@@ -23,7 +23,7 @@ int main(void)
 {
   cmd_ini(0, NULL);
 
-  //Main thread with highest priority to init all threads
+  //Main thread com a prioridade mais alta para conseguir inicializar as threads todas
   cyg_thread_create(11, ui_th_prog, (cyg_addrword_t)0,
                     "UI", (void *)stack[0], 4096,
                     &ui_thread, &thread_s[0]);

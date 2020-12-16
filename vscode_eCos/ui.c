@@ -6,22 +6,6 @@
 #include <cyg/io/io.h>
 #include <cyg/kernel/kapi.h>
 
-Cyg_ErrNo err;
-cyg_io_handle_t serH;
-cyg_bool_t r;
-
-cyg_mutex_t sharedBuffMutex;
-
-cyg_mutex_t printfMutex;
-
-cyg_sem_t newCmdSem;
-
-cyg_mbox uiMbox, TXMbox;
-
-cyg_handle_t uiMboxH;
-cyg_handle_t TXMboxH;
-extern cyg_handle_t procMboxH;
-
 #define SOM 0xFD       /* start of message */
 #define EOM 0xFE       /* end of message */
 #define RCLK 0xC0      /* read clock */
@@ -41,26 +25,21 @@ extern cyg_handle_t procMboxH;
 #define CMD_OK 0       /* command successful */
 #define CMD_ERROR 0xFF /* error in command */
 
-#define uiID 0xCE
-#define procID 0xCF
+//Comunicação entre thread UI e thread processing
+#define CPT 0xD0  //Check period of transference
+#define MPT 0xD1  //Modify period of transference
+#define CTTL 0xD2 //Check threshold temperature and luminosity
+#define DTTL 0xD3 //Define threshold temperature and luminosity
+#define PR 0xD4   //Process registers (max, min, mean) between instants t1 and t2 (h,m,s)
 
-#define CPT 0xD0
-#define MPT 0xD1
-#define CTTL 0xD2
-#define DTTL 0xD3
-#define PR 0xD4
+#define uiID 0xCE   //ID da thread UI
+#define procID 0xCF //ID da thread processing
 
-#define NRBUF 100
-#define REGDIM 5
+#define NRBUF 100 //Dimensão do buffer circular do eCos
+#define REGDIM 5  //Dimensão dos registos (bytes)
 
-unsigned char eCosRingBuff[NRBUF][REGDIM];
-int iwrite = 0;
-int iread = 0;
-int nr = 0;
-bool flagNr = false;
-int maxReadings = 0;
-
-unsigned char bufr[100];
+#define ARGVECSIZE 10
+#define MAX_LINE 50
 
 /*-------------------------------------------------------------------------+
 | Header definition
@@ -89,6 +68,7 @@ bool cmd_ir(int argc, char **argv);
 void cmd_ir_display(void);
 bool cmd_trc(int argc, char **argv);
 bool cmd_tri(int argc, char **argv);
+void cmd_trc_tri_display(void);
 
 bool cmd_irl(int argc, char **argv);
 bool cmd_lr(int argc, char **argv);
@@ -102,6 +82,43 @@ void cmd_cttl_display(void);
 bool cmd_dttl(int argc, char **argv);
 bool cmd_pr(int argc, char **argv);
 void cmd_pr_display(void);
+
+typedef struct mBoxMessages
+{
+  unsigned char data[20]; //Informação a ser transferida
+  unsigned int cmd_dim;   //Numero de bytes do comando a ser tranferido (nao inclui o thread ID)
+} mBoxMessage;
+
+/*-------------------------------------------------------------------------+
+| Variables
++--------------------------------------------------------------------------*/
+
+Cyg_ErrNo err;
+cyg_io_handle_t serH; //Serial Handler
+cyg_bool_t r;
+
+cyg_mutex_t sharedBuffMutex; //Mutex para proteger acessos ao eCosRingBuff e os respetivos indices (iread, iwrite,...)
+
+cyg_mutex_t printfMutex; //Mutex para proteger escritas na consola, uma vez que mais que uma thread pode escrever na consola
+
+cyg_sem_t newCmdSem; //Semaforo para esperar pela respostas da thread RX (Antes de enviar uma mensagem para a thread TX fazer wait)
+
+cyg_mbox uiMbox, TXMbox; //uiMbox, mail box de receção de comandos na thread UI, vindos do processing thread e do RX thread.
+//TXMbos, mail box de receção de comandos na thread TX, vindos da thread UI e da thread processing.
+
+cyg_handle_t uiMboxH;
+cyg_handle_t TXMboxH;
+extern cyg_handle_t procMboxH; //Mail box da processing task, em que esta irá receber comandos da thread UI e da RX.
+
+//Variaveis do buffer circular eCos
+unsigned char eCosRingBuff[NRBUF][REGDIM];
+int iwrite = 0; //Indice da proxima escrita no buffer circular
+int iread = 0;  //Indice da proxima leitura no buffer circular
+int nr = 0;     //Numero de registos válidos
+bool flagNr = false;
+int maxReadings = 0; //Número de registos que ainda não foram lidos
+
+unsigned char bufr[60]; //Buffer que contem uma copia da informação que foi enviada para a thread UI
 
 /*-------------------------------------------------------------------------+
 | Variable and constants definition
@@ -131,8 +148,8 @@ const commands[] = {
     {cmd_dtl, cmd_status_display, "dtl", "<t> <l>          define alarm temperature and luminosity"},
     {cmd_aa, cmd_status_display, "aa", "<a>               activate/deactivate alarms (1/0)"},
     {cmd_ir, cmd_ir_display, "ir", "<p>              information about registers (NREG, nr, iread, iwrite)"},
-    {cmd_trc, cmd_status_display, "trc", "<n>              transfer n registers from current iread position"},
-    {cmd_tri, cmd_status_display, "tri", "<n> <i>          transfer n registers from index i (0 - oldest)"},
+    {cmd_trc, cmd_trc_tri_display, "trc", "<n>              transfer n registers from current iread position"},
+    {cmd_tri, cmd_trc_tri_display, "tri", "<n> <i>          transfer n registers from index i (0 - oldest)"},
 
     {cmd_irl, NULL, "irl", "                 information about local registers (NRBUF, nr, iread, iwrite)"},
     {cmd_lr, NULL, "lr", "<n> <i>          list n registers (local memory) from index i (0 - oldest)"},
@@ -141,26 +158,15 @@ const commands[] = {
     {cmd_cpt, cmd_cpt_display, "cpt", "                 check period of transference"},
     {cmd_mpt, cmd_status_display, "mpt", "<p>              modify period of transference (minutes - 0 deactivate)"},
     {cmd_cttl, cmd_cttl_display, "cttl", "                 check threshold temperature and luminosity for processing"},
-    {cmd_dttl, cmd_status_display, "dttl", "<t> <l>          dene threshold temperature and luminosity for processing"},
+    {cmd_dttl, cmd_status_display, "dttl", "<t> <l>          define threshold temperature and luminosity for processing"},
     {cmd_pr, cmd_pr_display, "pr", "[h1 m1 s1 [h2 m2 s2]]  process registers (max, min, mean) between instants t1 and t2 (h,m,s)"},
 
     {cmd_sair, NULL, "sair", "                sair"},
     {cmd_ini, NULL, "ini", "<d>              inicializar dispositivo (0/1) ser0/ser1"}};
 
 #define NCOMMANDS (sizeof(commands) / sizeof(struct command_d))
-#define ARGVECSIZE 10
-#define MAX_LINE 50
-
-typedef struct mBoxMessages
-{
-  unsigned char data[20]; //Data to be transmited
-  unsigned int cmd_dim;   //Number of bytes to be transmited
-} mBoxMessage;
 
 mBoxMessage m_w; //Mensagem de escrita para o Proc
-
-///////////////////////////////////////////
-// SOS TA MARADO
 
 /*-------------------------------------------------------------------------+
 | Function: cmd_sos - provides a rudimentary help
@@ -171,7 +177,10 @@ bool cmd_sos(int argc, char **argv)
   int i;
   printf("%s\n", TitleMsg);
   for (i = 0; i < NCOMMANDS; i++)
+  {
     printf("%s %s\n", commands[i].cmd_name, commands[i].cmd_help);
+    fflush(stdout);
+  }
   cyg_mutex_unlock(&printfMutex);
   return true;
 }
@@ -181,7 +190,6 @@ bool cmd_sos(int argc, char **argv)
 +--------------------------------------------------------------------------*/
 bool cmd_sair(int argc, char **argv)
 {
-  //Falta terminar outras threads
   exit(0);
   return true;
 }
@@ -270,10 +278,6 @@ bool cmd_sc(int argc, char **argv)
   sscanf(argv[1], "%d", &h);
   sscanf(argv[2], "%d", &min);
   sscanf(argv[3], "%d", &s);
-
-  //printf("Horas = %d\n", h);
-  //printf("Minutos = %d\n", m);
-  //printf("Segundos = %d\n", s);
 
   mBoxMessage m;
   m.cmd_dim = 6;
@@ -466,10 +470,6 @@ bool cmd_dac(int argc, char **argv)
   sscanf(argv[2], "%d", &min);
   sscanf(argv[3], "%d", &s);
 
-  //printf("Horas = %d\n", h);
-  //printf("Minutos = %d\n", m);
-  //printf("Segundos = %d\n", s);
-
   mBoxMessage m;
   m.cmd_dim = 6;
   unsigned char bufw[m.cmd_dim + 1];
@@ -641,6 +641,21 @@ bool cmd_tri(int argc, char **argv)
   return true;
 }
 
+void cmd_trc_tri_display()
+{
+  if (bufr[2] == CMD_ERROR)
+  {
+    printf("Error in register transference\n");
+    return;
+  }
+  else if (bufr[2] == 0)
+  {
+    printf("There's no new registers to be transfered\n");
+    return;
+  }
+  printf("Successfully transfered %d registers\n", bufr[2]);
+}
+
 /*-------------------------------------------------------------------------+
 | Function: cmd_irl - information about local registers (NRBUF, nr, iread, iwrite)
 +--------------------------------------------------------------------------*/
@@ -719,7 +734,7 @@ bool cmd_lr(int argc, char **argv)
       }
     }
   }
-  else //index is omitted
+  else //indice i é omitido
   {
     int nRegs = n;
     if (n > maxReadings)
@@ -727,7 +742,7 @@ bool cmd_lr(int argc, char **argv)
       nRegs = maxReadings;
     }
     for (i = 0; i < nRegs; i++)
-    { //Read n registers
+    { //Ler nRegs registos do buffer circular eCos
       cyg_mutex_lock(&printfMutex);
       printf("Clock = %02d : %02d : %02d\n", eCosRingBuff[iread][0], eCosRingBuff[iread][1], eCosRingBuff[iread][2]);
       printf("Temp = %d\n", eCosRingBuff[iread][3]);
@@ -819,7 +834,7 @@ bool cmd_mpt(int argc, char **argv)
   m_w.cmd_dim = 4;
   m_w.data[4] = (unsigned char)uiID;
   m_w.data[3] = (unsigned char)EOM;
-  m_w.data[1] = (unsigned char)p;
+  m_w.data[2] = (unsigned char)p;
   m_w.data[1] = (unsigned char)MPT;
   m_w.data[0] = (unsigned char)SOM;
 
@@ -993,7 +1008,6 @@ void monitor(void)
     cyg_mutex_lock(&printfMutex);
     printf("\nCmd> ");
     cyg_mutex_unlock(&printfMutex);
-    /* Reading and parsing command line  ----------------------------------*/
     if ((argc = my_getline(argv, ARGVECSIZE)) > 0)
     {
       for (p = argv[0]; *p != '\0'; *p = tolower(*p), p++)
@@ -1001,38 +1015,35 @@ void monitor(void)
       for (i = 0; i < NCOMMANDS; i++)
         if (strcmp(argv[0], commands[i].cmd_name) == 0)
           break;
-      /* Executing commands -----------------------------------------------*/
       if (i < NCOMMANDS)
       {
-        if (((i > 0) && (i < 14))) //Commands to send to PIC
+        if (((i > 0) && (i < 14))) //Comandos a serem enviados para o PIC
         {
-          if (!cyg_semaphore_timed_wait(&newCmdSem, cyg_current_time() + 50)) //So ocorre quando for para fazer uma escrita do TX
+          if (!cyg_semaphore_timed_wait(&newCmdSem, cyg_current_time() + 50)) //So ocorre quando for para fazer uma escrita no TX
           {
-            continue; //Acontece quando o comando anterior ainda nao foi totalmete processado (RX ainda nao deu post)
+            continue; //Acontece quando o comando anterior ainda nao foi totalmete processado (newCmdSem ainda nao levou post)
           }
         }
         bool cmd_exec_ret = commands[i].cmd_fnct(argc, argv);
 
-        if (!cmd_exec_ret) //If arguments were invalid
+        if (!cmd_exec_ret) //Se os argumentos forem inválidos
         {
           continue;
         }
-        if (((i > 0) && (i < 14)) || ((i > 16) && (i < 22))) //Receive commands from proc and RX
+        if (((i > 0) && (i < 14)) || ((i > 16) && (i < 22))) //Receber comandos do RX e do processing thread.
         {
           m = (mBoxMessage *)cyg_mbox_timed_get(uiMboxH, cyg_current_time() + 50); //500ms
-          if (((i > 0) && (i < 14)))
+          if (((i > 0) && (i < 14)))                                               //Se for um comando a ser enviado para o PIC da post.
           {
             cyg_semaphore_post(&newCmdSem);
           }
-          //post sem
 
           if (m != NULL)
           {
-            memcpy(bufr, (*m).data, (*m).cmd_dim);
+            memcpy(bufr, (*m).data, (*m).cmd_dim); //Copiar o conteudo da mensagem da mail box para um buffer local.
             cyg_mutex_lock(&printfMutex);
-            commands[i].cmd_display();
+            commands[i].cmd_display(); //Escrever na consola o resultado da execução do comando
             cyg_mutex_unlock(&printfMutex);
-            //printf("Fazer prints (UI)\n");
           }
           else
           {
@@ -1054,6 +1065,7 @@ void monitor(void)
 
 void ui_th_prog(cyg_addrword_t data)
 {
+  //Inicializações
   cyg_mbox_create(&uiMboxH, &uiMbox);
   cyg_mbox_create(&TXMboxH, &TXMbox);
 
