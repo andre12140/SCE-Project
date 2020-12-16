@@ -75,7 +75,7 @@ channel_FVR_buf1 63
 "5 E:\Microchip\xc8\v2.30\pic\sources\c90\common\lwmod.c
 [v ___lwmod __lwmod `(ui  1 e 2 0 ]
 "8 E:\Microchip\xc8\v2.30\pic\sources\c90\common\memset.c
-[v _memset memset `(*.5v  1 e 1 0 ]
+[v _memset memset `(*.4v  1 e 1 0 ]
 "10 E:\Microchip\xc8\v2.30\pic\sources\c90\common\sprcadd.c
 [v ___fladd __fladd `(d  1 e 4 0 ]
 "15 E:\Microchip\xc8\v2.30\pic\sources\c90\common\Umul16.c
@@ -90,29 +90,29 @@ channel_FVR_buf1 63
 [v _ReadI2C ReadI2C `(uc  1 e 1 0 ]
 "47
 [v _WriteI2C WriteI2C `(c  1 e 1 0 ]
-"197 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
+"196 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
 [v _tsttc tsttc `(uc  1 e 1 0 ]
-"226
+"225
 [v _LCDsend LCDsend `(v  1 e 1 0 ]
-"234
+"233
 [v _LCDrecv LCDrecv `(uc  1 e 1 0 ]
-"265
+"264
 [v _LCDsend2x4 LCDsend2x4 `(v  1 e 1 0 ]
-"288
+"287
 [v _LCDinit LCDinit `(v  1 e 1 0 ]
-"311
+"310
 [v _LCDcmd LCDcmd `(v  1 e 1 0 ]
-"316
+"315
 [v _LCDchar LCDchar `(v  1 e 1 0 ]
-"321
+"320
 [v _LCDstr LCDstr `(v  1 e 1 0 ]
-"335
+"334
 [v _differenceBetweenTimePeriod differenceBetweenTimePeriod `(v  1 e 1 0 ]
-"351
+"350
 [v _PWM_Output_D4_Enable PWM_Output_D4_Enable `(v  1 e 1 0 ]
-"355
+"354
 [v _PWM_Output_D4_Disable PWM_Output_D4_Disable `(v  1 e 1 0 ]
-"363
+"362
 [v _Clock_ISR Clock_ISR `(v  1 e 1 0 ]
 "403
 [v _wirteEEPROMinit wirteEEPROMinit `(v  1 e 1 0 ]
@@ -120,53 +120,53 @@ channel_FVR_buf1 63
 [v _update_menuLCD update_menuLCD `(v  1 e 1 0 ]
 "568
 [v _monitoring_TEMP_LUM monitoring_TEMP_LUM `(v  1 e 1 0 ]
-"638
+"641
 [v _S1button S1button `(v  1 e 1 0 ]
-"661
+"664
 [v _sendMessage sendMessage `(v  1 e 1 0 ]
-"670
+"673
 [v _checkFlags checkFlags `(v  1 e 1 0 ]
-"721
+"724
 [v _editClock editClock `(v  1 e 1 0 ]
-"759
+"762
 [v _editTemp editTemp `(v  1 e 1 0 ]
-"781
+"784
 [v _editLum editLum `(v  1 e 1 0 ]
-"803
+"806
 [v _toggleAlarms toggleAlarms `(v  1 e 1 0 ]
-"824
+"827
 [v _S1_ISR S1_ISR `(v  1 e 1 0 ]
-"853
+"856
 [v _sendOKMessage sendOKMessage `(v  1 e 1 0 ]
-"863
+"866
 [v _sendERRORMessage sendERRORMessage `(v  1 e 1 0 ]
-"873
+"876
 [v _cmd_rc cmd_rc `(v  1 e 1 0 ]
-"885
+"888
 [v _cmd_sc cmd_sc `(v  1 e 1 0 ]
-"900
+"903
 [v _cmd_rtl cmd_rtl `(v  1 e 1 0 ]
-"911
+"914
 [v _cmd_rp cmd_rp `(v  1 e 1 0 ]
-"922
+"925
 [v _cmd_mmp cmd_mmp `(v  1 e 1 0 ]
-"931
+"934
 [v _cmd_mta cmd_mta `(v  1 e 1 0 ]
-"940
+"943
 [v _cmd_ra cmd_ra `(v  1 e 1 0 ]
-"955
+"958
 [v _cmd_dac cmd_dac `(v  1 e 1 0 ]
-"969
+"972
 [v _cmd_dtl cmd_dtl `(v  1 e 1 0 ]
-"981
+"984
 [v _cmd_aa cmd_aa `(v  1 e 1 0 ]
-"993
+"996
 [v _cmd_ir cmd_ir `(v  1 e 1 0 ]
-"1006
+"1009
 [v _cmd_trc cmd_trc `(v  1 e 1 0 ]
-"1048
+"1056
 [v _cmd_tri cmd_tri `(v  1 e 1 0 ]
-"1110
+"1118
 [v _main main `(v  1 e 1 0 ]
 "63 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/adcc.c
 [v _ADCC_Initialize ADCC_Initialize `(v  1 e 1 0 ]
@@ -988,72 +988,74 @@ channel_FVR_buf1 63
 [v _WPUC4 WPUC4 `VEb  1 e 0 @31356 ]
 "358 E:\Microchip\xc8\v2.30\pic\sources\c90\common\doprnt.c
 [v _dpowers dpowers `DC[5]ui  1 s 10 dpowers ]
-"87 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
+"85 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
 [v _NREG NREG `uc  1 e 1 0 ]
-"88
+"86
 [v _PMON PMON `uc  1 e 1 0 ]
-"89
+"87
 [v _TALA TALA `uc  1 e 1 0 ]
-"95
+"93
 [v _ALAF ALAF `uc  1 e 1 0 ]
 [s S1885 command_d 3 `*.37(v 1 cmd_fnct 2 0 `uc 1 cmd_name 1 2 ]
-"118
+"116
 [v _commands commands `DC[13]S1885  1 e 39 0 ]
 [s S1971 Time 3 `uc 1 h 1 0 `uc 1 m 1 1 `uc 1 s 1 2 ]
-"161
+"159
 [v _t t `S1971  1 e 3 0 ]
-"163
+"161
 [v _temp temp `uc  1 e 1 0 ]
-"164
+"162
 [v _lumLevel lumLevel `uc  1 e 1 0 ]
-"166
+"164
 [s S1975 clockAlarm 4 `S1971 1 alarmVal 3 0 `uc 1 trigger 1 3 ]
 [v _clkAlarm clkAlarm `S1975  1 e 4 0 ]
 [s S1978 temperatureAlarm 3 `uc 1 alarmTemp 1 0 `uc 1 trigger 1 1 `uc 1 triggered 1 2 ]
-"167
+"165
 [v _tempAlarm tempAlarm `S1978  1 e 3 0 ]
 [s S1982 luminosityAlarm 3 `uc 1 alarmLum 1 0 `uc 1 trigger 1 1 `uc 1 triggered 1 2 ]
-"168
+"166
 [v _lumAlarm lumAlarm `S1982  1 e 3 0 ]
-"170
+"168
 [v _dimingLed dimingLed `i  1 e 2 0 ]
-"171
+"169
 [v _alarmPWMStart alarmPWMStart `S1971  1 e 3 0 ]
-"173
+"171
 [v _editingClockAlarm editingClockAlarm `i  1 e 2 0 ]
-"174
+"172
 [v _editingTempAlarm editingTempAlarm `uc  1 e 1 0 ]
-"175
+"173
 [v _editingLumAlarm editingLumAlarm `uc  1 e 1 0 ]
-"177
+"175
 [v _modeFlag modeFlag `i  1 e 2 0 ]
-"179
+"177
 [v _PWM_on PWM_on `uc  1 e 1 0 ]
-"181
+"179
 [v _prevTemp prevTemp `i  1 e 2 0 ]
-"182
+"180
 [v _prevLumLevel prevLumLevel `i  1 e 2 0 ]
-"184
+"182
 [v _updateLCD updateLCD `uc  1 e 1 0 ]
-"185
+"183
 [v _flagS1pushed flagS1pushed `uc  1 e 1 0 ]
-"186
+"184
 [v _monitor_TEMP_LUM monitor_TEMP_LUM `uc  1 e 1 0 ]
-"187
+"185
 [v _counterMonitorAux counterMonitorAux `uc  1 e 1 0 ]
-"189
+"187
 [v _writeEEPROM_flag writeEEPROM_flag `uc  1 e 1 0 ]
-"191
+"189
 [v _iread iread `uc  1 e 1 0 ]
-"192
+"190
 [v _iwrite iwrite `uc  1 e 1 0 ]
-"193
+"191
 [v _nr nr `uc  1 e 1 0 ]
-"195
+"192
+[v _maxReadings maxReadings `uc  1 e 1 0 ]
+"194
 [v _bufHalfFull bufHalfFull `uc  1 e 1 0 ]
 "566
 [v _flagNr flagNr `uc  1 e 1 0 ]
-"669
+"672
 [v _sentMessageBufHalfFull sentMessageBufHalfFull `uc  1 e 1 0 ]
 "62 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/eusart.c
 [v _eusartTxHead eusartTxHead `VEuc  1 e 1 0 ]
@@ -1085,44 +1087,44 @@ channel_FVR_buf1 63
 [v _timer1ReloadVal timer1ReloadVal `VEui  1 e 2 0 ]
 "58
 [v _TMR1_InterruptHandler TMR1_InterruptHandler `*.37(v  1 e 2 0 ]
-"1110 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
+"1118 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
 [v _main main `(v  1 e 1 0 ]
 {
-"1128
+"1136
 [v main@i i `i  1 a 2 25 ]
-"1193
+"1201
 [v main@buff buff `[20]uc  1 a 20 0 ]
-"1194
+"1202
 [v main@n n `i  1 a 2 30 ]
-"1195
-[v main@i_2535 i `i  1 a 2 28 ]
-"1192
-[v main@c c `uc  1 a 1 27 ]
-"1125
+"1203
+[v main@i_2536 i `i  1 a 2 27 ]
+"1200
+[v main@c c `uc  1 a 1 29 ]
+"1133
 [v main@corrupted corrupted `uc  1 a 1 24 ]
-"1124
+"1132
 [v main@notInit notInit `uc  1 a 1 23 ]
-"1123
+"1131
 [v main@checkSumAux checkSumAux `uc  1 a 1 22 ]
-"1243
+"1251
 } 0
-"803
+"806
 [v _toggleAlarms toggleAlarms `(v  1 e 1 0 ]
 {
-"821
+"824
 } 0
 "8 E:\Microchip\xc8\v2.30\pic\sources\c90\common\memset.c
-[v _memset memset `(*.5v  1 e 1 0 ]
+[v _memset memset `(*.4v  1 e 1 0 ]
 {
-[v memset@p1 p1 `*.5v  1 a 1 wreg ]
+[v memset@p1 p1 `*.4v  1 a 1 wreg ]
 "15
-[v memset@p p `*.5uc  1 a 1 12 ]
+[v memset@p p `*.4uc  1 a 1 5 ]
 "8
-[v memset@p1 p1 `*.5v  1 a 1 wreg ]
-[v memset@c c `i  1 p 2 7 ]
-[v memset@n n `ui  1 p 2 9 ]
+[v memset@p1 p1 `*.4v  1 a 1 wreg ]
+[v memset@c c `i  1 p 2 0 ]
+[v memset@n n `ui  1 p 2 2 ]
 "18
-[v memset@p1 p1 `*.5v  1 a 1 13 ]
+[v memset@p1 p1 `*.4v  1 a 1 6 ]
 "22
 } 0
 "83 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/i2c1_driver.c
@@ -1139,30 +1141,30 @@ channel_FVR_buf1 63
 [v _EUSART_Read EUSART_Read `(uc  1 e 1 0 ]
 {
 "130
-[v EUSART_Read@readValue readValue `uc  1 a 1 8 ]
+[v EUSART_Read@readValue readValue `uc  1 a 1 1 ]
 "146
 } 0
-"759 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
+"762 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
 [v _editTemp editTemp `(v  1 e 1 0 ]
 {
-"779
+"782
 } 0
-"781
+"784
 [v _editLum editLum `(v  1 e 1 0 ]
 {
-"801
+"804
 } 0
-"721
+"724
 [v _editClock editClock `(v  1 e 1 0 ]
 {
-"757
+"760
 } 0
-"670
+"673
 [v _checkFlags checkFlags `(v  1 e 1 0 ]
 {
-"691
-[v checkFlags@buff buff `[7]uc  1 a 7 49 ]
-"719
+"694
+[v checkFlags@buff buff `[7]uc  1 a 7 60 ]
+"722
 } 0
 "403
 [v _wirteEEPROMinit wirteEEPROMinit `(v  1 e 1 0 ]
@@ -1174,15 +1176,15 @@ channel_FVR_buf1 63
 {
 [s S1971 Time 3 `uc 1 h 1 0 `uc 1 m 1 1 `uc 1 s 1 2 ]
 "480
-[v update_menuLCD@diff diff `S1971  1 a 3 15 ]
+[v update_menuLCD@diff diff `S1971  1 a 3 56 ]
 "433
-[v update_menuLCD@str str `[8]uc  1 a 8 0 ]
+[v update_menuLCD@str str `[8]uc  1 a 8 41 ]
 "510
-[v update_menuLCD@tt tt `[4]uc  1 a 4 8 ]
+[v update_menuLCD@tt tt `[4]uc  1 a 4 49 ]
 "519
-[v update_menuLCD@l l `[3]uc  1 a 3 12 ]
+[v update_menuLCD@l l `[3]uc  1 a 3 53 ]
 "480
-[v update_menuLCD@F12903 F12903 `S1971  1 s 3 F12903 ]
+[v update_menuLCD@F12904 F12904 `S1971  1 s 3 F12904 ]
 "564
 } 0
 "505 E:\Microchip\xc8\v2.30\pic\sources\c90\common\doprnt.c
@@ -1190,22 +1192,22 @@ channel_FVR_buf1 63
 {
 [v sprintf@sp sp `*.4uc  1 a 1 wreg ]
 "514
-[v sprintf@width width `i  1 a 2 38 ]
+[v sprintf@width width `i  1 a 2 31 ]
 "545
-[v sprintf@val val `ui  1 a 2 35 ]
+[v sprintf@val val `ui  1 a 2 28 ]
 "512
-[v sprintf@c c `uc  1 a 1 40 ]
+[v sprintf@c c `uc  1 a 1 33 ]
 "525
-[v sprintf@flag flag `uc  1 a 1 37 ]
+[v sprintf@flag flag `uc  1 a 1 30 ]
 "521
-[v sprintf@prec prec `c  1 a 1 34 ]
+[v sprintf@prec prec `c  1 a 1 27 ]
 "507
-[v sprintf@ap ap `[1]*.4v  1 a 1 33 ]
+[v sprintf@ap ap `[1]*.4v  1 a 1 26 ]
 "505
 [v sprintf@sp sp `*.4uc  1 a 1 wreg ]
-[v sprintf@f f `*.25DCuc  1 p 2 21 ]
+[v sprintf@f f `*.25DCuc  1 p 2 14 ]
 "550
-[v sprintf@sp sp `*.4uc  1 a 1 41 ]
+[v sprintf@sp sp `*.4uc  1 a 1 34 ]
 "1567
 } 0
 "8 E:\Microchip\xc8\v2.30\pic\sources\c90\common\isdigit.c
@@ -1214,41 +1216,41 @@ channel_FVR_buf1 63
 [v isdigit@c c `uc  1 a 1 wreg ]
 [v isdigit@c c `uc  1 a 1 wreg ]
 "14
-[v isdigit@c c `uc  1 a 1 8 ]
+[v isdigit@c c `uc  1 a 1 1 ]
 "15
 } 0
 "5 E:\Microchip\xc8\v2.30\pic\sources\c90\common\lwmod.c
 [v ___lwmod __lwmod `(ui  1 e 2 0 ]
 {
 "10
-[v ___lwmod@counter counter `uc  1 a 1 20 ]
+[v ___lwmod@counter counter `uc  1 a 1 13 ]
 "5
-[v ___lwmod@divisor divisor `ui  1 p 2 15 ]
-[v ___lwmod@dividend dividend `ui  1 p 2 17 ]
+[v ___lwmod@divisor divisor `ui  1 p 2 8 ]
+[v ___lwmod@dividend dividend `ui  1 p 2 10 ]
 "25
 } 0
 "5 E:\Microchip\xc8\v2.30\pic\sources\c90\common\lwdiv.c
 [v ___lwdiv __lwdiv `(ui  1 e 2 0 ]
 {
 "10
-[v ___lwdiv@quotient quotient `ui  1 a 2 13 ]
+[v ___lwdiv@quotient quotient `ui  1 a 2 5 ]
 "11
-[v ___lwdiv@counter counter `uc  1 a 1 12 ]
+[v ___lwdiv@counter counter `uc  1 a 1 7 ]
 "5
-[v ___lwdiv@divisor divisor `ui  1 p 2 7 ]
-[v ___lwdiv@dividend dividend `ui  1 p 2 9 ]
+[v ___lwdiv@divisor divisor `ui  1 p 2 0 ]
+[v ___lwdiv@dividend dividend `ui  1 p 2 2 ]
 "30
 } 0
-"335 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
+"334 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
 [v _differenceBetweenTimePeriod differenceBetweenTimePeriod `(v  1 e 1 0 ]
 {
 [s S1971 Time 3 `uc 1 h 1 0 `uc 1 m 1 1 `uc 1 s 1 2 ]
-[v differenceBetweenTimePeriod@start start `S1971  1 p 3 7 ]
+[v differenceBetweenTimePeriod@start start `S1971  1 p 3 0 ]
+"335
+[v differenceBetweenTimePeriod@stop stop `S1971  1 p 3 3 ]
 "336
-[v differenceBetweenTimePeriod@stop stop `S1971  1 p 3 10 ]
-"337
-[v differenceBetweenTimePeriod@diff diff `*.4S1971  1 p 1 13 ]
-"349
+[v differenceBetweenTimePeriod@diff diff `*.4S1971  1 p 1 6 ]
+"348
 } 0
 "117 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/tmr2.c
 [v _TMR2_StopTimer TMR2_StopTimer `(v  1 e 1 0 ]
@@ -1260,55 +1262,55 @@ channel_FVR_buf1 63
 {
 "115
 } 0
-"355 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
+"354 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
 [v _PWM_Output_D4_Disable PWM_Output_D4_Disable `(v  1 e 1 0 ]
 {
-"357
+"356
 } 0
 "74 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/pwm6.c
 [v _PWM6_LoadDutyValue PWM6_LoadDutyValue `(v  1 e 1 0 ]
 {
-[v PWM6_LoadDutyValue@dutyValue dutyValue `ui  1 p 2 7 ]
+[v PWM6_LoadDutyValue@dutyValue dutyValue `ui  1 p 2 0 ]
 "81
 } 0
-"321 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
+"320 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
 [v _LCDstr LCDstr `(v  1 e 1 0 ]
 {
-"323
-[v LCDstr@c c `uc  1 a 1 21 ]
-"321
-[v LCDstr@p p `*.26uc  1 p 2 16 ]
-"326
+"322
+[v LCDstr@c c `uc  1 a 1 14 ]
+"320
+[v LCDstr@p p `*.26uc  1 p 2 9 ]
+"325
 } 0
-"316
+"315
 [v _LCDchar LCDchar `(v  1 e 1 0 ]
 {
 [v LCDchar@c c `uc  1 a 1 wreg ]
 [v LCDchar@c c `uc  1 a 1 wreg ]
+"317
+[v LCDchar@c c `uc  1 a 1 8 ]
 "318
-[v LCDchar@c c `uc  1 a 1 15 ]
-"319
 } 0
-"311
+"310
 [v _LCDcmd LCDcmd `(v  1 e 1 0 ]
 {
 [v LCDcmd@c c `uc  1 a 1 wreg ]
 [v LCDcmd@c c `uc  1 a 1 wreg ]
+"312
+[v LCDcmd@c c `uc  1 a 1 8 ]
 "313
-[v LCDcmd@c c `uc  1 a 1 15 ]
-"314
 } 0
 "568
 [v _monitoring_TEMP_LUM monitoring_TEMP_LUM `(v  1 e 1 0 ]
 {
-"636
+"639
 } 0
-"197
+"196
 [v _tsttc tsttc `(uc  1 e 1 0 ]
 {
-"199
-[v tsttc@value value `uc  1 a 1 10 ]
-"224
+"198
+[v tsttc@value value `uc  1 a 1 3 ]
+"223
 } 0
 "32 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\I2C/i2c.c
 [v _ReadI2C ReadI2C `(uc  1 e 1 0 ]
@@ -1319,10 +1321,10 @@ channel_FVR_buf1 63
 [v _DATAEE_WriteByte DATAEE_WriteByte `(v  1 e 1 0 ]
 {
 "182
-[v DATAEE_WriteByte@GIEBitValue GIEBitValue `uc  1 a 1 16 ]
+[v DATAEE_WriteByte@GIEBitValue GIEBitValue `uc  1 a 1 9 ]
 "180
-[v DATAEE_WriteByte@bAdd bAdd `ui  1 p 2 13 ]
-[v DATAEE_WriteByte@bData bData `uc  1 p 1 15 ]
+[v DATAEE_WriteByte@bAdd bAdd `ui  1 p 2 6 ]
+[v DATAEE_WriteByte@bData bData `uc  1 p 1 8 ]
 "200
 } 0
 "130 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/adcc.c
@@ -1331,7 +1333,7 @@ channel_FVR_buf1 63
 [v ADCC_GetSingleConversion@channel channel `E12086  1 a 1 wreg ]
 [v ADCC_GetSingleConversion@channel channel `E12086  1 a 1 wreg ]
 "133
-[v ADCC_GetSingleConversion@channel channel `E12086  1 a 1 10 ]
+[v ADCC_GetSingleConversion@channel channel `E12086  1 a 1 3 ]
 "155
 } 0
 "106 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/tmr2.c
@@ -1344,210 +1346,210 @@ channel_FVR_buf1 63
 {
 "104
 } 0
-"638 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
+"641 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
 [v _S1button S1button `(v  1 e 1 0 ]
 {
-"659
+"662
 } 0
-"351
+"350
 [v _PWM_Output_D4_Enable PWM_Output_D4_Enable `(v  1 e 1 0 ]
 {
-"353
+"352
 } 0
-"1006
+"1009
 [v _cmd_trc cmd_trc `(v  1 e 1 0 ]
 {
+"1034
+[v cmd_trc@buffData buffData `[5]uc  1 a 5 24 ]
 "1027
-[v cmd_trc@buffData buffData `[5]uc  1 a 5 31 ]
-"1020
-[v cmd_trc@buffInit buffInit `[3]uc  1 a 3 36 ]
-"1008
-[v cmd_trc@n n `i  1 a 2 46 ]
+[v cmd_trc@buffInit buffInit `[3]uc  1 a 3 29 ]
+"1012
+[v cmd_trc@nRegs nRegs `i  1 a 2 39 ]
+"1011
+[v cmd_trc@n n `i  1 a 2 37 ]
+"1035
+[v cmd_trc@address address `ui  1 a 2 34 ]
+"1032
+[v cmd_trc@i i `i  1 a 2 32 ]
+"1033
+[v cmd_trc@j j `uc  1 a 1 41 ]
+"1048
+[v cmd_trc@buffEOM buffEOM `[1]uc  1 a 1 36 ]
 "1009
-[v cmd_trc@maxReadings maxReadings `i  1 a 2 44 ]
-"1028
-[v cmd_trc@address address `ui  1 a 2 41 ]
-"1025
-[v cmd_trc@i i `i  1 a 2 39 ]
-"1026
-[v cmd_trc@j j `uc  1 a 1 48 ]
-"1040
-[v cmd_trc@buffEOM buffEOM `[1]uc  1 a 1 43 ]
-"1006
-[v cmd_trc@num num `i  1 p 2 22 ]
-[v cmd_trc@buffer buffer `*.5uc  1 p 1 24 ]
-"1046
+[v cmd_trc@num num `i  1 p 2 15 ]
+[v cmd_trc@buffer buffer `*.4uc  1 p 1 17 ]
+"1054
 } 0
-"993
+"996
 [v _cmd_ir cmd_ir `(v  1 e 1 0 ]
 {
-"994
-[v cmd_ir@buff buff `[7]uc  1 a 7 26 ]
-"1004
+"997
+[v cmd_ir@buff buff `[7]uc  1 a 7 19 ]
+"1007
 } 0
-"981
+"984
 [v _cmd_aa cmd_aa `(v  1 e 1 0 ]
 {
-[v cmd_aa@num num `i  1 p 2 22 ]
-[v cmd_aa@buffer buffer `*.5uc  1 p 1 24 ]
-"991
+[v cmd_aa@num num `i  1 p 2 15 ]
+[v cmd_aa@buffer buffer `*.4uc  1 p 1 17 ]
+"994
 } 0
-"969
+"972
 [v _cmd_dtl cmd_dtl `(v  1 e 1 0 ]
 {
-"971
-[v cmd_dtl@lumAux lumAux `i  1 a 2 29 ]
-"970
-[v cmd_dtl@tempAux tempAux `i  1 a 2 27 ]
-"969
-[v cmd_dtl@num num `i  1 p 2 22 ]
-[v cmd_dtl@buffer buffer `*.5uc  1 p 1 24 ]
-"979
+"974
+[v cmd_dtl@lumAux lumAux `i  1 a 2 22 ]
+"973
+[v cmd_dtl@tempAux tempAux `i  1 a 2 20 ]
+"972
+[v cmd_dtl@num num `i  1 p 2 15 ]
+[v cmd_dtl@buffer buffer `*.4uc  1 p 1 17 ]
+"982
 } 0
-"955
+"958
 [v _cmd_dac cmd_dac `(v  1 e 1 0 ]
 {
+"961
+[v cmd_dac@s s `i  1 a 2 24 ]
+"960
+[v cmd_dac@m m `i  1 a 2 22 ]
+"959
+[v cmd_dac@h h `i  1 a 2 20 ]
 "958
-[v cmd_dac@s s `i  1 a 2 31 ]
-"957
-[v cmd_dac@m m `i  1 a 2 29 ]
-"956
-[v cmd_dac@h h `i  1 a 2 27 ]
-"955
-[v cmd_dac@num num `i  1 p 2 22 ]
-[v cmd_dac@buffer buffer `*.5uc  1 p 1 24 ]
-"967
+[v cmd_dac@num num `i  1 p 2 15 ]
+[v cmd_dac@buffer buffer `*.4uc  1 p 1 17 ]
+"970
 } 0
-"940
+"943
 [v _cmd_ra cmd_ra `(v  1 e 1 0 ]
 {
-"941
-[v cmd_ra@buff buff `[9]uc  1 a 9 26 ]
-"953
+"944
+[v cmd_ra@buff buff `[9]uc  1 a 9 19 ]
+"956
 } 0
-"931
+"934
 [v _cmd_mta cmd_mta `(v  1 e 1 0 ]
 {
-[v cmd_mta@buffer buffer `*.5uc  1 p 1 24 ]
-"938
+[v cmd_mta@buffer buffer `*.4uc  1 p 1 17 ]
+"941
 } 0
-"922
+"925
 [v _cmd_mmp cmd_mmp `(v  1 e 1 0 ]
 {
-[v cmd_mmp@num num `i  1 p 2 22 ]
-[v cmd_mmp@buffer buffer `*.5uc  1 p 1 24 ]
-"929
+[v cmd_mmp@num num `i  1 p 2 15 ]
+[v cmd_mmp@buffer buffer `*.4uc  1 p 1 17 ]
+"932
 } 0
-"911
+"914
 [v _cmd_rp cmd_rp `(v  1 e 1 0 ]
 {
-"912
-[v cmd_rp@buff buff `[5]uc  1 a 5 26 ]
-"920
+"915
+[v cmd_rp@buff buff `[5]uc  1 a 5 19 ]
+"923
 } 0
-"900
+"903
 [v _cmd_rtl cmd_rtl `(v  1 e 1 0 ]
 {
-"901
-[v cmd_rtl@buff buff `[5]uc  1 a 5 26 ]
-"909
+"904
+[v cmd_rtl@buff buff `[5]uc  1 a 5 19 ]
+"912
 } 0
-"885
+"888
 [v _cmd_sc cmd_sc `(v  1 e 1 0 ]
 {
+"891
+[v cmd_sc@s s `i  1 a 2 24 ]
+"890
+[v cmd_sc@m m `i  1 a 2 22 ]
+"889
+[v cmd_sc@h h `i  1 a 2 20 ]
 "888
-[v cmd_sc@s s `i  1 a 2 31 ]
-"887
-[v cmd_sc@m m `i  1 a 2 29 ]
-"886
-[v cmd_sc@h h `i  1 a 2 27 ]
-"885
-[v cmd_sc@num num `i  1 p 2 22 ]
-[v cmd_sc@buffer buffer `*.5uc  1 p 1 24 ]
-"898
+[v cmd_sc@num num `i  1 p 2 15 ]
+[v cmd_sc@buffer buffer `*.4uc  1 p 1 17 ]
+"901
 } 0
-"873
+"876
 [v _cmd_rc cmd_rc `(v  1 e 1 0 ]
 {
-"874
-[v cmd_rc@buff buff `[6]uc  1 a 6 26 ]
-"883
+"877
+[v cmd_rc@buff buff `[6]uc  1 a 6 19 ]
+"886
 } 0
-"1048
+"1056
 [v _cmd_tri cmd_tri `(v  1 e 1 0 ]
 {
-"1084
-[v cmd_tri@buffData buffData `[5]uc  1 a 5 30 ]
-"1074
-[v cmd_tri@buffInit buffInit `[4]uc  1 a 4 35 ]
-"1053
-[v cmd_tri@startingIndex startingIndex `i  1 a 2 47 ]
-"1081
-[v cmd_tri@i i `i  1 a 2 42 ]
-"1060
-[v cmd_tri@maxReadings maxReadings `i  1 a 2 40 ]
-"1083
-[v cmd_tri@j j `uc  1 a 1 46 ]
-"1050
-[v cmd_tri@n n `uc  1 a 1 45 ]
-"1051
-[v cmd_tri@index index `uc  1 a 1 44 ]
-"1101
-[v cmd_tri@buffEOM buffEOM `[1]uc  1 a 1 39 ]
-"1048
-[v cmd_tri@num num `i  1 p 2 22 ]
-[v cmd_tri@buffer buffer `*.5uc  1 p 1 24 ]
-"1107
+"1092
+[v cmd_tri@buffData buffData `[5]uc  1 a 5 23 ]
+"1082
+[v cmd_tri@buffInit buffInit `[4]uc  1 a 4 28 ]
+"1061
+[v cmd_tri@startingIndex startingIndex `i  1 a 2 38 ]
+"1089
+[v cmd_tri@i i `i  1 a 2 35 ]
+"1068
+[v cmd_tri@maxReadingsAux maxReadingsAux `i  1 a 2 33 ]
+"1091
+[v cmd_tri@j j `uc  1 a 1 41 ]
+"1058
+[v cmd_tri@n n `uc  1 a 1 40 ]
+"1059
+[v cmd_tri@index index `uc  1 a 1 37 ]
+"1110
+[v cmd_tri@buffEOM buffEOM `[1]uc  1 a 1 32 ]
+"1056
+[v cmd_tri@num num `i  1 p 2 15 ]
+[v cmd_tri@buffer buffer `*.4uc  1 p 1 17 ]
+"1116
 } 0
 "15 E:\Microchip\xc8\v2.30\pic\sources\c90\common\Umul16.c
 [v ___wmul __wmul `(ui  1 e 2 0 ]
 {
 "17
-[v ___wmul@product product `ui  1 a 2 11 ]
+[v ___wmul@product product `ui  1 a 2 4 ]
 "15
-[v ___wmul@multiplier multiplier `ui  1 p 2 7 ]
-[v ___wmul@multiplicand multiplicand `ui  1 p 2 9 ]
+[v ___wmul@multiplier multiplier `ui  1 p 2 0 ]
+[v ___wmul@multiplicand multiplicand `ui  1 p 2 2 ]
 "53
 } 0
 "202 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/memory.c
 [v _DATAEE_ReadByte DATAEE_ReadByte `(uc  1 e 1 0 ]
 {
-[v DATAEE_ReadByte@bAdd bAdd `ui  1 p 2 13 ]
+[v DATAEE_ReadByte@bAdd bAdd `ui  1 p 2 6 ]
 "212
 } 0
-"853 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
+"856 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
 [v _sendOKMessage sendOKMessage `(v  1 e 1 0 ]
 {
 [v sendOKMessage@cmd cmd `uc  1 a 1 wreg ]
-"854
-[v sendOKMessage@bufw bufw `[4]uc  1 a 4 18 ]
-"853
+"857
+[v sendOKMessage@bufw bufw `[4]uc  1 a 4 11 ]
+"856
 [v sendOKMessage@cmd cmd `uc  1 a 1 wreg ]
-"855
-[v sendOKMessage@cmd cmd `uc  1 a 1 17 ]
-"861
+"858
+[v sendOKMessage@cmd cmd `uc  1 a 1 10 ]
+"864
 } 0
-"863
+"866
 [v _sendERRORMessage sendERRORMessage `(v  1 e 1 0 ]
 {
 [v sendERRORMessage@cmd cmd `uc  1 a 1 wreg ]
-"864
-[v sendERRORMessage@bufw bufw `[4]uc  1 a 4 18 ]
-"863
+"867
+[v sendERRORMessage@bufw bufw `[4]uc  1 a 4 11 ]
+"866
 [v sendERRORMessage@cmd cmd `uc  1 a 1 wreg ]
-"865
-[v sendERRORMessage@cmd cmd `uc  1 a 1 17 ]
-"871
+"868
+[v sendERRORMessage@cmd cmd `uc  1 a 1 10 ]
+"874
 } 0
-"661
+"664
 [v _sendMessage sendMessage `(v  1 e 1 0 ]
 {
-"662
-[v sendMessage@n n `i  1 a 2 14 ]
-"661
-[v sendMessage@num num `i  1 p 2 10 ]
-[v sendMessage@buffer buffer `*.4uc  1 p 1 12 ]
-"667
+"665
+[v sendMessage@n n `i  1 a 2 7 ]
+"664
+[v sendMessage@num num `i  1 p 2 3 ]
+[v sendMessage@buffer buffer `*.4uc  1 p 1 5 ]
+"670
 } 0
 "176 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/eusart.c
 [v _putch putch `(v  1 e 1 0 ]
@@ -1555,7 +1557,7 @@ channel_FVR_buf1 63
 [v putch@txData txData `uc  1 a 1 wreg ]
 [v putch@txData txData `uc  1 a 1 wreg ]
 "178
-[v putch@txData txData `uc  1 a 1 9 ]
+[v putch@txData txData `uc  1 a 1 2 ]
 "179
 } 0
 "148
@@ -1563,7 +1565,7 @@ channel_FVR_buf1 63
 {
 [v EUSART_Write@txData txData `uc  1 a 1 wreg ]
 [v EUSART_Write@txData txData `uc  1 a 1 wreg ]
-[v EUSART_Write@txData txData `uc  1 a 1 8 ]
+[v EUSART_Write@txData txData `uc  1 a 1 1 ]
 "169
 } 0
 "50 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/mcc.c
@@ -1584,7 +1586,7 @@ channel_FVR_buf1 63
 "178
 [v _TMR1_SetInterruptHandler TMR1_SetInterruptHandler `(v  1 e 1 0 ]
 {
-[v TMR1_SetInterruptHandler@InterruptHandler InterruptHandler `*.37(v  1 p 2 7 ]
+[v TMR1_SetInterruptHandler@InterruptHandler InterruptHandler `*.37(v  1 p 2 0 ]
 "180
 } 0
 "58 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/pwm6.c
@@ -1615,7 +1617,7 @@ channel_FVR_buf1 63
 "50
 [v _INT_SetInterruptHandler INT_SetInterruptHandler `(v  1 e 1 0 ]
 {
-[v INT_SetInterruptHandler@InterruptHandler InterruptHandler `*.37(v  1 p 2 7 ]
+[v INT_SetInterruptHandler@InterruptHandler InterruptHandler `*.37(v  1 p 2 0 ]
 "52
 } 0
 "75 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/eusart.c
@@ -1626,13 +1628,13 @@ channel_FVR_buf1 63
 "220
 [v _EUSART_SetTxInterruptHandler EUSART_SetTxInterruptHandler `(v  1 e 1 0 ]
 {
-[v EUSART_SetTxInterruptHandler@interruptHandler interruptHandler `*.37(v  1 p 2 7 ]
+[v EUSART_SetTxInterruptHandler@interruptHandler interruptHandler `*.37(v  1 p 2 0 ]
 "222
 } 0
 "224
 [v _EUSART_SetRxInterruptHandler EUSART_SetRxInterruptHandler `(v  1 e 1 0 ]
 {
-[v EUSART_SetRxInterruptHandler@interruptHandler interruptHandler `*.37(v  1 p 2 7 ]
+[v EUSART_SetRxInterruptHandler@interruptHandler interruptHandler `*.37(v  1 p 2 0 ]
 "226
 } 0
 "63 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/adcc.c
@@ -1640,33 +1642,33 @@ channel_FVR_buf1 63
 {
 "104
 } 0
-"288 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
+"287 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
 [v _LCDinit LCDinit `(v  1 e 1 0 ]
 {
-"309
+"308
 } 0
-"265
+"264
 [v _LCDsend2x4 LCDsend2x4 `(v  1 e 1 0 ]
 {
 [v LCDsend2x4@c c `uc  1 a 1 wreg ]
-"268
-[v LCDsend2x4@lc lc `uc  1 a 1 14 ]
 "267
-[v LCDsend2x4@hc hc `uc  1 a 1 13 ]
-"265
+[v LCDsend2x4@lc lc `uc  1 a 1 7 ]
+"266
+[v LCDsend2x4@hc hc `uc  1 a 1 6 ]
+"264
 [v LCDsend2x4@c c `uc  1 a 1 wreg ]
-[v LCDsend2x4@mode mode `uc  1 p 1 9 ]
-"270
-[v LCDsend2x4@c c `uc  1 a 1 12 ]
-"286
+[v LCDsend2x4@mode mode `uc  1 p 1 2 ]
+"269
+[v LCDsend2x4@c c `uc  1 a 1 5 ]
+"285
 } 0
-"226
+"225
 [v _LCDsend LCDsend `(v  1 e 1 0 ]
 {
 [v LCDsend@c c `uc  1 a 1 wreg ]
 [v LCDsend@c c `uc  1 a 1 wreg ]
-[v LCDsend@c c `uc  1 a 1 10 ]
-"233
+[v LCDsend@c c `uc  1 a 1 3 ]
+"232
 } 0
 "47 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\I2C/i2c.c
 [v _WriteI2C WriteI2C `(c  1 e 1 0 ]
@@ -1674,7 +1676,7 @@ channel_FVR_buf1 63
 [v WriteI2C@data_out data_out `uc  1 a 1 wreg ]
 [v WriteI2C@data_out data_out `uc  1 a 1 wreg ]
 "49
-[v WriteI2C@data_out data_out `uc  1 a 1 8 ]
+[v WriteI2C@data_out data_out `uc  1 a 1 1 ]
 "78
 } 0
 "118 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/eusart.c
@@ -1698,7 +1700,7 @@ channel_FVR_buf1 63
 [v TMR1_WriteTimer@timerVal timerVal `ui  1 p 2 0 ]
 "147
 } 0
-"363 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
+"362 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
 [v _Clock_ISR Clock_ISR `(v  1 e 1 0 ]
 {
 "401
@@ -1736,10 +1738,10 @@ channel_FVR_buf1 63
 {
 "57
 } 0
-"824 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
+"827 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\main.c
 [v _S1_ISR S1_ISR `(v  1 e 1 0 ]
 {
-"847
+"850
 } 0
 "181 E:\Andre\IST\5Ano_1Semestre\SCE\GIT\SCE_Project_part2\mcc_generated_files/eusart.c
 [v _EUSART_Transmit_ISR EUSART_Transmit_ISR `(v  1 e 1 0 ]
